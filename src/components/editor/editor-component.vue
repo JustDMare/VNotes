@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import DocumentComponent from "./document-component.vue";
+import NoteComponent from "./note-component.vue";
 </script>
 <template>
   <main id="editor">
-    <DocumentComponent></DocumentComponent>
+    <NoteComponent></NoteComponent>
   </main>
 </template>
