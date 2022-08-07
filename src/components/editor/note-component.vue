@@ -6,7 +6,11 @@ const noteTitle: Ref<string> = ref("");
 <template>
   <article id="note">
     <header>
-      <h1 contenteditable placeholder="Untitled" id="note-title">
+      <h1
+        contenteditable
+        :placeholder="$t('note.titlePlaceholder')"
+        id="note-title"
+      >
         {{ noteTitle }}
       </h1>
     </header>
