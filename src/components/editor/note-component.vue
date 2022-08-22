@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, type Ref } from "@vue/reactivity";
+import BlockList from "./block-list.vue";
 
 const noteTitle: Ref<string> = ref("");
 </script>
@@ -14,6 +15,7 @@ const noteTitle: Ref<string> = ref("");
         {{ noteTitle }}
       </h1>
     </header>
+    <BlockList></BlockList>
   </article>
 </template>
 
