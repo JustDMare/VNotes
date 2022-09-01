@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NoteComponent from "./note-component.vue";
+import NoteComponent from "./NoteComponent.vue";
 </script>
 <template>
   <main id="editor">

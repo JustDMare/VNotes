@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import EditorComponent from "@/components/editor/editor-component.vue";
-import SidebarComponent from "@/components/sidebar/sidebar-component.vue";
+import EditorComponent from "@/components/editor/EditorComponent.vue";
+import SidebarComponent from "@/components/sidebar/SidebarComponent.vue";
 </script>
 
 <template>

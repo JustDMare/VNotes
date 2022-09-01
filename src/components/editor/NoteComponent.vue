@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, type Ref } from "@vue/reactivity";
-import BlockList from "./block-list.vue";
+import BlockList from "./BlockList.vue";
 
 const noteTitle: Ref<string> = ref("");
 </script>

@@ -1,5 +1,5 @@
-import { createI18n, type LocaleMessages, type VueMessageType } from "vue-i18n";
-import { LOCALES, type I18nOptions } from "./i18n.types";
+import { createI18n } from "vue-i18n";
+import { LOCALES } from "./i18n.types";
 import { en, es } from "./locales";
 
 export const defaultLocale = LOCALES.EN;
