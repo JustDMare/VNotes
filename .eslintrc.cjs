@@ -19,6 +19,9 @@ module.exports = {
     {
       files: ["cypress/integration/**.spec.{js,ts,jsx,tsx}"],
       extends: ["plugin:cypress/recommended"],
+      rules: {
+        "consistent-type-imports": "off",
+      },
     },
   ],
   rules: {
@@ -28,6 +31,7 @@ module.exports = {
       "error",
       { code: 100, ignoreComments: false, ignorePattern: 'd="([\\s\\S]*?)"' },
     ],
+
     "no-dupe-class-members": "off",
     "no-duplicate-imports": "error",
     "no-empty-function": "error",
