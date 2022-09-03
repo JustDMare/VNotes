@@ -1,7 +1,7 @@
 BLOCK_DICTIONARYBLOCK_DICTIONARY
 <script setup lang="ts">
 import BLOCK_DICTIONARY from "@/services/block-dictionary";
-import type Block from "@/types/blocks/block";
+import type { Block } from "@/types/blocks";
 import type { PropType } from "vue";
 
 defineProps({
