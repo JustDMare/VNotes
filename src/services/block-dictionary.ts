@@ -1,5 +1,10 @@
-import type { BlockType } from "@/types/blocks/block";
-import TextBlock from "@/components/editor/blocks/TextBlock.vue";
+import {
+  HeadingBigBlock,
+  HeadingMediumBlock,
+  HeadingSmallBlock,
+  TextBlock,
+} from "@/components/editor/blocks";
+import type { BlockType } from "@/types";
 import type { Component } from "vue";
 
 /**
@@ -12,6 +17,11 @@ import type { Component } from "vue";
 const BLOCK_DICTIONARY: ReadonlyMap<BlockType, Component> = new Map<
   BlockType,
   Component
->([["text", TextBlock]]);
+>([
+  ["text", TextBlock],
+  ["heading_big", HeadingBigBlock],
+  ["heading_medium", HeadingMediumBlock],
+  ["heading_small", HeadingSmallBlock],
+]);
 
 export default BLOCK_DICTIONARY;

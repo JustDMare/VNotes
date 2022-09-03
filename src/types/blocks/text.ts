@@ -1,5 +1,5 @@
 import type Block from "./block";
 
-export interface TextBlock extends Block {
+export default interface TextBlock extends Block {
   type: "text";
 }
