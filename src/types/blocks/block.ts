@@ -9,4 +9,8 @@ export default interface Block {
   //unique_properties: BlockCustomProperties;
 }
 
-export type BlockType = "text"; //| "heading1" | "heading2" | "heading3"
+export type BlockType =
+  | "text"
+  | "heading_big"
+  | "heading_medium"
+  | "heading_small";

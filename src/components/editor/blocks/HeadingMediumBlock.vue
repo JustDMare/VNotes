@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Block } from "@/types/blocks";
+import type { Block } from "@/types";
 
 import type { PropType } from "vue";
 
@@ -9,5 +9,5 @@ defineProps({
 </script>
 
 <template>
-  <p contenteditable>{{ block.content }}</p>
+  <h2 contenteditable>{{ block.content }}</h2>
 </template>

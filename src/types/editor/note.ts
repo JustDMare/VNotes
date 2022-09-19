@@ -1,4 +1,4 @@
-import type Block from "../blocks/block";
+import type { Block } from "../blocks";
 
 export default interface Note {
   noteId: string;
