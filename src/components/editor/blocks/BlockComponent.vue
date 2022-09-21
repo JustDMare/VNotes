@@ -13,4 +13,11 @@ defineProps({
   <component :is="BLOCK_DICTIONARY.get(block.type)" :block="block"></component>
 </template>
 
-<style scoped></style>
+<style scoped>
+[contenteditable]:focus {
+  outline: 0px solid transparent;
+}
+[contenteditable] {
+  white-space: pre-wrap;
+}
+</style>
