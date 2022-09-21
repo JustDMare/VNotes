@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, type Ref } from "@vue/reactivity";
 import BlockList from "./BlockList.vue";
+import { useMainStore } from "@/stores/main";
 
-const noteTitle: Ref<string> = ref("");
+const mainStore = useMainStore();
+const note = mainStore.$state.noteInEditor;
 </script>
 <template>
   <article id="note">
@@ -12,10 +13,10 @@ const noteTitle: Ref<string> = ref("");
         :placeholder="$t('note.titlePlaceholder')"
         id="note-title"
       >
-        {{ noteTitle }}
+        {{ note.title }}
       </h1>
     </header>
-    <BlockList></BlockList>
+    <BlockList :block-list="note.content"></BlockList>
   </article>
 </template>
 
