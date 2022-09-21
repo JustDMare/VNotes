@@ -13,6 +13,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "composite": true,
+    "noImplicitThis": false,
     "baseUrl": ".",
     "paths": {
       "@/*": [
