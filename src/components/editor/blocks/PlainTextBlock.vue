@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { Block } from "@/types/blocks";
-import { type PropType, reactive, ref } from "vue";
 import { useTextBasedBlock } from "@/composables/textBasedBlock";
+import type { Block } from "@/types/blocks";
+import { reactive, type PropType } from "vue";
 
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
@@ -12,7 +12,11 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(block);
 </script>
 
 <template>
-  <p contenteditable @keydown="parseSpecialKeys" @input="processInput">
-    {{ block.content }}
-  </p>
+  <p
+    v-once
+    contenteditable
+    @keydown="parseSpecialKeys"
+    @input="processInput"
+    v-text="block.content"
+  />
 </template>
