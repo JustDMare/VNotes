@@ -3,7 +3,7 @@ import BlockList from "./BlockList.vue";
 import { useMainStore } from "@/stores/main";
 
 const mainStore = useMainStore();
-const note = mainStore.$state.noteInEditor;
+const note = mainStore.noteInEditor;
 </script>
 <template>
   <article id="note">

@@ -5,7 +5,6 @@ export default interface Block {
   createdTime: string; //timestamp
   lastUpdatedTime: string; //timestamp
   content: string; //Content of the block
-  //children_blocks: IBlock[]
   //unique_properties: BlockCustomProperties;
 }
 
