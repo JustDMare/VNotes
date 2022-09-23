@@ -19,6 +19,11 @@ export const useMainStore = defineStore("main", {
     },
   },
   actions: {
+    //DOCUMENTATE ACTIONS
+    updateNoteInEditorTitle(content: string): void {
+      //Check for errors
+      this.noteInEditor.title = content;
+    },
     updateBlockContentInEditor(blockId: string, content: string): void {
       const block = this.getBlockInEditorById(blockId);
       if (block) {
@@ -26,11 +31,17 @@ export const useMainStore = defineStore("main", {
         block.content = content;
       }
     },
-    createBlockInEditor(previousBlockId: string): void {
-      const previousBlockIndex = this.noteInEditor.content.findIndex(
-        (block: Block) => block.blockId === previousBlockId
-      );
-      const newBlockIndex = previousBlockIndex + 1;
+    createBlockInEditor(previousBlockId?: string): void {
+      //Check for errors
+      let newBlockIndex: number;
+      if (previousBlockId) {
+        const previousBlockIndex = this.noteInEditor.content.findIndex(
+          (block: Block) => block.blockId === previousBlockId
+        );
+        newBlockIndex = previousBlockIndex + 1;
+      } else {
+        newBlockIndex = 0;
+      }
       const newBlock: TextBlock = {
         type: "text",
         blockId: crypto.randomUUID(),

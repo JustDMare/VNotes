@@ -4,14 +4,27 @@ import { useMainStore } from "@/stores/main";
 
 const mainStore = useMainStore();
 const note = mainStore.noteInEditor;
+function parseSpecialKeys(event: KeyboardEvent) {
+  if (event.code === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    mainStore.createBlockInEditor();
+  }
+}
+function processInput(event: Event) {
+  const input = event.target as HTMLElement;
+  mainStore.updateNoteInEditorTitle(input.innerText);
+}
 </script>
 <template>
   <article id="note">
     <header>
       <h1
+        v-once
         contenteditable
         :placeholder="$t('note.titlePlaceholder')"
         id="note-title"
+        @keydown="parseSpecialKeys"
+        @input="processInput"
       >
         {{ note.title }}
       </h1>
