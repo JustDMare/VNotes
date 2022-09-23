@@ -19,14 +19,14 @@ export const useMainStore = defineStore("main", {
     },
   },
   actions: {
-    updateBlockContentInEditor(blockId: string, content: string) {
+    updateBlockContentInEditor(blockId: string, content: string): void {
       const block = this.getBlockInEditorById(blockId);
       if (block) {
         //Check for errors
         block.content = content;
       }
     },
-    createBlockInEditor(previousBlockId: string) {
+    createBlockInEditor(previousBlockId: string): void {
       const previousBlockIndex = this.noteInEditor.content.findIndex(
         (block: Block) => block.blockId === previousBlockId
       );
@@ -41,6 +41,9 @@ export const useMainStore = defineStore("main", {
       };
       this.blockCreated = true;
       this.noteInEditor.content.splice(newBlockIndex, 0, newBlock);
+    },
+    setBlockCreated(blockCreated: boolean): void {
+      this.blockCreated = blockCreated;
     },
   },
 });
