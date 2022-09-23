@@ -1,12 +1,15 @@
-import { defineStore } from "pinia";
 import { noteBlocks } from "@/mock-data/note-mock";
-import { reactive } from "vue";
 import type { Block, Note } from "@/types";
+import type TextBlock from "@/types/blocks/text";
+import { defineStore } from "pinia";
+import { reactive } from "vue";
 
 export const useMainStore = defineStore("main", {
   state: () => ({
     noteInEditor: reactive(noteBlocks) as Note,
+    blockCreated: false as boolean,
   }),
+
   getters: {
     getBlockInEditorById: (state) => {
       return (blockId: string) =>
@@ -22,6 +25,22 @@ export const useMainStore = defineStore("main", {
         //Check for errors
         block.content = content;
       }
+    },
+    createBlockInEditor(previousBlockId: string) {
+      const previousBlockIndex = this.noteInEditor.content.findIndex(
+        (block: Block) => block.blockId === previousBlockId
+      );
+      const newBlockIndex = previousBlockIndex + 1;
+      const newBlock: TextBlock = {
+        type: "text",
+        blockId: crypto.randomUUID(),
+        parentId: this.noteInEditor.noteId,
+        createdTime: String(Date.now()),
+        lastUpdatedTime: String(Date.now()),
+        content: "",
+      };
+      this.blockCreated = true;
+      this.noteInEditor.content.splice(newBlockIndex, 0, newBlock);
     },
   },
 });

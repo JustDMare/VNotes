@@ -6,11 +6,16 @@ import type { PropType } from "vue";
 
 defineProps({
   block: { type: Object as PropType<Block>, required: true },
+  index: { type: Number, required: true },
 });
 </script>
 
 <template>
-  <component :is="BLOCK_DICTIONARY.get(block.type)" :block="block"></component>
+  <component
+    :is="BLOCK_DICTIONARY.get(block.type)"
+    :index="index"
+    :block="block"
+  ></component>
 </template>
 
 <style scoped>
