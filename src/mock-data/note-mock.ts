@@ -53,7 +53,7 @@ export const noteBlocks: Note = {
       type: "text",
       createdTime: "1662199262",
       lastUpdatedTime: "1662199262",
-      content: "This is one last text block",
+      content: "This is one last \n text block",
     },
   ],
 };

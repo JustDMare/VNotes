@@ -1,13 +1,16 @@
 <script lang="ts" setup>
+import { useTextBasedBlock } from "@/composables/textBasedBlock";
 import type { Block } from "@/types";
-
 import type { PropType } from "vue";
 
-defineProps({
+const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
+const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
 </script>
 
 <template>
-  <h2 contenteditable>{{ block.content }}</h2>
+  <h2 v-once contenteditable @keydown="parseSpecialKeys" @input="processInput">
+    {{ block.content }}
+  </h2>
 </template>

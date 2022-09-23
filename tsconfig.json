@@ -14,5 +14,6 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noImplicitThis": true
   }
 }
