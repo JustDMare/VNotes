@@ -9,16 +9,15 @@ const props = defineProps({
 const blocks = ref(props.blockList);
 const itemRefs = ref([]);
 onMounted(() => {
-  console.log(itemRefs.value[1] );
+  console.log(itemRefs.value[1]);
 });
 </script>
 
 <template>
   <BlockComponent
-    v-for="(block, index) in blocks"
+    v-for="block in blocks"
     :key="block.blockId"
     :block="block"
     ref="itemRefs"
-    :index="index"
   ></BlockComponent>
 </template>
