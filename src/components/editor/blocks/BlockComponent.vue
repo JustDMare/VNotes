@@ -11,7 +11,7 @@ const props = defineProps({
 const mainStore = useMainStore();
 
 function createBlockBelow() {
-  mainStore.createBlockInEditor(props.block.blockId);
+  mainStore.createBlockInEditor(props.block.blockID);
 }
 </script>
 
