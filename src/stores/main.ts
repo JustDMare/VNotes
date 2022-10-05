@@ -14,7 +14,7 @@ export const useMainStore = defineStore("main", {
     getBlockInEditorById: (state) => {
       return (blockId: string) =>
         state.noteInEditor.content.find(
-          (block: Block) => block.blockId === blockId
+          (block: Block) => block.blockID === blockId
         );
     },
   },
@@ -36,7 +36,7 @@ export const useMainStore = defineStore("main", {
       let newBlockIndex: number;
       if (previousBlockId) {
         const previousBlockIndex = this.noteInEditor.content.findIndex(
-          (block: Block) => block.blockId === previousBlockId
+          (block: Block) => block.blockID === previousBlockId
         );
         newBlockIndex = previousBlockIndex + 1;
       } else {
@@ -44,8 +44,8 @@ export const useMainStore = defineStore("main", {
       }
       const newBlock: TextBlock = {
         type: "text",
-        blockId: crypto.randomUUID(),
-        parentId: this.noteInEditor.noteId,
+        blockID: crypto.randomUUID(),
+        parentID: this.noteInEditor.noteID,
         createdTime: String(Date.now()),
         lastUpdatedTime: String(Date.now()),
         content: "",

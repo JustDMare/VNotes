@@ -11,12 +11,12 @@ export function useTextBasedBlock(block: Block) {
   }
   function processInput(event: Event) {
     const input = event.target as HTMLElement;
-    mainStore.updateBlockContentInEditor(block.blockId, input.innerText);
+    mainStore.updateBlockContentInEditor(block.blockID, input.innerText);
   }
 
   // HELPER FUNCTIONS
   function AddNewBlockBelow() {
-    mainStore.createBlockInEditor(block.blockId);
+    mainStore.createBlockInEditor(block.blockID);
   }
 
   return { parseSpecialKeys, processInput };

@@ -1,8 +1,8 @@
 import type { Block } from "../blocks";
 
 export default interface Note {
-  noteId: string;
-  parentId: string;
+  noteID: string;
+  parentID: string;
   title: string;
   createdTime: string; // timestamp
   lastUpdatedTime: string; // timestamp
