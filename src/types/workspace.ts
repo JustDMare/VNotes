@@ -3,6 +3,5 @@ import type { NoteReference } from "./note-reference";
 
 export default interface Workspace {
   workspaceID: string;
-  rootFolders: Folder[];
-  rootNotes: NoteReference[];
+  content: (Folder | NoteReference)[];
 }

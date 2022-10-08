@@ -1,4 +1,4 @@
-import type { Note } from "@/types";
+import type { NoteReference } from "./note-reference";
 
 export default interface Folder {
   folderID: string;
@@ -6,7 +6,6 @@ export default interface Folder {
   name: string;
   createdTime: string;
   lastUpdatedTime: string;
-  notes: Note[];
-  folders: Folder[];
+  content: (Folder | NoteReference)[];
   numberOfItems: number;
 }
