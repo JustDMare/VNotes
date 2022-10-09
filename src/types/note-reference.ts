@@ -1,3 +1,6 @@
 import type { Note } from "./editor";
 
-export type NoteReference = Omit<Note, "content">;
+export type NoteReference = Omit<
+  Note,
+  "content" | "createdTime" | "lastUpdatedTime"
+>;
