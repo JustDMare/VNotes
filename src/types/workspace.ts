@@ -1,7 +1,7 @@
-import type Folder from "./folder";
-import type { NoteReference } from "./note-reference";
+import type { FolderSidebarReference } from "./folder";
+import type { NoteSidebarReference } from "./note-reference";
 
 export default interface Workspace {
   workspaceID: string;
-  content: (Folder | NoteReference)[];
+  content: (FolderSidebarReference | NoteSidebarReference)[];
 }
