@@ -11,7 +11,7 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
 </script>
 
 <template>
-  <h1 v-once ontenteditable @keydown="parseSpecialKeys" @input="processInput">
+  <h1 v-once contenteditable @keydown="parseSpecialKeys" @input="processInput">
     {{ block.content }}
   </h1>
 </template>

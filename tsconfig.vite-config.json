@@ -4,6 +4,11 @@
     "vite.config.*"
   ],
   "compilerOptions": {
+    "target": "es2022",
+    "lib": [
+      "es2022",
+      "dom"
+    ],
     "composite": true,
     "types": [
       "node",

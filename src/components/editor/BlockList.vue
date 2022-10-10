@@ -16,7 +16,7 @@ onMounted(() => {
 <template>
   <BlockComponent
     v-for="block in blocks"
-    :key="block.blockId"
+    :key="block.blockID"
     :block="block"
     ref="itemRefs"
   ></BlockComponent>

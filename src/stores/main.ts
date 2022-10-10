@@ -1,5 +1,6 @@
 import { noteBlocks } from "@/mock-data/note-mock";
-import type { Block, Note } from "@/types";
+import { workspaceMock } from "@/mock-data/workspace-mock";
+import type { Block, Note, Workspace } from "@/types";
 import type TextBlock from "@/types/blocks/text";
 import { defineStore } from "pinia";
 import { reactive } from "vue";
@@ -8,13 +9,14 @@ export const useMainStore = defineStore("main", {
   state: () => ({
     noteInEditor: reactive(noteBlocks) as Note,
     blockCreated: false as boolean,
+    workspace: workspaceMock as Workspace,
   }),
 
   getters: {
     getBlockInEditorById: (state) => {
-      return (blockId: string) =>
+      return (blockID: string) =>
         state.noteInEditor.content.find(
-          (block: Block) => block.blockId === blockId
+          (block: Block) => block.blockID === blockID
         );
     },
   },
@@ -24,19 +26,19 @@ export const useMainStore = defineStore("main", {
       //Check for errors
       this.noteInEditor.title = content;
     },
-    updateBlockContentInEditor(blockId: string, content: string): void {
-      const block = this.getBlockInEditorById(blockId);
+    updateBlockContentInEditor(blockID: string, content: string): void {
+      const block = this.getBlockInEditorById(blockID);
       if (block) {
         //Check for errors
         block.content = content;
       }
     },
-    createBlockInEditor(previousBlockId?: string): void {
+    createBlockInEditor(previousBlockID?: string): void {
       //Check for errors
       let newBlockIndex: number;
-      if (previousBlockId) {
+      if (previousBlockID) {
         const previousBlockIndex = this.noteInEditor.content.findIndex(
-          (block: Block) => block.blockId === previousBlockId
+          (block: Block) => block.blockID === previousBlockID
         );
         newBlockIndex = previousBlockIndex + 1;
       } else {
@@ -44,8 +46,8 @@ export const useMainStore = defineStore("main", {
       }
       const newBlock: TextBlock = {
         type: "text",
-        blockId: crypto.randomUUID(),
-        parentId: this.noteInEditor.noteId,
+        blockID: crypto.randomUUID(),
+        parentID: this.noteInEditor.noteID,
         createdTime: String(Date.now()),
         lastUpdatedTime: String(Date.now()),
         content: "",

@@ -1,6 +1,6 @@
 export default interface Block {
-  blockId: string;
-  parentId: string;
+  blockID: string;
+  parentID: string;
   type: BlockType;
   createdTime: string; //timestamp
   lastUpdatedTime: string; //timestamp

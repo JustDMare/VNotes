@@ -10,6 +10,11 @@
     "src/**/__tests__/*"
   ],
   "compilerOptions": {
+    "target": "es2022",
+    "lib": [
+      "es2022",
+      "dom"
+    ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "composite": true,
