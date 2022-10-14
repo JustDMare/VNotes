@@ -36,8 +36,8 @@ function processInput(event: Event) {
 <style scoped lang="scss">
 #note {
   width: 100%;
-  max-width: 700px;
-
+  max-width: 900px;
+  padding: 0 6rem;
   &-title {
     font-size: 32px;
     font-weight: 700;

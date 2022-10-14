@@ -3,6 +3,7 @@ import NoteComponent from "./NoteComponent.vue";
 </script>
 <template>
   <main id="editor">
-    <NoteComponent></NoteComponent>
+    <NoteComponent />
   </main>
 </template>
+<style scoped lang="scss"></style>

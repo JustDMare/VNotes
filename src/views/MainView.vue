@@ -4,8 +4,14 @@ import SidebarComponent from "@/components/sidebar/SidebarComponent.vue";
 </script>
 
 <template>
-  <div>
-    <SidebarComponent></SidebarComponent>
-    <EditorComponent></EditorComponent>
+  <div id="editor">
+    <SidebarComponent id="sidebar" />
+    <EditorComponent id="editor" />
   </div>
 </template>
+<style lang="scss" scoped>
+#editor {
+  display: flex;
+  flex-direction: row;
+}
+</style>
