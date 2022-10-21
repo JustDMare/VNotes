@@ -33,7 +33,7 @@ function processInput(event: Event) {
   </article>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 #note {
   width: 100%;
   max-width: 900px;
@@ -44,15 +44,18 @@ function processInput(event: Event) {
   }
 }
 
-[contenteditable]:empty:before {
-  content: attr(placeholder);
-  pointer-events: none;
-  display: block; /* For Firefox */
-  opacity: 0.5;
-}
-
 [contenteditable] {
   word-wrap: break-word;
+  white-space: pre-line;
   outline-style: none;
+  &:focus {
+    outline: 0px solid transparent;
+  }
+  &:empty::before {
+    content: attr(placeholder);
+    pointer-events: none;
+    display: block; /* For Firefox */
+    opacity: 0.5;
+  }
 }
 </style>

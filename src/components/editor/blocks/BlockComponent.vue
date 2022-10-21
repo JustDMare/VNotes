@@ -26,10 +26,5 @@ function createBlockBelow() {
 </template>
 
 <style scoped>
-[contenteditable]:focus {
-  outline: 0px solid transparent;
-}
-[contenteditable] {
-  white-space: pre-wrap;
-}
+
 </style>
