@@ -29,7 +29,7 @@ function processInput(event: Event) {
         {{ note.title }}
       </h1>
     </header>
-    <BlockList :block-list="note.content"></BlockList>
+    <BlockList :block-list="note.content" />
   </article>
 </template>
 

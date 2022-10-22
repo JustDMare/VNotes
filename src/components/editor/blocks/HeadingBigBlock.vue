@@ -15,3 +15,9 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
     {{ block.content }}
   </h1>
 </template>
+
+<style lang="scss" scoped>
+h1 {
+  font-family: var(--font-sans);
+}
+</style>

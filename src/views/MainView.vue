@@ -44,11 +44,11 @@ onMounted(() => {
 
 <template>
   <section id="main-view">
-    <SidebarComponent id="sidebarComponent" ref="sidebarComponent" />
+    <SidebarComponent id="sidebar" ref="sidebarComponent" />
     <div class="resizer" ref="resizer">
       <span class="resizer-delimiter"></span>
     </div>
-    <EditorComponent id="editorComponent" ref="editorComponent" />
+    <EditorComponent id="editor" ref="editorComponent" />
   </section>
 </template>
 
@@ -59,7 +59,7 @@ onMounted(() => {
   height: 100%;
 }
 
-#sidebarComponent {
+#sidebar {
   height: 100%;
   position: relative;
   margin: 0;
@@ -85,7 +85,7 @@ onMounted(() => {
   }
 }
 
-#editorComponent {
+#editor {
   flex-basis: 0;
   flex-grow: 1;
   height: 100%;
