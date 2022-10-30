@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import EditorComponent from "@/components/editor/EditorComponent.vue";
-import SidebarComponent from "@/components/sidebar/SidebarComponent.vue";
+import { SidebarComponent } from "@/components/sidebar";
 import { onMounted, ref, type Ref } from "vue";
+//Importing from the index.ts raises an error for some reason, investigate
+//import NoteWorkspace from "@/components/editor/NoteWorkspace.vue";
+import { NoteWorkspace } from "@/components/editor";
 
 const sidebarComponent: Ref<InstanceType<typeof SidebarComponent> | null> =
   ref(null);
-const editorComponent: Ref<InstanceType<typeof EditorComponent> | null> =
+const editorComponent: Ref<InstanceType<typeof NoteWorkspace> | null> =
   ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
 
@@ -48,7 +50,7 @@ onMounted(() => {
     <div class="resizer" ref="resizer">
       <span class="resizer-delimiter"></span>
     </div>
-    <EditorComponent id="editor" ref="editorComponent" />
+    <NoteWorkspace id="editor" ref="editorComponent" />
   </section>
 </template>
 

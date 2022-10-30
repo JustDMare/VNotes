@@ -8,20 +8,18 @@ import type { BlockType } from "@/types";
 import type { Component } from "vue";
 
 /**
- * @readonly @constant BLOCK_DICTIONARY that contains all the BlockTypes and their matching Vue
- * Components in order to render or create the appropriate component based on its BlockType
+ * @readonly Returns a readonly map that contains all the BlockTypes and their matching Vue
+ * Components in order to render or create the appropriate component based on its BlockType.
  *
- *
- * @type ReadonlyMap<BlockType, Component>
+ * @returns {ReadonlyMap<BlockType, Component>} map that contains all the BlockTypes and their
+ * assigned Vue Components.
  */
-const BLOCK_DICTIONARY: ReadonlyMap<BlockType, Component> = new Map<
-  BlockType,
-  Component
->([
-  ["text", PlainTextBlock],
-  ["heading_big", HeadingBigBlock],
-  ["heading_medium", HeadingMediumBlock],
-  ["heading_small", HeadingSmallBlock],
-]);
-
-export default BLOCK_DICTIONARY;
+function getBlockDictionary(): ReadonlyMap<BlockType, Component> {
+  return new Map<BlockType, Component>([
+    ["text", PlainTextBlock],
+    ["heading_big", HeadingBigBlock],
+    ["heading_medium", HeadingMediumBlock],
+    ["heading_small", HeadingSmallBlock],
+  ]);
+}
+export default getBlockDictionary;
