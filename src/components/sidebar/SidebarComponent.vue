@@ -11,7 +11,7 @@ defineExpose({ sidebar });
 </script>
 
 <template>
-  <aside ref="sidebar">
+  <aside ref="sidebar" id="sidebar">
     <nav>
       <SidebarFolder
         v-for="folderReference in sidebarContent.folders"
@@ -27,4 +27,9 @@ defineExpose({ sidebar });
   </aside>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+#sidebar {
+  background-color: var(--color-white);
+  box-shadow: var(--sidebar-shadow);
+}
+</style>

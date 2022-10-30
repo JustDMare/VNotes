@@ -80,10 +80,10 @@ onMounted(() => {
   box-sizing: border-box;
 
   &-delimiter {
-    border-right: 1px solid rgba(0, 0, 0, 0.4);
+    border-left: 1px solid rgba(0, 0, 0, 0.4);
     height: 100%;
     display: block;
-    margin-left: -4px;
+    margin-left: -8px;
   }
 }
 

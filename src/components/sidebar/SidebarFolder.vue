@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useMainStore } from "@/stores/main";
 import type { SidebarFolderReference } from "@/types";
 import { ref, type PropType } from "vue";
 import SidebarNote from "./SidebarNote.vue";
 
-const mainStore = useMainStore();
 defineProps({
   folderReference: {
     type: Object as PropType<SidebarFolderReference>,
