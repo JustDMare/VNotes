@@ -18,10 +18,28 @@ function createBlockBelow() {
 </script>
 
 <template>
-  <div>
-    <button @click="createBlockBelow">+</button>
-    <component :is="blockDictionary.get(block.type)" :block="block"></component>
+  <div class="block--wrapper">
+    <component
+      class="block--component"
+      :is="blockDictionary.get(block.type)"
+      :block="block"
+    ></component>
+    <button class="block--button__create" @click="createBlockBelow">+</button>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.block {
+  &--wrapper {
+    display: flex;
+    align-items: start;
+    position: relative;
+  }
+  &--component {
+  }
+  &--button__create {
+    align-content: center;
+    position: absolute;
+  }
+}
+</style>
