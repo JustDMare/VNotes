@@ -1,6 +1,6 @@
 import type {
   SidebarFolderReference,
-  Workspace,
+  UserSpace,
   SidebarNoteReference,
 } from "@/types";
 
@@ -79,7 +79,7 @@ const folderA: SidebarFolderReference = {
 
 //Workspace
 
-export const workspaceMock: Workspace = {
-  workspaceID: "c8376768-e101-4c4a-954c-ca73b1cd8785",
+export const userSpaceMock: UserSpace = {
+  userSpaceID: "c8376768-e101-4c4a-954c-ca73b1cd8785",
   content: { folders: [folderA, folderE], notes: [noteA, noteB] },
 };

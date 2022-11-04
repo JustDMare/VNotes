@@ -5,7 +5,7 @@ import SidebarFolder from "./SidebarFolder.vue";
 import SidebarNote from "./SidebarNote.vue";
 
 const mainStore = useMainStore();
-const sidebarContent = mainStore.$state.workspace.content;
+const sidebarContent = mainStore.$state.userSpace.content;
 const sidebar: Ref<HTMLDivElement | null> = ref(null);
 defineExpose({ sidebar });
 </script>

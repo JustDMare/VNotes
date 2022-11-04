@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { SidebarComponent } from "@/components/sidebar";
 import { onMounted, ref, type Ref } from "vue";
-//TODO:Importing from the index.ts raises an error for some reason, investigate
+//Importing from the index.ts raises an error for some reason, investigate
 //import NoteWorkspace from "@/components/editor/NoteWorkspace.vue";
 import { NoteWorkspace } from "@/components/editor";
 
