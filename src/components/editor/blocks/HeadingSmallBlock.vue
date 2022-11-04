@@ -22,6 +22,6 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
 </template>
 <style lang="scss">
 .block--heading__small + .block--button__create {
-  left: -20px;
+  top: 1px;
 }
 </style>

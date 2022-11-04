@@ -24,6 +24,7 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
 
 <style lang="scss">
 .block--heading__big + .block--button__create {
-  left: -20px;
+  left: -30px;
+  top: 7px;
 }
 </style>

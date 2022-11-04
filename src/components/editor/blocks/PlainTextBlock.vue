@@ -34,6 +34,6 @@ onMounted(() => {
 </template>
 <style lang="scss">
 .block--text + .block--button__create {
-  left: -20px;
+  top: -2px;
 }
 </style>

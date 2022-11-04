@@ -1,5 +1,6 @@
 BLOCK_DICTIONARYBLOCK_DICTIONARY
 <script setup lang="ts">
+import { PlusIcon } from "@/components/icons";
 import getBlockDictionary from "@/services/block-dictionary";
 import { useMainStore } from "@/stores/main";
 import type { Block } from "@/types/blocks";
@@ -24,7 +25,9 @@ function createBlockBelow() {
       :is="blockDictionary.get(block.type)"
       :block="block"
     ></component>
-    <button class="block--button__create" @click="createBlockBelow">+</button>
+    <button class="block--button__create" @click="createBlockBelow">
+      <PlusIcon class="plus-icon" />
+    </button>
   </div>
 </template>
 
@@ -36,10 +39,29 @@ function createBlockBelow() {
     position: relative;
   }
   &--component {
+    width: 100%;
   }
   &--button__create {
     align-content: center;
     position: absolute;
+    padding: 0;
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: 0;
+    background: transparent;
+    left: -30px;
   }
+}
+.plus-icon {
+  width: 100%;
+  height: 100%;
+}
+[contenteditable]:empty::before {
+  content: "Type '/' for commands";
+  color: rgba(0, 0, 0, 0.2);
+}
+p > br {
+  content: "hi";
 }
 </style>
