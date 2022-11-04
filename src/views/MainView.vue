@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { SidebarComponent } from "@/components/sidebar";
 import { onMounted, ref, type Ref } from "vue";
-//Importing from the index.ts raises an error for some reason, investigate
+//TODO:Importing from the index.ts raises an error for some reason, investigate
 //import NoteWorkspace from "@/components/editor/NoteWorkspace.vue";
 import { NoteWorkspace } from "@/components/editor";
 
 const sidebarComponent: Ref<InstanceType<typeof SidebarComponent> | null> =
   ref(null);
-const editorComponent: Ref<InstanceType<typeof NoteWorkspace> | null> =
+const workspaceComponent: Ref<InstanceType<typeof NoteWorkspace> | null> =
   ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
 
@@ -17,8 +17,8 @@ function resize(event: MouseEvent): void {
     sidebarComponent.value.sidebar.style.flexBasis = size;
     sidebarComponent.value.sidebar.style.cursor = "col-resize";
   }
-  if (editorComponent.value && editorComponent.value.editor) {
-    editorComponent.value.editor.classList.toggle("moving", true);
+  if (workspaceComponent.value && workspaceComponent.value.workspace) {
+    workspaceComponent.value.workspace.classList.toggle("moving", true);
   }
 }
 
@@ -33,8 +33,11 @@ onMounted(() => {
           if (sidebarComponent.value && sidebarComponent.value.sidebar) {
             sidebarComponent.value.sidebar.style.cursor = "default";
           }
-          if (editorComponent.value && editorComponent.value.editor) {
-            editorComponent.value.editor.classList.toggle("moving", false);
+          if (workspaceComponent.value && workspaceComponent.value.workspace) {
+            workspaceComponent.value.workspace.classList.toggle(
+              "moving",
+              false
+            );
           }
         },
         false
@@ -45,13 +48,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <section id="main-view">
+  <div id="main-view">
     <SidebarComponent id="sidebar" ref="sidebarComponent" />
     <div class="resizer" ref="resizer">
       <span class="resizer-delimiter"></span>
     </div>
-    <NoteWorkspace id="editor" ref="editorComponent" />
-  </section>
+    <NoteWorkspace id="workspace" ref="workspaceComponent" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -87,7 +90,7 @@ onMounted(() => {
   }
 }
 
-#editor {
+#workspace {
   flex-basis: 0;
   flex-grow: 1;
   height: 100%;

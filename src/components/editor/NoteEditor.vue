@@ -16,25 +16,27 @@ function processInput(event: Event) {
 }
 </script>
 <template>
-  <article id="note">
-    <header>
-      <h1
-        v-once
-        contenteditable
-        :placeholder="$t('note.titlePlaceholder')"
-        id="note-title"
-        @keydown="parseSpecialKeys"
-        @input="processInput"
-      >
-        {{ note.title }}
-      </h1>
-    </header>
-    <BlockList :block-list="note.content" />
-  </article>
+  <main>
+    <article>
+      <header>
+        <h1
+          v-once
+          contenteditable
+          :placeholder="$t('note.titlePlaceholder')"
+          id="note-title"
+          @keydown="parseSpecialKeys"
+          @input="processInput"
+        >
+          {{ note.title }}
+        </h1>
+      </header>
+      <BlockList :block-list="note.content" />
+    </article>
+  </main>
 </template>
 
 <style lang="scss">
-#note {
+main {
   width: 100%;
   max-width: 900px;
   padding: 0 6rem;
