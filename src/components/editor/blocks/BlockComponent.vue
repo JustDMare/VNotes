@@ -25,6 +25,7 @@ function createBlockBelow() {
       :is="blockDictionary.get(block.type)"
       :block="block"
     ></component>
+
     <button class="block--button__create" @click="createBlockBelow">
       <PlusIcon class="plus-icon" />
     </button>
@@ -40,6 +41,7 @@ function createBlockBelow() {
   }
   &--component {
     width: 100%;
+    min-height: 1em;
   }
   &--button__create {
     align-content: center;
@@ -53,15 +55,18 @@ function createBlockBelow() {
     left: -30px;
   }
 }
+
 .plus-icon {
   width: 100%;
   height: 100%;
 }
-[contenteditable]:empty::before {
+
+[contenteditable]:not(:focus):empty::before {
+  content: "\A0";
+  color: rgba(0, 0, 0, 1);
+}
+[contenteditable]:focus:empty::before {
   content: "Type '/' for commands";
   color: rgba(0, 0, 0, 0.2);
-}
-p > br {
-  content: "hi";
 }
 </style>
