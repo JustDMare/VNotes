@@ -21,7 +21,7 @@ function toggleContentVisibility(): void {
     {{ folderReference.name }}
   </button>
   <div class="nav-folder__content" v-if="showContents">
-    <SidebarFolder
+    <NavigationFolder
       v-for="subfolderReference in folderReference.content.folders"
       :key="subfolderReference.folderID"
       :folder-reference="subfolderReference"
