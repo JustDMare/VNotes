@@ -53,6 +53,13 @@ function createBlockBelow() {
     border: 0;
     background: transparent;
     left: -30px;
+    border-radius: 4px;
+    color: var(--color-base-50);
+
+    &:hover {
+      background-color: var(--color-base-80);
+      color: var(--color-base-30);
+    }
   }
 }
 
@@ -67,6 +74,6 @@ function createBlockBelow() {
 }
 [contenteditable]:focus:empty::before {
   content: "Type '/' for commands";
-  color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.5);
 }
 </style>
