@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { NavigationFolderReference } from "@/types";
 import { ref, type PropType } from "vue";
-import SidebarNote from "./SidebarNote.vue";
+import NavigationNote from "./NavigationNote.vue";
 
 defineProps({
   folderReference: {
@@ -26,7 +26,7 @@ function toggleContentVisibility(): void {
       :key="subfolderReference.folderID"
       :folder-reference="subfolderReference"
     />
-    <SidebarNote
+    <NavigationNote
       v-for="noteReference in folderReference.content.notes"
       :key="noteReference.noteID"
       :note-reference="noteReference"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SidebarFolder from "./SidebarFolder.vue";
-import SidebarNote from "./SidebarNote.vue";
+import NavigationFolder from "./NavigationFolder.vue";
+import NavigationNote from "./NavigationNote.vue";
 import { useMainStore } from "@/stores/main";
 
 const mainStore = useMainStore();
@@ -9,12 +9,12 @@ const sidebarContent = mainStore.$state.userSpace.content;
 
 <template>
   <nav id="navigation">
-    <SidebarFolder
+    <NavigationFolder
       v-for="folderReference in sidebarContent.folders"
       :key="folderReference.folderID"
       :folder-reference="folderReference"
     />
-    <SidebarNote
+    <NavigationNote
       v-for="noteReference in sidebarContent.notes"
       :key="noteReference.noteID"
       :note-reference="noteReference"
