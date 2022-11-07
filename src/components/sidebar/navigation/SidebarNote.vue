@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useMainStore } from "@/stores/main";
-import type { SidebarNoteReference } from "@/types";
+import type { NavigationNoteReference } from "@/types";
 import type { PropType } from "vue";
 
-const mainStore = useMainStore();
 defineProps({
   noteReference: {
-    type: Object as PropType<SidebarNoteReference>,
+    type: Object as PropType<NavigationNoteReference>,
     required: true,
   },
 });

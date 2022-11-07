@@ -1,4 +1,4 @@
-import type { SidebarNoteReference } from "./note-reference";
+import type { NavigationNoteReference } from "./note-reference";
 
 export default interface Folder {
   folderID: string;
@@ -6,11 +6,14 @@ export default interface Folder {
   name: string;
   createdTime: string;
   lastUpdatedTime: string;
-  content: { folders: SidebarFolderReference[]; notes: SidebarNoteReference[] };
+  content: {
+    folders: NavigationFolderReference[];
+    notes: NavigationNoteReference[];
+  };
   numberOfItems: number;
 }
 
-export type SidebarFolderReference = Omit<
+export type NavigationFolderReference = Omit<
   Folder,
   "createdTime" | "lastUpdatedTime"
 >;
