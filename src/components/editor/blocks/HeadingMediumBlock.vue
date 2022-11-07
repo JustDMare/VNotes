@@ -11,7 +11,7 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
 
 <template>
   <h2
-    class="block--heading__medium"
+    class="block__content--heading__medium"
     v-once
     contenteditable
     @keydown="parseSpecialKeys"
@@ -21,7 +21,7 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
   </h2>
 </template>
 <style lang="scss">
-.block--heading__medium + .block--button__create {
+.block__content--heading__medium + .block__button-wrapper {
   top: 4px;
 }
 </style>

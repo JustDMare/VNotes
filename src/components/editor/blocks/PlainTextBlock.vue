@@ -24,7 +24,7 @@ onMounted(() => {
 
 <template>
   <p
-    class="block--text"
+    class="block__content--text"
     v-once
     ref="content"
     contenteditable
@@ -35,7 +35,7 @@ onMounted(() => {
   </p>
 </template>
 <style lang="scss">
-.block--text + .block--button__create {
+.block__content--text + .block__button-wrapper {
   top: -2px;
 }
 </style>
