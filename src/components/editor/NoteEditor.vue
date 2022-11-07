@@ -16,7 +16,7 @@ function processInput(event: Event) {
 }
 </script>
 <template>
-  <main>
+  <main id="note">
     <article>
       <header>
         <h1
@@ -36,14 +36,16 @@ function processInput(event: Event) {
 </template>
 
 <style lang="scss">
-main {
+#note {
   width: 100%;
   max-width: 900px;
   padding: 0 6rem;
-  &-title {
-    font-size: 32px;
-    font-weight: 700;
-  }
+  overflow-y: scroll;
+}
+#note-title {
+  font-size: 32px;
+  font-weight: 700;
+  padding: 2px;
 }
 
 [contenteditable] {
