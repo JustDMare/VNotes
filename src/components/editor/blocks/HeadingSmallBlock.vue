@@ -20,8 +20,4 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
     {{ block.content }}
   </h3>
 </template>
-<style lang="scss">
-.block__content--heading__small + .block__button-wrapper {
-  top: 1px;
-}
-</style>
+<style lang="scss"></style>

@@ -34,8 +34,4 @@ onMounted(() => {
     {{ block.content }}
   </p>
 </template>
-<style lang="scss">
-.block__content--text + .block__button-wrapper {
-  top: -2px;
-}
-</style>
+<style lang="scss"></style>
