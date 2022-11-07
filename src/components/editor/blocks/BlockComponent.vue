@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { GripIcon, PlusIcon } from "@/components/icons";
-import getBlockDictionary from "@/services/block-dictionary";
+import {
+  getBlockComponentDictionary,
+  getBlockClassDictionary,
+} from "@/services/block-dictionary";
 import { useMainStore } from "@/stores/main";
-import type { Block } from "@/types/blocks";
-import { type PropType, ref } from "vue";
+import type { Block, BlockType } from "@/types/blocks";
+import { type PropType, ref, type Component } from "vue";
 
-const blockDictionary = getBlockDictionary();
+const blockComponentDictionary: ReadonlyMap<BlockType, Component> =
+  getBlockComponentDictionary();
+const blockClassDictionary: ReadonlyMap<BlockType, string> =
+  getBlockClassDictionary();
 
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
@@ -28,13 +34,14 @@ function hideButtons(): void {
 <template>
   <div
     class="block"
+    :class="blockClassDictionary.get(block.type)"
     @mouseover="showButtons"
     @mouseleave="hideButtons"
     @focusout="hideButtons"
   >
     <component
       class="block__content"
-      :is="blockDictionary.get(block.type)"
+      :is="blockComponentDictionary.get(block.type)"
       :block="block"
     ></component>
     <div

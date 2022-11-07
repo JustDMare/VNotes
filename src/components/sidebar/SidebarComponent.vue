@@ -29,7 +29,7 @@ defineExpose({ sidebar });
 
 <style scoped lang="scss">
 #sidebar {
-  background-color: var(var(--color-base-90));
-  box-shadow: var(--sidebar-shadow);
+  background-color: var(--color-base-90);
+  box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.08) inset;
 }
 </style>
