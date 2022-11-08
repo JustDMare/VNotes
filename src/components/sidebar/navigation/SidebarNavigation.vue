@@ -8,7 +8,7 @@ const sidebarContent = mainStore.$state.userSpace.content;
 </script>
 
 <template>
-  <nav id="navigation">
+  <nav class="nav">
     <NavigationFolder
       v-for="folderReference in sidebarContent.folders"
       :key="folderReference.folderID"
@@ -23,11 +23,20 @@ const sidebarContent = mainStore.$state.userSpace.content;
 </template>
 
 <style lang="scss" scoped>
-#navigation {
+//Variables
+.nav {
+  --nav-icon-size: 1.125em;
+}
+.nav {
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+::v-deep .nav__icon {
+  width: var(--nav-icon-size) !important;
+  height: var(--nav-icon-size) !important;
 }
 </style>

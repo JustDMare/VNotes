@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ChevronRightIcon, FolderIcon } from "@/components/icons";
 import type { NavigationFolderReference } from "@/types";
 import { ref, type PropType } from "vue";
 import NavigationNote from "./NavigationNote.vue";
@@ -17,10 +18,11 @@ function toggleContentVisibility(): void {
 </script>
 
 <template>
-  <button class="nav-folder" @click="toggleContentVisibility">
-    {{ folderReference.name }}
+  <button class="nav__folder" @click="toggleContentVisibility">
+    <FolderIcon class="nav__icon" /> {{ folderReference.name }}
+    <ChevronRightIcon class="nav__icon" />
   </button>
-  <div class="nav-folder__content" v-if="showContents">
+  <div class="nav__folder__content" v-if="showContents">
     <NavigationFolder
       v-for="subfolderReference in folderReference.content.folders"
       :key="subfolderReference.folderID"
@@ -35,10 +37,18 @@ function toggleContentVisibility(): void {
 </template>
 
 <style scoped lang="scss">
-.nav-folder {
+.nav__folder {
   padding-left: 16px;
+  background-color: transparent;
+  border: 0;
+  text-align: start;
+  display: grid;
+  grid-template-columns: var(--nav-icon-size) 1fr var(--nav-icon-size);
+
   &__content {
     margin-left: 16px;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>
