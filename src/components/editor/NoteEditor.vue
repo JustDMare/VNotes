@@ -23,14 +23,16 @@ function processInput(event: Event) {
           v-once
           contenteditable
           :placeholder="$t('note.titlePlaceholder')"
-          id="note-title"
+          id="note__title"
           @keydown="parseSpecialKeys"
           @input="processInput"
         >
           {{ note.title }}
         </h1>
       </header>
-      <BlockList :block-list="note.content" />
+      <div id="note__list">
+        <BlockList :block-list="note.content" />
+      </div>
     </article>
   </main>
 </template>
@@ -41,11 +43,18 @@ function processInput(event: Event) {
   max-width: 900px;
   padding: 0 6rem;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
-#note-title {
+#note__title {
   font-size: 32px;
   font-weight: 700;
   padding: 2px;
+}
+
+#note__list {
+  display: flex;
+  flex-direction: column;
 }
 
 [contenteditable] {

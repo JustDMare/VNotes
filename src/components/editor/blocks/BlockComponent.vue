@@ -37,7 +37,7 @@ function hideButtons(): void {
     :class="blockClassDictionary.get(block.type)"
     @mouseover="showButtons"
     @mouseleave="hideButtons"
-    @focusout="hideButtons"
+    @hover="showButtons"
   >
     <component
       class="block__content"
@@ -48,7 +48,7 @@ function hideButtons(): void {
       class="block__button-wrapper"
       @mouseover="showButtons"
       @mouseleave="hideButtons"
-      @focusout="hideButtons"
+      @hover="showButtons"
     >
       <button
         v-show="buttonsVisible"
