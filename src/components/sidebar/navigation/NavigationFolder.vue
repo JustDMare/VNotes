@@ -18,9 +18,10 @@ function toggleContentVisibility(): void {
 </script>
 
 <template>
-  <button class="nav__folder" @click="toggleContentVisibility">
-    <FolderIcon class="nav__icon" /> {{ folderReference.name }}
-    <ChevronRightIcon class="nav__icon" />
+  <button class="nav__folder nav__item" @click="toggleContentVisibility">
+    <ChevronRightIcon class="nav__icon nav__icon--chevron" />
+    <FolderIcon class="nav__icon nav__icon--folder" />
+    <span class="nav__item__text">{{ folderReference.name }}</span>
   </button>
   <div class="nav__folder__content" v-if="showContents">
     <NavigationFolder
@@ -42,8 +43,6 @@ function toggleContentVisibility(): void {
   background-color: transparent;
   border: 0;
   text-align: start;
-  display: grid;
-  grid-template-columns: var(--nav-icon-size) 1fr var(--nav-icon-size);
 
   &__content {
     margin-left: 16px;

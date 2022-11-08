@@ -12,8 +12,9 @@ defineProps({
 </script>
 
 <template>
-  <button class="nav__note">
-    <NoteIcon class="nav__icon" />{{ noteReference.title }}
+  <button class="nav__note nav__item">
+    <NoteIcon class="nav__icon nav__icon--note" />
+    <span class="nav__item__text">{{ noteReference.title }}</span>
   </button>
 </template>
 
@@ -23,7 +24,5 @@ defineProps({
   background-color: transparent;
   border: 0;
   text-align: start;
-  display: grid;
-  grid-template-columns: var(--nav-icon-size) 1fr;
 }
 </style>

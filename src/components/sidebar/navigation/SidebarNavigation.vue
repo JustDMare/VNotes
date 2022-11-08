@@ -35,8 +35,29 @@ const sidebarContent = mainStore.$state.userSpace.content;
   overflow-x: hidden;
 }
 
-::v-deep .nav__icon {
-  width: var(--nav-icon-size) !important;
-  height: var(--nav-icon-size) !important;
+::v-deep .nav {
+  &__item {
+    display: grid;
+    grid-template-columns: var(--nav-icon-size) var(--nav-icon-size) 1fr;
+    column-gap: 2px;
+    &__text {
+      padding-left: 6px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+  &__icon {
+    width: var(--nav-icon-size);
+    height: var(--nav-icon-size);
+
+    &--chevron {
+      grid-column: 1;
+    }
+    &--folder,
+    &--note {
+      grid-column: 2;
+    }
+  }
 }
 </style>
