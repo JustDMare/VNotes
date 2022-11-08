@@ -42,7 +42,6 @@ function processInput(event: Event) {
   width: 100%;
   max-width: 900px;
   padding: 0 6rem;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
 }
