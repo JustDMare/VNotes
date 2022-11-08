@@ -53,7 +53,7 @@ function onMouseDown(): void {
   box-sizing: border-box;
   width: 260px;
   min-width: 220px;
-  max-width: 400px;
+  max-width: 480px;
 }
 
 .resizer {

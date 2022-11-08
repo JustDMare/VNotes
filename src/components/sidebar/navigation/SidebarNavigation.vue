@@ -25,18 +25,23 @@ const sidebarContent = mainStore.$state.userSpace.content;
 <style lang="scss" scoped>
 //Variables
 .nav {
-  --nav-icon-size: 1.125em;
+  --nav-icon-size: 1rem;
 }
 .nav {
+  margin-top: 8px;
+
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
   overflow-x: hidden;
 }
-
-::v-deep .nav {
-  &__item {
+.nav ::v-deep {
+  &,
+  .nav__folder__content {
+    row-gap: 0.5rem;
+  }
+  .nav__item {
     display: grid;
     grid-template-columns: var(--nav-icon-size) var(--nav-icon-size) 1fr;
     column-gap: 2px;
@@ -45,9 +50,10 @@ const sidebarContent = mainStore.$state.userSpace.content;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      font-size: inherit;
     }
   }
-  &__icon {
+  .nav__icon {
     width: var(--nav-icon-size);
     height: var(--nav-icon-size);
 

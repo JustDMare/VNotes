@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <template>
-  <button class="nav__note nav__item">
+  <button class="sidebar__item nav__item nav__note">
     <NoteIcon class="nav__icon nav__icon--note" />
     <span class="nav__item__text">{{ noteReference.title }}</span>
   </button>
@@ -20,7 +20,6 @@ defineProps({
 
 <style scoped lang="scss">
 .nav__note {
-  padding-left: 16px;
   background-color: transparent;
   border: 0;
   text-align: start;
