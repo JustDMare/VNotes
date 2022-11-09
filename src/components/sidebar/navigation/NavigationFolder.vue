@@ -43,9 +43,14 @@ function toggleContentVisibility(): void {
 </template>
 
 <style scoped lang="scss">
+//Variables
 .nav__folder {
   &__content {
-    margin-left: 12px;
+    --nav-folder-content--left-margin: calc(
+      var(--sidebar-item--left-padding) + var(--sidebar-item--left-margin) +
+        var(--nav-icon-size) / 2
+    );
+    margin-left: var(--nav-folder-content--left-margin);
     border-left: 1px solid var(--color-base-50);
   }
 }

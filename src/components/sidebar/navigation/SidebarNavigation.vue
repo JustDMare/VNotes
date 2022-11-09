@@ -31,7 +31,6 @@ const sidebarContent = mainStore.$state.userSpace.content;
 }
 .nav {
   margin-top: 0.5rem;
-
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
