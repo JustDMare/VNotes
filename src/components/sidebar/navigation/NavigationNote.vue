@@ -20,7 +20,4 @@ defineProps({
   </li>
 </template>
 
-<style scoped lang="scss">
-.nav__note {
-}
-</style>
+<style scoped lang="scss"></style>

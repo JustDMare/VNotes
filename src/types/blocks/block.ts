@@ -12,4 +12,5 @@ export type BlockType =
   | "text"
   | "heading_big"
   | "heading_medium"
-  | "heading_small";
+  | "heading_small"
+  | "checkbox";

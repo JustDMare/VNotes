@@ -1,7 +1,7 @@
 import { noteBlocks } from "@/mock-data/note-mock";
 import { userSpaceMock } from "@/mock-data/workspace-mock";
 import type { Block, Note, UserSpace } from "@/types";
-import type TextBlock from "@/types/blocks/text";
+import type PlainTextBlock from "@/types/blocks/text";
 
 import { defineStore } from "pinia";
 import { reactive } from "vue";
@@ -45,7 +45,7 @@ export const useMainStore = defineStore("main", {
       } else {
         newBlockIndex = 0;
       }
-      const newBlock: TextBlock = {
+      const newBlock: PlainTextBlock = {
         type: "text",
         blockID: crypto.randomUUID(),
         parentID: this.noteInEditor.noteID,
