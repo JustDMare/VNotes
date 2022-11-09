@@ -1,0 +1,27 @@
+//Core tokens
+:root {
+  //Font
+  --font-sans: Roboto, sans-serif;
+  --font-default-size: 16px;
+
+  //Color Palette
+  --color-text: var(--color-base-10);
+  --color-primary: #11151c;
+  --color-secondary: #212d40;
+  --color-tertiary: #778da9;
+  --color-accent: #3c6e71;
+
+  --color-base-100: #ffffff;
+  --color-base-90: #f8f9fa;
+  --color-base-80: #e9ecef;
+  --color-base-70: #dee2e6;
+  --color-base-60: #ced4da;
+  --color-base-50: #adb5bd;
+  --color-base-40: #6c757d;
+  --color-base-30: #495057;
+  --color-base-20: #343a40;
+  --color-base-10: #212529;
+  --color-base-0: #000000;
+
+  --color-background: var(--color-white);
+}

@@ -13,15 +13,18 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
 
 const content: Ref<HTMLElement | null> = ref(null);
 onMounted(() => {
-  if (mainStore.blockCreated) {
-    content.value?.focus();
+  if (mainStore.blockCreated && content.value) {
+    content.value.innerHTML = "<span>&nbsp;</span>";
+    content.value.focus();
     mainStore.setBlockCreated(false);
+    content.value.innerHTML = "";
   }
 });
 </script>
 
 <template>
   <p
+    class="block__content--text"
     v-once
     ref="content"
     contenteditable
@@ -31,3 +34,4 @@ onMounted(() => {
     {{ block.content }}
   </p>
 </template>
+<style lang="scss"></style>

@@ -1,3 +1,5 @@
+const { off } = require("process");
+
 /* eslint-env node */
 require("@rushstack/eslint-patch/modern-module-resolution");
 
@@ -39,5 +41,6 @@ module.exports = {
 
     //VUE
     "vue/eqeqeq": "error",
+    "vuejs-accessibility/mouse-events-have-key-events": "off",
   },
 };

@@ -1,6 +1,6 @@
 import type { Note } from "./editor";
 
-export type SidebarNoteReference = Omit<
+export type NavigationNoteReference = Omit<
   Note,
   "content" | "createdTime" | "lastUpdatedTime"
 >;

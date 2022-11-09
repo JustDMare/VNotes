@@ -1,7 +1,8 @@
 import { noteBlocks } from "@/mock-data/note-mock";
-import { workspaceMock } from "@/mock-data/workspace-mock";
-import type { Block, Note, Workspace } from "@/types";
+import { userSpaceMock } from "@/mock-data/workspace-mock";
+import type { Block, Note, UserSpace } from "@/types";
 import type TextBlock from "@/types/blocks/text";
+
 import { defineStore } from "pinia";
 import { reactive } from "vue";
 
@@ -9,7 +10,7 @@ export const useMainStore = defineStore("main", {
   state: () => ({
     noteInEditor: reactive(noteBlocks) as Note,
     blockCreated: false as boolean,
-    workspace: workspaceMock as Workspace,
+    userSpace: userSpaceMock as UserSpace,
   }),
 
   getters: {
