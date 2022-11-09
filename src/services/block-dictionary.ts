@@ -1,4 +1,5 @@
 import {
+  CheckBoxBlock,
   HeadingBigBlock,
   HeadingMediumBlock,
   HeadingSmallBlock,
@@ -20,6 +21,7 @@ function getBlockComponentDictionary(): ReadonlyMap<BlockType, Component> {
     ["heading_big", HeadingBigBlock],
     ["heading_medium", HeadingMediumBlock],
     ["heading_small", HeadingSmallBlock],
+    ["checkbox", CheckBoxBlock],
   ]);
 }
 
@@ -35,6 +37,7 @@ function getBlockClassDictionary(): ReadonlyMap<BlockType, string> {
     ["heading_big", "block--heading__big"],
     ["heading_medium", "block--heading__medium"],
     ["heading_small", "block--heading__small"],
+    ["checkbox", "block--checkbox"],
   ]);
 }
 export { getBlockComponentDictionary, getBlockClassDictionary };
