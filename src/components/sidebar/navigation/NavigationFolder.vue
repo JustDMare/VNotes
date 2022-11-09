@@ -15,47 +15,45 @@ let showContents = ref(false);
 function toggleContentVisibility(): void {
   showContents.value = !showContents.value;
 }
-//TODO: TURN INTO <ul> and <li> structure?
 </script>
 
 <template>
-  <button
-    class="sidebar__item nav__item nav__folder"
-    @click="toggleContentVisibility"
-  >
-    <ChevronRightIcon class="nav__icon nav__icon--chevron" />
-    <FolderIcon class="nav__icon nav__icon--folder" />
-    <span class="nav__item__text">{{ folderReference.name }}</span>
-  </button>
-  <div class="nav__folder__content" v-if="showContents">
-    <NavigationFolder
-      class="nav__folder__content__item"
-      v-for="subfolderReference in folderReference.content.folders"
-      :key="subfolderReference.folderID"
-      :folder-reference="subfolderReference"
-    />
-    <NavigationNote
-      class="nav__folder__content__item"
-      v-for="noteReference in folderReference.content.notes"
-      :key="noteReference.noteID"
-      :note-reference="noteReference"
-    />
-  </div>
+  <li class="nav__folder">
+    <button class="sidebar__item nav__item" @click="toggleContentVisibility">
+      <ChevronRightIcon
+        class="nav__icon nav__icon--chevron"
+        :class="{ 'nav__icon--chevron--down': showContents }"
+      />
+      <FolderIcon class="nav__icon nav__icon--folder" />
+      <span class="nav__item__text">{{ folderReference.name }}</span>
+    </button>
+    <ul class="nav__folder__content" v-if="showContents">
+      <NavigationFolder
+        v-for="subfolderReference in folderReference.content.folders"
+        :key="subfolderReference.folderID"
+        :folder-reference="subfolderReference"
+      />
+      <NavigationNote
+        v-for="noteReference in folderReference.content.notes"
+        :key="noteReference.noteID"
+        :note-reference="noteReference"
+      />
+    </ul>
+  </li>
 </template>
 
 <style scoped lang="scss">
 .nav__folder {
-  background-color: transparent;
-  border: 0;
-  text-align: start;
-
   &__content {
-    display: flex;
-    flex-direction: column;
-
-    &__item {
-      padding-left: 16px;
-    }
+    margin-left: 12px;
+    border-left: 1px solid var(--color-base-50);
+  }
+}
+.nav__icon--chevron {
+  -webkit-transition: transform 0.3s; /* Safari */
+  transition: transform 0.3s;
+  &--down {
+    transform: rotate(90deg);
   }
 }
 </style>
