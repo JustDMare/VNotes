@@ -44,6 +44,7 @@ function processInput(event: Event) {
   padding: 0 6rem;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 #note__title {
   font-size: 32px;

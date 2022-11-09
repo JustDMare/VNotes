@@ -50,7 +50,6 @@ function toggleContentVisibility(): void {
   }
 }
 .nav__icon--chevron {
-  -webkit-transition: transform 0.3s; /* Safari */
   transition: transform 0.3s;
   &--down {
     transform: rotate(90deg);
