@@ -1,8 +1,6 @@
 import { noteBlocks } from "@/mock-data/note-mock";
 import { userSpaceMock } from "@/mock-data/workspace-mock";
-import type { Block, Note, UserSpace } from "@/types";
-import type PlainTextBlock from "@/types/blocks/text";
-
+import type { Block, Note, UserSpace, PlainTextBlock } from "@/types";
 import { defineStore } from "pinia";
 import { reactive } from "vue";
 
