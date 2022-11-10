@@ -1,6 +1,14 @@
 import { noteBlocks } from "@/mock-data/note-mock";
 import { userSpaceMock } from "@/mock-data/workspace-mock";
-import type { Block, Note, UserSpace, PlainTextBlock } from "@/types";
+import type {
+  Block,
+  Note,
+  UserSpace,
+  PlainTextBlock,
+  BlockUniqueProperties,
+  AllPropertyTypes,
+} from "@/types";
+
 import { defineStore } from "pinia";
 import { reactive } from "vue";
 
@@ -32,6 +40,17 @@ export const useMainStore = defineStore("main", {
         block.content = content;
       }
     },
+    updateBlockUniqueProperty(
+      blockID: string,
+      uniqueProperty: keyof BlockUniqueProperties,
+      uniquePropertyValue: AllPropertyTypes<BlockUniqueProperties>
+    ): void {
+      const block = this.getBlockInEditorById(blockID);
+      if (block) {
+        block.uniqueProperties[uniqueProperty] = uniquePropertyValue;
+      }
+    },
+
     createBlockBelowBlockID(previousBlockID?: string): void {
       //Check for errors
       let newBlockIndex: number;
