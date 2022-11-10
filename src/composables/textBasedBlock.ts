@@ -1,7 +1,7 @@
 import { useMainStore } from "@/stores/main";
-import type { Block } from "@/types";
+import { unref, type Ref } from "vue";
 
-export function useTextBasedBlock(block: Block) {
+export function useTextBasedBlock(blockID: Ref<string>) {
   const mainStore = useMainStore();
   function parseSpecialKeys(event: KeyboardEvent) {
     if (event.code === "Enter" && !event.shiftKey) {
@@ -11,12 +11,13 @@ export function useTextBasedBlock(block: Block) {
   }
   function processInput(event: Event) {
     const input = event.target as HTMLElement;
-    mainStore.updateBlockContent(block.blockID, input.innerText);
+    mainStore.updateBlockContent(unref(blockID), input.innerText);
   }
 
   // HELPER FUNCTIONS
   function addNewBlockBelow() {
-    mainStore.createBlockBelowBlockID(block.blockID);
+    console.log(blockID);
+    mainStore.createBlockBelowBlockID(unref(blockID));
   }
 
   return { parseSpecialKeys, processInput };

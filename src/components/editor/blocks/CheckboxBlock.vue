@@ -2,17 +2,20 @@
 import { useTextBasedBlock } from "@/composables/textBasedBlock";
 import { useMainStore } from "@/stores/main";
 import type { CheckboxBlock } from "@/types/blocks";
-import { computed, onMounted, ref, type PropType, type Ref } from "vue";
+import { computed, onMounted, ref, toRef, type PropType, type Ref } from "vue";
 
 const props = defineProps({
   //TODO: Change all blocks to use their own block data and cast it to their type
   block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
+
 const checkboxSelected = computed(() => props.block.uniqueProperties.selected);
 
 const mainStore = useMainStore();
 
-const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
+const { parseSpecialKeys, processInput } = useTextBasedBlock(
+  toRef(props.block, "blockID")
+);
 
 const content: Ref<HTMLElement | null> = ref(null);
 onMounted(() => {
@@ -45,4 +48,9 @@ onMounted(() => {
     </p>
   </div>
 </template>
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.block__content--checkbox {
+  display: flex;
+  flex-direction: row;
+}
+</style>
