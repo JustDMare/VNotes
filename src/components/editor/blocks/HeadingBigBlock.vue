@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useTextBasedBlock } from "@/composables/textBasedBlock";
+import { useTextBasedBlock } from "@/composables/text-based-block";
 import type { Block } from "@/types";
 import { toRef, type PropType } from "vue";
 

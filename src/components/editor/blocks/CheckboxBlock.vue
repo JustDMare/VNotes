@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useTextBasedBlock } from "@/composables/textBasedBlock";
+import { useTextBasedBlock } from "@/composables/text-based-block";
 import { useMainStore } from "@/stores/main";
 import type { CheckboxBlock } from "@/types/blocks";
 import { computed, onMounted, ref, toRef, type PropType, type Ref } from "vue";
