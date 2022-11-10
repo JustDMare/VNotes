@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { useTextBasedBlock } from "@/composables/textBasedBlock";
 import { useMainStore } from "@/stores/main";
-import type { Block } from "@/types/blocks";
-import { onMounted, ref, type PropType, type Ref } from "vue";
+import type { CheckboxBlock } from "@/types/blocks";
+import { computed, onMounted, ref, type PropType, type Ref } from "vue";
 
 const props = defineProps({
-  block: { type: Object as PropType<Block>, required: true },
+  //TODO: Change all blocks to use their own block data and cast it to their type
+  block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
+const checkboxSelected = computed(() => props.block.uniqueProperties.selected);
+
 const mainStore = useMainStore();
 
 const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
@@ -28,7 +31,7 @@ onMounted(() => {
       type="checkbox"
       class="block__content--checkbox__checkbox"
       name="checkbox"
-      value="yes"
+      v-model="checkboxSelected"
     />
     <p
       v-once
