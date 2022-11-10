@@ -1,4 +1,4 @@
-import type { CheckboxCustomProperties } from "./checkbox";
+import type { CheckboxUniqueProperties } from "./checkbox";
 export default interface Block {
   blockID: string;
   parentID: string;
@@ -6,7 +6,7 @@ export default interface Block {
   createdTime: string; //timestamp
   lastUpdatedTime: string; //timestamp
   content: string; //Content of the block
-  unique_properties: BlockCustomProperties;
+  uniqueProperties: BlockUniqueProperties;
 }
 
 export type BlockType =
@@ -16,4 +16,4 @@ export type BlockType =
   | "heading_small"
   | "checkbox";
 
-export type BlockCustomProperties = Partial<CheckboxCustomProperties>;
+export type BlockUniqueProperties = Partial<CheckboxUniqueProperties>;

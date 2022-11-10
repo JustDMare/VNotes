@@ -21,18 +21,18 @@ export const useMainStore = defineStore("main", {
   },
   actions: {
     //DOCUMENTATE ACTIONS
-    updateNoteInEditorTitle(content: string): void {
+    updateNoteTitle(content: string): void {
       //Check for errors
       this.noteInEditor.title = content;
     },
-    updateBlockContentInEditor(blockID: string, content: string): void {
+    updateBlockContent(blockID: string, content: string): void {
       const block = this.getBlockInEditorById(blockID);
       if (block) {
         //Check for errors
         block.content = content;
       }
     },
-    createBlockInEditor(previousBlockID?: string): void {
+    createBlockBelowBlockID(previousBlockID?: string): void {
       //Check for errors
       let newBlockIndex: number;
       if (previousBlockID) {
@@ -50,6 +50,7 @@ export const useMainStore = defineStore("main", {
         createdTime: String(Date.now()),
         lastUpdatedTime: String(Date.now()),
         content: "",
+        uniqueProperties: {},
       };
       this.blockCreated = true;
       this.noteInEditor.content.splice(newBlockIndex, 0, newBlock);

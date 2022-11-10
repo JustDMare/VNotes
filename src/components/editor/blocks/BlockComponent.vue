@@ -21,7 +21,7 @@ const mainStore = useMainStore();
 let buttonsVisible = ref(false);
 
 function createBlockBelow() {
-  mainStore.createBlockInEditor(props.block.blockID);
+  mainStore.createBlockBelowBlockID(props.block.blockID);
 }
 function showButtons(): void {
   buttonsVisible.value = true;

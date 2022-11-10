@@ -7,12 +7,12 @@ const note = mainStore.noteInEditor;
 function parseSpecialKeys(event: KeyboardEvent) {
   if (event.code === "Enter" && !event.shiftKey) {
     event.preventDefault();
-    mainStore.createBlockInEditor();
+    mainStore.createBlockBelowBlockID();
   }
 }
 function processInput(event: Event) {
   const input = event.target as HTMLElement;
-  mainStore.updateNoteInEditorTitle(input.innerText);
+  mainStore.updateNoteTitle(input.innerText);
 }
 </script>
 <template>

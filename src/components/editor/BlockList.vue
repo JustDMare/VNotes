@@ -1,17 +1,16 @@
 <script lang="ts" setup>
 import type { Block } from "@/types";
-import { ref, type PropType } from "vue";
+import type { PropType } from "vue";
 import BlockComponent from "./blocks/BlockComponent.vue";
 
-const props = defineProps({
+defineProps({
   blockList: { type: Object as PropType<Block[]>, required: true },
 });
-const blocks = ref(props.blockList);
 </script>
 
 <template>
   <BlockComponent
-    v-for="block in blocks"
+    v-for="block in blockList"
     :key="block.blockID"
     :block="block"
   ></BlockComponent>

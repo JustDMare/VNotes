@@ -6,17 +6,17 @@ export function useTextBasedBlock(block: Block) {
   function parseSpecialKeys(event: KeyboardEvent) {
     if (event.code === "Enter" && !event.shiftKey) {
       event.preventDefault();
-      AddNewBlockBelow();
+      addNewBlockBelow();
     }
   }
   function processInput(event: Event) {
     const input = event.target as HTMLElement;
-    mainStore.updateBlockContentInEditor(block.blockID, input.innerText);
+    mainStore.updateBlockContent(block.blockID, input.innerText);
   }
 
   // HELPER FUNCTIONS
-  function AddNewBlockBelow() {
-    mainStore.createBlockInEditor(block.blockID);
+  function addNewBlockBelow() {
+    mainStore.createBlockBelowBlockID(block.blockID);
   }
 
   return { parseSpecialKeys, processInput };
