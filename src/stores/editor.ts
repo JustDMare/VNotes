@@ -28,15 +28,15 @@ export const useEditorStore = defineStore("editor", {
     },
   },
   actions: {
-    //DOCUMENTATE ACTIONS
+    //TODO: DOCUMENTATE ACTIONS
     updateNoteTitle(content: string): void {
-      //Check for errors
+      //TODO: Check for errors
       this.noteInEditor.title = content;
     },
     updateBlockContent(blockID: string, content: string): void {
       const block = this.getBlockInEditorById(blockID);
       if (block) {
-        //Check for errors
+        //TODO: Check for errors
         block.content = content;
       }
     },
@@ -45,6 +45,7 @@ export const useEditorStore = defineStore("editor", {
       uniqueProperty: keyof BlockUniqueProperties,
       uniquePropertyValue: AllPropertyTypes<BlockUniqueProperties>
     ): void {
+      //TODO: Check for errors
       const block = this.getBlockInEditorById(blockID);
       if (block) {
         block.uniqueProperties[uniqueProperty] = uniquePropertyValue;
@@ -52,7 +53,7 @@ export const useEditorStore = defineStore("editor", {
     },
 
     createBlockBelowBlockID(previousBlockID?: string): void {
-      //Check for errors
+      //TODO: Check for errors
       let newBlockIndex: number;
       if (previousBlockID) {
         const previousBlockIndex = this.noteInEditor.content.findIndex(
