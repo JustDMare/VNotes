@@ -12,7 +12,7 @@ import type {
 import { defineStore } from "pinia";
 import { reactive } from "vue";
 
-export const useMainStore = defineStore("main", {
+export const useEditorStore = defineStore("editor", {
   state: () => ({
     noteInEditor: reactive(noteBlocks) as Note,
     blockCreated: false as boolean,

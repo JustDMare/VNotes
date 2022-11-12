@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import BlockList from "./BlockList.vue";
-import { useMainStore } from "@/stores/main";
+import { useEditorStore } from "@/stores/editor";
 
-const mainStore = useMainStore();
-const note = mainStore.noteInEditor;
+const editorStore = useEditorStore();
+const note = editorStore.noteInEditor;
 function parseSpecialKeys(event: KeyboardEvent) {
   if (event.code === "Enter" && !event.shiftKey) {
     event.preventDefault();
-    mainStore.createBlockBelowBlockID();
+    editorStore.createBlockBelowBlockID();
   }
 }
 function processInput(event: Event) {
   const input = event.target as HTMLElement;
-  mainStore.updateNoteTitle(input.innerText);
+  editorStore.updateNoteTitle(input.innerText);
 }
 </script>
 <template>

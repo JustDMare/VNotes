@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import NavigationFolder from "./NavigationFolder.vue";
 import NavigationNote from "./NavigationNote.vue";
-import { useMainStore } from "@/stores/main";
+import { useEditorStore } from "@/stores/editor";
 
-const mainStore = useMainStore();
-const sidebarContent = mainStore.$state.userSpace.content;
+const editorStore = useEditorStore();
+const sidebarContent = editorStore.$state.userSpace.content;
 </script>
 
 <template>
