@@ -2,14 +2,13 @@
 import { useTextBasedBlock } from "@/composables/text-based-block";
 import { useMainStore } from "@/stores/main";
 import type { CheckboxBlock } from "@/types/blocks";
-import { computed, onMounted, ref, toRef, type PropType, type Ref } from "vue";
+import { onMounted, ref, toRef, watch, type PropType, type Ref } from "vue";
 
 const props = defineProps({
   //TODO: Change all blocks to use their own block data and cast it to their type
   block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
-
-const checkboxSelected = computed(() => props.block.uniqueProperties.selected);
+const checkboxSelected = ref(props.block.uniqueProperties.selected);
 
 const mainStore = useMainStore();
 
@@ -26,6 +25,21 @@ onMounted(() => {
     content.value.innerHTML = "";
   }
 });
+
+watch(
+  () => props.block.uniqueProperties.selected,
+  (selected) => {
+    checkboxSelected.value = selected;
+  }
+);
+
+function onCheckboxChange(): void {
+  mainStore.updateBlockUniqueProperty(
+    props.block.blockID,
+    "selected",
+    !checkboxSelected.value
+  );
+}
 </script>
 
 <template>
@@ -34,7 +48,8 @@ onMounted(() => {
       type="checkbox"
       class="block__content--checkbox__checkbox"
       name="checkbox"
-      v-model="checkboxSelected"
+      :checked="checkboxSelected"
+      @change="onCheckboxChange"
     />
     <p
       v-once
