@@ -7,7 +7,7 @@ const note = editorStore.noteInEditor;
 function parseSpecialKeys(event: KeyboardEvent) {
   if (event.code === "Enter" && !event.shiftKey) {
     event.preventDefault();
-    editorStore.createBlockBelowBlockID();
+    editorStore.createBlockBelowTitle();
   }
 }
 function processInput(event: Event) {

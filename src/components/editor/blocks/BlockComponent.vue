@@ -115,11 +115,11 @@ function hideButtons(): void {
   height: 100%;
 }
 
-[contenteditable]:not(:focus):empty::before {
+:deep([contenteditable]:not(:focus):empty::before) {
   content: "\A0";
   color: rgba(0, 0, 0, 1);
 }
-[contenteditable]:focus:empty::before {
+:deep([contenteditable]:focus:empty::before) {
   content: "Type '/' for commands";
   color: rgba(0, 0, 0, 0.5);
 }

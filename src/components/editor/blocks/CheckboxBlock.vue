@@ -19,10 +19,10 @@ const { parseSpecialKeys, processInput } = useTextBasedBlock(
 const content: Ref<HTMLElement | null> = ref(null);
 onMounted(() => {
   if (editorStore.blockCreated && content.value) {
-    content.value.innerHTML = "<span>&nbsp;</span>";
+    content.value.innerHTML = "<span>&nbsp;</span>"; //Firefox
     content.value.focus();
     editorStore.setBlockCreated(false);
-    content.value.innerHTML = "";
+    content.value.innerHTML = ""; //Firefox
   }
 });
 
@@ -67,5 +67,8 @@ function onCheckboxChange(): void {
 .block__content--checkbox {
   display: flex;
   flex-direction: row;
+  &__text {
+    flex-grow: 1;
+  }
 }
 </style>

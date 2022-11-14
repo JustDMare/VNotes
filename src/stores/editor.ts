@@ -1,12 +1,14 @@
 import { noteBlocks } from "@/mock-data/note-mock";
 import { userSpaceMock } from "@/mock-data/workspace-mock";
 import type {
-  Block,
-  Note,
-  UserSpace,
-  PlainTextBlock,
-  BlockUniqueProperties,
   AllPropertyTypes,
+  Block,
+  BlockType,
+  BlockUniqueProperties,
+  CheckboxBlock,
+  Note,
+  PlainTextBlock,
+  UserSpace,
 } from "@/types";
 
 import { defineStore } from "pinia";
@@ -52,31 +54,57 @@ export const useEditorStore = defineStore("editor", {
       }
     },
 
-    createBlockBelowBlockID(previousBlockID?: string): void {
+    createBlockBelowTitle() {
+      const newBlock = getNewBlockTemplate(this.noteInEditor.noteID);
+      this.addBlockToNote(0, newBlock);
+    },
+
+    createBlockBelowBlockID(previousBlockID: string): void {
       //TODO: Check for errors
-      let newBlockIndex: number;
-      if (previousBlockID) {
-        const previousBlockIndex = this.noteInEditor.content.findIndex(
-          (block: Block) => block.blockID === previousBlockID
-        );
-        newBlockIndex = previousBlockIndex + 1;
-      } else {
-        newBlockIndex = 0;
-      }
-      const newBlock: PlainTextBlock = {
-        type: "text",
-        blockID: crypto.randomUUID(),
-        parentID: this.noteInEditor.noteID,
-        createdTime: String(Date.now()),
-        lastUpdatedTime: String(Date.now()),
-        content: "",
-        uniqueProperties: {},
-      };
-      this.blockCreated = true;
-      this.noteInEditor.content.splice(newBlockIndex, 0, newBlock);
+      const previousBlockIndex = this.noteInEditor.content.findIndex(
+        (block: Block) => block.blockID === previousBlockID
+      );
+      const newBlockIndex = previousBlockIndex + 1;
+      const previousBlockType =
+        this.getBlockInEditorById(previousBlockID)?.type;
+
+      const newBlock = getNewBlockTemplate(
+        this.noteInEditor.noteID,
+        previousBlockType
+      );
+      this.addBlockToNote(newBlockIndex, newBlock);
+    },
+    addBlockToNote(blockIndex: number, block: Block) {
+      this.setBlockCreated(true);
+      this.noteInEditor.content.splice(blockIndex, 0, block);
     },
     setBlockCreated(blockCreated: boolean): void {
       this.blockCreated = blockCreated;
     },
   },
 });
+//Documentar
+function newBlockTemplate(parentID: string): Block {
+  return {
+    type: "text",
+    blockID: crypto.randomUUID(),
+    parentID: parentID,
+    createdTime: String(Date.now()),
+    lastUpdatedTime: String(Date.now()),
+    content: "",
+    uniqueProperties: {},
+  };
+}
+//Documentar
+function getNewBlockTemplate(noteID: string, type?: BlockType): Block {
+  const newBlock: Block = newBlockTemplate(noteID);
+  newBlock.parentID = noteID;
+  if (type === "checkbox") {
+    console.log(newBlock);
+    newBlock.type = "checkbox";
+    newBlock.uniqueProperties.selected = false;
+    console.log(newBlock);
+    return <CheckboxBlock>newBlock;
+  }
+  return <PlainTextBlock>newBlock;
+}
