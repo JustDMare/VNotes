@@ -44,13 +44,16 @@ function onCheckboxChange(): void {
 
 <template>
   <div class="block__content--checkbox">
-    <input
-      type="checkbox"
-      class="block__content--checkbox__checkbox"
-      name="checkbox"
-      :checked="checkboxSelected"
-      @change="onCheckboxChange"
-    />
+    <label :for="block.blockID" class="block__content--checkbox__label">
+      <input
+        type="checkbox"
+        class="block__content--checkbox__checkbox"
+        name="checkbox"
+        :checked="checkboxSelected"
+        @change="onCheckboxChange"
+        :id="block.blockID"
+      />
+    </label>
     <p
       v-once
       class="block__content--checkbox__text"
@@ -66,7 +69,44 @@ function onCheckboxChange(): void {
 <style lang="scss" scoped>
 .block__content--checkbox {
   display: flex;
+  column-gap: 0.5rem;
   flex-direction: row;
+  justify-items: flex-start;
+
+  &__label {
+    height: 1rem;
+    width: 1rem;
+    align-self: center;
+    align-items: center;
+  }
+  &__checkbox {
+    //Hiding the native checkbox but still accessible
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: var(--color-base-90);
+    border: 1px var(--color-base-30) solid;
+
+    border-radius: 3px;
+    height: 1em;
+    width: 1em;
+    align-self: center;
+    transition: all 0.25s ease-in-out;
+
+    cursor: pointer;
+
+    /*
+   //TODO: Usar un outline para marcar focus en checkbox?
+    &:focus {
+      outline: 1px solid var(--color-base-40);
+      outline-offset: 2px;
+    }*/
+
+    &:checked {
+      background: var(--color-accent) url("@/assets/icons/checked-icon.svg")
+        no-repeat center center / cover;
+    }
+  }
   &__text {
     flex-grow: 1;
   }
