@@ -1,7 +1,7 @@
 import { noteBlocks } from "@/mock-data/note-mock";
 import { userSpaceMock } from "@/mock-data/workspace-mock";
 import type {
-  AllPropertyTypes,
+  AllPropertyTypesFromInterface,
   Block,
   BlockType,
   BlockUniqueProperties,
@@ -45,7 +45,7 @@ export const useEditorStore = defineStore("editor", {
     updateBlockUniqueProperty(
       blockID: string,
       uniqueProperty: keyof BlockUniqueProperties,
-      uniquePropertyValue: AllPropertyTypes<BlockUniqueProperties>
+      uniquePropertyValue: AllPropertyTypesFromInterface<BlockUniqueProperties>
     ): void {
       //TODO: Check for errors
       const block = this.getBlockInEditorById(blockID);

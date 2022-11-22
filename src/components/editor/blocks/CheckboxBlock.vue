@@ -96,7 +96,7 @@ function onCheckboxChange(): void {
     cursor: pointer;
 
     /*
-   //TODO: Usar un outline para marcar focus en checkbox?
+   // TODO: Usar un outline para marcar focus en checkbox?
     &:focus {
       outline: 1px solid var(--color-base-40);
       outline-offset: 2px;

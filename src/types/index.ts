@@ -5,4 +5,4 @@ export { type NavigationNoteReference as NavigationNoteReference } from "./note-
 export { type NavigationFolderReference as NavigationFolderReference } from "./folder";
 export { type default as UserSpace } from "./user-space";
 
-export { type AllPropertyTypes } from "./utlity-types";
+export { type AllPropertyTypesFromInterface } from "./utlity-types";
