@@ -77,8 +77,9 @@ function onCheckboxChange(): void {
   &__label {
     height: 1rem;
     width: 1rem;
-    align-self: center;
-    align-items: center;
+    align-self: start;
+    align-items: start;
+    margin-top: 2px;
   }
   &__checkbox {
     //Hiding the native checkbox but still accessible
