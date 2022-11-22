@@ -8,7 +8,7 @@ const props = defineProps({
   //TODO: Change all blocks to use their own block data and cast it to their type
   block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
-const checkboxSelected = ref(props.block.uniqueProperties.selected);
+const checkboxChecked = ref(props.block.uniqueProperties.selected);
 
 const editorStore = useEditorStore();
 
@@ -29,7 +29,7 @@ onMounted(() => {
 watch(
   () => props.block.uniqueProperties.selected,
   (selected) => {
-    checkboxSelected.value = selected;
+    checkboxChecked.value = selected;
   }
 );
 
@@ -37,7 +37,7 @@ function onCheckboxChange(): void {
   editorStore.updateBlockUniqueProperty(
     props.block.blockID,
     "selected",
-    !checkboxSelected.value
+    !checkboxChecked.value
   );
 }
 </script>
@@ -49,7 +49,7 @@ function onCheckboxChange(): void {
         type="checkbox"
         class="block__content--checkbox__checkbox"
         name="checkbox"
-        :checked="checkboxSelected"
+        :checked="checkboxChecked"
         @change="onCheckboxChange"
         :id="block.blockID"
       />
@@ -57,6 +57,7 @@ function onCheckboxChange(): void {
     <p
       v-once
       class="block__content--checkbox__text"
+      :class="{ 'block__content--checkbox__text--checked': checkboxChecked }"
       ref="content"
       contenteditable
       @keydown="parseSpecialKeys"
@@ -109,6 +110,10 @@ function onCheckboxChange(): void {
   }
   &__text {
     flex-grow: 1;
+    &--checked {
+      color: var(--color-base-40);
+      text-decoration: line-through var(--color-base-40);
+    }
   }
 }
 </style>
