@@ -8,7 +8,10 @@ const props = defineProps({
   //TODO: Change all blocks to use their own block data and cast it to their type
   block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
-const checkboxChecked = ref(props.block.uniqueProperties.selected);
+const checkboxChecked: Ref<boolean> = ref(
+  props.block.uniqueProperties.selected
+);
+const initialBlockContent: Ref<string> = ref(props.block.content);
 
 const editorStore = useEditorStore();
 
@@ -30,6 +33,15 @@ watch(
   () => props.block.uniqueProperties.selected,
   (selected) => {
     checkboxChecked.value = selected;
+  }
+);
+
+watch(
+  () => props.block.content,
+  (blockContent) => {
+    if (content.value?.innerText !== blockContent) {
+      initialBlockContent.value = blockContent;
+    }
   }
 );
 
@@ -55,7 +67,6 @@ function onCheckboxChange(): void {
       />
     </label>
     <p
-      v-once
       class="block__content--checkbox__text"
       :class="{ 'block__content--checkbox__text--checked': checkboxChecked }"
       ref="content"
@@ -63,7 +74,7 @@ function onCheckboxChange(): void {
       @keydown="parseSpecialKeys"
       @input="processInput"
     >
-      {{ block.content }}
+      {{ initialBlockContent }}
     </p>
   </div>
 </template>

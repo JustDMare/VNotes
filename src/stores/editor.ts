@@ -83,7 +83,7 @@ export const useEditorStore = defineStore("editor", {
     },
   },
 });
-//Documentar
+//TODO: Documentar
 function newBlockTemplate(parentID: string): Block {
   return {
     type: "text",
@@ -95,15 +95,13 @@ function newBlockTemplate(parentID: string): Block {
     uniqueProperties: {},
   };
 }
-//Documentar
+//TODO: Documentar
 function getNewBlockTemplate(noteID: string, type?: BlockType): Block {
   const newBlock: Block = newBlockTemplate(noteID);
   newBlock.parentID = noteID;
   if (type === "checkbox") {
-    console.log(newBlock);
     newBlock.type = "checkbox";
     newBlock.uniqueProperties.selected = false;
-    console.log(newBlock);
     return <CheckboxBlock>newBlock;
   }
   return <PlainTextBlock>newBlock;
