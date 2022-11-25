@@ -1,37 +1,35 @@
 <script lang="ts" setup>
-import { useTextBasedBlock } from "@/composables/textBasedBlock";
-import { useMainStore } from "@/stores/main";
+import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
+import { useTextBasedBlock } from "@/composables/text-based-block";
 import type { Block } from "@/types/blocks";
-import { onMounted, ref, type PropType, type Ref } from "vue";
+import { onMounted, type PropType } from "vue";
 
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
-const mainStore = useMainStore();
 
-const { parseSpecialKeys, processInput } = useTextBasedBlock(props.block);
+const {
+  initialBlockContent,
+  blockHTMLContent,
+  parseSpecialKeys,
+  processInput,
+} = useTextBasedBlock(props.block);
+const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 
-const content: Ref<HTMLElement | null> = ref(null);
 onMounted(() => {
-  if (mainStore.blockCreated && content.value) {
-    content.value.innerHTML = "<span>&nbsp;</span>";
-    content.value.focus();
-    mainStore.setBlockCreated(false);
-    content.value.innerHTML = "";
-  }
+  focusBlockOnCreation();
 });
 </script>
 
 <template>
   <p
     class="block__content--text"
-    v-once
-    ref="content"
+    ref="blockHTMLContent"
     contenteditable
     @keydown="parseSpecialKeys"
     @input="processInput"
   >
-    {{ block.content }}
+    {{ initialBlockContent }}
   </p>
 </template>
 <style lang="scss"></style>

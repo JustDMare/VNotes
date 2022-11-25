@@ -1,27 +1,23 @@
 <script setup lang="ts">
 import { GripIcon, PlusIcon } from "@/components/icons";
-import {
-  getBlockComponentDictionary,
-  getBlockClassDictionary,
-} from "@/services/block-dictionary";
-import { useMainStore } from "@/stores/main";
+import { getBlockComponentMap, getBlockClassMap } from "@/common/maps";
+import { useEditorStore } from "@/stores/editor";
 import type { Block, BlockType } from "@/types/blocks";
 import { type PropType, ref, type Component } from "vue";
 
-const blockComponentDictionary: ReadonlyMap<BlockType, Component> =
-  getBlockComponentDictionary();
-const blockClassDictionary: ReadonlyMap<BlockType, string> =
-  getBlockClassDictionary();
+const blockComponentMap: ReadonlyMap<BlockType, Component> =
+  getBlockComponentMap();
+const blockClassMap: ReadonlyMap<BlockType, string> = getBlockClassMap();
 
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
-const mainStore = useMainStore();
+const editorStore = useEditorStore();
 
 let buttonsVisible = ref(false);
 
 function createBlockBelow() {
-  mainStore.createBlockInEditor(props.block.blockID);
+  editorStore.createBlockBelowBlockID(props.block.blockID);
 }
 function showButtons(): void {
   buttonsVisible.value = true;
@@ -34,14 +30,14 @@ function hideButtons(): void {
 <template>
   <div
     class="block"
-    :class="blockClassDictionary.get(block.type)"
+    :class="blockClassMap.get(block.type)"
     @mouseover="showButtons"
     @mouseleave="hideButtons"
     @hover="showButtons"
   >
     <component
       class="block__content"
-      :is="blockComponentDictionary.get(block.type)"
+      :is="blockComponentMap.get(block.type)"
       :block="block"
     ></component>
     <div
@@ -119,11 +115,11 @@ function hideButtons(): void {
   height: 100%;
 }
 
-[contenteditable]:not(:focus):empty::before {
+:deep([contenteditable]:not(:focus):empty::before) {
   content: "\A0";
   color: rgba(0, 0, 0, 1);
 }
-[contenteditable]:focus:empty::before {
+:deep([contenteditable]:focus:empty::before) {
   content: "Type '/' for commands";
   color: rgba(0, 0, 0, 0.5);
 }

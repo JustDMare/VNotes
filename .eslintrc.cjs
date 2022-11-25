@@ -5,7 +5,7 @@ require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
   root: true,
-  plugins: ["vuejs-accessibility"],
+  plugins: ["vuejs-accessibility", "unused-imports"],
   extends: [
     "plugin:vue/vue3-essential",
     "eslint:recommended",
@@ -33,7 +33,7 @@ module.exports = {
       "error",
       { code: 100, ignoreComments: false, ignorePattern: 'd="([\\s\\S]*?)"' },
     ],
-
+    "unused-imports/no-unused-imports": "error",
     "no-dupe-class-members": "off",
     "no-duplicate-imports": "error",
     "no-empty-function": "error",
@@ -42,5 +42,6 @@ module.exports = {
     //VUE
     "vue/eqeqeq": "error",
     "vuejs-accessibility/mouse-events-have-key-events": "off",
+    "vuejs-accessibility/form-control-has-label": "off",
   },
 };

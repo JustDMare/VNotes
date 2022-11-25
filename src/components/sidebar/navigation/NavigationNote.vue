@@ -3,6 +3,8 @@ import { NoteIcon } from "@/components/icons";
 import type { NavigationNoteReference } from "@/types";
 import type { PropType } from "vue";
 
+//TODO: Remember to change the button for a RouterLink
+
 defineProps({
   noteReference: {
     type: Object as PropType<NavigationNoteReference>,
@@ -20,7 +22,4 @@ defineProps({
   </li>
 </template>
 
-<style scoped lang="scss">
-.nav__note {
-}
-</style>
+<style scoped lang="scss"></style>
