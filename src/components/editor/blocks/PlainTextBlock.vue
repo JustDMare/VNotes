@@ -1,13 +1,12 @@
 <script lang="ts" setup>
+import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
 import { useTextBasedBlock } from "@/composables/text-based-block";
-import { useEditorStore } from "@/stores/editor";
 import type { Block } from "@/types/blocks";
-import { onMounted, ref, toRef, type PropType, type Ref } from "vue";
+import { onMounted, type PropType } from "vue";
 
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
-const editorStore = useEditorStore();
 
 const {
   initialBlockContent,
@@ -15,14 +14,10 @@ const {
   parseSpecialKeys,
   processInput,
 } = useTextBasedBlock(props.block);
+const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 
 onMounted(() => {
-  if (editorStore.blockCreated && blockHTMLContent.value) {
-    blockHTMLContent.value.innerHTML = "<span>&nbsp;</span>";
-    blockHTMLContent.value.focus();
-    editorStore.setBlockCreated(false);
-    blockHTMLContent.value.innerHTML = "";
-  }
+  focusBlockOnCreation();
 });
 </script>
 
