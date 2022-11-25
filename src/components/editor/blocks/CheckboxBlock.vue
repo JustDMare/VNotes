@@ -1,8 +1,9 @@
 <script lang="ts" setup>
+import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
 import { useTextBasedBlock } from "@/composables/text-based-block";
 import { useEditorStore } from "@/stores/editor";
 import type { CheckboxBlock } from "@/types/blocks";
-import { onMounted, ref, toRef, watch, type PropType, type Ref } from "vue";
+import { onMounted, ref, watch, type PropType, type Ref } from "vue";
 
 const props = defineProps({
   block: { type: Object as PropType<CheckboxBlock>, required: true },
@@ -16,16 +17,12 @@ const {
   parseSpecialKeys,
   processInput,
 } = useTextBasedBlock(props.block);
+const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 
 const editorStore = useEditorStore();
 
 onMounted(() => {
-  if (editorStore.blockCreated && blockHTMLContent.value) {
-    blockHTMLContent.value.innerHTML = "<span>&nbsp;</span>"; //Firefox
-    blockHTMLContent.value.focus();
-    editorStore.setBlockCreated(false);
-    blockHTMLContent.value.innerHTML = ""; //Firefox
-  }
+  focusBlockOnCreation();
 });
 
 watch(
