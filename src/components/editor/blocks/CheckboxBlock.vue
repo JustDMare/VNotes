@@ -5,27 +5,26 @@ import type { CheckboxBlock } from "@/types/blocks";
 import { onMounted, ref, toRef, watch, type PropType, type Ref } from "vue";
 
 const props = defineProps({
-  //TODO: Change all blocks to use their own block data and cast it to their type
   block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
 const checkboxChecked: Ref<boolean> = ref(
   props.block.uniqueProperties.selected
 );
-const initialBlockContent: Ref<string> = ref(props.block.content);
+const {
+  initialBlockContent,
+  blockHTMLContent,
+  parseSpecialKeys,
+  processInput,
+} = useTextBasedBlock(props.block);
 
 const editorStore = useEditorStore();
 
-const { parseSpecialKeys, processInput } = useTextBasedBlock(
-  toRef(props.block, "blockID")
-);
-
-const content: Ref<HTMLElement | null> = ref(null);
 onMounted(() => {
-  if (editorStore.blockCreated && content.value) {
-    content.value.innerHTML = "<span>&nbsp;</span>"; //Firefox
-    content.value.focus();
+  if (editorStore.blockCreated && blockHTMLContent.value) {
+    blockHTMLContent.value.innerHTML = "<span>&nbsp;</span>"; //Firefox
+    blockHTMLContent.value.focus();
     editorStore.setBlockCreated(false);
-    content.value.innerHTML = ""; //Firefox
+    blockHTMLContent.value.innerHTML = ""; //Firefox
   }
 });
 
@@ -33,15 +32,6 @@ watch(
   () => props.block.uniqueProperties.selected,
   (selected) => {
     checkboxChecked.value = selected;
-  }
-);
-
-watch(
-  () => props.block.content,
-  (blockContent) => {
-    if (content.value?.innerText !== blockContent) {
-      initialBlockContent.value = blockContent;
-    }
   }
 );
 
@@ -69,7 +59,7 @@ function onCheckboxChange(): void {
     <p
       class="block__content--checkbox__text"
       :class="{ 'block__content--checkbox__text--checked': checkboxChecked }"
-      ref="content"
+      ref="blockHTMLContent"
       contenteditable
       @keydown="parseSpecialKeys"
       @input="processInput"

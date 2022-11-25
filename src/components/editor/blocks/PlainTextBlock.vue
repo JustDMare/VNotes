@@ -9,17 +9,19 @@ const props = defineProps({
 });
 const editorStore = useEditorStore();
 
-const { parseSpecialKeys, processInput } = useTextBasedBlock(
-  toRef(props.block, "blockID")
-);
+const {
+  initialBlockContent,
+  blockHTMLContent,
+  parseSpecialKeys,
+  processInput,
+} = useTextBasedBlock(props.block);
 
-const content: Ref<HTMLElement | null> = ref(null);
 onMounted(() => {
-  if (editorStore.blockCreated && content.value) {
-    content.value.innerHTML = "<span>&nbsp;</span>";
-    content.value.focus();
+  if (editorStore.blockCreated && blockHTMLContent.value) {
+    blockHTMLContent.value.innerHTML = "<span>&nbsp;</span>";
+    blockHTMLContent.value.focus();
     editorStore.setBlockCreated(false);
-    content.value.innerHTML = "";
+    blockHTMLContent.value.innerHTML = "";
   }
 });
 </script>
@@ -27,13 +29,12 @@ onMounted(() => {
 <template>
   <p
     class="block__content--text"
-    v-once
-    ref="content"
+    ref="blockHTMLContent"
     contenteditable
     @keydown="parseSpecialKeys"
     @input="processInput"
   >
-    {{ block.content }}
+    {{ initialBlockContent }}
   </p>
 </template>
 <style lang="scss"></style>
