@@ -154,5 +154,12 @@ function hideButtons(): void {
       top: 3px;
     }
   }
+  &--checkbox {
+    margin-top: 2px;
+
+    & .block__button {
+      top: 0px;
+    }
+  }
 }
 </style>

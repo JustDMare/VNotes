@@ -55,7 +55,10 @@ function onCheckboxChange(): void {
     </label>
     <p
       class="block__content--checkbox__text"
-      :class="{ 'block__content--checkbox__text--checked': checkboxChecked }"
+      :class="{
+        'block__content--checkbox__text--checked':
+          checkboxChecked && block.content.length,
+      }"
       ref="blockHTMLContent"
       contenteditable
       @keydown="parseSpecialKeys"
@@ -94,13 +97,6 @@ function onCheckboxChange(): void {
     transition: all 0.25s ease-in-out;
 
     cursor: pointer;
-
-    /*
-   // TODO: Usar un outline para marcar focus en checkbox?
-    &:focus {
-      outline: 1px solid var(--color-base-40);
-      outline-offset: 2px;
-    }*/
 
     &:checked {
       background: var(--color-accent) url("@/assets/icons/checked-icon.svg")
