@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ChevronRightIcon, FolderIcon } from "@/components/icons";
-import type { NavigationFolderReference } from "@/types";
+import type { Folder } from "vnotes-types";
 import { ref, type PropType } from "vue";
 import NavigationNote from "./NavigationNote.vue";
 
 defineProps({
   folderReference: {
-    type: Object as PropType<NavigationFolderReference>,
+    type: Object as PropType<Folder>,
     required: true,
   },
 });
@@ -30,12 +30,12 @@ function toggleContentVisibility(): void {
     <ul class="nav__folder__content" v-if="showContents">
       <NavigationFolder
         v-for="subfolderReference in folderReference.content.folders"
-        :key="subfolderReference.folderID"
+        :key="subfolderReference._id"
         :folder-reference="subfolderReference"
       />
       <NavigationNote
         v-for="noteReference in folderReference.content.notes"
-        :key="noteReference.noteID"
+        :key="noteReference._id"
         :note-reference="noteReference"
       />
     </ul>

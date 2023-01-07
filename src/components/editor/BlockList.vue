@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Block } from "@/types";
+import type { Block } from "vnotes-types";
 import type { PropType } from "vue";
 import BlockComponent from "./blocks/BlockComponent.vue";
 
@@ -11,7 +11,7 @@ defineProps({
 <template>
   <BlockComponent
     v-for="block in blockList"
-    :key="block.blockID"
+    :key="block._id"
     :block="block"
   ></BlockComponent>
 </template>

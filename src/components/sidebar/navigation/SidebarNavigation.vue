@@ -12,12 +12,12 @@ const sidebarContent = editorStore.$state.userSpace.content;
     <ul class="nav">
       <NavigationFolder
         v-for="folderReference in sidebarContent.folders"
-        :key="folderReference.folderID"
+        :key="folderReference._id"
         :folder-reference="folderReference"
       />
       <NavigationNote
         v-for="noteReference in sidebarContent.notes"
-        :key="noteReference.noteID"
+        :key="noteReference._id"
         :note-reference="noteReference"
       />
     </ul>

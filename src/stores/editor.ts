@@ -23,10 +23,8 @@ export const useEditorStore = defineStore("editor", {
 
   getters: {
     getBlockInEditorById: (state) => {
-      return (blockID: string) =>
-        state.noteInEditor.content.find(
-          (block: Block) => block.blockID === blockID
-        );
+      return (_id: string) =>
+        state.noteInEditor.content.find((block: Block) => block._id === _id);
     },
   },
   actions: {
@@ -35,41 +33,41 @@ export const useEditorStore = defineStore("editor", {
       //TODO: Check for errors
       this.noteInEditor.title = content;
     },
-    updateBlockContent(blockID: string, content: string): void {
-      const block = this.getBlockInEditorById(blockID);
+    updateBlockContent(_id: string, content: string): void {
+      const block = this.getBlockInEditorById(_id);
       if (block) {
         //TODO: Check for errors
         block.content = content;
       }
     },
     updateBlockUniqueProperty(
-      blockID: string,
+      _id: string,
       uniqueProperty: keyof BlockUniqueProperties,
       uniquePropertyValue: AllPropertyTypesFromInterface<BlockUniqueProperties>
     ): void {
       //TODO: Check for errors
-      const block = this.getBlockInEditorById(blockID);
+      const block = this.getBlockInEditorById(_id);
       if (block) {
         block.uniqueProperties[uniqueProperty] = uniquePropertyValue;
       }
     },
 
     createBlockBelowTitle() {
-      const newBlock = getNewBlockTemplate(this.noteInEditor.noteID);
+      const newBlock = getNewBlockTemplate(this.noteInEditor._id);
       this.addBlockToNote(0, newBlock);
     },
 
-    createBlockBelowBlockID(previousBlockID: string): void {
+    createBlockBelowBlockId(previousBlockId: string): void {
       //TODO: Check for errors
       const previousBlockIndex = this.noteInEditor.content.findIndex(
-        (block: Block) => block.blockID === previousBlockID
+        (block: Block) => block._id === previousBlockId
       );
       const newBlockIndex = previousBlockIndex + 1;
       const previousBlockType =
-        this.getBlockInEditorById(previousBlockID)?.type;
+        this.getBlockInEditorById(previousBlockId)?.type;
 
       const newBlock = getNewBlockTemplate(
-        this.noteInEditor.noteID,
+        this.noteInEditor._id,
         previousBlockType
       );
       this.addBlockToNote(newBlockIndex, newBlock);
@@ -84,11 +82,11 @@ export const useEditorStore = defineStore("editor", {
   },
 });
 //TODO: Documentar
-function newBlockTemplate(parentID: string): Block {
+function newBlockTemplate(parentId: string): Block {
   return {
     type: "text",
     blockID: crypto.randomUUID(),
-    parentID: parentID,
+    parentId: parentId,
     createdTime: String(Date.now()),
     lastUpdatedTime: String(Date.now()),
     content: "",
@@ -96,9 +94,9 @@ function newBlockTemplate(parentID: string): Block {
   };
 }
 //TODO: Documentar
-function getNewBlockTemplate(noteID: string, type?: BlockType): Block {
-  const newBlock: Block = newBlockTemplate(noteID);
-  newBlock.parentID = noteID;
+function getNewBlockTemplate(_id: string, type?: BlockType): Block {
+  const newBlock: Block = newBlockTemplate(_id);
+  newBlock.parentId = _id;
   if (type === "checkbox") {
     newBlock.type = "checkbox";
     newBlock.uniqueProperties.selected = false;

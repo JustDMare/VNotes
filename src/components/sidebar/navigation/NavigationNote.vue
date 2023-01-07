@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NoteIcon } from "@/components/icons";
-import type { NavigationNoteReference } from "@/types";
+import type { NavigationNoteReference } from "vnotes-types";
 import type { PropType } from "vue";
 
 //TODO: Remember to change the button for a RouterLink
