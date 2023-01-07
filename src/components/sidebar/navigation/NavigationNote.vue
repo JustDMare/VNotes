@@ -15,10 +15,13 @@ defineProps({
 
 <template>
   <li class="nav__note">
-    <button class="sidebar__item nav__item">
+    <router-link
+      class="sidebar__item nav__item"
+      :to="`/editor/${noteReference._id}`"
+    >
       <NoteIcon class="nav__icon nav__icon--note" />
       <span class="nav__item__text">{{ noteReference.title }}</span>
-    </button>
+    </router-link>
   </li>
 </template>
 
