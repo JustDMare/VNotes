@@ -9,7 +9,7 @@ import type {
   Note,
   PlainTextBlock,
   UserSpace,
-} from "@/types";
+} from "vnotes-types";
 
 import { defineStore } from "pinia";
 import { reactive } from "vue";
