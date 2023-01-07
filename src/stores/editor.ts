@@ -53,7 +53,7 @@ export const useEditorStore = defineStore("editor", {
     },
 
     createBlockBelowTitle() {
-      const newBlock = getNewBlockTemplate(this.noteInEditor._id);
+      const newBlock = getNewBlockTemplate();
       this.addBlockToNote(0, newBlock);
     },
 
@@ -66,10 +66,7 @@ export const useEditorStore = defineStore("editor", {
       const previousBlockType =
         this.getBlockInEditorById(previousBlockId)?.type;
 
-      const newBlock = getNewBlockTemplate(
-        this.noteInEditor._id,
-        previousBlockType
-      );
+      const newBlock = getNewBlockTemplate(previousBlockType);
       this.addBlockToNote(newBlockIndex, newBlock);
     },
     addBlockToNote(blockIndex: number, block: Block) {
@@ -82,21 +79,17 @@ export const useEditorStore = defineStore("editor", {
   },
 });
 //TODO: Documentar
-function newBlockTemplate(parentId: string): Block {
+function newBlockTemplate(): Block {
   return {
     type: "text",
-    blockID: crypto.randomUUID(),
-    parentId: parentId,
-    createdTime: String(Date.now()),
-    lastUpdatedTime: String(Date.now()),
+    _id: crypto.randomUUID(),
     content: "",
     uniqueProperties: {},
   };
 }
 //TODO: Documentar
-function getNewBlockTemplate(_id: string, type?: BlockType): Block {
-  const newBlock: Block = newBlockTemplate(_id);
-  newBlock.parentId = _id;
+function getNewBlockTemplate(type?: BlockType): Block {
+  const newBlock: Block = newBlockTemplate();
   if (type === "checkbox") {
     newBlock.type = "checkbox";
     newBlock.uniqueProperties.selected = false;
