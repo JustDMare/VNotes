@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import BlockList from "./BlockList.vue";
 import { useEditorStore } from "@/stores/editor";
+import { computed, ref, watch, type Ref } from "vue";
+import { onBeforeRouteUpdate } from "vue-router";
 
 const editorStore = useEditorStore();
-const note = editorStore.noteInEditor;
+const note = computed(() => {
+  return editorStore.noteInEditor;
+});
+
+const noteTitle: Ref<HTMLHeadingElement | null> = ref(null);
+
 function parseSpecialKeys(event: KeyboardEvent) {
   if (event.code === "Enter" && !event.shiftKey) {
     event.preventDefault();
@@ -14,21 +21,37 @@ function processInput(event: Event) {
   const input = event.target as HTMLElement;
   editorStore.updateNoteTitle(input.innerText);
 }
+
+onBeforeRouteUpdate((to, from) => {
+  if (to.params.id !== from.params.id) {
+    const noteId = to.params.id as string;
+    editorStore.fetchNote(noteId);
+  }
+});
+//TODO: Document
+watch(
+  () => note.value,
+  (note, oldNote) => {
+    if (noteTitle.value && note && note.title !== oldNote?.title) {
+      noteTitle.value.innerHTML = note.title;
+    }
+  }
+);
 </script>
 <template>
   <main id="note">
-    <article>
+    <article v-if="note">
       <header>
         <h1
           v-once
           contenteditable
           :placeholder="$t('note.titlePlaceholder')"
           id="note__title"
+          ref="noteTitle"
           @keydown="parseSpecialKeys"
           @input="processInput"
-        >
-          {{ note.title }}
-        </h1>
+          v-html="note.title"
+        ></h1>
       </header>
       <div id="note__list">
         <BlockList :block-list="note.content" />

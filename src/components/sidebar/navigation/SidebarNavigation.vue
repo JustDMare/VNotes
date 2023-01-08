@@ -56,6 +56,7 @@ const sidebarContent = computed(() => {
     display: grid;
     grid-template-columns: var(--nav-icon-size) var(--nav-icon-size) 1fr;
     column-gap: 2px;
+    text-decoration: none;
     &__text {
       padding-left: 6px;
       white-space: nowrap;

@@ -1,4 +1,3 @@
-import { noteBlocks } from "@/mock-data/note-mock";
 import { userSpaceMock } from "@/mock-data/workspace-mock";
 import type {
   AllPropertyTypesFromInterface,
@@ -6,17 +5,16 @@ import type {
   BlockType,
   BlockUniqueProperties,
   CheckboxBlock,
-  Note,
   PlainTextBlock,
   UserSpace,
+  Note,
 } from "vnotes-types";
 
 import { defineStore } from "pinia";
-import { reactive } from "vue";
 
 export const useEditorStore = defineStore("editor", {
   state: () => ({
-    noteInEditor: reactive(noteBlocks) as Note,
+    noteInEditor: null as Note | null,
     blockCreated: false as boolean,
     userSpace: userSpaceMock as UserSpace,
   }),
@@ -24,15 +22,31 @@ export const useEditorStore = defineStore("editor", {
   getters: {
     getBlockInEditorById: (state) => {
       return (_id: string) =>
-        state.noteInEditor.content.find((block: Block) => block._id === _id);
+        state.noteInEditor?.content.find((block: Block) => block._id === _id);
     },
   },
   actions: {
-    //TODO: DOCUMENTATE ACTIONS
+    //TODO: Document and better error handling
+    fetchNote(noteId: string) {
+      fetch(`http://localhost:3030/notes/${noteId}`)
+        .then((data) => data.json())
+        .then((json) => {
+          this.noteInEditor = json.note;
+        })
+        .catch((error) => {
+          this.noteInEditor = null;
+          console.log(error);
+        });
+    },
+
+    //TODO: DOCUMENT ACTIONS
     updateNoteTitle(content: string): void {
       //TODO: Check for errors
-      this.noteInEditor.title = content;
+      if (this.noteInEditor) {
+        this.noteInEditor.title = content;
+      }
     },
+
     updateBlockContent(_id: string, content: string): void {
       const block = this.getBlockInEditorById(_id);
       if (block) {
@@ -59,19 +73,23 @@ export const useEditorStore = defineStore("editor", {
 
     createBlockBelowBlockId(previousBlockId: string): void {
       //TODO: Check for errors
-      const previousBlockIndex = this.noteInEditor.content.findIndex(
-        (block: Block) => block._id === previousBlockId
-      );
-      const newBlockIndex = previousBlockIndex + 1;
-      const previousBlockType =
-        this.getBlockInEditorById(previousBlockId)?.type;
+      if (this.noteInEditor) {
+        const previousBlockIndex = this.noteInEditor.content.findIndex(
+          (block: Block) => block._id === previousBlockId
+        );
+        const newBlockIndex = previousBlockIndex + 1;
+        const previousBlockType =
+          this.getBlockInEditorById(previousBlockId)?.type;
 
-      const newBlock = getNewBlockTemplate(previousBlockType);
-      this.addBlockToNote(newBlockIndex, newBlock);
+        const newBlock = getNewBlockTemplate(previousBlockType);
+        this.addBlockToNote(newBlockIndex, newBlock);
+      }
     },
     addBlockToNote(blockIndex: number, block: Block) {
-      this.setBlockCreated(true);
-      this.noteInEditor.content.splice(blockIndex, 0, block);
+      if (this.noteInEditor) {
+        this.setBlockCreated(true);
+        this.noteInEditor.content.splice(blockIndex, 0, block);
+      }
     },
     setBlockCreated(blockCreated: boolean): void {
       this.blockCreated = blockCreated;
