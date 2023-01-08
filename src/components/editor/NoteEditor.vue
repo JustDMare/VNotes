@@ -52,6 +52,7 @@ watch(
           @input="processInput"
           v-html="note.title"
         ></h1>
+        <button @click="editorStore.saveNoteChanges()"></button>
       </header>
       <div id="note__list">
         <BlockList :block-list="note.content" />
