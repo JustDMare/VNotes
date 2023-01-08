@@ -54,15 +54,23 @@ const sidebarContent = computed(() => {
   }
   .nav__item {
     display: grid;
-    grid-template-columns: var(--nav-icon-size) var(--nav-icon-size) 1fr;
+    grid-template-columns: var(--nav-icon-size) var(--nav-icon-size) 9fr 1fr;
     column-gap: 2px;
     text-decoration: none;
-    &__text {
-      padding-left: 6px;
+
+    &__text,
+    &__content-number {
+      padding: 0 6px;
       white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
       font-size: inherit;
+    }
+    &__text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__content-number {
+      font-weight: 400;
+      opacity: 0.8;
     }
   }
   .nav__icon {

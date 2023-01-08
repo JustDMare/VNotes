@@ -26,6 +26,9 @@ function toggleContentVisibility(): void {
       />
       <FolderIcon class="nav__icon nav__icon--folder" />
       <span class="nav__item__text">{{ folderReference.name }}</span>
+      <span class="nav__item__content-number">{{
+        folderReference.numberOfItems
+      }}</span>
     </button>
     <ul class="nav__folder__content" v-if="showContents">
       <NavigationFolder
