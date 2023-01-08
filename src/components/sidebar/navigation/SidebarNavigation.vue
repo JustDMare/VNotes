@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import NavigationFolder from "./NavigationFolder.vue";
 import NavigationNote from "./NavigationNote.vue";
-import { useEditorStore } from "@/stores/editor";
+import { useUserSpaceStore } from "@/stores/user-space";
+import { computed } from "vue";
 
-const editorStore = useEditorStore();
-const sidebarContent = editorStore.$state.userSpace.content;
+const userSpaceStore = useUserSpaceStore();
+const sidebarContent = computed(() => {
+  return userSpaceStore.$state.userSpace.content;
+});
 </script>
 
 <template>
@@ -12,12 +15,12 @@ const sidebarContent = editorStore.$state.userSpace.content;
     <ul class="nav">
       <NavigationFolder
         v-for="folderReference in sidebarContent.folders"
-        :key="folderReference.folderID"
+        :key="folderReference._id"
         :folder-reference="folderReference"
       />
       <NavigationNote
         v-for="noteReference in sidebarContent.notes"
-        :key="noteReference.noteID"
+        :key="noteReference._id"
         :note-reference="noteReference"
       />
     </ul>
@@ -51,14 +54,23 @@ const sidebarContent = editorStore.$state.userSpace.content;
   }
   .nav__item {
     display: grid;
-    grid-template-columns: var(--nav-icon-size) var(--nav-icon-size) 1fr;
+    grid-template-columns: var(--nav-icon-size) var(--nav-icon-size) 9fr 1fr;
     column-gap: 2px;
-    &__text {
-      padding-left: 6px;
+    text-decoration: none;
+
+    &__text,
+    &__content-number {
+      padding: 0 6px;
       white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
       font-size: inherit;
+    }
+    &__text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__content-number {
+      font-weight: 400;
+      opacity: 0.8;
     }
   }
   .nav__icon {

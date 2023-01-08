@@ -2,7 +2,7 @@
 import { GripIcon, PlusIcon } from "@/components/icons";
 import { getBlockComponentMap, getBlockClassMap } from "@/common/maps";
 import { useEditorStore } from "@/stores/editor";
-import type { Block, BlockType } from "@/types/blocks";
+import type { Block, BlockType } from "vnotes-types";
 import { type PropType, ref, type Component } from "vue";
 
 const blockComponentMap: ReadonlyMap<BlockType, Component> =
@@ -17,7 +17,7 @@ const editorStore = useEditorStore();
 let buttonsVisible = ref(false);
 
 function createBlockBelow() {
-  editorStore.createBlockBelowBlockID(props.block.blockID);
+  editorStore.createBlockBelowBlockId(props.block._id);
 }
 function showButtons(): void {
   buttonsVisible.value = true;

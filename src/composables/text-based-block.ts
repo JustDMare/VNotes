@@ -1,5 +1,5 @@
 import { useEditorStore } from "@/stores/editor";
-import type { Block } from "@/types";
+import type { Block } from "vnotes-types";
 import { ref, unref, watch, type Ref } from "vue";
 
 export function useTextBasedBlock(block: Block) {
@@ -23,13 +23,13 @@ export function useTextBasedBlock(block: Block) {
   function parseSpecialKeys(event: KeyboardEvent) {
     if (event.code === "Enter" && !event.shiftKey) {
       event.preventDefault();
-      editorStore.createBlockBelowBlockID(unref(block.blockID));
+      editorStore.createBlockBelowBlockId(unref(block._id));
     }
   }
 
   function processInput(event: Event) {
     const input = event.target as HTMLElement;
-    editorStore.updateBlockContent(unref(block.blockID), input.innerText);
+    editorStore.updateBlockContent(unref(block._id), input.innerText);
   }
 
   return {

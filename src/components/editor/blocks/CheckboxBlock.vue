@@ -2,7 +2,8 @@
 import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
 import { useTextBasedBlock } from "@/composables/text-based-block";
 import { useEditorStore } from "@/stores/editor";
-import type { CheckboxBlock } from "@/types/blocks";
+import type { CheckboxBlock } from "vnotes-types";
+
 import { onMounted, ref, watch, type PropType, type Ref } from "vue";
 
 const props = defineProps({
@@ -34,7 +35,7 @@ watch(
 
 function onCheckboxChange(): void {
   editorStore.updateBlockUniqueProperty(
-    props.block.blockID,
+    props.block._id,
     "selected",
     !checkboxChecked.value
   );
@@ -43,14 +44,14 @@ function onCheckboxChange(): void {
 
 <template>
   <div class="block__content--checkbox">
-    <label :for="block.blockID" class="block__content--checkbox__label">
+    <label :for="block._id" class="block__content--checkbox__label">
       <input
         type="checkbox"
         class="block__content--checkbox__checkbox"
         name="checkbox"
         :checked="checkboxChecked"
         @change="onCheckboxChange"
-        :id="block.blockID"
+        :id="block._id"
       />
     </label>
     <p
