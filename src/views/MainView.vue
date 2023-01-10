@@ -75,9 +75,7 @@ function onMouseDown(): void {
   flex-basis: 0;
   flex-grow: 1;
   height: 100%;
-  flex-direction: row;
   position: relative;
-  display: flex;
   margin: 0;
   padding: 0;
 }

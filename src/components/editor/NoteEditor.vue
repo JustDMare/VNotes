@@ -52,7 +52,6 @@ watch(
           @input="processInput"
           v-html="note.title"
         ></h1>
-        <button @click="editorStore.saveNoteChanges()"></button>
       </header>
       <div id="note__list">
         <BlockList :block-list="note.content" />
@@ -69,6 +68,7 @@ watch(
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  overflow-y: scroll;
 }
 #note__title {
   font-size: 32px;
