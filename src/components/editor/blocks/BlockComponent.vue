@@ -120,7 +120,7 @@ function hideButtons(): void {
   color: rgba(0, 0, 0, 1);
 }
 :deep([contenteditable]:focus:empty::before) {
-  content: "Type '/' for commands";
+  content: attr(placeholder);
   color: rgba(0, 0, 0, 0.5);
 }
 
