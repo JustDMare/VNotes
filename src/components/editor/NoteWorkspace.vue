@@ -20,10 +20,9 @@ import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
   top: 0;
   left: 0;
   align-self: flex-start;
-  flex-basis: 2rem;
-  border-bottom: solid 1px black;
-  margin-left: -15px;
+  min-height: 2.5rem;
   width: 100%;
+  z-index: 3;
 }
 
 .workspace__editor {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useEditorStore } from "@/stores/editor";
-//TODO: CONTINUAR PONIENDO EL PLACEHOLDER A LOS BLOQUES PARA INTERNACIONALIZARLOS
 const editorStore = useEditorStore();
 </script>
 <template>
@@ -13,5 +12,7 @@ const editorStore = useEditorStore();
 <style scoped lang="scss">
 #workspace-header {
   display: flex;
+  border-bottom: solid 1px black;
+  background-color: var(--color-background);
 }
 </style>
