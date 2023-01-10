@@ -10,4 +10,8 @@ const editorStore = useEditorStore();
     </button>
   </menu>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+#workspace-header {
+  display: flex;
+}
+</style>
