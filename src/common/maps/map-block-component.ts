@@ -5,7 +5,7 @@ import {
   HeadingSmallBlock,
   PlainTextBlock,
 } from "@/components/editor/blocks";
-import type { BlockType } from "@/types";
+import type { BlockType } from "vnotes-types";
 import type { Component } from "vue";
 
 /**
