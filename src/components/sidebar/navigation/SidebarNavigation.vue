@@ -60,15 +60,16 @@ const sidebarContent = computed(() => {
 
     &__text,
     &__content-number {
-      padding: 0 6px;
       white-space: nowrap;
       font-size: inherit;
     }
     &__text {
+      padding: 0 6px;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     &__content-number {
+      padding: 0 4px;
       font-weight: 400;
       opacity: 0.8;
     }
