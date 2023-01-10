@@ -39,21 +39,21 @@ watch(
 );
 </script>
 <template>
-  <main id="note">
-    <article v-if="note">
+  <main id="note-editor">
+    <article id="note-editor__content" v-if="note">
       <header>
         <h1
           v-once
           contenteditable
           :placeholder="$t('note.titlePlaceholder')"
-          id="note__title"
+          id="note-editor__content__title"
           ref="noteTitle"
           @keydown="parseSpecialKeys"
           @input="processInput"
           v-html="note.title"
         ></h1>
       </header>
-      <div id="note__list">
+      <div id="note-editor__content__list">
         <BlockList :block-list="note.content" />
       </div>
     </article>
@@ -61,24 +61,27 @@ watch(
 </template>
 
 <style lang="scss">
-#note {
+#note-editor {
   width: 100%;
-  max-width: 900px;
-  padding: 0 6rem;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  overflow-y: scroll;
-}
-#note__title {
-  font-size: 32px;
-  font-weight: 700;
-  padding: 2px;
-}
 
-#note__list {
-  display: flex;
-  flex-direction: column;
+  &__content {
+    width: 100%;
+    max-width: 900px;
+    padding: 0 6rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    &__title {
+      font-size: 32px;
+      font-weight: 700;
+      padding: 2px;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
 
 [contenteditable] {
