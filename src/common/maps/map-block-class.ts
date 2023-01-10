@@ -1,4 +1,4 @@
-import type { BlockType } from "@/types";
+import type { BlockType } from "vnotes-types";
 
 /**
  * @readonly Returns a readonly map that contains all the BlockTypes and their matching CSS BEM
