@@ -62,7 +62,7 @@ function onCheckboxChange(): void {
       }"
       ref="blockHTMLContent"
       contenteditable
-      placeholder="$t('note.blockPlaceholder')"
+      :placeholder="$t('note.blockPlaceholder')"
       @keydown="parseSpecialKeys"
       @input="processInput"
     >
