@@ -1,5 +1,9 @@
 {
   "note": {
-    "titlePlaceholder": "Untitled"
+    "titlePlaceholder": "Untitled",
+    "blockPlaceholder": "Type '/' for commands"
+  },
+  "header": {
+    "saveChanges": "Save Changes"
   }
 }

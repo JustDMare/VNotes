@@ -1,5 +1,9 @@
 {
   "note": {
-    "titlePlaceholder": "Sin título"
+    "titlePlaceholder": "Sin título",
+    "blockPlaceholder": "Escribe '/' para acceder a los comandos"
+  },
+  "header": {
+    "saveChanges": "Guardar cambios"
   }
 }
