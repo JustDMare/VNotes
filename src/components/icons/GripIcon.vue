@@ -13,6 +13,7 @@ export default {};
     height="1em"
     preserveAspectRatio="xMidYMid meet"
     viewBox="0 0 24 24"
+    class="icon"
   >
     <g
       fill="none"
