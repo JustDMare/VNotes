@@ -4,8 +4,8 @@ import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
 </script>
 <template>
   <div id="workspace">
-    <NoteWorkspaceHeader class="workspace__header" />
-    <NoteEditor class="workspace__editor" />
+    <NoteWorkspaceHeader id="ws__header" />
+    <NoteEditor id="ws__editor" />
   </div>
 </template>
 <style scoped lang="scss">
@@ -15,7 +15,7 @@ import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
   overflow-y: scroll;
   position: relative;
 }
-.workspace__header {
+#ws__header {
   position: sticky;
   top: 0;
   left: 0;
@@ -25,7 +25,7 @@ import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
   z-index: 3;
 }
 
-.workspace__editor {
+#ws__editor {
   margin-top: 2.5rem;
 }
 </style>
