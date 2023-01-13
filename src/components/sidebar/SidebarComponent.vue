@@ -38,10 +38,8 @@ function onMouseDown(): void {
 <style scoped lang="scss">
 //variables
 #sidebar {
-  --resizer--size: 12px;
-
-  --sidebar-item--padding: 4px;
-  --sidebar-item--left-margin: var(--resizer--size);
+  --sidebar-item--padding: 8px;
+  --sidebar-item--margin: 6px;
 }
 
 #sidebar {
@@ -55,7 +53,7 @@ function onMouseDown(): void {
   color: var(--color-base-30);
   border-radius: 2px;
   padding: 0 0 0 var(--sidebar-item--padding);
-  margin-left: var(--sidebar-item--left-margin);
+  margin: 0 var(--sidebar-item--margin) 0 var(--sidebar-item--margin);
   background-color: transparent;
   border: 0;
   text-align: start;
@@ -69,17 +67,17 @@ function onMouseDown(): void {
 }
 .resizer {
   flex-basis: 1px;
-  z-index: 2;
+  z-index: 4;
   border-right: 1px solid rgba(0, 0, 0, 0.4);
-
   box-sizing: border-box;
+  width: 0;
 
   &-delimiter {
     cursor: col-resize;
     height: 100%;
     display: block;
-    right: calc(-1 / 2 * var(--resizer--size));
-    padding-left: var(--resizer--size);
+    right: 2px;
+    padding-left: 8px;
   }
 }
 </style>
