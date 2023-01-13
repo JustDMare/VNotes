@@ -4,6 +4,9 @@
     "blockPlaceholder": "Type '/' for commands"
   },
   "header": {
-    "saveChanges": "Save Changes"
+    "saveChanges": "Save"
+  },
+  "tooltips": {
+    "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S"
   }
 }
