@@ -68,7 +68,7 @@ function onMouseDown(): void {
 .resizer {
   flex-basis: 1px;
   z-index: 4;
-  border-right: 1px solid rgba(0, 0, 0, 0.4);
+  border-right: 1px solid var(--color-base-50);
   box-sizing: border-box;
   width: 0;
 
