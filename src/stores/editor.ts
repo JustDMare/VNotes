@@ -33,7 +33,6 @@ export const useEditorStore = defineStore("editor", {
         .then((data) => data.json())
         .then((json) => {
           this.noteInEditor = json.note;
-          console.log(this.noteInEditor);
         })
         .catch((error) => {
           this.noteInEditor = null;

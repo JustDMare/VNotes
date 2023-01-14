@@ -9,10 +9,6 @@ const noteLastUpdatedTime = computed(() => {
   if (!editorStore.noteInEditor) {
     return null;
   }
-  const timestamp = Number(editorStore.noteInEditor.lastUpdatedTime);
-  const timeDifference = Date.now() - timestamp;
-  const timePassed = new Date(timeDifference).getHours();
-  console.log(timePassed);
   return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
 });
 </script>
