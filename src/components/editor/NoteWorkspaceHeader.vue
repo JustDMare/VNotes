@@ -9,23 +9,29 @@ const noteLastUpdatedTime = computed(() => {
   if (!editorStore.noteInEditor) {
     return null;
   }
+  const timestamp = Number(editorStore.noteInEditor.lastUpdatedTime);
+  const timeDifference = Date.now() - timestamp;
+  const timePassed = new Date(timeDifference).getHours();
+  console.log(timePassed);
   return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
 });
 </script>
 
 <template>
   <menu id="ws__header">
-    <span v-if="noteLastUpdatedTime">
-      {{ $t("header.lastSaved", { date: noteLastUpdatedTime }) }}
-    </span>
-    <button
-      :title="$t('tooltips.saveButton')"
-      class="ws__header__btn"
-      @click="editorStore.saveNoteChanges()"
-    >
-      <SaveIcon />
-      <span>{{ $t("header.saveChanges") }}</span>
-    </button>
+    <div class="ws__header__save-section">
+      <span class="ws__header__save-section__text" v-if="noteLastUpdatedTime">
+        {{ $t("header.lastSaved", { date: noteLastUpdatedTime }) }}
+      </span>
+      <button
+        :title="$t('tooltips.saveButton')"
+        class="ws__header__btn ws__header__save-section__button"
+        @click="editorStore.saveNoteChanges()"
+      >
+        <SaveIcon />
+        <span>{{ $t("header.saveChanges") }}</span>
+      </button>
+    </div>
   </menu>
 </template>
 
@@ -37,6 +43,15 @@ const noteLastUpdatedTime = computed(() => {
   justify-content: end;
   box-shadow: -8px 13px 43px 0px rgba(0, 0, 0, 0.03);
   align-items: center;
+}
+.ws__header__save-section {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  &__text {
+    font-size: 0.875rem;
+    color: var(--color-base-40);
+  }
 }
 .ws__header__btn {
   background: var(--color-base-100);

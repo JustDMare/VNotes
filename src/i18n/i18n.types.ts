@@ -1,6 +1,6 @@
 export enum LOCALES {
-  EN = "en-UK",
-  ES = "es-ES",
+  EN = "en",
+  ES = "es",
 }
 
 export type Locale = LOCALES;
@@ -8,6 +8,6 @@ export type Locale = LOCALES;
 type LocaleValues = Record<LOCALES, { value: string; caption: string }>;
 
 export const localeValues: LocaleValues = {
-  "es-ES": { value: LOCALES.ES, caption: "Español" },
-  "en-UK": { value: LOCALES.EN, caption: "English" },
+  es: { value: "es-ES", caption: "Español" },
+  en: { value: "en-UK", caption: "English" },
 };
