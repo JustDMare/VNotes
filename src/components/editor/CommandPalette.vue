@@ -7,7 +7,9 @@ const editorStore = useEditorStore();
 const showCommandPalette = ref(false);
 let { x, y } = { x: 0, y: 0 };
 const cmdPalette = ref<HTMLElement | null>(null);
+const searchTerm = ref("");
 
+//TODO: Document. Should improve to displace the dialog if it doesn't fit on the screen.
 function getCommandPaletteCoordinates() {
   let { x, y } = { x: 0, y: 0 };
   const selection = window.getSelection();
@@ -22,7 +24,6 @@ function getCommandPaletteCoordinates() {
       selection.collapseToStart();
       const element: HTMLElement = selection.focusNode as HTMLElement;
       x = element.getBoundingClientRect().left;
-      
       y =
         element.getBoundingClientRect().top +
         element.getBoundingClientRect().height;
@@ -31,18 +32,69 @@ function getCommandPaletteCoordinates() {
   return { x, y };
 }
 
+function handleClickOutside(event: MouseEvent) {
+  if (cmdPalette.value) {
+    if (cmdPalette.value && !cmdPalette.value.contains(event.target as Node)) {
+      editorStore.setCommandPaletteOpen(false);
+    }
+  }
+}
+function handleSpecialKeys(event: KeyboardEvent) {
+  if (
+    event.code === "Escape" ||
+    event.code === "Space" ||
+    event.code === "Tab"
+  ) {
+    editorStore.setCommandPaletteOpen(false);
+  }
+  if (event.code === "Enter") {
+    editorStore.setCommandPaletteOpen(false); //Change to select the command
+  }
+  if (event.code === "Backspace" && searchTerm.value === "") {
+    editorStore.setCommandPaletteOpen(false);
+  }
+}
+/*TODO: Document. Mention that it doesn't support interactions like copy/paste
+ * and probably more, but it does support selecting (like with shift + arrows) and
+ * deleting multiple characters. However, checking all interactions adds too much complexity
+ * and it's not worth it.
+ * Also, doesn't support "Delete" key. Once again, too much complexity to be worth it.
+ */
+function handleKeypress(event: KeyboardEvent) {
+  if (event.key.length === 1) {
+    searchTerm.value += event.key;
+  }
+  if (event.code === "Backspace") {
+    let numberOfCharsToDelete = 1;
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount !== 0) {
+      const range = selection.getRangeAt(0).cloneRange();
+      if (range.startOffset !== range.endOffset) {
+        numberOfCharsToDelete = range.endOffset - range.startOffset;
+      }
+    }
+    searchTerm.value = searchTerm.value.slice(0, -numberOfCharsToDelete);
+  }
+}
+
 watch(
   () => editorStore.commandPaletteOpen,
-  (val: boolean) => {
-    if (val) {
+  (newVal: boolean, oldVal) => {
+    if (newVal) {
       ({ x, y } = getCommandPaletteCoordinates());
       if (cmdPalette.value) {
         cmdPalette.value.style.left = `${x}px`;
         cmdPalette.value.style.top = `${y}px`;
       }
       showCommandPalette.value = true;
-    } else {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeypress);
+      document.addEventListener("keydown", handleSpecialKeys);
+    } else if (newVal === false && newVal !== oldVal) {
       showCommandPalette.value = false;
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeypress);
+      document.removeEventListener("keydown", handleSpecialKeys);
     }
   }
 );
