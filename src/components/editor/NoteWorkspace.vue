@@ -1,13 +1,33 @@
 <script setup lang="ts">
 import NoteEditor from "./NoteEditor.vue";
+import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
 </script>
+
 <template>
   <div id="workspace">
-    <NoteEditor />
+    <NoteWorkspaceHeader id="ws__header" />
+    <NoteEditor id="ws__editor" />
   </div>
 </template>
+
 <style scoped lang="scss">
 #workspace {
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+#ws__header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  align-self: flex-start;
+  height: 3.5rem;
+  width: 100%;
+  z-index: 3;
+}
+
+#ws__editor {
+  margin-top: 2.5rem;
 }
 </style>

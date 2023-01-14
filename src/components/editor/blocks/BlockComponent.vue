@@ -41,20 +41,20 @@ function hideButtons(): void {
       :block="block"
     ></component>
     <div
-      class="block__button-wrapper"
+      class="block__btn-wrapper"
       @mouseover="showButtons"
       @mouseleave="hideButtons"
       @hover="showButtons"
     >
       <button
         v-show="buttonsVisible"
-        class="block__button"
+        class="block__btn"
         @click="createBlockBelow"
       >
-        <PlusIcon class="plus-icon" />
+        <PlusIcon class="block__btn__icon" />
       </button>
-      <button v-show="buttonsVisible" class="block__button">
-        <GripIcon class="plus-icon" />
+      <button v-show="buttonsVisible" class="block__btn">
+        <GripIcon class="block__btn__icon" />
       </button>
     </div>
   </div>
@@ -81,7 +81,7 @@ function hideButtons(): void {
     z-index: 1;
     padding: 2px;
   }
-  &__button {
+  &__btn {
     align-content: center;
     padding: 0;
     display: block;
@@ -110,7 +110,7 @@ function hideButtons(): void {
   }
 }
 
-.plus-icon {
+.block__btn__icon {
   width: 100%;
   height: 100%;
 }
@@ -129,35 +129,35 @@ function hideButtons(): void {
   &--text {
     margin-top: 2px;
 
-    & .block__button {
+    & .block__btn {
       top: 0px;
     }
   }
   &--heading__big {
     margin-top: 2em;
 
-    & .block__button {
+    & .block__btn {
       top: 9px;
     }
   }
   &--heading__medium {
     margin-top: 1.5em;
 
-    & .block__button {
+    & .block__btn {
       top: 5px;
     }
   }
   &--heading__small {
     margin-top: 1em;
 
-    & .block__button {
+    & .block__btn {
       top: 3px;
     }
   }
   &--checkbox {
     margin-top: 2px;
 
-    & .block__button {
+    & .block__btn {
       top: 0px;
     }
   }

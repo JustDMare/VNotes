@@ -1,5 +1,13 @@
 {
   "note": {
-    "titlePlaceholder": "Untitled"
+    "titlePlaceholder": "Untitled",
+    "blockPlaceholder": "Type '/' for commands"
+  },
+  "header": {
+    "lastSaved": "Last saved: {date}",
+    "saveChanges": "Save"
+  },
+  "tooltips": {
+    "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S"
   }
 }

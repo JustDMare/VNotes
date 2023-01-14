@@ -1,3 +1,4 @@
+import { useUserSpaceStore } from "@/stores/user-space";
 import { userSpaceMock } from "@/mock-data/workspace-mock";
 import type {
   AllPropertyTypesFromInterface,
@@ -37,6 +38,30 @@ export const useEditorStore = defineStore("editor", {
           this.noteInEditor = null;
           console.log(error);
         });
+    },
+    //TODO: Document and better error handling
+    saveNoteChanges() {
+      if (this.noteInEditor) {
+        fetch("http://localhost:3030/notes/update-content", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            _id: this.noteInEditor._id,
+            title: this.noteInEditor.title,
+            content: this.noteInEditor.content,
+          }),
+        })
+          .then((data) => data.json())
+          .then((json) => {
+            const userSpaceStore = useUserSpaceStore();
+            userSpaceStore.fetchAllUserSpaceContent();
+            this.noteInEditor = json.note;
+          })
+          .catch((error) => console.log(error));
+      }
     },
 
     //TODO: DOCUMENT ACTIONS

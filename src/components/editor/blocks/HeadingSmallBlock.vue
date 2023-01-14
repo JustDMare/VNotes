@@ -14,6 +14,7 @@ const { initialBlockContent, parseSpecialKeys, processInput } =
   <h3
     class="block__content--heading__small"
     contenteditable
+    :placeholder="$t('note.blockPlaceholder')"
     ref="blockHTMLContent"
     @keydown="parseSpecialKeys"
     @input="processInput"

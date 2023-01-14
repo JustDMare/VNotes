@@ -15,6 +15,7 @@ const { initialBlockContent, parseSpecialKeys, processInput } =
   <h1
     class="block__content--heading__big"
     contenteditable
+    :placeholder="$t('note.blockPlaceholder')"
     ref="blockHTMLContent"
     @keydown="parseSpecialKeys"
     @input="processInput"

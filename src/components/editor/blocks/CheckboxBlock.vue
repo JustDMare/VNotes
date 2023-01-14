@@ -62,6 +62,7 @@ function onCheckboxChange(): void {
       }"
       ref="blockHTMLContent"
       contenteditable
+      :placeholder="$t('note.blockPlaceholder')"
       @keydown="parseSpecialKeys"
       @input="processInput"
     >
@@ -100,7 +101,7 @@ function onCheckboxChange(): void {
     cursor: pointer;
 
     &:checked {
-      background: var(--color-accent) url("@/assets/icons/checked-icon.svg")
+      background: var(--color-base-10) url("@/assets/icons/checked-icon.svg")
         no-repeat center center / cover;
     }
   }

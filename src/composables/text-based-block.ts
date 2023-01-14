@@ -11,6 +11,7 @@ export function useTextBasedBlock(block: Block) {
   //TODO: Documentar que este watch comprueba los cambios que
   //puedan venir de la store central para sustituir los datos actuales por los heredados
   // Sirve como failsafe para guardar los datos previos en caso de error.
+  //TODO: Mencionarlo en la documentacion y en la presentacion
   watch(
     () => block.content,
     (inheritedContent) => {

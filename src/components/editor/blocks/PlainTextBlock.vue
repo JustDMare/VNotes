@@ -28,6 +28,7 @@ onMounted(() => {
     contenteditable
     @keydown="parseSpecialKeys"
     @input="processInput"
+    :placeholder="$t('note.blockPlaceholder')"
   >
     {{ initialBlockContent }}
   </p>

@@ -18,6 +18,7 @@ const {
   <h2
     class="block__content--heading__medium"
     contenteditable
+    :placeholder="$t('note.blockPlaceholder')"
     ref="blockHTMLContent"
     @keydown="parseSpecialKeys"
     @input="processInput"

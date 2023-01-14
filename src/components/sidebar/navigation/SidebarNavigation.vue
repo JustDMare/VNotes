@@ -33,9 +33,9 @@ const sidebarContent = computed(() => {
   --nav-icon-size: 1rem;
 }
 .nav {
-  margin-top: 0.5rem;
+  padding-top: 0.5rem;
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 :deep(.nav) {
@@ -71,6 +71,7 @@ const sidebarContent = computed(() => {
     &__content-number {
       font-weight: 400;
       opacity: 0.8;
+      text-align: end;
     }
   }
   .nav__icon {
