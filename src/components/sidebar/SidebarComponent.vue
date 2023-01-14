@@ -57,6 +57,7 @@ function onMouseDown(): void {
   background-color: transparent;
   border: 0;
   text-align: start;
+  transition: all 0.2s ease-in;
   &:hover {
     background-color: var(--color-base-80);
     color: var(--color-base-10);
