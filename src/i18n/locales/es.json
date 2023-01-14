@@ -4,6 +4,10 @@
     "blockPlaceholder": "Escribe '/' para acceder a los comandos"
   },
   "header": {
+    "lastSaved": "Ultima vez guardado: {date}",
     "saveChanges": "Guardar cambios"
+  },
+  "tooltips": {
+    "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S"
   }
 }

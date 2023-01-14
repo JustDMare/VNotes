@@ -4,6 +4,7 @@
     "blockPlaceholder": "Type '/' for commands"
   },
   "header": {
+    "lastSaved": "Last saved: {date}",
     "saveChanges": "Save"
   },
   "tooltips": {
