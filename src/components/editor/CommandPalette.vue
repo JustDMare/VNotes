@@ -78,7 +78,8 @@ function handleKeypress(event: KeyboardEvent) {
     searchTerm.value = searchTerm.value.slice(0, -numberOfCharsToDelete);
   }
 }
-
+//TODO: Cleanup code (functions, files, etc.)
+//TODO: Create the commands to be executed
 watch(
   () => editorStore.commandPaletteOpen,
   (newVal: boolean, oldVal) => {
