@@ -18,6 +18,7 @@ export const useEditorStore = defineStore("editor", {
     noteInEditor: null as Note | null,
     blockCreated: false as boolean,
     userSpace: userSpaceMock as UserSpace,
+    commandPaletteOpen: false as boolean,
   }),
 
   getters: {
@@ -118,6 +119,9 @@ export const useEditorStore = defineStore("editor", {
     },
     setBlockCreated(blockCreated: boolean): void {
       this.blockCreated = blockCreated;
+    },
+    setCommandPaletteOpen(commandPaletteOpen: boolean): void {
+      this.commandPaletteOpen = commandPaletteOpen;
     },
   },
 });

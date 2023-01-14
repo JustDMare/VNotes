@@ -82,6 +82,7 @@ function hideButtons(): void {
     padding: 2px;
   }
   &__btn {
+    position: relative;
     align-content: center;
     padding: 0;
     display: block;
@@ -91,6 +92,10 @@ function hideButtons(): void {
     background: transparent;
     border-radius: 4px;
     color: var(--color-base-50);
+    &__icon {
+      width: 100%;
+      height: 100%;
+    }
 
     &:hover {
       background-color: var(--color-base-80);
@@ -108,11 +113,6 @@ function hideButtons(): void {
       z-index: 0;
     }
   }
-}
-
-.block__btn__icon {
-  width: 100%;
-  height: 100%;
 }
 
 :deep([contenteditable]:not(:focus):empty::before) {

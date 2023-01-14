@@ -22,6 +22,9 @@ export function useTextBasedBlock(block: Block) {
   );
 
   function parseSpecialKeys(event: KeyboardEvent) {
+    if (event.key === "/") {
+      editorStore.setCommandPaletteOpen(true);
+    }
     if (event.code === "Enter" && !event.shiftKey) {
       event.preventDefault();
       editorStore.createBlockBelowBlockId(unref(block._id));
