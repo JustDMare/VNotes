@@ -54,9 +54,11 @@ function handleSpecialKeys(event: KeyboardEvent) {
     editorStore.setCommandPaletteOpen(false);
   }
 }
-/*TODO: Document. Mention that it doesn't support interactions like copy/paste
- * and probably more, but it does support selecting (like with shift + arrows) and
- * deleting multiple characters. However, checking all interactions adds too much complexity
+/*TODO: Document. Mention that it doesn't support more complex interactions like copy/paste,
+ * adding or removing chars in the middle of the term, etc.
+ * It does support selecting from the end (like with shift + left arrow) to
+ * delete multiple chars.
+ * Checking all interactions adds too much complexity
  * and it's not worth it.
  * Also, doesn't support "Delete" key. Once again, too much complexity to be worth it.
  */
