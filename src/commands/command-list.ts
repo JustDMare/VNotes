@@ -10,13 +10,14 @@ import {
 import { i18n } from "@/i18n/i18n.plugin";
 import convertBlockTypeCommand from "./convert-block-type";
 import deleteBlockCommand from "./delete-block";
-//TODO: Document this
-const COMMAND_LIST = (): Command[] => {
-  const allCommands = CONVERT_BLOCK_TYPE_COMMANDS().concat(EDITOR_COMMANDS());
-  return allCommands;
-};
 
-const CONVERT_BLOCK_TYPE_COMMANDS = (): Command[] => {
+//TODO: Document this
+function getCommandList(): Command[] {
+  const allCommands = getConvertBlockTypeCommands().concat(getEditorCommands());
+  return allCommands;
+}
+
+function getConvertBlockTypeCommands(): Command[] {
   const t = i18n.global.t;
   return [
     {
@@ -68,9 +69,9 @@ const CONVERT_BLOCK_TYPE_COMMANDS = (): Command[] => {
       tag: "todo",
     },
   ];
-};
+}
 
-const EDITOR_COMMANDS = (): Command[] => {
+function getEditorCommands(): Command[] {
   const t = i18n.global.t;
   return [
     {
@@ -80,6 +81,6 @@ const EDITOR_COMMANDS = (): Command[] => {
       description: t("commandPalette.editor.deleteBlock.description"),
     },
   ];
-};
+}
 
-export default COMMAND_LIST;
+export default getCommandList;
