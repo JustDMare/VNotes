@@ -17,6 +17,10 @@ const cmdPalette = ref<HTMLElement | null>(null);
 function executeCommand(command: Command) {
   command.execute();
   editorStore.setCommandPaletteOpen(false);
+  if (editorStore.blockOpeningCommandPalette) {
+    editorStore.blockOpeningCommandPalette.content =
+      blockContentBeforeCommand.value;
+  }
 }
 
 //TODO: Document. Should improve to displace the dialog if it doesn't fit on the screen.
@@ -100,6 +104,10 @@ watch(
         cmdPalette.value.style.left = `${x}px`;
         cmdPalette.value.style.top = `${y}px`;
       }
+      if (editorStore.blockOpeningCommandPalette) {
+        blockContentBeforeCommand.value =
+          editorStore.blockOpeningCommandPalette.content;
+      }
       showCommandPalette.value = true;
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleKeypress);
@@ -110,6 +118,7 @@ watch(
       document.removeEventListener("keydown", handleSpecialKeys);
       showCommandPalette.value = false;
       searchTerm.value = "";
+      blockContentBeforeCommand.value = "";
     }
   }
 );
@@ -133,10 +142,8 @@ watch(
 <style lang="scss" scoped>
 .cmd-palette {
   position: absolute;
-  padding: 6px;
+  padding: 0.5rem;
   border-radius: 6px;
-  top: 0;
-  left: 0;
   height: 200px;
   overflow-y: auto;
   background-color: var(--color-base-100);

@@ -13,7 +13,7 @@ export default function convertBlockTypeCommand(
     }
   };
 }
-
+//TODO: Modify so that conversion is done in the store
 function handleBlockConversion(block: Block, blockType: BlockType) {
   if (block.type === blockType) {
     return;
