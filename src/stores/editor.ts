@@ -1,5 +1,4 @@
 import { useUserSpaceStore } from "@/stores/user-space";
-import { userSpaceMock } from "@/mock-data/workspace-mock";
 import type {
   AllPropertyTypesFromInterface,
   Block,
@@ -7,7 +6,6 @@ import type {
   BlockUniqueProperties,
   CheckboxBlock,
   PlainTextBlock,
-  UserSpace,
   Note,
 } from "vnotes-types";
 
@@ -17,7 +15,6 @@ export const useEditorStore = defineStore("editor", {
   state: () => ({
     noteInEditor: null as Note | null,
     blockCreated: false as boolean,
-    userSpace: userSpaceMock as UserSpace,
     commandPaletteOpen: false as boolean,
   }),
 
