@@ -21,46 +21,50 @@ const CONVERT_BLOCK_TYPE_COMMANDS = (): Command[] => {
   return [
     {
       icon: PlainTextIcon,
-      name: "Plain text",
+      name: t("commandPalette.convertBlockType.plainText.name"),
       execute: convertBlockTypeCommand("63b9531a4bca2b32bd80103c", "text"),
-      description: "",
+      description: t("commandPalette.convertBlockType.plainText.description"),
       tag: "p",
     },
     {
       icon: HeadingBigIcon,
-      name: "help",
+      name: t("commandPalette.convertBlockType.headingBig.name"),
       execute: convertBlockTypeCommand(
         "63b9531a4bca2b32bd80103c",
         "heading_big"
       ),
-      description: "a",
+      description: t("commandPalette.convertBlockType.headingBig.description"),
       tag: "h1",
     },
     {
       icon: HeadingMediumIcon,
-      name: "help",
+      name: t("commandPalette.convertBlockType.headingMedium.name"),
       execute: convertBlockTypeCommand(
         "63b9531a4bca2b32bd80103c",
         "heading_medium"
       ),
-      description: "a",
+      description: t(
+        "commandPalette.convertBlockType.headingMedium.description"
+      ),
       tag: "h2",
     },
     {
       icon: HeadingSmallIcon,
-      name: "help",
+      name: t("commandPalette.convertBlockType.headingSmall.name"),
       execute: convertBlockTypeCommand(
         "63b9531a4bca2b32bd80103c",
         "heading_small"
       ),
-      description: "a",
+      description: t(
+        "commandPalette.convertBlockType.headingSmall.description"
+      ),
       tag: "h3",
     },
     {
       icon: CheckboxIcon,
-      name: "help",
+      name: t("commandPalette.convertBlockType.checkbox.name"),
       execute: convertBlockTypeCommand("63b9531a4bca2b32bd80103c", "checkbox"),
-      description: "a",
+      description: t("commandPalette.convertBlockType.checkbox.description"),
       tag: "todo",
     },
   ];
@@ -71,9 +75,9 @@ const EDITOR_COMMANDS = (): Command[] => {
   return [
     {
       icon: TrashIcon,
-      name: "Plain text",
+      name: t("commandPalette.editor.deleteBlock.name"),
       execute: deleteBlockCommand("63b9531a4bca2b32bd80103c"),
-      description: "",
+      description: t("commandPalette.editor.deleteBlock.description"),
     },
   ];
 };
