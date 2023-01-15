@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatLongDateAndTime } from "@/common";
+import { formatLongDateAndTime } from "@/utils";
 import { useEditorStore } from "@/stores/editor";
 import { computed } from "vue";
 import { SaveIcon } from "../icons";

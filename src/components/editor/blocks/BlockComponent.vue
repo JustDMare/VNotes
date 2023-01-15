@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GripIcon, PlusIcon } from "@/components/icons";
-import { getBlockComponentMap, getBlockClassMap } from "@/common/maps";
+import { getBlockComponentMap, getBlockClassMap } from "@/mappings";
 import { useEditorStore } from "@/stores/editor";
 import type { Block, BlockType } from "vnotes-types";
 import { type PropType, ref, type Component } from "vue";
