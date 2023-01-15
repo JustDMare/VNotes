@@ -45,7 +45,7 @@ const sidebarContent = computed(() => {
   .nav__note {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
+    row-gap: 4px;
   }
   &,
   .nav__folder__content {
@@ -57,7 +57,7 @@ const sidebarContent = computed(() => {
     grid-template-columns: var(--nav-icon-size) var(--nav-icon-size) 9fr 1fr;
     column-gap: 2px;
     text-decoration: none;
-
+    padding: 2px 0;
     &__text,
     &__content-number {
       padding: 0 6px;
