@@ -83,7 +83,7 @@ function handleKeypress(event: KeyboardEvent) {
 watch(
   () => editorStore.commandPaletteOpen,
   (newVal: boolean, oldVal) => {
-    if (newVal) {
+    if (newVal && newVal !== oldVal) {
       ({ x, y } = getCommandPaletteCoordinates());
       if (cmdPalette.value) {
         cmdPalette.value.style.left = `${x}px`;
@@ -94,10 +94,10 @@ watch(
       document.addEventListener("keydown", handleKeypress);
       document.addEventListener("keydown", handleSpecialKeys);
     } else if (newVal === false && newVal !== oldVal) {
-      showCommandPalette.value = false;
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeypress);
       document.removeEventListener("keydown", handleSpecialKeys);
+      showCommandPalette.value = false;
     }
   }
 );
