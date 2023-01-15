@@ -11,31 +11,31 @@
     "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S"
   },
   "commandPalette": {
-    "convertType": {
+    "convertBlockType": {
       "plainText": {
-        "title": "Texto sin formato",
+        "name": "Texto sin formato",
         "description": "Convertir en texto sin formato"
       },
       "headingBig": {
-        "title": "Encabezado grande",
+        "name": "Encabezado grande",
         "description": "Convertir a encabezado H1"
       },
       "headingMedium": {
-        "title": "Encabezado mediano",
+        "name": "Encabezado mediano",
         "description": "Convertir a encabezado H2"
       },
       "headingSmall": {
-        "title": "Encabezado pequeño",
+        "name": "Encabezado pequeño",
         "description": "Convertir a encabezado H3"
       },
       "checkbox": {
-        "title": "Casilla de verificación",
+        "name": "Casilla de verificación",
         "description": "Convertir en casilla de verificación"
       }
     },
     "editor": {
       "deleteBlock": {
-        "title": "Delete block",
+        "name": "Delete block",
         "description": "Eliminar bloque actual"
       }
     }

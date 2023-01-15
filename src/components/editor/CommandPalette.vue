@@ -1,11 +1,15 @@
 <script lang="ts" setup>
+import COMMAND_LIST from "@/commands/command-list";
+import type { Command } from "@/commands/interfaces";
 import { useEditorStore } from "@/stores/editor";
-import { ref, watch } from "vue";
+import { ref, shallowRef, watch, type ShallowRef } from "vue";
 
 const editorStore = useEditorStore();
 
 const showCommandPalette = ref(false);
 let { x, y } = { x: 0, y: 0 };
+let commands: ShallowRef<Command[]> = shallowRef(COMMAND_LIST());
+
 const cmdPalette = ref<HTMLElement | null>(null);
 const searchTerm = ref("");
 
@@ -105,7 +109,11 @@ watch(
 
 <template>
   <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette">
-    HELLO
+    <div v-for="command in commands" :key="command.name">
+      <component :is="command.icon" />
+      <span>{{ command.name }}</span>
+      <span>{{ command.description }}</span>
+    </div>
   </dialog>
 </template>
 
@@ -114,8 +122,8 @@ watch(
   position: absolute;
   top: 0;
   left: 0;
-  width: 40px;
-  height: 50px;
+  width: 300px;
+  height: 350px;
   background-color: #fff;
   border: 1px solid #000;
   z-index: 10;

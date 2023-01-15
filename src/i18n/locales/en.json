@@ -11,31 +11,31 @@
     "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S"
   },
   "commandPalette": {
-    "convertType": {
+    "convertBlockType": {
       "plainText": {
-        "title": "Plain text",
+        "name": "Plain text",
         "description": "Convert to plain text"
       },
       "headingBig": {
-        "title": "Heading big",
+        "name": "Heading big",
         "description": "Convert to H1 heading"
       },
       "headingMedium": {
-        "title": "Heading medium",
+        "name": "Heading medium",
         "description": "Convert to H2 heading"
       },
       "headingSmall": {
-        "title": "Heading small",
+        "name": "Heading small",
         "description": "Convert to H3 heading"
       },
       "checkbox": {
-        "title": "Checkbox",
+        "name": "Checkbox",
         "description": "Convert to checkbox"
       }
     },
     "editor": {
       "deleteBlock": {
-        "title": "Delete block",
+        "name": "Delete block",
         "description": "Deletes the current block"
       }
     }
