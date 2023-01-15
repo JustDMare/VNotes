@@ -120,6 +120,14 @@ export const useEditorStore = defineStore("editor", {
     setCommandPaletteOpen(commandPaletteOpen: boolean): void {
       this.commandPaletteOpen = commandPaletteOpen;
     },
+    deleteBlockById(blockId: string): void {
+      if (this.noteInEditor) {
+        const blockIndex = this.noteInEditor.content.findIndex(
+          (block: Block) => block._id === blockId
+        );
+        this.noteInEditor.content.splice(blockIndex, 1);
+      }
+    },
   },
 });
 //TODO: Documentar

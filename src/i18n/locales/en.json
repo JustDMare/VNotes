@@ -9,5 +9,6 @@
   },
   "tooltips": {
     "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S"
-  }
+  },
+  "commandPalette": {}
 }

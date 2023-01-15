@@ -5,5 +5,5 @@ export interface Command {
   name: string;
   execute: () => void;
   description: string;
-  shorthand: string;
+  tag?: string;
 }
