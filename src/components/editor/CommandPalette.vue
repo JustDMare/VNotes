@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import COMMAND_LIST from "@/commands/command-list";
+import getCommandList from "@/commands/command-list";
 import type { Command } from "@/commands/interfaces";
 import { useEditorStore } from "@/stores/editor";
 import { ref, shallowRef, watch, type ShallowRef } from "vue";
@@ -8,7 +8,7 @@ const editorStore = useEditorStore();
 
 const showCommandPalette = ref(false);
 let { x, y } = { x: 0, y: 0 };
-let commands: ShallowRef<Command[]> = shallowRef(COMMAND_LIST());
+let commands: ShallowRef<Command[]> = shallowRef(getCommandList());
 
 const cmdPalette = ref<HTMLElement | null>(null);
 const searchTerm = ref("");
@@ -122,8 +122,8 @@ watch(
   position: absolute;
   top: 0;
   left: 0;
-  width: 300px;
-  height: 350px;
+  height: 150px;
+  overflow-y: auto;
   background-color: #fff;
   border: 1px solid #000;
   z-index: 10;
