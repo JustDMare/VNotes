@@ -10,7 +10,7 @@ import {
 import { i18n } from "@/i18n/i18n.plugin";
 import convertBlockTypeCommand from "./convert-block-type";
 import deleteBlockCommand from "./delete-block";
-
+//TODO: Document this
 const COMMAND_LIST = (): Command[] => {
   const allCommands = CONVERT_BLOCK_TYPE_COMMANDS().concat(EDITOR_COMMANDS());
   return allCommands;

@@ -10,5 +10,34 @@
   "tooltips": {
     "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S"
   },
-  "commandPalette": {}
+  "commandPalette": {
+    "convertType": {
+      "plainText": {
+        "title": "Plain text",
+        "description": "Convert to plain text"
+      },
+      "headingBig": {
+        "title": "Heading big",
+        "description": "Convert to H1 heading"
+      },
+      "headingMedium": {
+        "title": "Heading medium",
+        "description": "Convert to H2 heading"
+      },
+      "headingSmall": {
+        "title": "Heading small",
+        "description": "Convert to H3 heading"
+      },
+      "checkbox": {
+        "title": "Checkbox",
+        "description": "Convert to checkbox"
+      }
+    },
+    "editor": {
+      "deleteBlock": {
+        "title": "Delete block",
+        "description": "Deletes the current block"
+      }
+    }
+  }
 }
