@@ -1,8 +1,11 @@
 import { useEditorStore } from "@/stores/editor";
 
-export default function deleteBlockCommand(blockId: string): () => void {
+export default function deleteBlockCommand(): () => void {
   return function (): void {
     const editorStore = useEditorStore();
-    editorStore.deleteBlockById(blockId);
+    const block = editorStore.blockOpeningCommandPalette;
+    if (block) {
+      editorStore.deleteBlockById(block._id);
+    }
   };
 }

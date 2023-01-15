@@ -23,27 +23,21 @@ function getConvertBlockTypeCommands(): Command[] {
     {
       icon: PlainTextIcon,
       name: t("commandPalette.convertBlockType.plainText.name"),
-      execute: convertBlockTypeCommand("63b9531a4bca2b32bd80103c", "text"),
+      execute: convertBlockTypeCommand("text"),
       description: t("commandPalette.convertBlockType.plainText.description"),
       tag: "p",
     },
     {
       icon: HeadingBigIcon,
       name: t("commandPalette.convertBlockType.headingBig.name"),
-      execute: convertBlockTypeCommand(
-        "63b9531a4bca2b32bd80103c",
-        "heading_big"
-      ),
+      execute: convertBlockTypeCommand("heading_big"),
       description: t("commandPalette.convertBlockType.headingBig.description"),
       tag: "h1",
     },
     {
       icon: HeadingMediumIcon,
       name: t("commandPalette.convertBlockType.headingMedium.name"),
-      execute: convertBlockTypeCommand(
-        "63b9531a4bca2b32bd80103c",
-        "heading_medium"
-      ),
+      execute: convertBlockTypeCommand("heading_medium"),
       description: t(
         "commandPalette.convertBlockType.headingMedium.description"
       ),
@@ -52,10 +46,7 @@ function getConvertBlockTypeCommands(): Command[] {
     {
       icon: HeadingSmallIcon,
       name: t("commandPalette.convertBlockType.headingSmall.name"),
-      execute: convertBlockTypeCommand(
-        "63b9531a4bca2b32bd80103c",
-        "heading_small"
-      ),
+      execute: convertBlockTypeCommand("heading_small"),
       description: t(
         "commandPalette.convertBlockType.headingSmall.description"
       ),
@@ -64,7 +55,7 @@ function getConvertBlockTypeCommands(): Command[] {
     {
       icon: CheckboxIcon,
       name: t("commandPalette.convertBlockType.checkbox.name"),
-      execute: convertBlockTypeCommand("63b9531a4bca2b32bd80103c", "checkbox"),
+      execute: convertBlockTypeCommand("checkbox"),
       description: t("commandPalette.convertBlockType.checkbox.description"),
       tag: "todo",
     },
@@ -77,7 +68,7 @@ function getEditorCommands(): Command[] {
     {
       icon: TrashIcon,
       name: t("commandPalette.editor.deleteBlock.name"),
-      execute: deleteBlockCommand("63b9531a4bca2b32bd80103c"),
+      execute: deleteBlockCommand(),
       description: t("commandPalette.editor.deleteBlock.description"),
     },
   ];

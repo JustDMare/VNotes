@@ -3,7 +3,6 @@ import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
 import { useTextBasedBlock } from "@/composables/text-based-block";
 import { useEditorStore } from "@/stores/editor";
 import type { CheckboxBlock } from "vnotes-types";
-
 import { onMounted, ref, watch, type PropType, type Ref } from "vue";
 
 const props = defineProps({

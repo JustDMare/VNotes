@@ -1,15 +1,28 @@
 import { useEditorStore } from "@/stores/editor";
-import type { BlockType } from "vnotes-types";
+import type { Block, BlockType } from "vnotes-types";
 
+//TODO: Document
 export default function convertBlockTypeCommand(
-  blockId: string,
   blockType: BlockType
 ): () => void {
   return function (): void {
     const editorStore = useEditorStore();
-    const block = editorStore.getBlockInEditorById(blockId);
+    const block = editorStore.blockOpeningCommandPalette;
     if (block) {
-      block.type = blockType;
+      handleBlockConversion(block, blockType);
     }
   };
+}
+
+function handleBlockConversion(block: Block, blockType: BlockType) {
+  if (block.type === blockType) {
+    return;
+  }
+  if (
+    blockType === "checkbox" &&
+    block.uniqueProperties.selected === undefined
+  ) {
+    block.uniqueProperties = { selected: false };
+  }
+  block.type = blockType;
 }

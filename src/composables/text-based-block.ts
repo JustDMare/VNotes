@@ -24,6 +24,7 @@ export function useTextBasedBlock(block: Block) {
   function parseSpecialKeys(event: KeyboardEvent) {
     if (event.key === "/") {
       editorStore.setCommandPaletteOpen(true);
+      editorStore.setBlockOpeningCommandPalette(block);
     }
     if (event.code === "Enter" && !event.shiftKey) {
       event.preventDefault();

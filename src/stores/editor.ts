@@ -16,6 +16,7 @@ export const useEditorStore = defineStore("editor", {
     noteInEditor: null as Note | null,
     blockCreated: false as boolean,
     commandPaletteOpen: false as boolean,
+    blockOpeningCommandPalette: null as Block | null,
   }),
 
   getters: {
@@ -119,6 +120,9 @@ export const useEditorStore = defineStore("editor", {
     },
     setCommandPaletteOpen(commandPaletteOpen: boolean): void {
       this.commandPaletteOpen = commandPaletteOpen;
+    },
+    setBlockOpeningCommandPalette(block: Block): void {
+      this.blockOpeningCommandPalette = block;
     },
     deleteBlockById(blockId: string): void {
       if (this.noteInEditor) {

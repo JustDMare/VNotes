@@ -2,16 +2,22 @@
 import getCommandList from "@/commands/command-list";
 import type { Command } from "@/commands/interfaces";
 import { useEditorStore } from "@/stores/editor";
-import { ref, shallowRef, watch, type ShallowRef } from "vue";
+import { ref, shallowRef, watch } from "vue";
 
 const editorStore = useEditorStore();
 
-const showCommandPalette = ref(false);
 let { x, y } = { x: 0, y: 0 };
-let commands: ShallowRef<Command[]> = shallowRef(getCommandList());
+const showCommandPalette = ref(false);
+const commands = shallowRef<Command[]>(getCommandList());
+const blockContentBeforeCommand = ref("");
+const searchTerm = ref("");
 
 const cmdPalette = ref<HTMLElement | null>(null);
-const searchTerm = ref("");
+
+function executeCommand(command: Command) {
+  command.execute();
+  editorStore.setCommandPaletteOpen(false);
+}
 
 //TODO: Document. Should improve to displace the dialog if it doesn't fit on the screen.
 function getCommandPaletteCoordinates() {
@@ -44,6 +50,7 @@ function handleClickOutside(event: MouseEvent) {
   }
 }
 function handleSpecialKeys(event: KeyboardEvent) {
+  console.log(searchTerm.value);
   if (
     event.code === "Escape" ||
     event.code === "Space" ||
@@ -102,6 +109,7 @@ watch(
       document.removeEventListener("keydown", handleKeypress);
       document.removeEventListener("keydown", handleSpecialKeys);
       showCommandPalette.value = false;
+      searchTerm.value = "";
     }
   }
 );
@@ -110,9 +118,14 @@ watch(
 <template>
   <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette">
     <div v-for="command in commands" :key="command.name">
-      <component :is="command.icon" />
-      <span>{{ command.name }}</span>
-      <span>{{ command.description }}</span>
+      <button
+        @click="executeCommand(command)"
+        :title="command.description"
+        class="cmd-palette__command"
+      >
+        <component :is="command.icon" />
+        <span class="cmd-palette__command__name">{{ command.name }}</span>
+      </button>
     </div>
   </dialog>
 </template>
@@ -120,12 +133,34 @@ watch(
 <style lang="scss" scoped>
 .cmd-palette {
   position: absolute;
+  padding: 6px;
+  border-radius: 6px;
   top: 0;
   left: 0;
-  height: 150px;
+  height: 200px;
   overflow-y: auto;
-  background-color: #fff;
-  border: 1px solid #000;
+  background-color: var(--color-base-100);
+  border: 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   z-index: 10;
+
+  &__command {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    width: 100%;
+    padding: 0.5rem;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--color-base-80);
+    }
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-right: 0.5rem;
+    }
+  }
 }
 </style>
