@@ -15,6 +15,9 @@ const searchTerm = ref("");
 
 const cmdPalette = ref<HTMLElement | null>(null);
 
+const MAX_HEIGHT = 200; //TODO: Improve this
+const highlightedCommandIndex = ref(0);
+
 function executeCommand(command: Command) {
   command.execute();
   editorStore.setCommandPaletteOpen(false);
@@ -26,12 +29,9 @@ function executeCommand(command: Command) {
 
 const filteredCommands = computed(() => {
   const query = searchTerm.value;
-
   if (query === "") {
     return commands.value;
   }
-
-  console.log(filteredCommands);
   return matchSorter(commands.value, query, {
     keys: ["name", "tag", "description"],
   });
@@ -49,14 +49,22 @@ function getCommandPaletteCoordinates() {
     const rect = range.getClientRects()[0];
     if (rect) {
       x = rect.left;
-      y = rect.top + rect.height;
+      if (rect.top + rect.height + MAX_HEIGHT > window.innerHeight) {
+        y = rect.top - MAX_HEIGHT;
+      } else {
+        y = rect.top + rect.height;
+      }
     } else {
       selection.collapseToStart();
       const element: HTMLElement = selection.focusNode as HTMLElement;
       x = element.getBoundingClientRect().left;
-      y =
-        element.getBoundingClientRect().top +
-        element.getBoundingClientRect().height;
+      const clientRectTop = element.getBoundingClientRect().top;
+      const clientRectHeight = element.getBoundingClientRect().height;
+      if (clientRectTop + clientRectHeight + MAX_HEIGHT > window.innerHeight) {
+        y = clientRectTop - MAX_HEIGHT;
+      } else {
+        y = clientRectTop + clientRectHeight;
+      }
     }
   }
   return { x, y };
@@ -70,13 +78,35 @@ function handleClickOutside(event: MouseEvent) {
   }
 }
 function handleSpecialKeys(event: KeyboardEvent) {
-  if (
-    event.code === "Escape" ||
-    event.code === "Space" ||
-    event.code === "Tab"
-  ) {
+  if (event.code === "Escape" || event.code === "Tab") {
     editorStore.setCommandPaletteOpen(false);
   }
+  if (event.code === "Space" && !filteredCommands.value.length) {
+    editorStore.setCommandPaletteOpen(false);
+  }
+  if (event.code === "ArrowDown") {
+    if (filteredCommands.value.length > highlightedCommandIndex.value + 1) {
+      highlightedCommandIndex.value++;
+      //TODO: Scroll to view
+    }
+  }
+  if (event.code === "ArrowUp") {
+    if (highlightedCommandIndex.value > 0) {
+      highlightedCommandIndex.value--;
+    }
+  }
+  if (event.code === "ArrowUp") {
+    const selectedCommand = document.querySelector(".selected");
+    if (selectedCommand) {
+      const previousCommand = selectedCommand.previousElementSibling;
+      if (previousCommand) {
+        selectedCommand.classList.remove("selected");
+        previousCommand.classList.add("selected");
+        previousCommand.scrollIntoView({ block: "nearest" });
+      }
+    }
+  }
+
   if (event.code === "Enter") {
     editorStore.setCommandPaletteOpen(false); //Change to select the command
   }
@@ -108,6 +138,15 @@ function handleKeypress(event: KeyboardEvent) {
     searchTerm.value = searchTerm.value.slice(0, -numberOfCharsToDelete);
   }
 }
+watch(
+  () => filteredCommands.value,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      highlightedCommandIndex.value = 0;
+      //TODO: Scroll to start if needed
+    }
+  }
+);
 //TODO: Cleanup code (functions, files, etc.)
 //TODO: Create the commands to be executed
 watch(
@@ -135,6 +174,7 @@ watch(
       searchTerm.value = "";
       blockContentBeforeCommand.value = "";
       commands.value = getCommandList();
+      cmdPalette?.value?.scrollTo(0, 0);
     }
   }
 );
@@ -142,25 +182,33 @@ watch(
 
 <template>
   <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette">
-    <div v-for="command in filteredCommands" :key="command.name">
-      <button
-        @click="executeCommand(command)"
-        :title="command.description"
-        class="cmd-palette__command"
-      >
-        <component :is="command.icon" />
-        <span class="cmd-palette__command__name">{{ command.name }}</span>
-      </button>
+    <div v-if="filteredCommands.length">
+      <div v-for="(command, index) in filteredCommands" :key="command.name">
+        <button
+          @click="executeCommand(command)"
+          :title="command.description"
+          class="cmd-palette__command"
+          :class="{ selected: index === highlightedCommandIndex }"
+          @mouseenter="highlightedCommandIndex = index"
+        >
+          <component :is="command.icon" />
+          <span class="cmd-palette__command__name">{{ command.name }}</span>
+        </button>
+      </div>
+    </div>
+    <div v-else>
+      <p>{{ $t("commandPalette.noCommands") }}</p>
     </div>
   </dialog>
 </template>
-
+//TODO: ANIMATION
 <style lang="scss" scoped>
 .cmd-palette {
   position: absolute;
   padding: 0.5rem;
   border-radius: 6px;
   max-height: 200px;
+  width: 240px;
   overflow-y: auto;
   background-color: var(--color-base-100);
   border: 0;
@@ -176,6 +224,7 @@ watch(
     border: 0;
     background-color: transparent;
     cursor: pointer;
+    &.selected,
     &:hover {
       background-color: var(--color-base-80);
     }

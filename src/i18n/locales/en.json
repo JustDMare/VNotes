@@ -38,6 +38,7 @@
         "name": "Delete block",
         "description": "Deletes the current block"
       }
-    }
+    },
+    "noCommands": "No commands found"
   }
 }

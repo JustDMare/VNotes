@@ -35,9 +35,10 @@
     },
     "editor": {
       "deleteBlock": {
-        "name": "Delete block",
+        "name": "Eliminar bloque",
         "description": "Eliminar bloque actual"
       }
-    }
+    },
+    "noCommands": "No se han encontrado comandos"
   }
 }
