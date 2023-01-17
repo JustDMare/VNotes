@@ -2,7 +2,8 @@
 import getCommandList from "@/commands/command-list";
 import type { Command } from "@/commands/interfaces";
 import { useEditorStore } from "@/stores/editor";
-import { ref, shallowRef, watch } from "vue";
+import { computed, ref, shallowRef, watch } from "vue";
+import { matchSorter } from "match-sorter";
 
 const editorStore = useEditorStore();
 
@@ -22,6 +23,21 @@ function executeCommand(command: Command) {
       blockContentBeforeCommand.value;
   }
 }
+
+const filteredCommands = computed(() => {
+  const query = searchTerm.value;
+
+  if (query === "") {
+    return commands.value;
+  }
+
+  console.log(filteredCommands);
+  return matchSorter(commands.value, query, {
+    keys: ["name", "tag", "description"],
+  });
+});
+//TODO: RESET SCROLL ON CREATION
+//IMPROVE STYLING
 
 //TODO: Document. Should improve to displace the dialog if it doesn't fit on the screen.
 function getCommandPaletteCoordinates() {
@@ -54,7 +70,6 @@ function handleClickOutside(event: MouseEvent) {
   }
 }
 function handleSpecialKeys(event: KeyboardEvent) {
-  console.log(searchTerm.value);
   if (
     event.code === "Escape" ||
     event.code === "Space" ||
@@ -78,7 +93,7 @@ function handleSpecialKeys(event: KeyboardEvent) {
  * Also, doesn't support "Delete" key. Once again, too much complexity to be worth it.
  */
 function handleKeypress(event: KeyboardEvent) {
-  if (event.key.length === 1) {
+  if (event.key.length === 1 && event.key !== "/") {
     searchTerm.value += event.key;
   }
   if (event.code === "Backspace") {
@@ -110,7 +125,7 @@ watch(
       }
       showCommandPalette.value = true;
       document.addEventListener("mousedown", handleClickOutside);
-      document.addEventListener("keydown", handleKeypress);
+      document.addEventListener("keyup", handleKeypress);
       document.addEventListener("keydown", handleSpecialKeys);
     } else if (newVal === false && newVal !== oldVal) {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -119,6 +134,7 @@ watch(
       showCommandPalette.value = false;
       searchTerm.value = "";
       blockContentBeforeCommand.value = "";
+      commands.value = getCommandList();
     }
   }
 );
@@ -126,7 +142,7 @@ watch(
 
 <template>
   <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette">
-    <div v-for="command in commands" :key="command.name">
+    <div v-for="command in filteredCommands" :key="command.name">
       <button
         @click="executeCommand(command)"
         :title="command.description"
@@ -144,7 +160,7 @@ watch(
   position: absolute;
   padding: 0.5rem;
   border-radius: 6px;
-  height: 200px;
+  max-height: 200px;
   overflow-y: auto;
   background-color: var(--color-base-100);
   border: 0;
