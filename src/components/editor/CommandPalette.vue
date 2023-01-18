@@ -204,7 +204,7 @@ watch(
       showCommandPalette.value = true;
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleSpecialKeys);
-      document.addEventListener("keyup", handleKeypress);
+      document.addEventListener("keydown", handleKeypress);
     } else if (newVal === false && newVal !== oldVal) {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleSpecialKeys);
