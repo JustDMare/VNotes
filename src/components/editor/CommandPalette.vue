@@ -21,7 +21,6 @@ const isPositionedOnTop = ref(false);
 
 function executeCommand(command: Command) {
   command.execute();
-  editorStore.setCommandPaletteOpen(false);
   if (editorStore.blockOpeningCommandPalette) {
     editorStore.blockOpeningCommandPalette.content =
       blockContentBeforeCommand.value;
@@ -130,7 +129,6 @@ function handleSpecialKeys(event: KeyboardEvent) {
     }
   }
   if (event.code === "Enter") {
-    event.stopPropagation();
     if (filteredCommands.value.length) {
       executeCommand(filteredCommands.value[highlightedCommandIndex.value]);
       editorStore.setCommandPaletteOpen(false);

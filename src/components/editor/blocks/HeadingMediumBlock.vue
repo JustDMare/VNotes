@@ -12,6 +12,7 @@ const {
   parseSpecialKeys,
   processInput,
 } = useTextBasedBlock(props.block);
+defineExpose({ blockHTMLContent });
 </script>
 
 <template>

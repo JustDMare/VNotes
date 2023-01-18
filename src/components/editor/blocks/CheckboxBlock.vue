@@ -19,6 +19,7 @@ const {
 } = useTextBasedBlock(props.block);
 const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 
+defineExpose({ blockHTMLContent });
 const editorStore = useEditorStore();
 
 onMounted(() => {

@@ -15,6 +15,7 @@ const {
   processInput,
 } = useTextBasedBlock(props.block);
 const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
+defineExpose({ blockHTMLContent });
 
 onMounted(() => {
   focusBlockOnCreation();

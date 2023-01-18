@@ -3,7 +3,8 @@ import { GripIcon, PlusIcon } from "@/components/icons";
 import { getBlockComponentMap, getBlockClassMap } from "@/mappings";
 import { useEditorStore } from "@/stores/editor";
 import type { Block, BlockType } from "vnotes-types";
-import { type PropType, ref, type Component } from "vue";
+import { type PropType, ref, type Component, type Ref, watch } from "vue";
+import type { PlainTextBlock } from ".";
 
 const blockComponentMap: ReadonlyMap<BlockType, Component> =
   getBlockComponentMap();
@@ -13,6 +14,7 @@ const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
 const editorStore = useEditorStore();
+const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
 
 let buttonsVisible = ref(false);
 
@@ -25,6 +27,15 @@ function showButtons(): void {
 function hideButtons(): void {
   buttonsVisible.value = false;
 }
+watch(
+  () => props.block.type,
+  (newType) => {
+    setTimeout(() => {
+      blockInnerComponent.value?.blockHTMLContent.focus();
+      //TODO: Focus at the end of the text
+    }, 0);
+  }
+);
 </script>
 
 <template>
@@ -39,6 +50,7 @@ function hideButtons(): void {
       class="block__content"
       :is="blockComponentMap.get(block.type)"
       :block="block"
+      ref="blockInnerComponent"
     ></component>
     <div
       class="block__btn-wrapper"
