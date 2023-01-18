@@ -167,6 +167,12 @@ function handleKeypress(event: KeyboardEvent) {
     searchTerm.value = searchTerm.value.slice(0, -numberOfCharsToDelete);
   }
 }
+
+function handleMouseMove(event: MouseEvent) {
+  //TODO: Deactivate pointer-events when using arrow keys. Activate them when mouse is moved or
+  //clicked
+}
+
 watch(
   () => filteredCommands.value,
   (newVal, oldVal) => {
@@ -213,10 +219,12 @@ watch(
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleSpecialKeys);
       document.addEventListener("keydown", handleKeypress);
+      document.addEventListener("mousemove", handleMouseMove);
     } else if (newVal === false && newVal !== oldVal) {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleSpecialKeys);
       document.removeEventListener("keydown", handleKeypress);
+      document.removeEventListener("mousemove", handleMouseMove);
       showCommandPalette.value = false;
       searchTerm.value = "";
       blockContentBeforeCommand.value = "";

@@ -29,7 +29,7 @@ function hideButtons(): void {
 }
 watch(
   () => props.block.type,
-  (newType) => {
+  () => {
     setTimeout(() => {
       blockInnerComponent.value?.blockHTMLContent.focus();
       //TODO: Focus at the end of the text
