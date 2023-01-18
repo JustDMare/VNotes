@@ -111,12 +111,22 @@ function handleSpecialKeys(event: KeyboardEvent) {
   if (event.code === "ArrowDown") {
     if (filteredCommands.value.length > highlightedCommandIndex.value + 1) {
       highlightedCommandIndex.value++;
+      document.querySelector(".selected")?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
       //TODO: Scroll to view
     }
   }
   if (event.code === "ArrowUp") {
     if (highlightedCommandIndex.value > 0) {
       highlightedCommandIndex.value--;
+      document.querySelector(".selected")?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
     }
   }
   if (event.code === "Enter") {
@@ -237,7 +247,9 @@ watch(
       </div>
     </div>
     <div v-else>
-      <p>{{ $t("commandPalette.noCommands") }}</p>
+      <p class="cmd-palette__no-command">
+        {{ $t("commandPalette.noCommands") }}
+      </p>
     </div>
   </dialog>
 </template>
@@ -248,13 +260,13 @@ watch(
   padding: 0.5rem;
   border-radius: 6px;
   max-height: 200px;
-  width: 240px;
+  width: 250px;
   overflow-y: auto;
   background-color: var(--color-base-100);
   border: 0;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   z-index: 10;
-
+  transition: all 0.2s ease-in-out;
   &__command {
     display: flex;
     align-items: center;
@@ -264,6 +276,7 @@ watch(
     border: 0;
     background-color: transparent;
     cursor: pointer;
+    transition: background 0.25s ease-in-out;
     &.selected,
     &:hover {
       background-color: var(--color-base-80);
@@ -273,6 +286,14 @@ watch(
       height: 1.5rem;
       margin-right: 0.5rem;
     }
+    &__name {
+      font-size: 0.875rem;
+    }
+  }
+  &__no-command {
+    font-size: 0.875rem;
+    color: var(--color-base-30);
+    padding: 4px;
   }
 }
 </style>
