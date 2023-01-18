@@ -32,7 +32,12 @@ export function useTextBasedBlock(block: Block) {
       editorStore.setCommandPaletteOpen(true);
       editorStore.setBlockOpeningCommandPalette(block);
     }
-    if (event.code === "Enter" && !event.shiftKey) {
+
+    if (
+      event.code === "Enter" &&
+      !event.shiftKey &&
+      !editorStore.commandPaletteOpen
+    ) {
       event.preventDefault();
       editorStore.createBlockBelowBlockId(unref(block._id));
     }

@@ -2,7 +2,7 @@
 import getCommandList from "@/commands/command-list";
 import type { Command } from "@/commands/interfaces";
 import { useEditorStore } from "@/stores/editor";
-import { computed, ref, shallowRef, watch } from "vue";
+import { computed, nextTick, ref, shallowRef, watch } from "vue";
 import { matchSorter } from "match-sorter";
 
 const editorStore = useEditorStore();
@@ -17,6 +17,7 @@ const cmdPalette = ref<HTMLElement | null>(null);
 
 const MAX_HEIGHT = 200; //TODO: Improve this
 const highlightedCommandIndex = ref(0);
+const isPositionedOnTop = ref(false);
 
 function executeCommand(command: Command) {
   command.execute();
@@ -25,14 +26,20 @@ function executeCommand(command: Command) {
     editorStore.blockOpeningCommandPalette.content =
       blockContentBeforeCommand.value;
   }
+  editorStore.setCommandPaletteOpen(false);
 }
-
+function getCommandPaletteHeight() {
+  if (cmdPalette.value) {
+    console.log(cmdPalette.value.getBoundingClientRect().height);
+    return cmdPalette.value.getBoundingClientRect().height;
+  }
+  return 0;
+}
 const filteredCommands = computed(() => {
-  const query = searchTerm.value;
-  if (query === "") {
+  if (searchTerm.value === "") {
     return commands.value;
   }
-  return matchSorter(commands.value, query, {
+  return matchSorter(commands.value, searchTerm.value, {
     keys: ["name", "tag", "description"],
   });
 });
@@ -42,6 +49,15 @@ const filteredCommands = computed(() => {
 //TODO: Document. Should improve to displace the dialog if it doesn't fit on the screen.
 function getCommandPaletteCoordinates() {
   let { x, y } = { x: 0, y: 0 };
+  let dialogHeight = MAX_HEIGHT;
+  if (cmdPalette.value && cmdPalette.value.getBoundingClientRect().height > 0) {
+    console.log("Rects" + cmdPalette.value.getBoundingClientRect().height);
+    console.log("offset" + cmdPalette.value.offsetHeight);
+    console.log("client" + cmdPalette.value.clientHeight);
+    console.log("computed" + getCommandPaletteHeight());
+    dialogHeight = cmdPalette.value.getBoundingClientRect().height;
+  }
+  console.log(dialogHeight);
   const selection = window.getSelection();
   if (selection && selection.rangeCount !== 0) {
     const range = selection.getRangeAt(0).cloneRange();
@@ -49,8 +65,12 @@ function getCommandPaletteCoordinates() {
     const rect = range.getClientRects()[0];
     if (rect) {
       x = rect.left;
-      if (rect.top + rect.height + MAX_HEIGHT > window.innerHeight) {
-        y = rect.top - MAX_HEIGHT;
+      if (
+        rect.top + rect.height + dialogHeight > window.innerHeight ||
+        isPositionedOnTop.value
+      ) {
+        isPositionedOnTop.value = true;
+        y = rect.top - dialogHeight;
       } else {
         y = rect.top + rect.height;
       }
@@ -60,8 +80,12 @@ function getCommandPaletteCoordinates() {
       x = element.getBoundingClientRect().left;
       const clientRectTop = element.getBoundingClientRect().top;
       const clientRectHeight = element.getBoundingClientRect().height;
-      if (clientRectTop + clientRectHeight + MAX_HEIGHT > window.innerHeight) {
-        y = clientRectTop - MAX_HEIGHT;
+      if (
+        clientRectTop + clientRectHeight + dialogHeight > window.innerHeight ||
+        isPositionedOnTop.value
+      ) {
+        isPositionedOnTop.value = true;
+        y = clientRectTop - dialogHeight;
       } else {
         y = clientRectTop + clientRectHeight;
       }
@@ -95,21 +119,14 @@ function handleSpecialKeys(event: KeyboardEvent) {
       highlightedCommandIndex.value--;
     }
   }
-  if (event.code === "ArrowUp") {
-    const selectedCommand = document.querySelector(".selected");
-    if (selectedCommand) {
-      const previousCommand = selectedCommand.previousElementSibling;
-      if (previousCommand) {
-        selectedCommand.classList.remove("selected");
-        previousCommand.classList.add("selected");
-        previousCommand.scrollIntoView({ block: "nearest" });
-      }
+  if (event.code === "Enter") {
+    event.stopPropagation();
+    if (filteredCommands.value.length) {
+      executeCommand(filteredCommands.value[highlightedCommandIndex.value]);
+      editorStore.setCommandPaletteOpen(false);
     }
   }
 
-  if (event.code === "Enter") {
-    editorStore.setCommandPaletteOpen(false); //Change to select the command
-  }
   if (event.code === "Backspace" && searchTerm.value === "") {
     editorStore.setCommandPaletteOpen(false);
   }
@@ -123,6 +140,10 @@ function handleSpecialKeys(event: KeyboardEvent) {
  * Also, doesn't support "Delete" key. Once again, too much complexity to be worth it.
  */
 function handleKeypress(event: KeyboardEvent) {
+  console.log(searchTerm.value);
+  if (event.code === "Enter") {
+    event.stopPropagation();
+  }
   if (event.key.length === 1 && event.key !== "/") {
     searchTerm.value += event.key;
   }
@@ -143,10 +164,28 @@ watch(
   (newVal, oldVal) => {
     if (newVal !== oldVal) {
       highlightedCommandIndex.value = 0;
+
+      nextTick(() => {
+        if (cmdPalette.value) {
+          const { y } = getCommandPaletteCoordinates();
+          console.log(y);
+          cmdPalette.value.style.top = `${y}px`;
+        }
+      });
+
       //TODO: Scroll to start if needed
     }
   }
 );
+
+watch(
+  () => cmdPalette.value?.clientHeight,
+  (val) => {
+    console.log("height" + val);
+  },
+  { immediate: true }
+);
+
 //TODO: Cleanup code (functions, files, etc.)
 //TODO: Create the commands to be executed
 watch(
@@ -164,17 +203,18 @@ watch(
       }
       showCommandPalette.value = true;
       document.addEventListener("mousedown", handleClickOutside);
-      document.addEventListener("keyup", handleKeypress);
       document.addEventListener("keydown", handleSpecialKeys);
+      document.addEventListener("keyup", handleKeypress);
     } else if (newVal === false && newVal !== oldVal) {
       document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleKeypress);
       document.removeEventListener("keydown", handleSpecialKeys);
+      document.removeEventListener("keydown", handleKeypress);
       showCommandPalette.value = false;
       searchTerm.value = "";
       blockContentBeforeCommand.value = "";
       commands.value = getCommandList();
       cmdPalette?.value?.scrollTo(0, 0);
+      isPositionedOnTop.value = false;
     }
   }
 );
