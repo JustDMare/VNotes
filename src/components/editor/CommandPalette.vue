@@ -18,6 +18,7 @@ const cmdPalette = ref<HTMLElement | null>(null);
 const MAX_HEIGHT = 200; //TODO: Improve this
 const highlightedCommandIndex = ref(0);
 const isPositionedOnTop = ref(false);
+const enableMouseEvents = ref(false);
 
 function executeCommand(command: Command) {
   command.execute();
@@ -108,6 +109,7 @@ function handleSpecialKeys(event: KeyboardEvent) {
     editorStore.setCommandPaletteOpen(false);
   }
   if (event.code === "ArrowDown") {
+    event.preventDefault();
     if (filteredCommands.value.length > highlightedCommandIndex.value + 1) {
       highlightedCommandIndex.value++;
       document.querySelector(".selected")?.scrollIntoView({
@@ -115,11 +117,12 @@ function handleSpecialKeys(event: KeyboardEvent) {
         block: "center",
         inline: "center",
       });
-      //TODO: Scroll to view
     }
   }
   if (event.code === "ArrowUp") {
     if (highlightedCommandIndex.value > 0) {
+      event.preventDefault();
+
       highlightedCommandIndex.value--;
       document.querySelector(".selected")?.scrollIntoView({
         behavior: "smooth",
@@ -132,6 +135,7 @@ function handleSpecialKeys(event: KeyboardEvent) {
     if (filteredCommands.value.length) {
       executeCommand(filteredCommands.value[highlightedCommandIndex.value]);
       editorStore.setCommandPaletteOpen(false);
+      event.preventDefault();
     }
   }
 
@@ -148,6 +152,15 @@ function handleSpecialKeys(event: KeyboardEvent) {
  * Also, doesn't support "Delete" key. Once again, too much complexity to be worth it.
  */
 function handleKeypress(event: KeyboardEvent) {
+  const elements = Array.from(
+    document.getElementsByClassName("cmd-palette__command")
+  );
+  if (elements.length) {
+    elements.forEach((element) => {
+      (element as HTMLElement).style.pointerEvents = "none";
+    });
+  }
+
   console.log(searchTerm.value);
   if (event.code === "Enter") {
     event.stopPropagation();
@@ -168,9 +181,16 @@ function handleKeypress(event: KeyboardEvent) {
   }
 }
 
-function handleMouseMove(event: MouseEvent) {
-  //TODO: Deactivate pointer-events when using arrow keys. Activate them when mouse is moved or
-  //clicked
+function handleMouseRegainedControl(event: MouseEvent) {
+  const elements = Array.from(
+    document.getElementsByClassName("cmd-palette__command")
+  );
+  if (elements.length) {
+    console.log();
+    elements.forEach((element) => {
+      (element as HTMLElement).style.pointerEvents = "auto";
+    });
+  }
 }
 
 watch(
@@ -186,8 +206,6 @@ watch(
           cmdPalette.value.style.top = `${y}px`;
         }
       });
-
-      //TODO: Scroll to start if needed
     }
   }
 );
@@ -219,12 +237,15 @@ watch(
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleSpecialKeys);
       document.addEventListener("keydown", handleKeypress);
-      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mousemove", handleMouseRegainedControl);
+      document.addEventListener("mousedown", handleMouseRegainedControl);
     } else if (newVal === false && newVal !== oldVal) {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleSpecialKeys);
       document.removeEventListener("keydown", handleKeypress);
-      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mousemove", handleMouseRegainedControl);
+      document.removeEventListener("mousedown", handleMouseRegainedControl);
+
       showCommandPalette.value = false;
       searchTerm.value = "";
       blockContentBeforeCommand.value = "";
@@ -245,7 +266,7 @@ watch(
           :title="command.description"
           class="cmd-palette__command"
           :class="{ selected: index === highlightedCommandIndex }"
-          @mouseenter="highlightedCommandIndex = index"
+          @mouseover="highlightedCommandIndex = index"
         >
           <component :is="command.icon" />
           <span class="cmd-palette__command__name">{{ command.name }}</span>
