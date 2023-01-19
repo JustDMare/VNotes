@@ -117,7 +117,6 @@ watch(
   </dialog>
 </template>
 
-//TODO: ANIMATION
 <style lang="scss" scoped>
 .cmd-palette {
   position: absolute;
