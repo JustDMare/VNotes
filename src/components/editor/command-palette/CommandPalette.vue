@@ -78,9 +78,6 @@ function recalculatePosition() {
     }
   });
 }
-
-//TODO: Cleanup code (functions, files, etc.)
-//TODO: Create the commands to be executed
 watch(
   () => editorStore.commandPaletteOpen,
   (newVal: boolean, oldVal) => {
