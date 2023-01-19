@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { SidebarComponent } from "@/components/sidebar";
 import { NoteWorkspace } from "@/components/editor";
-import CommandPalette from "@/components/editor/CommandPalette.vue";
+import CommandPalette from "@/components/editor/command-palette/CommandPalette.vue";
 </script>
 
 <template>
