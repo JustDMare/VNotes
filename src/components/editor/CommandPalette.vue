@@ -18,7 +18,6 @@ const cmdPalette = ref<HTMLElement | null>(null);
 const MAX_HEIGHT = 200; //TODO: Improve this
 const highlightedCommandIndex = ref(0);
 const isPositionedOnTop = ref(false);
-const enableMouseEvents = ref(false);
 
 function executeCommand(command: Command) {
   command.execute();
@@ -30,7 +29,6 @@ function executeCommand(command: Command) {
 }
 function getCommandPaletteHeight() {
   if (cmdPalette.value) {
-    console.log(cmdPalette.value.getBoundingClientRect().height);
     return cmdPalette.value.getBoundingClientRect().height;
   }
   return 0;
@@ -43,21 +41,14 @@ const filteredCommands = computed(() => {
     keys: ["name", "tag", "description"],
   });
 });
-//TODO: RESET SCROLL ON CREATION
-//IMPROVE STYLING
 
-//TODO: Document. Should improve to displace the dialog if it doesn't fit on the screen.
+//TODO: Document.
 function getCommandPaletteCoordinates() {
   let { x, y } = { x: 0, y: 0 };
   let dialogHeight = MAX_HEIGHT;
   if (cmdPalette.value && cmdPalette.value.getBoundingClientRect().height > 0) {
-    console.log("Rects" + cmdPalette.value.getBoundingClientRect().height);
-    console.log("offset" + cmdPalette.value.offsetHeight);
-    console.log("client" + cmdPalette.value.clientHeight);
-    console.log("computed" + getCommandPaletteHeight());
     dialogHeight = cmdPalette.value.getBoundingClientRect().height;
   }
-  console.log(dialogHeight);
   const selection = window.getSelection();
   if (selection && selection.rangeCount !== 0) {
     const range = selection.getRangeAt(0).cloneRange();
@@ -161,7 +152,6 @@ function handleKeypress(event: KeyboardEvent) {
     });
   }
 
-  console.log(searchTerm.value);
   if (event.code === "Enter") {
     event.stopPropagation();
   }
@@ -186,7 +176,6 @@ function handleMouseRegainedControl(event: MouseEvent) {
     document.getElementsByClassName("cmd-palette__command")
   );
   if (elements.length) {
-    console.log();
     elements.forEach((element) => {
       (element as HTMLElement).style.pointerEvents = "auto";
     });
@@ -202,20 +191,11 @@ watch(
       nextTick(() => {
         if (cmdPalette.value) {
           const { y } = getCommandPaletteCoordinates();
-          console.log(y);
           cmdPalette.value.style.top = `${y}px`;
         }
       });
     }
   }
-);
-
-watch(
-  () => cmdPalette.value?.clientHeight,
-  (val) => {
-    console.log("height" + val);
-  },
-  { immediate: true }
 );
 
 //TODO: Cleanup code (functions, files, etc.)
