@@ -6,8 +6,7 @@ import type { Block, BlockType } from "vnotes-types";
 import { type PropType, ref, type Component, type Ref, watch } from "vue";
 import type { PlainTextBlock } from ".";
 
-const blockComponentMap: ReadonlyMap<BlockType, Component> =
-  getBlockComponentMap();
+const blockComponentMap: ReadonlyMap<BlockType, Component> = getBlockComponentMap();
 const blockClassMap: ReadonlyMap<BlockType, string> = getBlockClassMap();
 
 const props = defineProps({
@@ -58,11 +57,7 @@ watch(
       @mouseleave="hideButtons"
       @hover="showButtons"
     >
-      <button
-        v-show="buttonsVisible"
-        class="block__btn"
-        @click="createBlockBelow"
-      >
+      <button v-show="buttonsVisible" class="block__btn" @click="createBlockBelow">
         <PlusIcon class="block__btn__icon" />
       </button>
       <button v-show="buttonsVisible" class="block__btn">

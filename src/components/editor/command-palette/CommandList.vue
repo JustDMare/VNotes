@@ -20,8 +20,7 @@ const highlightedCommandIndex = ref(0);
 function executeCommand(command: Command) {
   command.execute();
   if (editorStore.blockOpeningCommandPalette) {
-    editorStore.blockOpeningCommandPalette.content =
-      blockContentBeforeCommand.value;
+    editorStore.blockOpeningCommandPalette.content = blockContentBeforeCommand.value;
   }
   editorStore.setCommandPaletteOpen(false);
 }
@@ -74,18 +73,14 @@ function handleArrowKeys(event: KeyboardEvent) {
     inline: "center",
   });
 }
-/*TODO: Document. Mention that it doesn't support more complex interactions like copy/paste,
- * adding or removing chars in the middle of the term, etc.
- * It does support selecting from the end (like with shift + left arrow) to
- * delete multiple chars.
- * Checking all interactions adds too much complexity
- * and it's not worth it.
- * Also, doesn't support "Delete" key. Once again, too much complexity to be worth it.
+/*TODO: Document. Mention that it doesn't support more complex interactions like
+ * copy/paste, adding or removing chars in the middle of the term, etc. It does support
+ * selecting from the end (like with shift + left arrow) to delete multiple chars.
+ * Checking all interactions adds too much complexity and it's not worth it. Also, doesn't
+ * support "Delete" key. Once again, too much complexity to be worth it.
  */
 function handleKeypress(event: KeyboardEvent) {
-  const elements = Array.from(
-    document.getElementsByClassName("cmd-palette__command")
-  );
+  const elements = Array.from(document.getElementsByClassName("cmd-palette__command"));
   if (elements.length) {
     elements.forEach((element) => {
       (element as HTMLElement).style.pointerEvents = "none";
@@ -97,9 +92,9 @@ function handleKeypress(event: KeyboardEvent) {
   }
   if (event.code === "Backspace") {
     handleBackspace();
-}
-function handleBackspace() {
-  let numberOfCharsToDelete = 1;
+  }
+  function handleBackspace() {
+    let numberOfCharsToDelete = 1;
     const selection = window.getSelection();
     if (selection && selection.rangeCount !== 0) {
       const range = selection.getRangeAt(0).cloneRange();
@@ -112,9 +107,7 @@ function handleBackspace() {
 }
 
 function handleMouseRegainedControl() {
-  const elements = Array.from(
-    document.getElementsByClassName("cmd-palette__command")
-  );
+  const elements = Array.from(document.getElementsByClassName("cmd-palette__command"));
   if (elements.length) {
     elements.forEach((element) => {
       (element as HTMLElement).style.pointerEvents = "auto";
@@ -127,8 +120,7 @@ function onShowingCommandList() {
   document.addEventListener("mousemove", handleMouseRegainedControl);
   document.addEventListener("mousedown", handleMouseRegainedControl);
   if (editorStore.blockOpeningCommandPalette) {
-    blockContentBeforeCommand.value =
-      editorStore.blockOpeningCommandPalette.content;
+    blockContentBeforeCommand.value = editorStore.blockOpeningCommandPalette.content;
   }
 }
 function onHidingCommandList() {

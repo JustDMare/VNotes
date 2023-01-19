@@ -31,7 +31,7 @@ module.exports = {
     eqeqeq: ["error", "always", { null: "ignore" }],
     "max-len": [
       "error",
-      { code: 100, ignoreComments: false, ignorePattern: 'd="([\\s\\S]*?)"' },
+      { code: 90, ignoreComments: false, ignorePattern: 'd="([\\s\\S]*?)"' },
     ],
     "unused-imports/no-unused-imports": "error",
     "no-dupe-class-members": "off",

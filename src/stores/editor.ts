@@ -102,8 +102,7 @@ export const useEditorStore = defineStore("editor", {
           (block: Block) => block._id === previousBlockId
         );
         const newBlockIndex = previousBlockIndex + 1;
-        const previousBlockType =
-          this.getBlockInEditorById(previousBlockId)?.type;
+        const previousBlockType = this.getBlockInEditorById(previousBlockId)?.type;
 
         const newBlock = getNewBlockTemplate(previousBlockType);
         this.addBlockToNote(newBlockIndex, newBlock);

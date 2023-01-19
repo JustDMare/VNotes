@@ -2,9 +2,7 @@ import { useEditorStore } from "@/stores/editor";
 import type { Block, BlockType } from "vnotes-types";
 
 //TODO: Document
-export default function convertBlockTypeCommand(
-  blockType: BlockType
-): () => void {
+export default function convertBlockTypeCommand(blockType: BlockType): () => void {
   return function (): void {
     const editorStore = useEditorStore();
     const block = editorStore.blockOpeningCommandPalette;
@@ -18,10 +16,7 @@ function handleBlockConversion(block: Block, blockType: BlockType) {
   if (block.type === blockType) {
     return;
   }
-  if (
-    blockType === "checkbox" &&
-    block.uniqueProperties.selected === undefined
-  ) {
+  if (blockType === "checkbox" && block.uniqueProperties.selected === undefined) {
     block.uniqueProperties = { selected: false };
   }
   block.type = blockType;

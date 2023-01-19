@@ -28,12 +28,7 @@ function getCommandPaletteCoordinates() {
     const rect = range.getClientRects()[0];
     if (rect) {
       computeCoordinates(rect.left, rect.top, rect.height, dialogHeight);
-      ({ x, y } = computeCoordinates(
-        rect.left,
-        rect.top,
-        rect.height,
-        dialogHeight
-      ));
+      ({ x, y } = computeCoordinates(rect.left, rect.top, rect.height, dialogHeight));
     } else {
       selection.collapseToStart();
       const element: HTMLElement = selection.focusNode as HTMLElement;

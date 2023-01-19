@@ -1,9 +1,7 @@
 import { useEditorStore } from "@/stores/editor";
 import type { Ref } from "vue";
 
-export function useFocusBlockOnCreation(
-  blockHTMLContent: Ref<HTMLElement | null>
-) {
+export function useFocusBlockOnCreation(blockHTMLContent: Ref<HTMLElement | null>) {
   const editorStore = useEditorStore();
 
   function focusBlockOnCreation() {

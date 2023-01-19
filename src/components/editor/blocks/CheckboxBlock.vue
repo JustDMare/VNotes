@@ -8,15 +8,9 @@ import { onMounted, ref, watch, type PropType, type Ref } from "vue";
 const props = defineProps({
   block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
-const checkboxChecked: Ref<boolean> = ref(
-  props.block.uniqueProperties.selected
-);
-const {
-  initialBlockContent,
-  blockHTMLContent,
-  parseSpecialKeys,
-  processInput,
-} = useTextBasedBlock(props.block);
+const checkboxChecked: Ref<boolean> = ref(props.block.uniqueProperties.selected);
+const { initialBlockContent, blockHTMLContent, parseSpecialKeys, processInput } =
+  useTextBasedBlock(props.block);
 const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 
 defineExpose({ blockHTMLContent });
@@ -101,8 +95,8 @@ function onCheckboxChange(): void {
     cursor: pointer;
 
     &:checked {
-      background: var(--color-base-10) url("@/assets/icons/checked-icon.svg")
-        no-repeat center center / cover;
+      background: var(--color-base-10) url("@/assets/icons/checked-icon.svg") no-repeat
+        center center / cover;
     }
   }
   &__text {

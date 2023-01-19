@@ -6,12 +6,8 @@ import type { PropType } from "vue";
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
-const {
-  initialBlockContent,
-  parseSpecialKeys,
-  processInput,
-  blockHTMLContent,
-} = useTextBasedBlock(props.block);
+const { initialBlockContent, parseSpecialKeys, processInput, blockHTMLContent } =
+  useTextBasedBlock(props.block);
 defineExpose({ blockHTMLContent });
 </script>
 

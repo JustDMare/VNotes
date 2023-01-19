@@ -38,18 +38,14 @@ function getConvertBlockTypeCommands(): Command[] {
       icon: HeadingMediumIcon,
       name: t("commandPalette.convertBlockType.headingMedium.name"),
       execute: convertBlockTypeCommand("heading_medium"),
-      description: t(
-        "commandPalette.convertBlockType.headingMedium.description"
-      ),
+      description: t("commandPalette.convertBlockType.headingMedium.description"),
       tag: "h2",
     },
     {
       icon: HeadingSmallIcon,
       name: t("commandPalette.convertBlockType.headingSmall.name"),
       execute: convertBlockTypeCommand("heading_small"),
-      description: t(
-        "commandPalette.convertBlockType.headingSmall.description"
-      ),
+      description: t("commandPalette.convertBlockType.headingSmall.description"),
       tag: "h3",
     },
     {
