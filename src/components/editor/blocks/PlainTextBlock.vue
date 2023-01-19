@@ -8,13 +8,10 @@ const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
 
-const {
-  initialBlockContent,
-  blockHTMLContent,
-  parseSpecialKeys,
-  processInput,
-} = useTextBasedBlock(props.block);
+const { initialBlockContent, blockHTMLContent, parseSpecialKeys, processInput } =
+  useTextBasedBlock(props.block);
 const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
+defineExpose({ blockHTMLContent });
 
 onMounted(() => {
   focusBlockOnCreation();

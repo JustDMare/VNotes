@@ -52,7 +52,7 @@ function onMouseDown(): void {
   font-weight: 500;
   color: var(--color-base-30);
   border-radius: 2px;
-  padding: 0 0 0 var(--sidebar-item--padding);
+  padding: 2px 0 2px var(--sidebar-item--padding);
   margin: 0 var(--sidebar-item--margin) 0 var(--sidebar-item--margin);
   background-color: transparent;
   border: 0;

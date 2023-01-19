@@ -1,5 +1,4 @@
 import { useUserSpaceStore } from "@/stores/user-space";
-import { userSpaceMock } from "@/mock-data/workspace-mock";
 import type {
   AllPropertyTypesFromInterface,
   Block,
@@ -7,7 +6,6 @@ import type {
   BlockUniqueProperties,
   CheckboxBlock,
   PlainTextBlock,
-  UserSpace,
   Note,
 } from "vnotes-types";
 
@@ -17,7 +15,8 @@ export const useEditorStore = defineStore("editor", {
   state: () => ({
     noteInEditor: null as Note | null,
     blockCreated: false as boolean,
-    userSpace: userSpaceMock as UserSpace,
+    commandPaletteOpen: false as boolean,
+    blockOpeningCommandPalette: null as Block | null,
   }),
 
   getters: {
@@ -103,8 +102,7 @@ export const useEditorStore = defineStore("editor", {
           (block: Block) => block._id === previousBlockId
         );
         const newBlockIndex = previousBlockIndex + 1;
-        const previousBlockType =
-          this.getBlockInEditorById(previousBlockId)?.type;
+        const previousBlockType = this.getBlockInEditorById(previousBlockId)?.type;
 
         const newBlock = getNewBlockTemplate(previousBlockType);
         this.addBlockToNote(newBlockIndex, newBlock);
@@ -118,6 +116,20 @@ export const useEditorStore = defineStore("editor", {
     },
     setBlockCreated(blockCreated: boolean): void {
       this.blockCreated = blockCreated;
+    },
+    setCommandPaletteOpen(commandPaletteOpen: boolean): void {
+      this.commandPaletteOpen = commandPaletteOpen;
+    },
+    setBlockOpeningCommandPalette(block: Block): void {
+      this.blockOpeningCommandPalette = block;
+    },
+    deleteBlockById(blockId: string): void {
+      if (this.noteInEditor) {
+        const blockIndex = this.noteInEditor.content.findIndex(
+          (block: Block) => block._id === blockId
+        );
+        this.noteInEditor.content.splice(blockIndex, 1);
+      }
     },
   },
 });

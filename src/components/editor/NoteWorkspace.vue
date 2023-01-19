@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import NoteEditor from "./NoteEditor.vue";
 import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
+import { useEditorStore } from "@/stores/editor";
+import { computed } from "vue";
+
+const editorStore = useEditorStore();
+
+const scrollStateClass = computed(() => {
+  return editorStore.commandPaletteOpen ? "disable-scroll" : "allow-scroll";
+});
 </script>
 
 <template>
-  <div id="workspace">
+  <div id="workspace" :class="scrollStateClass">
     <NoteWorkspaceHeader id="ws__header" />
     <NoteEditor id="ws__editor" />
   </div>
@@ -14,7 +22,6 @@ import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
 #workspace {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
   position: relative;
 }
 #ws__header {
@@ -29,5 +36,12 @@ import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
 
 #ws__editor {
   margin-top: 2.5rem;
+}
+
+.allow-scroll {
+  overflow-y: auto;
+}
+.disable-scroll {
+  overflow-y: hidden;
 }
 </style>

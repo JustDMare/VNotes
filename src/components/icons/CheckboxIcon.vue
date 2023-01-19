@@ -1,7 +1,7 @@
 <script lang="ts">
 /**
- * Save icon belonging to Lucide icon set ({@link https://lucide.dev}).
- * Obtained via Iconify ({@link https://icon-sets.iconify.design/lucide/save/})
+ * Check-square icon belonging to Lucide icon set ({@link https://lucide.dev}).
+ * Obtained via Iconify ({@link https://icon-sets.iconify.design/lucide/check-square/})
  */
 export default {};
 </script>
@@ -13,7 +13,6 @@ export default {};
     height="1em"
     preserveAspectRatio="xMidYMid meet"
     viewBox="0 0 24 24"
-    class="icon"
   >
     <g
       fill="none"
@@ -22,8 +21,8 @@ export default {};
       stroke-linejoin="round"
       stroke-width="2"
     >
-      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-      <path d="M17 21v-8H7v8M7 3v5h8" />
+      <path d="m9 11l3 3L22 4" />
+      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
     </g>
   </svg>
 </template>

@@ -86,6 +86,7 @@ watch(
 
 [contenteditable] {
   word-wrap: break-word;
+  word-break: break-all;
   white-space: pre-line;
   outline-style: none;
   &:focus {

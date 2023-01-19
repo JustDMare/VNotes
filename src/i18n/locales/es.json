@@ -9,5 +9,36 @@
   },
   "tooltips": {
     "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S"
+  },
+  "commandPalette": {
+    "convertBlockType": {
+      "plainText": {
+        "name": "Texto sin formato",
+        "description": "Convertir en texto sin formato"
+      },
+      "headingBig": {
+        "name": "Encabezado grande",
+        "description": "Convertir a encabezado H1"
+      },
+      "headingMedium": {
+        "name": "Encabezado mediano",
+        "description": "Convertir a encabezado H2"
+      },
+      "headingSmall": {
+        "name": "Encabezado pequeño",
+        "description": "Convertir a encabezado H3"
+      },
+      "checkbox": {
+        "name": "Casilla de verificación",
+        "description": "Convertir en casilla de verificación"
+      }
+    },
+    "editor": {
+      "deleteBlock": {
+        "name": "Eliminar bloque",
+        "description": "Eliminar bloque actual"
+      }
+    },
+    "noCommands": "No se han encontrado comandos"
   }
 }

@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { GripIcon, PlusIcon } from "@/components/icons";
-import { getBlockComponentMap, getBlockClassMap } from "@/common/maps";
+import { getBlockComponentMap, getBlockClassMap } from "@/mappings";
 import { useEditorStore } from "@/stores/editor";
 import type { Block, BlockType } from "vnotes-types";
-import { type PropType, ref, type Component } from "vue";
+import { type PropType, ref, type Component, type Ref, watch } from "vue";
+import type { PlainTextBlock } from ".";
 
-const blockComponentMap: ReadonlyMap<BlockType, Component> =
-  getBlockComponentMap();
+const blockComponentMap: ReadonlyMap<BlockType, Component> = getBlockComponentMap();
 const blockClassMap: ReadonlyMap<BlockType, string> = getBlockClassMap();
 
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
 const editorStore = useEditorStore();
+const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
 
 let buttonsVisible = ref(false);
 
@@ -25,6 +26,15 @@ function showButtons(): void {
 function hideButtons(): void {
   buttonsVisible.value = false;
 }
+watch(
+  () => props.block.type,
+  () => {
+    setTimeout(() => {
+      blockInnerComponent.value?.blockHTMLContent.focus();
+      //TODO: Focus at the end of the text
+    }, 0);
+  }
+);
 </script>
 
 <template>
@@ -39,6 +49,7 @@ function hideButtons(): void {
       class="block__content"
       :is="blockComponentMap.get(block.type)"
       :block="block"
+      ref="blockInnerComponent"
     ></component>
     <div
       class="block__btn-wrapper"
@@ -46,11 +57,7 @@ function hideButtons(): void {
       @mouseleave="hideButtons"
       @hover="showButtons"
     >
-      <button
-        v-show="buttonsVisible"
-        class="block__btn"
-        @click="createBlockBelow"
-      >
+      <button v-show="buttonsVisible" class="block__btn" @click="createBlockBelow">
         <PlusIcon class="block__btn__icon" />
       </button>
       <button v-show="buttonsVisible" class="block__btn">
@@ -82,6 +89,7 @@ function hideButtons(): void {
     padding: 2px;
   }
   &__btn {
+    position: relative;
     align-content: center;
     padding: 0;
     display: block;
@@ -91,6 +99,10 @@ function hideButtons(): void {
     background: transparent;
     border-radius: 4px;
     color: var(--color-base-50);
+    &__icon {
+      width: 100%;
+      height: 100%;
+    }
 
     &:hover {
       background-color: var(--color-base-80);
@@ -108,11 +120,6 @@ function hideButtons(): void {
       z-index: 0;
     }
   }
-}
-
-.block__btn__icon {
-  width: 100%;
-  height: 100%;
 }
 
 :deep([contenteditable]:not(:focus):empty::before) {

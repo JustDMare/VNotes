@@ -13,9 +13,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
   actions: {
     //TODO: Error Handling and Documentation
     fetchAllUserSpaceContent(): void {
-      fetch(
-        `http://localhost:3030/user-space/${this.userSpace.userToken}`
-      ).then((data) =>
+      fetch(`http://localhost:3030/user-space/${this.userSpace.userToken}`).then((data) =>
         data.json().then((json) => {
           this.userSpace._id = json.userSpace._id;
           this.userSpace.userToken = json.userSpace.userToken;

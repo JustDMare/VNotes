@@ -1,7 +1,7 @@
 <script lang="ts">
 /**
- * Save icon belonging to Lucide icon set ({@link https://lucide.dev}).
- * Obtained via Iconify ({@link https://icon-sets.iconify.design/lucide/save/})
+ * Trash-2 icon belonging to Lucide icon set ({@link https://lucide.dev}).
+ * Obtained via Iconify ({@link https://icon-sets.iconify.design/lucide/trash-2/})
  */
 export default {};
 </script>
@@ -13,17 +13,14 @@ export default {};
     height="1em"
     preserveAspectRatio="xMidYMid meet"
     viewBox="0 0 24 24"
-    class="icon"
   >
-    <g
+    <path
       fill="none"
       stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round"
       stroke-width="2"
-    >
-      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-      <path d="M17 21v-8H7v8M7 3v5h8" />
-    </g>
+      d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2m-6 5v6m4-6v6"
+    />
   </svg>
 </template>
