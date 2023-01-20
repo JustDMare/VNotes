@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { useEditorStore } from "@/stores/editor";
 import type { Block } from "vnotes-types";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { BlockComponent } from "./blocks";
 import { Sortable as SortableComponent } from "sortablejs-vue3";
 import type Sortable from "sortablejs";
 
 const editorStore = useEditorStore();
+const dragging = ref(false);
 
 const blockList = computed(() => {
   if (!editorStore.noteInEditor) {
@@ -15,9 +16,10 @@ const blockList = computed(() => {
   return editorStore.noteInEditor.content as Block[];
 });
 
-const options = { handle: ".handle" };
+const options = { handle: ".grip-btn", animation: 250 };
 
 function onEnd(event: Sortable.SortableEvent) {
+  dragging.value = false;
   if (event.oldIndex !== undefined && event.newIndex !== undefined) {
     editorStore.moveBlockInNote(event.oldIndex, event.newIndex);
   }
@@ -33,6 +35,8 @@ function onEnd(event: Sortable.SortableEvent) {
     :key="editorStore.noteInEditor?._id"
     :options="options"
     @end="onEnd"
+    @start="dragging = true"
+    :class="{ 'is-dragging': dragging }"
   >
     <template #item="{ element }">
       <BlockComponent :block="element" :key="element._id"></BlockComponent>
@@ -57,5 +61,9 @@ function onEnd(event: Sortable.SortableEvent) {
   padding-top: 4px;
   padding-bottom: 4px;
   border-radius: 3px;
+}
+.is-dragging :deep(.grip-btn) {
+  cursor: grabbing !important;
+  cursor: -webkit-grabbing !important;
 }
 </style>

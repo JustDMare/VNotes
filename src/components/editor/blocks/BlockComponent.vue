@@ -35,6 +35,8 @@ watch(
     }, 0);
   }
 );
+
+watch;
 </script>
 
 <template>
@@ -57,10 +59,19 @@ watch(
       @mouseleave="hideButtons"
       @hover="showButtons"
     >
-      <button v-show="buttonsVisible" class="block__btn" @click="createBlockBelow">
+      <button
+        :title="$t('tooltips.block.addBlockButton')"
+        v-show="buttonsVisible"
+        class="block__btn"
+        @click="createBlockBelow"
+      >
         <PlusIcon class="block__btn__icon" />
       </button>
-      <button v-show="buttonsVisible" class="block__btn handle">
+      <button
+        :title="$t('tooltips.block.gripButton')"
+        v-show="buttonsVisible"
+        class="block__btn grip-btn"
+      >
         <GripIcon class="block__btn__icon" />
       </button>
     </div>
@@ -168,8 +179,12 @@ watch(
     }
   }
 }
-.handle {
-  cursor: move;
-  cursor: -webkit-grabbing;
+.grip-btn {
+  cursor: grab;
+  cursor: -webkit-grab;
+  &:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+  }
 }
 </style>

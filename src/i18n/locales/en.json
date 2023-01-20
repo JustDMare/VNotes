@@ -8,7 +8,11 @@
     "saveChanges": "Save"
   },
   "tooltips": {
-    "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S"
+    "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S",
+    "block": {
+      "gripButton": "Hold and drag to move the block",
+      "addBlockButton": "Add a new block below"
+    }
   },
   "commandPalette": {
     "convertBlockType": {
