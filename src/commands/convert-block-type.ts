@@ -16,7 +16,12 @@ function handleBlockConversion(block: Block, blockType: BlockType) {
   if (block.type === blockType) {
     return;
   }
-  if (blockType === "checkbox" && block.uniqueProperties.selected === undefined) {
+  console.log("hi");
+  if (
+    blockType === "checkbox" &&
+    (block.uniqueProperties === undefined ||
+      block.uniqueProperties.selected === undefined)
+  ) {
     block.uniqueProperties = { selected: false };
   }
   block.type = blockType;
