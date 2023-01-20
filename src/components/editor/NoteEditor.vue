@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BlockList from "./BlockList.vue";
 import { useEditorStore } from "@/stores/editor";
-import { computed, ref, watch, type Ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch, type Ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 
 const editorStore = useEditorStore();
@@ -20,6 +20,21 @@ function parseSpecialKeys(event: KeyboardEvent) {
 function processInput(event: Event) {
   const input = event.target as HTMLElement;
   editorStore.updateNoteTitle(input.innerText);
+}
+
+onMounted(() => {
+  addEventListener("keydown", parseEditorShortcuts);
+});
+
+onUnmounted(() => {
+  removeEventListener("keydown", parseEditorShortcuts);
+});
+
+function parseEditorShortcuts(event: KeyboardEvent) {
+  if (event.key === "s" && (event.ctrlKey || event.metaKey)) {
+    event.preventDefault();
+    editorStore.saveNoteChanges();
+  }
 }
 
 onBeforeRouteUpdate((to, from) => {
