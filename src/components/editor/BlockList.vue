@@ -1,17 +1,27 @@
 <script lang="ts" setup>
+import { useEditorStore } from "@/stores/editor";
 import type { Block } from "vnotes-types";
-import type { PropType } from "vue";
-import BlockComponent from "./blocks/BlockComponent.vue";
+import { computed } from "vue";
+import { BlockComponent } from "./blocks";
+const editorStore = useEditorStore();
 
-defineProps({
-  blockList: { type: Object as PropType<Block[]>, required: true },
+const blockList = computed({
+  get() {
+    if (!editorStore.noteInEditor) {
+      return [];
+    }
+    return editorStore.noteInEditor.content as Block[];
+  },
+  set(blockList: Block[]) {
+    editorStore.updateNoteContent(blockList);
+  },
 });
 </script>
 
 <template>
   <BlockComponent
     v-for="block in blockList"
-    :key="block._id"
     :block="block"
+    :key="block._id"
   ></BlockComponent>
 </template>

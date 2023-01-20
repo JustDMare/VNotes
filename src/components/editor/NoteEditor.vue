@@ -54,7 +54,7 @@ watch(
         ></h1>
       </header>
       <div id="note-editor__content__list">
-        <BlockList :block-list="note.content" />
+        <BlockList />
       </div>
     </article>
   </main>
