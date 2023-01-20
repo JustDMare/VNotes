@@ -3,6 +3,8 @@ import { useEditorStore } from "@/stores/editor";
 import type { Block } from "vnotes-types";
 import { computed } from "vue";
 import { BlockComponent } from "./blocks";
+import { Sortable } from "sortablejs-vue3";
+
 const editorStore = useEditorStore();
 
 const blockList = computed({
@@ -16,12 +18,13 @@ const blockList = computed({
     editorStore.updateNoteContent(blockList);
   },
 });
+const options = { handle: ".handle" };
 </script>
 
 <template>
-  <BlockComponent
-    v-for="block in blockList"
-    :block="block"
-    :key="block._id"
-  ></BlockComponent>
+  <Sortable class="a" :list="blockList" item-key="_id" tag="div" :options="options">
+    <template #item="{ element }">
+      <BlockComponent :block="element" :key="element._id"></BlockComponent>
+    </template>
+  </Sortable>
 </template>

@@ -67,14 +67,13 @@ watch(
   &__content {
     width: 100%;
     max-width: 900px;
-    padding: 0 6rem;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     &__title {
       font-size: 32px;
       font-weight: 700;
-      padding: 2px;
+      padding: 2px 6rem;
     }
 
     &__list {
