@@ -28,10 +28,6 @@ export function useTextBasedBlock(block: Block) {
   );
 
   function parseSpecialKeys(event: KeyboardEvent) {
-    if (event.key === "s" && (event.ctrlKey || event.metaKey)) {
-      event.preventDefault();
-      editorStore.saveNoteChanges();
-    }
     if (event.key === "/") {
       editorStore.setCommandPaletteOpen(true);
       editorStore.setBlockOpeningCommandPalette(block);

@@ -12,17 +12,20 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "match-sorter": "^6.3.0",
     "pinia": "^2.0.13",
+    "sortablejs": "^1.15.0",
+    "sortablejs-vue3": "^1.2.5",
     "vue": "^3.2.33",
     "vue-i18n": "^9.1.10",
-    "vue-router": "^4.0.14",
-    "match-sorter": "^6.3.0"
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^3.4.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/jsdom": "^16.2.14",
     "@types/node": "^16.11.27",
+    "@types/sortablejs": "^1.15.0",
     "@vitejs/plugin-vue": "^2.3.1",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^10.0.0",

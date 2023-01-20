@@ -131,6 +131,18 @@ export const useEditorStore = defineStore("editor", {
         this.noteInEditor.content.splice(blockIndex, 1);
       }
     },
+    updateNoteContent(content: Block[]): void {
+      if (this.noteInEditor) {
+        this.noteInEditor.content = content;
+      }
+    },
+    moveBlockInNote(from: number, to: number) {
+      if (!this.noteInEditor) {
+        return;
+      }
+      const item = this.noteInEditor.content.splice(from, 1)[0];
+      this.noteInEditor.content.splice(to, 0, item);
+    },
   },
 });
 //TODO: Documentar

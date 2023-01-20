@@ -35,6 +35,8 @@ watch(
     }, 0);
   }
 );
+
+watch;
 </script>
 
 <template>
@@ -57,10 +59,19 @@ watch(
       @mouseleave="hideButtons"
       @hover="showButtons"
     >
-      <button v-show="buttonsVisible" class="block__btn" @click="createBlockBelow">
+      <button
+        :title="$t('tooltips.block.addBlockButton')"
+        v-show="buttonsVisible"
+        class="block__btn"
+        @click="createBlockBelow"
+      >
         <PlusIcon class="block__btn__icon" />
       </button>
-      <button v-show="buttonsVisible" class="block__btn">
+      <button
+        :title="$t('tooltips.block.gripButton')"
+        v-show="buttonsVisible"
+        class="block__btn grip-btn"
+      >
         <GripIcon class="block__btn__icon" />
       </button>
     </div>
@@ -72,15 +83,14 @@ watch(
 .block {
   --button--size: 24px;
   --button-wrapper--right-margin: 8px;
-  --button-wrapper--left-alignment: calc(
-    -1 * var(--button--size) * 2 - var(--button-wrapper--right-margin)
-  );
+  --button-wrapper--left-alignment: 0;
 }
 //Generic styling
 .block {
   display: flex;
   align-items: start;
   position: relative;
+  padding: 0 6rem;
 
   &__content {
     width: 100%;
@@ -111,8 +121,8 @@ watch(
 
     &-wrapper {
       position: absolute;
-      left: var(--button-wrapper--left-alignment);
-      min-width: calc(100% - var(--button-wrapper--left-alignment));
+      left: 40px;
+      min-width: 100%;
       min-height: 100%;
       display: flex;
       flex-direction: row;
@@ -167,6 +177,14 @@ watch(
     & .block__btn {
       top: 0px;
     }
+  }
+}
+.grip-btn {
+  cursor: grab;
+  cursor: -webkit-grab;
+  &:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
   }
 }
 </style>

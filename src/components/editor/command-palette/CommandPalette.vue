@@ -15,7 +15,6 @@ const isPositionedOnTop = ref(false);
 
 //TODO: Document.
 function getCommandPaletteCoordinates() {
-  console.log(isPositionedOnTop.value);
   let { x, y } = { x: 0, y: 0 };
   let dialogHeight = MAX_HEIGHT;
   if (cmdPalette.value && cmdPalette.value.getBoundingClientRect().height > 0) {
