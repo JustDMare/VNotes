@@ -44,5 +44,6 @@ module.exports = {
     "vue/eqeqeq": "error",
     "vuejs-accessibility/mouse-events-have-key-events": "off",
     "vuejs-accessibility/form-control-has-label": "off",
+    "vuejs-accessibility/heading-has-content": "off",
   },
 };

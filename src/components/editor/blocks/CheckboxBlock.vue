@@ -9,8 +9,9 @@ const props = defineProps({
   block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
 const checkboxChecked: Ref<boolean> = ref(props.block.uniqueProperties.selected);
-const { initialBlockContent, blockHTMLContent, parseSpecialKeys, processInput } =
-  useTextBasedBlock(props.block);
+const { blockHTMLContent, parseSpecialKeys, processInput } = useTextBasedBlock(
+  props.block
+);
 const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 
 defineExpose({ blockHTMLContent });
@@ -59,9 +60,7 @@ function onCheckboxChange(): void {
       :placeholder="$t('note.blockPlaceholder')"
       @keydown="parseSpecialKeys"
       @input="processInput"
-    >
-      {{ initialBlockContent }}
-    </p>
+    ></p>
   </div>
 </template>
 <style lang="scss" scoped>

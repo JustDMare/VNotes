@@ -1,2 +1,3 @@
 export * from "./date-formatter";
-export * from "./place-caret-at-end";
+export * from "./focus-and-caret-at-end";
+export * from "./focus-and-caret-align";

@@ -7,8 +7,9 @@ const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
 
-const { initialBlockContent, parseSpecialKeys, processInput, blockHTMLContent } =
-  useTextBasedBlock(props.block);
+const { parseSpecialKeys, processInput, blockHTMLContent } = useTextBasedBlock(
+  props.block
+);
 defineExpose({ blockHTMLContent });
 </script>
 
@@ -20,9 +21,7 @@ defineExpose({ blockHTMLContent });
     ref="blockHTMLContent"
     @keydown="parseSpecialKeys"
     @input="processInput"
-  >
-    {{ initialBlockContent }}
-  </h1>
+  ></h1>
 </template>
 
 <style lang="scss"></style>

@@ -1,10 +1,9 @@
 import { useEditorStore } from "@/stores/editor";
-import { focusAndPlaceCaretAtEnd } from "@/utils";
+import { focusAndAlignCaretInSameVertical } from "@/utils";
 import type { Block } from "vnotes-types";
-import { ref, unref, watch, type Ref } from "vue";
+import { onMounted, ref, unref, watch, type Ref } from "vue";
 
 export function useTextBasedBlock(block: Block) {
-  const initialBlockContent: Ref<string> = ref(block.content);
   const blockHTMLContent: Ref<HTMLElement | null> = ref(null);
   const editorStore = useEditorStore();
 
@@ -22,22 +21,38 @@ export function useTextBasedBlock(block: Block) {
     () => block.content,
     (inheritedContent) => {
       if (blockHTMLContent.value?.innerText !== inheritedContent) {
-        initialBlockContent.value = inheritedContent;
+        parseBlockContent();
       }
     }
   );
+  onMounted(() => {
+    parseBlockContent();
+  });
+  //DOCUMENTAR Y MENCIONAR EN LA DOCOUMENTACION COMO SE HA TRABAJADO CON LOS NODOS PARA
+  //QUE SE PUEDA MOVER EL FOCO DE UN BLOQUE A OTRO.
+  function parseBlockContent() {
+    const contentToParse = block.content;
+    const contentForTextNodes = contentToParse.split("\n");
+    console.log(contentForTextNodes);
+    if (!contentForTextNodes.length && blockHTMLContent.value) {
+      const emptyTextNode = document.createTextNode("");
+      blockHTMLContent.value.appendChild(emptyTextNode);
+    }
+    contentForTextNodes.forEach((nodeContent) => {
+      if (blockHTMLContent.value === null) {
+        return;
+      }
+      const textNode = document.createTextNode(nodeContent + "\n");
+      blockHTMLContent.value.appendChild(textNode);
+    });
+  }
 
   function parseSpecialKeys(event: KeyboardEvent) {
-    if (event.key === "Enter" && event.shiftKey) {
-      event.preventDefault();
-      blockHTMLContent.value?.parentElement;
-    }
     if (event.key === "ArrowUp") {
       const selection = window.getSelection();
       if (selection) {
         const range = selection.getRangeAt(0);
         range.collapse(true);
-        console.log(range);
         if (!range.startContainer.previousSibling) {
           event.preventDefault();
           focusPreviousContentEditable();
@@ -49,8 +64,6 @@ export function useTextBasedBlock(block: Block) {
       if (selection) {
         const range = selection.getRangeAt(0);
         range.collapse(true);
-        console.log(range);
-        console.log(selection);
         if (
           !range.startContainer.nextSibling
           // !range.startContainer.nextSibling || (range.startContainer.nextSibling as
@@ -97,8 +110,7 @@ export function useTextBasedBlock(block: Block) {
     const index = elements.findIndex((element) => element === blockHTMLContent.value);
     if (index > 0) {
       const elementToFocus = elements[index - 1];
-      console.log(elementToFocus);
-      focusAndPlaceCaretAtEnd(elementToFocus);
+      focusAndAlignCaretInSameVertical(elementToFocus);
     }
   }
   function focusNextContentEditable() {
@@ -106,8 +118,7 @@ export function useTextBasedBlock(block: Block) {
     const index = elements.findIndex((element) => element === blockHTMLContent.value);
     if (index < elements.length - 1) {
       const elementToFocus = elements[index + 1];
-      console.log(elementToFocus);
-      focusAndPlaceCaretAtEnd(elementToFocus);
+      focusAndAlignCaretInSameVertical(elementToFocus);
     }
   }
   function findContentEditables() {
@@ -117,7 +128,6 @@ export function useTextBasedBlock(block: Block) {
     return elements;
   }
   return {
-    initialBlockContent,
     blockHTMLContent,
     parseSpecialKeys,
     processInput,

@@ -8,24 +8,13 @@ const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
 
-const { initialBlockContent, blockHTMLContent, parseSpecialKeys, processInput } =
-  useTextBasedBlock(props.block);
+const { blockHTMLContent, parseSpecialKeys, processInput } = useTextBasedBlock(
+  props.block
+);
 const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 defineExpose({ blockHTMLContent });
 
-function parseBlockContent() {
-  const contentForTextNodes = initialBlockContent.value.split("\n");
-  contentForTextNodes.forEach((nodeContent) => {
-    if (blockHTMLContent.value === null) {
-      return;
-    }
-    const textNode = document.createTextNode(nodeContent + "\n");
-    blockHTMLContent.value.appendChild(textNode);
-  });
-}
 onMounted(() => {
-  console.log(initialBlockContent);
-  parseBlockContent();
   focusBlockOnCreation();
 });
 </script>

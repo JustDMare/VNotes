@@ -6,8 +6,9 @@ import type { PropType } from "vue";
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
-const { initialBlockContent, blockHTMLContent, parseSpecialKeys, processInput } =
-  useTextBasedBlock(props.block);
+const { blockHTMLContent, parseSpecialKeys, processInput } = useTextBasedBlock(
+  props.block
+);
 defineExpose({ blockHTMLContent });
 </script>
 
@@ -19,8 +20,6 @@ defineExpose({ blockHTMLContent });
     ref="blockHTMLContent"
     @keydown="parseSpecialKeys"
     @input="processInput"
-  >
-    {{ initialBlockContent }}
-  </h2>
+  ></h2>
 </template>
 <style lang="scss"></style>
