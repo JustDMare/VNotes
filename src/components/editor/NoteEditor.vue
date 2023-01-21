@@ -100,9 +100,8 @@ watch(
 }
 
 [contenteditable] {
-  word-wrap: break-word;
-  word-break: break-all;
-  white-space: pre-line;
+  word-break: break-word;
+  white-space: pre-wrap;
   outline-style: none;
   &:focus {
     outline: 0px solid transparent;
