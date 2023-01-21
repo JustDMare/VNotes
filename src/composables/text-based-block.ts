@@ -1,5 +1,9 @@
 import { useEditorStore } from "@/stores/editor";
-import { focusAndAlignCaretInSameVertical, focusAndPlaceCaretAtEnd } from "@/utils";
+import {
+  focusUpAndAlignCaretInSameVertical,
+  focusAndPlaceCaretAtEnd,
+  focusDownAndAlignCaretInSameVertical,
+} from "@/utils";
 import type { Block } from "vnotes-types";
 import { onMounted, ref, unref, watch, type Ref } from "vue";
 
@@ -32,20 +36,25 @@ export function useTextBasedBlock(block: Block) {
   //QUE SE PUEDA MOVER EL FOCO DE UN BLOQUE A OTRO.
   function parseBlockContent() {
     const contentToParse = block.content;
-    if (contentToParse === "" && blockHTMLContent.value) {
-      const textNode = document.createTextNode("");
-      //blockHTMLContent.value.appendChild(textNode);
+    if (contentToParse === "") {
       return;
     }
+    if (blockHTMLContent.value) {
+      blockHTMLContent.value.innerHTML = "";
+      const contentForTextNodes = contentToParse.split("\n");
+      contentForTextNodes.forEach((nodeContent, index) => {
+        if (blockHTMLContent.value === null) {
+          return;
+        }
 
-    const contentForTextNodes = contentToParse.split("\n");
-    contentForTextNodes.forEach((nodeContent) => {
-      if (blockHTMLContent.value === null) {
-        return;
-      }
-      const textNode = document.createTextNode(nodeContent + "\n");
-      blockHTMLContent.value.appendChild(textNode);
-    });
+        const textNode = document.createTextNode(nodeContent);
+        blockHTMLContent.value.appendChild(textNode);
+        if (index < contentForTextNodes.length - 1) {
+          const brNode = document.createTextNode("\n");
+          blockHTMLContent.value.append(brNode);
+        }
+      });
+    }
   }
 
   function parseSpecialKeys(event: KeyboardEvent) {
@@ -71,9 +80,31 @@ export function useTextBasedBlock(block: Block) {
         if (nextSibling && nextSibling.className) {
           isBlockButtonsWrapperNextSibling = nextSibling.className.includes("wrapper");
         }
+        console.log("childNodes", range.startContainer.parentElement.childNodes);
+        console.log("children", range.startContainer.parentElement.children);
+        console.log(nextSibling);
+        console.log(!nextSibling || isBlockButtonsWrapperNextSibling);
         if (!nextSibling || isBlockButtonsWrapperNextSibling) {
           event.preventDefault();
           focusNextContentEditable();
+        }
+      }
+    }
+    if (event.key === "Backspace" && blockHTMLContent.value?.innerText.length) {
+      const selection = window.getSelection();
+      if (selection && blockHTMLContent.value) {
+        const range = selection.getRangeAt(0);
+        range.collapse();
+
+        if (range.startContainer.textContent?.length === 1) {
+          event.preventDefault();
+          const textNode = range.startContainer;
+          blockHTMLContent.value.removeChild(textNode);
+          editorStore.updateBlockContent(
+            unref(block._id),
+            blockHTMLContent.value.innerHTML.replace(/\n$/, "")
+          );
+          console.log(editorStore.getBlockInEditorById(unref(block._id))?.content);
         }
       }
     }
@@ -120,7 +151,7 @@ export function useTextBasedBlock(block: Block) {
     const index = elements.findIndex((element) => element === blockHTMLContent.value);
     if (index > 0) {
       const elementToFocus = elements[index - 1];
-      focusAndAlignCaretInSameVertical(elementToFocus);
+      focusUpAndAlignCaretInSameVertical(elementToFocus);
     }
   }
   function focusNextContentEditable() {
@@ -128,7 +159,7 @@ export function useTextBasedBlock(block: Block) {
     const index = elements.findIndex((element) => element === blockHTMLContent.value);
     if (index < elements.length - 1) {
       const elementToFocus = elements[index + 1];
-      focusAndAlignCaretInSameVertical(elementToFocus);
+      focusDownAndAlignCaretInSameVertical(elementToFocus);
     }
   }
   function findContentEditables() {

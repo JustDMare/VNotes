@@ -1,7 +1,21 @@
-export function focusAndAlignCaretInSameVertical(element: HTMLElement) {
+export function focusUpAndAlignCaretInSameVertical(element: HTMLElement) {
   const caretPreviousOffset = getCaretPreviousPosition();
   element.focus();
-  restoreCaretPosition(element, caretPreviousOffset);
+  let nodeToFocus = element.lastChild as Node;
+  if (!nodeToFocus) {
+    nodeToFocus = element;
+  }
+  restoreCaretPosition(nodeToFocus, caretPreviousOffset);
+}
+
+export function focusDownAndAlignCaretInSameVertical(element: HTMLElement) {
+  const caretPreviousOffset = getCaretPreviousPosition();
+  element.focus();
+  let nodeToFocus = element.firstChild as Node;
+  if (!nodeToFocus) {
+    nodeToFocus = element;
+  }
+  restoreCaretPosition(nodeToFocus, caretPreviousOffset);
 }
 
 function getCaretPreviousPosition() {
@@ -15,20 +29,16 @@ function getCaretPreviousPosition() {
   return previousOffset;
 }
 
-function restoreCaretPosition(element: HTMLElement, previousOffset: number) {
+function restoreCaretPosition(nodeToFocus: Node, previousOffset: number) {
   const selection = window.getSelection();
   if (selection) {
     const range = document.createRange();
-    let lastChild = element.lastChild as Node;
-    if (!lastChild) {
-      lastChild = element;
-    }
-    range.selectNodeContents(lastChild);
+    range.selectNodeContents(nodeToFocus);
     range.collapse(true);
-    if (lastChild.textContent && lastChild.textContent.length > previousOffset) {
-      range.setStart(lastChild, previousOffset);
+    if (nodeToFocus.textContent && nodeToFocus.textContent.length > previousOffset) {
+      range.setStart(nodeToFocus, previousOffset);
     } else {
-      range.setStart(lastChild, lastChild.textContent?.length || 0);
+      range.setStart(nodeToFocus, nodeToFocus.textContent?.length || 0);
     }
     selection.removeAllRanges();
     selection.addRange(range);

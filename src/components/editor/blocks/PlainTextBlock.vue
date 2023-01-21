@@ -23,7 +23,7 @@ onMounted(() => {
   <p
     class="block__content--text note-editor__content-editable"
     ref="blockHTMLContent"
-    contenteditable
+    contenteditable="plaintext-only"
     @keydown="parseSpecialKeys"
     @input="processInput"
     :placeholder="$t('note.blockPlaceholder')"

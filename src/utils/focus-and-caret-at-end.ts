@@ -3,11 +3,11 @@ export function focusAndPlaceCaretAtEnd(element: HTMLElement) {
   const selection = window.getSelection();
   if (selection) {
     const range = document.createRange();
-    let lastChild = element.lastChild as Node;
-    if (!lastChild) {
-      lastChild = element;
+    let nodeToFocus = element.lastChild as Node;
+    if (!nodeToFocus) {
+      nodeToFocus = element;
     }
-    range.selectNodeContents(lastChild as Node);
+    range.selectNodeContents(nodeToFocus as Node);
     range.collapse(false);
     selection.removeAllRanges();
     selection.addRange(range);
