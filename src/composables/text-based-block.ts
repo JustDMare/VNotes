@@ -28,6 +28,37 @@ export function useTextBasedBlock(block: Block) {
   );
 
   function parseSpecialKeys(event: KeyboardEvent) {
+    if (event.key === "ArrowUp") {
+      const selection = window.getSelection();
+      if (selection) {
+        const range = selection.getRangeAt(0);
+        range.collapse(true);
+        console.log(range);
+        if (!range.startContainer.previousSibling) {
+          event.preventDefault();
+          focusPreviousContentEditable();
+        }
+      }
+    }
+    if (event.key === "ArrowDown") {
+      const selection = window.getSelection();
+      if (selection) {
+        const range = selection.getRangeAt(0);
+        range.collapse(true);
+        console.log(range);
+        console.log(selection);
+        const a = "a";
+
+        if (
+          !range.startContainer.nextSibling
+          // !range.startContainer.nextSibling || (range.startContainer.nextSibling as
+          // HTMLElement).className.includes("wrapper")
+        ) {
+          event.preventDefault();
+          focusNextContentEditable();
+        }
+      }
+    }
     if (event.key === "Backspace" && (event.metaKey || event.ctrlKey)) {
       deleteBlockAndFocusPrevious(event);
     } else if (
@@ -55,17 +86,34 @@ export function useTextBasedBlock(block: Block) {
 
   function deleteBlockAndFocusPrevious(event: KeyboardEvent) {
     event.preventDefault();
-    const elements: HTMLElement[] = Array.from(
-      document.getElementsByClassName("note-editor__content-editable")
-    ) as HTMLElement[];
-    const index = elements.findIndex((element) => element === blockHTMLContent.value);
-    if (index > 0) {
-      const elementToFocus = elements[index - 1];
-      focusAndPlaceCaretAtEnd(elementToFocus);
-    }
+    focusPreviousContentEditable();
     editorStore.deleteBlockById(unref(block._id));
   }
 
+  function focusPreviousContentEditable() {
+    const elements = findContentEditables();
+    const index = elements.findIndex((element) => element === blockHTMLContent.value);
+    if (index > 0) {
+      const elementToFocus = elements[index - 1];
+      console.log(elementToFocus);
+      focusAndPlaceCaretAtEnd(elementToFocus);
+    }
+  }
+  function focusNextContentEditable() {
+    const elements = findContentEditables();
+    const index = elements.findIndex((element) => element === blockHTMLContent.value);
+    if (index < elements.length - 1) {
+      const elementToFocus = elements[index + 1];
+      console.log(elementToFocus);
+      focusAndPlaceCaretAtEnd(elementToFocus);
+    }
+  }
+  function findContentEditables() {
+    const elements: HTMLElement[] = Array.from(
+      document.getElementsByClassName("note-editor__content-editable")
+    ) as HTMLElement[];
+    return elements;
+  }
   return {
     initialBlockContent,
     blockHTMLContent,
