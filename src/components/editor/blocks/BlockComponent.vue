@@ -35,8 +35,6 @@ watch(
     }, 0);
   }
 );
-
-watch;
 </script>
 
 <template>

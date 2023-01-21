@@ -17,6 +17,8 @@ const blockContentBeforeCommand = ref("");
 const searchTerm = ref("");
 const highlightedCommandIndex = ref(0);
 
+//TODO: Bug: If the new type of block is the same as the previous one, doesn't delete the
+//search term. It should delete it. (Add to testing findings?)
 function executeCommand(command: Command) {
   command.execute();
   if (editorStore.blockOpeningCommandPalette) {

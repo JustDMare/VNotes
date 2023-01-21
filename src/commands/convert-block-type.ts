@@ -16,6 +16,9 @@ function handleBlockConversion(block: Block, blockType: BlockType) {
   if (block.type === blockType) {
     return;
   }
+  //TODO: Add to testing findings that a block returned from backend (not newly created)
+  //used to break when converting to a block type that had unique properties because of
+  //the lack of `block.uniqueProperties === undefined` check
   if (
     blockType === "checkbox" &&
     (block.uniqueProperties === undefined ||
