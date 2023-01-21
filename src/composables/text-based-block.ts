@@ -47,8 +47,6 @@ export function useTextBasedBlock(block: Block) {
         range.collapse(true);
         console.log(range);
         console.log(selection);
-        const a = "a";
-
         if (
           !range.startContainer.nextSibling
           // !range.startContainer.nextSibling || (range.startContainer.nextSibling as
