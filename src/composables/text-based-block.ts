@@ -1,11 +1,11 @@
 import { useEditorStore } from "@/stores/editor";
+import { focusAndPlaceCaretAtEnd } from "@/utils";
 import type { Block } from "vnotes-types";
 import { ref, unref, watch, type Ref } from "vue";
 
 export function useTextBasedBlock(block: Block) {
   const initialBlockContent: Ref<string> = ref(block.content);
   const blockHTMLContent: Ref<HTMLElement | null> = ref(null);
-
   const editorStore = useEditorStore();
 
   //TODO: Documentar que este watch comprueba los cambios que
@@ -28,6 +28,15 @@ export function useTextBasedBlock(block: Block) {
   );
 
   function parseSpecialKeys(event: KeyboardEvent) {
+    if (event.key === "Backspace" && (event.metaKey || event.ctrlKey)) {
+      deleteBlockAndFocusPrevious(event);
+    } else if (
+      event.key === "Backspace" &&
+      blockHTMLContent.value?.innerText === "" &&
+      !editorStore.commandPaletteOpen
+    ) {
+      deleteBlockAndFocusPrevious(event);
+    }
     if (event.key === "/") {
       editorStore.setCommandPaletteOpen(true);
       editorStore.setBlockOpeningCommandPalette(block);
@@ -42,6 +51,19 @@ export function useTextBasedBlock(block: Block) {
   function processInput(event: Event) {
     const input = event.target as HTMLElement;
     editorStore.updateBlockContent(unref(block._id), input.innerText);
+  }
+
+  function deleteBlockAndFocusPrevious(event: KeyboardEvent) {
+    event.preventDefault();
+    const elements: HTMLElement[] = Array.from(
+      document.getElementsByClassName("note-editor__content-editable")
+    ) as HTMLElement[];
+    const index = elements.findIndex((element) => element === blockHTMLContent.value);
+    if (index > 0) {
+      const elementToFocus = elements[index - 1];
+      focusAndPlaceCaretAtEnd(elementToFocus);
+    }
+    editorStore.deleteBlockById(unref(block._id));
   }
 
   return {

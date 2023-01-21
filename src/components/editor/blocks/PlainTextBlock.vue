@@ -20,7 +20,7 @@ onMounted(() => {
 
 <template>
   <p
-    class="block__content--text"
+    class="block__content--text note-editor__content-editable"
     ref="blockHTMLContent"
     contenteditable
     @keydown="parseSpecialKeys"

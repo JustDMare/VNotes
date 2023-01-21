@@ -13,7 +13,7 @@ defineExpose({ blockHTMLContent });
 
 <template>
   <h2
-    class="block__content--heading__medium"
+    class="block__content--heading__medium note-editor__content-editable"
     contenteditable
     :placeholder="$t('note.blockPlaceholder')"
     ref="blockHTMLContent"
