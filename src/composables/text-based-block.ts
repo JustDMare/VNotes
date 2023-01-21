@@ -28,6 +28,10 @@ export function useTextBasedBlock(block: Block) {
   );
 
   function parseSpecialKeys(event: KeyboardEvent) {
+    if (event.key === "Enter" && event.shiftKey) {
+      event.preventDefault();
+      blockHTMLContent.value?.parentElement;
+    }
     if (event.key === "ArrowUp") {
       const selection = window.getSelection();
       if (selection) {

@@ -13,7 +13,19 @@ const { initialBlockContent, blockHTMLContent, parseSpecialKeys, processInput } 
 const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 defineExpose({ blockHTMLContent });
 
+function parseBlockContent() {
+  const contentForTextNodes = initialBlockContent.value.split("\n");
+  contentForTextNodes.forEach((nodeContent) => {
+    if (blockHTMLContent.value === null) {
+      return;
+    }
+    const textNode = document.createTextNode(nodeContent + "\n");
+    blockHTMLContent.value.appendChild(textNode);
+  });
+}
 onMounted(() => {
+  console.log(initialBlockContent);
+  parseBlockContent();
   focusBlockOnCreation();
 });
 </script>
@@ -26,8 +38,6 @@ onMounted(() => {
     @keydown="parseSpecialKeys"
     @input="processInput"
     :placeholder="$t('note.blockPlaceholder')"
-  >
-    {{ initialBlockContent }}
-  </p>
+  ></p>
 </template>
 <style lang="scss"></style>
