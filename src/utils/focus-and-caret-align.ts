@@ -19,8 +19,10 @@ function restoreCaretPosition(element: HTMLElement, previousOffset: number) {
   const selection = window.getSelection();
   if (selection) {
     const range = document.createRange();
-    console.log(element.childNodes);
-    const lastChild = element.lastChild as Node;
+    let lastChild = element.lastChild as Node;
+    if (!lastChild) {
+      lastChild = element;
+    }
     range.selectNodeContents(lastChild);
     range.collapse(true);
     if (lastChild.textContent && lastChild.textContent.length > previousOffset) {

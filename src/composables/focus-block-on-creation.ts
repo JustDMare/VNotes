@@ -6,10 +6,10 @@ export function useFocusBlockOnCreation(blockHTMLContent: Ref<HTMLElement | null
 
   function focusBlockOnCreation() {
     if (editorStore.blockCreated && blockHTMLContent.value) {
-      blockHTMLContent.value.innerHTML = "<span>&nbsp;</span>"; //Firefox
+      // blockHTMLContent.value.innerHTML = "<span>&nbsp;</span>"; //Firefox
       blockHTMLContent.value.focus();
       editorStore.setBlockCreated(false);
-      blockHTMLContent.value.innerHTML = ""; //Firefox
+      //blockHTMLContent.value.innerHTML = ""; //Firefox
     }
   }
   return { focusBlockOnCreation };

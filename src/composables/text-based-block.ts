@@ -1,5 +1,5 @@
 import { useEditorStore } from "@/stores/editor";
-import { focusAndAlignCaretInSameVertical } from "@/utils";
+import { focusAndAlignCaretInSameVertical, focusAndPlaceCaretAtEnd } from "@/utils";
 import type { Block } from "vnotes-types";
 import { onMounted, ref, unref, watch, type Ref } from "vue";
 
@@ -32,12 +32,13 @@ export function useTextBasedBlock(block: Block) {
   //QUE SE PUEDA MOVER EL FOCO DE UN BLOQUE A OTRO.
   function parseBlockContent() {
     const contentToParse = block.content;
-    const contentForTextNodes = contentToParse.split("\n");
-    console.log(contentForTextNodes);
-    if (!contentForTextNodes.length && blockHTMLContent.value) {
-      const emptyTextNode = document.createTextNode("");
-      blockHTMLContent.value.appendChild(emptyTextNode);
+    if (contentToParse === "" && blockHTMLContent.value) {
+      const textNode = document.createTextNode("");
+      //blockHTMLContent.value.appendChild(textNode);
+      return;
     }
+
+    const contentForTextNodes = contentToParse.split("\n");
     contentForTextNodes.forEach((nodeContent) => {
       if (blockHTMLContent.value === null) {
         return;
@@ -64,11 +65,13 @@ export function useTextBasedBlock(block: Block) {
       if (selection) {
         const range = selection.getRangeAt(0);
         range.collapse(true);
-        if (
-          !range.startContainer.nextSibling
-          // !range.startContainer.nextSibling || (range.startContainer.nextSibling as
-          // HTMLElement).className.includes("wrapper")
-        ) {
+        const nextSibling: HTMLElement = range.startContainer.nextSibling as HTMLElement;
+        let isBlockButtonsWrapperNextSibling = false;
+
+        if (nextSibling && nextSibling.className) {
+          isBlockButtonsWrapperNextSibling = nextSibling.className.includes("wrapper");
+        }
+        if (!nextSibling || isBlockButtonsWrapperNextSibling) {
           event.preventDefault();
           focusNextContentEditable();
         }
@@ -78,7 +81,8 @@ export function useTextBasedBlock(block: Block) {
       deleteBlockAndFocusPrevious(event);
     } else if (
       event.key === "Backspace" &&
-      blockHTMLContent.value?.innerText === "" &&
+      (blockHTMLContent.value?.innerText === "" ||
+        !blockHTMLContent.value?.innerHTML.length) &&
       !editorStore.commandPaletteOpen
     ) {
       deleteBlockAndFocusPrevious(event);
@@ -101,7 +105,13 @@ export function useTextBasedBlock(block: Block) {
 
   function deleteBlockAndFocusPrevious(event: KeyboardEvent) {
     event.preventDefault();
-    focusPreviousContentEditable();
+    const elements = findContentEditables();
+    //TODO: Refactor to separate function?
+    const index = elements.findIndex((element) => element === blockHTMLContent.value);
+    if (index > 0) {
+      const elementToFocus = elements[index - 1];
+      focusAndPlaceCaretAtEnd(elementToFocus);
+    }
     editorStore.deleteBlockById(unref(block._id));
   }
 
