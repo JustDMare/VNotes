@@ -2,6 +2,7 @@
 import { GripIcon, PlusIcon } from "@/components/icons";
 import { getBlockComponentMap, getBlockClassMap } from "@/mappings";
 import { useEditorStore } from "@/stores/editor";
+import { focusAndPlaceCaretAtEnd } from "@/utils";
 import type { Block, BlockType } from "vnotes-types";
 import { type PropType, ref, type Component, type Ref, watch } from "vue";
 import type { PlainTextBlock } from ".";
@@ -15,6 +16,7 @@ const props = defineProps({
 const editorStore = useEditorStore();
 const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
 
+defineExpose({ blockHTMLContent: blockInnerComponent.value?.blockHTMLContent });
 let buttonsVisible = ref(false);
 
 function createBlockBelow() {
@@ -30,13 +32,12 @@ watch(
   () => props.block.type,
   () => {
     setTimeout(() => {
-      blockInnerComponent.value?.blockHTMLContent.focus();
-      //TODO: Focus at the end of the text
+      if (blockInnerComponent.value) {
+        focusAndPlaceCaretAtEnd(blockInnerComponent.value.blockHTMLContent);
+      }
     }, 0);
   }
 );
-
-watch;
 </script>
 
 <template>

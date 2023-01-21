@@ -8,6 +8,7 @@ import type Sortable from "sortablejs";
 
 const editorStore = useEditorStore();
 const dragging = ref(false);
+const sortableOptions = { handle: ".grip-btn", animation: 250 };
 
 const blockList = computed(() => {
   if (!editorStore.noteInEditor) {
@@ -15,8 +16,6 @@ const blockList = computed(() => {
   }
   return editorStore.noteInEditor.content as Block[];
 });
-
-const options = { handle: ".grip-btn", animation: 250 };
 
 function onEnd(event: Sortable.SortableEvent) {
   dragging.value = false;
@@ -33,7 +32,7 @@ function onEnd(event: Sortable.SortableEvent) {
     tag="div"
     group="blocks"
     :key="editorStore.noteInEditor?._id"
-    :options="options"
+    :options="sortableOptions"
     @end="onEnd"
     @start="dragging = true"
     :class="{ 'is-dragging': dragging }"

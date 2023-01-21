@@ -62,6 +62,7 @@ watch(
           contenteditable
           :placeholder="$t('note.titlePlaceholder')"
           id="note-editor__content__title"
+          class="note-editor__content-editable"
           ref="noteTitle"
           @keydown="parseSpecialKeys"
           @input="processInput"
