@@ -16,20 +16,7 @@ export function useTextBasedBlock(block: Block) {
     if (block.content === "" || block.content === "\u200B" || block.content === "\n") {
       return true;
     }
-    if (
-      blockHTMLContent.value?.childNodes.length === 2 &&
-      ofCourseItIsFirefox() &&
-      blockHTMLContent.value?.lastChild?.nodeName === "BR" &&
-      !editorStore.commandPaletteOpen
-    ) {
-      if (
-        blockHTMLContent.value?.firstChild?.textContent === "\u200B" ||
-        blockHTMLContent.value?.firstChild?.textContent === "\n" ||
-        blockHTMLContent.value?.firstChild?.textContent === ""
-      ) {
-        return true;
-      }
-    }
+
     return false;
   });
 
