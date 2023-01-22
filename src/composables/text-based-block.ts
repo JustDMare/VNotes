@@ -80,10 +80,6 @@ export function useTextBasedBlock(block: Block) {
         if (nextSibling && nextSibling.className) {
           isBlockButtonsWrapperNextSibling = nextSibling.className.includes("wrapper");
         }
-        console.log("childNodes", range.startContainer.parentElement.childNodes);
-        console.log("children", range.startContainer.parentElement.children);
-        console.log(nextSibling);
-        console.log(!nextSibling || isBlockButtonsWrapperNextSibling);
         if (!nextSibling || isBlockButtonsWrapperNextSibling) {
           event.preventDefault();
           focusNextContentEditable();
