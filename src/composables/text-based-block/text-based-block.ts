@@ -3,6 +3,7 @@ import {
   focusUpAndAlignCaretInSameVertical,
   focusAndPlaceCaretAtEnd,
   focusDownAndAlignCaretInSameVertical,
+  ofCourseItIsFirefox,
 } from "@/utils";
 import type { Block } from "vnotes-types";
 import { computed, onMounted, ref, unref, watch, type Ref } from "vue";
@@ -12,9 +13,22 @@ export function useTextBasedBlock(block: Block) {
   const editorStore = useEditorStore();
 
   const isBlockEmpty = computed(() => {
-    console.log("block.content", block.content);
-    if (!block.content.length || block.content === "\u200B" || block.content === "\n") {
+    if (block.content === "" || block.content === "\u200B" || block.content === "\n") {
       return true;
+    }
+    if (
+      blockHTMLContent.value?.childNodes.length === 2 &&
+      ofCourseItIsFirefox() &&
+      blockHTMLContent.value?.lastChild?.nodeName === "BR" &&
+      !editorStore.commandPaletteOpen
+    ) {
+      if (
+        blockHTMLContent.value?.firstChild?.textContent === "\u200B" ||
+        blockHTMLContent.value?.firstChild?.textContent === "\n" ||
+        blockHTMLContent.value?.firstChild?.textContent === ""
+      ) {
+        return true;
+      }
     }
     return false;
   });
@@ -61,7 +75,6 @@ export function useTextBasedBlock(block: Block) {
             index === firstEmptyCharIndex ? emptyChar : ""
           );
           if (nodeContent !== "\u200B") {
-            console.log(nodeContent);
             nodeContent = nodeContent.replace(/\u200B/g, "");
           }
         }
@@ -125,58 +138,77 @@ export function useTextBasedBlock(block: Block) {
         range.setEnd(newTextNode, 1);
       }
     }
-    if (event.key === "Backspace" && (event.metaKey || event.ctrlKey)) {
-      event.preventDefault();
-      deleteBlockAndFocusPrevious();
-    } else if (
-      event.key === "Backspace" &&
-      (blockHTMLContent.value?.innerText === "" ||
-        !blockHTMLContent.value?.innerHTML.length ||
-        blockHTMLContent.value?.innerText === "\u200B" ||
-        blockHTMLContent.value?.innerText === "\n") &&
-      !editorStore.commandPaletteOpen
-    ) {
-      event.preventDefault();
-      deleteBlockAndFocusPrevious();
-    }
+    if (event.key === "Backspace") {
+      if (event.metaKey || event.ctrlKey) {
+        event.preventDefault();
+        deleteBlockAndFocusPrevious();
+      } else if (
+        (blockHTMLContent.value?.innerText === "" ||
+          !blockHTMLContent.value?.innerHTML.length ||
+          blockHTMLContent.value?.innerText === "\u200B" ||
+          blockHTMLContent.value?.innerText === "\n") &&
+        !editorStore.commandPaletteOpen
+      ) {
+        event.preventDefault();
+        deleteBlockAndFocusPrevious();
+      } else if (
+        blockHTMLContent.value?.childNodes.length === 2 &&
+        ofCourseItIsFirefox() &&
+        blockHTMLContent.value?.lastChild?.nodeName === "BR" &&
+        !editorStore.commandPaletteOpen
+      ) {
+        if (
+          blockHTMLContent.value?.firstChild?.textContent === "\u200B" ||
+          blockHTMLContent.value?.firstChild?.textContent === "\n" ||
+          blockHTMLContent.value?.firstChild?.textContent === ""
+        ) {
+          event.preventDefault();
+          deleteBlockAndFocusPrevious();
+        }
+      }
 
-    if (event.key === "Backspace" && blockHTMLContent.value?.innerText.length) {
-      const selection = window.getSelection();
-      if (selection && blockHTMLContent.value) {
-        const range = selection.getRangeAt(0);
-        const currentNode = range.startContainer;
-        const currentNodeText = currentNode.textContent;
-        if (currentNodeText) {
-          const removingLastCharacter =
-            currentNode.textContent?.length === 1 &&
-            range.startOffset === 1 &&
-            range.endOffset === 1;
-          const removingWholeLineWithSelection =
-            range.startOffset === 0 && range.endOffset === currentNodeText.length;
-          const nodeIsOnlyNode = blockHTMLContent.value.childNodes.length === 1;
-          if (
-            (removingLastCharacter || removingWholeLineWithSelection) &&
-            !nodeIsOnlyNode
-          ) {
-            console.log(1);
-            event.preventDefault();
-            currentNode.nodeValue = "\u200B";
-          }
-          if (currentNodeText === "\u200B") {
-            console.log(2);
-            event.preventDefault();
-            const previousSibling = currentNode.previousSibling;
-            if (previousSibling) {
-              const nodeToFocus = previousSibling.previousSibling;
-              blockHTMLContent.value.removeChild(previousSibling);
+      if (event.key === "Backspace" && blockHTMLContent.value?.innerText.length) {
+        const selection = window.getSelection();
+        if (selection && blockHTMLContent.value) {
+          const range = selection.getRangeAt(0);
+          const currentNode = range.startContainer;
+          const currentNodeText = currentNode.textContent;
+          if (currentNodeText) {
+            const removingLastCharacter =
+              currentNode.textContent?.length === 1 &&
+              range.startOffset === 1 &&
+              range.endOffset === 1;
+            const removingWholeLineWithSelection =
+              range.startOffset === 0 && range.endOffset === currentNodeText.length;
+            const nodeIsOnlyNode = blockHTMLContent.value.childNodes.length === 1;
+            if (
+              (removingLastCharacter || removingWholeLineWithSelection) &&
+              !nodeIsOnlyNode
+            ) {
+              event.preventDefault();
+              currentNode.nodeValue = "\u200B";
+            } else if (
+              ofCourseItIsFirefox() &&
+              (removingLastCharacter || removingWholeLineWithSelection) &&
+              nodeIsOnlyNode
+            ) {
               blockHTMLContent.value.removeChild(currentNode);
-              editorStore.updateBlockContent(
-                unref(block._id),
-                blockHTMLContent.value.innerText
-              );
-              if (nodeToFocus && nodeToFocus.textContent) {
-                range.setStart(nodeToFocus, nodeToFocus.textContent.length);
-                range.setEnd(nodeToFocus, nodeToFocus.textContent.length);
+            }
+            if (currentNodeText === "\u200B") {
+              event.preventDefault();
+              const previousSibling = currentNode.previousSibling;
+              if (previousSibling) {
+                const nodeToFocus = previousSibling.previousSibling;
+                blockHTMLContent.value.removeChild(previousSibling);
+                blockHTMLContent.value.removeChild(currentNode);
+                editorStore.updateBlockContent(
+                  unref(block._id),
+                  blockHTMLContent.value.innerText
+                );
+                if (nodeToFocus && nodeToFocus.textContent) {
+                  range.setStart(nodeToFocus, nodeToFocus.textContent.length);
+                  range.setEnd(nodeToFocus, nodeToFocus.textContent.length);
+                }
               }
             }
           }
