@@ -23,6 +23,7 @@ const scrollStateClass = computed(() => {
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow-x: hidden;
 }
 #ws__header {
   position: sticky;

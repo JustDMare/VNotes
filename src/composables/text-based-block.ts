@@ -95,7 +95,7 @@ export function useTextBasedBlock(block: Block) {
       if (selection && blockHTMLContent.value) {
         const range = selection.getRangeAt(0);
         range.collapse();
-
+        //TODO: RESTORE CARET POSITION
         if (range.startContainer.textContent?.length === 1) {
           event.preventDefault();
           const textNode = range.startContainer;
