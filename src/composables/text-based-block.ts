@@ -46,8 +46,16 @@ export function useTextBasedBlock(block: Block) {
         if (blockHTMLContent.value === null) {
           return;
         }
-        if (nodeContent !== "\u200B") {
-          nodeContent = nodeContent.replace(/\u200B/g, "");
+
+        if (nodeContent.includes("\u200B")) {
+          const firstEmptyCharIndex = nodeContent.indexOf("\u200B");
+          nodeContent = nodeContent.replace(/\u200B/g, (emptyChar, index) =>
+            index === firstEmptyCharIndex ? emptyChar : ""
+          );
+          if (nodeContent !== "\u200B") {
+            console.log(nodeContent);
+            nodeContent = nodeContent.replace(/\u200B/g, "");
+          }
         }
         const textNode = document.createTextNode(nodeContent);
         blockHTMLContent.value.appendChild(textNode);

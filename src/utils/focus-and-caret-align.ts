@@ -5,21 +5,21 @@ export function focusUpAndAlignCaretInSameVertical(element: HTMLElement) {
   if (!nodeToFocus) {
     nodeToFocus = element;
   }
-  if (
-    nodeToFocus.textContent &&
-    nodeToFocus.textContent[nodeToFocus.textContent.length - 1] === "\u200B"
-  ) {
-    caretPreviousOffset += 1;
+  if (nodeToFocus.textContent && nodeToFocus.textContent[0] === "\u200B") {
+    caretPreviousOffset -= 1;
   }
   restoreCaretPosition(nodeToFocus, caretPreviousOffset);
 }
 
 export function focusDownAndAlignCaretInSameVertical(element: HTMLElement) {
-  const caretPreviousOffset = getCaretPreviousPosition();
+  let caretPreviousOffset = getCaretPreviousPosition();
   element.focus();
   let nodeToFocus = element.firstChild as Node;
   if (!nodeToFocus) {
     nodeToFocus = element;
+  }
+  if (nodeToFocus.textContent && nodeToFocus.textContent[0] === "\u200B") {
+    caretPreviousOffset -= 1;
   }
   restoreCaretPosition(nodeToFocus, caretPreviousOffset);
 }
@@ -43,7 +43,6 @@ function restoreCaretPosition(nodeToFocus: Node, previousOffset: number) {
     range.collapse(true);
     if (nodeToFocus.textContent && nodeToFocus.textContent.length > previousOffset) {
       if (nodeToFocus.textContent[previousOffset] === "\u200B") {
-        console.log("hi");
         range.setStart(nodeToFocus, previousOffset + 1);
       } else {
         range.setStart(nodeToFocus, previousOffset);
