@@ -50,8 +50,8 @@ export function useTextBasedBlock(block: Block) {
         const textNode = document.createTextNode(nodeContent);
         blockHTMLContent.value.appendChild(textNode);
         if (index < contentForTextNodes.length - 1) {
-          const brNode = document.createTextNode("\n");
-          blockHTMLContent.value.append(brNode);
+          const lineBreakNode = document.createTextNode("\n");
+          blockHTMLContent.value.append(lineBreakNode);
         }
       });
     }
@@ -86,21 +86,60 @@ export function useTextBasedBlock(block: Block) {
         }
       }
     }
+    if (event.key === "Enter" && event.shiftKey) {
+      event.preventDefault();
+      const selection = window.getSelection();
+      if (selection && blockHTMLContent.value) {
+        const range = selection.getRangeAt(0);
+        range.collapse(true);
+        const currentNode = range.startContainer;
+        const currentNodeIndex = Array.from(blockHTMLContent.value.childNodes).indexOf(
+          currentNode as ChildNode
+        );
+        if (currentNodeIndex === -1) {
+          return;
+        }
+        const newLineNode = document.createElement("BR");
+        blockHTMLContent.value.childNodes[currentNodeIndex].after(newLineNode);
+        const newTextNode = document.createTextNode("\u200B");
+        blockHTMLContent.value.childNodes[currentNodeIndex + 1].after(newTextNode);
+        editorStore.updateBlockContent(block._id, blockHTMLContent.value.innerText);
+        range.setStart(newTextNode, 0);
+        range.setEnd(newTextNode, 0);
+      }
+    }
+
     if (event.key === "Backspace" && blockHTMLContent.value?.innerText.length) {
       const selection = window.getSelection();
       if (selection && blockHTMLContent.value) {
         const range = selection.getRangeAt(0);
-        range.collapse();
-        //TODO: RESTORE CARET POSITION
-        if (range.startContainer.textContent?.length === 1) {
-          event.preventDefault();
-          const textNode = range.startContainer;
-          blockHTMLContent.value.removeChild(textNode);
-          editorStore.updateBlockContent(
-            unref(block._id),
-            blockHTMLContent.value.innerHTML.replace(/\n$/, "")
-          );
-          console.log(editorStore.getBlockInEditorById(unref(block._id))?.content);
+        const currentNode = range.startContainer;
+        const currentNodeText = currentNode.textContent;
+        if (currentNodeText) {
+          const removingLastCharacter =
+            currentNode.textContent?.length === 1 &&
+            range.startOffset === 1 &&
+            range.endOffset === 1;
+          const removingWholeLineWithSelection =
+            range.startOffset === 0 && range.endOffset === currentNodeText.length;
+          if (removingLastCharacter || removingWholeLineWithSelection) {
+            event.preventDefault();
+            currentNode.nodeValue = "\u200B";
+          }
+          if (currentNodeText === "\u200B") {
+            event.preventDefault();
+            const previousSibling = currentNode.previousSibling;
+            if (previousSibling) {
+              const nodeToFocus = previousSibling.previousSibling;
+              blockHTMLContent.value.removeChild(previousSibling);
+              blockHTMLContent.value.removeChild(currentNode);
+              editorStore.updateBlockContent(block._id, blockHTMLContent.value.innerText);
+              if (nodeToFocus && nodeToFocus.textContent) {
+                range.setStart(nodeToFocus, nodeToFocus.textContent.length);
+                range.setEnd(nodeToFocus, nodeToFocus.textContent.length);
+              }
+            }
+          }
         }
       }
     }
