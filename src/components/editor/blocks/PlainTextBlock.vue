@@ -8,9 +8,8 @@ const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
 
-const { blockHTMLContent, parseSpecialKeys, processInput } = useTextBasedBlock(
-  props.block
-);
+const { blockHTMLContent, parseSpecialKeys, processInput, isBlockEmpty } =
+  useTextBasedBlock(props.block);
 const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
 defineExpose({ blockHTMLContent });
 
@@ -27,6 +26,7 @@ onMounted(() => {
     @keydown="parseSpecialKeys"
     @input="processInput"
     :placeholder="$t('note.blockPlaceholder')"
+    :class="{ 'block__show-placeholder': isBlockEmpty }"
   ></p>
 </template>
 <style lang="scss"></style>

@@ -5,11 +5,19 @@ import {
   focusDownAndAlignCaretInSameVertical,
 } from "@/utils";
 import type { Block } from "vnotes-types";
-import { onMounted, ref, unref, watch, type Ref } from "vue";
+import { computed, onMounted, ref, unref, watch, type Ref } from "vue";
 
 export function useTextBasedBlock(block: Block) {
   const blockHTMLContent: Ref<HTMLElement | null> = ref(null);
   const editorStore = useEditorStore();
+
+  const isBlockEmpty = computed(() => {
+    console.log("block.content", block.content);
+    if (!block.content.length || block.content === "\u200B" || block.content === "\n") {
+      return true;
+    }
+    return false;
+  });
 
   //TODO: Documentar que este watch comprueba los cambios que
   //puedan venir de la store central para sustituir los datos actuales por los heredados
@@ -124,7 +132,8 @@ export function useTextBasedBlock(block: Block) {
       event.key === "Backspace" &&
       (blockHTMLContent.value?.innerText === "" ||
         !blockHTMLContent.value?.innerHTML.length ||
-        blockHTMLContent.value?.innerText === "\u200B") &&
+        blockHTMLContent.value?.innerText === "\u200B" ||
+        blockHTMLContent.value?.innerText === "\n") &&
       !editorStore.commandPaletteOpen
     ) {
       event.preventDefault();
@@ -144,18 +153,27 @@ export function useTextBasedBlock(block: Block) {
             range.endOffset === 1;
           const removingWholeLineWithSelection =
             range.startOffset === 0 && range.endOffset === currentNodeText.length;
-          if (removingLastCharacter || removingWholeLineWithSelection) {
+          const nodeIsOnlyNode = blockHTMLContent.value.childNodes.length === 1;
+          if (
+            (removingLastCharacter || removingWholeLineWithSelection) &&
+            !nodeIsOnlyNode
+          ) {
+            console.log(1);
             event.preventDefault();
             currentNode.nodeValue = "\u200B";
           }
           if (currentNodeText === "\u200B") {
+            console.log(2);
             event.preventDefault();
             const previousSibling = currentNode.previousSibling;
             if (previousSibling) {
               const nodeToFocus = previousSibling.previousSibling;
               blockHTMLContent.value.removeChild(previousSibling);
               blockHTMLContent.value.removeChild(currentNode);
-              editorStore.updateBlockContent(block._id, blockHTMLContent.value.innerText);
+              editorStore.updateBlockContent(
+                unref(block._id),
+                blockHTMLContent.value.innerText
+              );
               if (nodeToFocus && nodeToFocus.textContent) {
                 range.setStart(nodeToFocus, nodeToFocus.textContent.length);
                 range.setEnd(nodeToFocus, nodeToFocus.textContent.length);
@@ -219,5 +237,6 @@ export function useTextBasedBlock(block: Block) {
     blockHTMLContent,
     parseSpecialKeys,
     processInput,
+    isBlockEmpty,
   };
 }

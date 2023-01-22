@@ -137,8 +137,8 @@ watch(
   content: "\A0";
   color: rgba(0, 0, 0, 1);
 }
-:deep([contenteditable]:focus:empty::before) {
-  content: "Type '/' for commands";
+:deep(.block__show-placeholder:focus::before) {
+  content: attr(placeholder);
   color: rgba(0, 0, 0, 0.5);
 }
 
