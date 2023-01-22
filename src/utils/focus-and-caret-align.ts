@@ -1,9 +1,15 @@
 export function focusUpAndAlignCaretInSameVertical(element: HTMLElement) {
-  const caretPreviousOffset = getCaretPreviousPosition();
+  let caretPreviousOffset = getCaretPreviousPosition();
   element.focus();
   let nodeToFocus = element.lastChild as Node;
   if (!nodeToFocus) {
     nodeToFocus = element;
+  }
+  if (
+    nodeToFocus.textContent &&
+    nodeToFocus.textContent[nodeToFocus.textContent.length - 1] === "\u200B"
+  ) {
+    caretPreviousOffset += 1;
   }
   restoreCaretPosition(nodeToFocus, caretPreviousOffset);
 }
