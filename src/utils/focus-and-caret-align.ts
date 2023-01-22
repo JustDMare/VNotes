@@ -36,7 +36,12 @@ function restoreCaretPosition(nodeToFocus: Node, previousOffset: number) {
     range.selectNodeContents(nodeToFocus);
     range.collapse(true);
     if (nodeToFocus.textContent && nodeToFocus.textContent.length > previousOffset) {
-      range.setStart(nodeToFocus, previousOffset);
+      if (nodeToFocus.textContent[previousOffset] === "\u200B") {
+        console.log("hi");
+        range.setStart(nodeToFocus, previousOffset + 1);
+      } else {
+        range.setStart(nodeToFocus, previousOffset);
+      }
     } else {
       range.setStart(nodeToFocus, nodeToFocus.textContent?.length || 0);
     }

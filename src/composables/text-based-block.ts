@@ -46,7 +46,9 @@ export function useTextBasedBlock(block: Block) {
         if (blockHTMLContent.value === null) {
           return;
         }
-
+        if (nodeContent !== "\u200B") {
+          nodeContent = nodeContent.replace(/\u200B/g, "");
+        }
         const textNode = document.createTextNode(nodeContent);
         blockHTMLContent.value.appendChild(textNode);
         if (index < contentForTextNodes.length - 1) {
@@ -76,7 +78,6 @@ export function useTextBasedBlock(block: Block) {
         range.collapse(true);
         const nextSibling: HTMLElement = range.startContainer.nextSibling as HTMLElement;
         let isBlockButtonsWrapperNextSibling = false;
-
         if (nextSibling && nextSibling.className) {
           isBlockButtonsWrapperNextSibling = nextSibling.className.includes("wrapper");
         }
@@ -104,8 +105,8 @@ export function useTextBasedBlock(block: Block) {
         const newTextNode = document.createTextNode("\u200B");
         blockHTMLContent.value.childNodes[currentNodeIndex + 1].after(newTextNode);
         editorStore.updateBlockContent(block._id, blockHTMLContent.value.innerText);
-        range.setStart(newTextNode, 0);
-        range.setEnd(newTextNode, 0);
+        range.setStart(newTextNode, 1);
+        range.setEnd(newTextNode, 1);
       }
     }
 
@@ -144,14 +145,17 @@ export function useTextBasedBlock(block: Block) {
       }
     }
     if (event.key === "Backspace" && (event.metaKey || event.ctrlKey)) {
-      deleteBlockAndFocusPrevious(event);
+      event.preventDefault();
+      deleteBlockAndFocusPrevious();
     } else if (
       event.key === "Backspace" &&
       (blockHTMLContent.value?.innerText === "" ||
-        !blockHTMLContent.value?.innerHTML.length) &&
+        !blockHTMLContent.value?.innerHTML.length ||
+        blockHTMLContent.value?.innerText === "\u200B") &&
       !editorStore.commandPaletteOpen
     ) {
-      deleteBlockAndFocusPrevious(event);
+      event.preventDefault();
+      deleteBlockAndFocusPrevious();
     }
     if (event.key === "/") {
       editorStore.setCommandPaletteOpen(true);
@@ -169,8 +173,7 @@ export function useTextBasedBlock(block: Block) {
     editorStore.updateBlockContent(unref(block._id), input.innerText);
   }
 
-  function deleteBlockAndFocusPrevious(event: KeyboardEvent) {
-    event.preventDefault();
+  function deleteBlockAndFocusPrevious() {
     const elements = findContentEditables();
     //TODO: Refactor to separate function?
     const index = elements.findIndex((element) => element === blockHTMLContent.value);
