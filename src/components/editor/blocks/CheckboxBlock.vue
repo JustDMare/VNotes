@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
-import { useTextBasedBlock } from "@/composables/text-based-block";
+import { useTextBasedBlock } from "@/composables/text-based-block/text-based-block";
 import { useEditorStore } from "@/stores/editor";
 import type { CheckboxBlock } from "vnotes-types";
 import { onMounted, ref, watch, type PropType, type Ref } from "vue";

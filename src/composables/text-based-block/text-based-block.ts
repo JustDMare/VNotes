@@ -117,6 +117,19 @@ export function useTextBasedBlock(block: Block) {
         range.setEnd(newTextNode, 1);
       }
     }
+    if (event.key === "Backspace" && (event.metaKey || event.ctrlKey)) {
+      event.preventDefault();
+      deleteBlockAndFocusPrevious();
+    } else if (
+      event.key === "Backspace" &&
+      (blockHTMLContent.value?.innerText === "" ||
+        !blockHTMLContent.value?.innerHTML.length ||
+        blockHTMLContent.value?.innerText === "\u200B") &&
+      !editorStore.commandPaletteOpen
+    ) {
+      event.preventDefault();
+      deleteBlockAndFocusPrevious();
+    }
 
     if (event.key === "Backspace" && blockHTMLContent.value?.innerText.length) {
       const selection = window.getSelection();
@@ -152,19 +165,7 @@ export function useTextBasedBlock(block: Block) {
         }
       }
     }
-    if (event.key === "Backspace" && (event.metaKey || event.ctrlKey)) {
-      event.preventDefault();
-      deleteBlockAndFocusPrevious();
-    } else if (
-      event.key === "Backspace" &&
-      (blockHTMLContent.value?.innerText === "" ||
-        !blockHTMLContent.value?.innerHTML.length ||
-        blockHTMLContent.value?.innerText === "\u200B") &&
-      !editorStore.commandPaletteOpen
-    ) {
-      event.preventDefault();
-      deleteBlockAndFocusPrevious();
-    }
+
     if (event.key === "/") {
       editorStore.setCommandPaletteOpen(true);
       editorStore.setBlockOpeningCommandPalette(block);

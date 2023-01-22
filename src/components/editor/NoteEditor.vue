@@ -12,7 +12,7 @@ const note = computed(() => {
 const noteTitle: Ref<HTMLHeadingElement | null> = ref(null);
 
 function parseSpecialKeys(event: KeyboardEvent) {
-  if (event.code === "Enter" && !event.shiftKey) {
+  if (event.code === "Enter") {
     event.preventDefault();
     editorStore.createBlockBelowTitle();
   }
