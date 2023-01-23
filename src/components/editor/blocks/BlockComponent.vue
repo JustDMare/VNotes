@@ -15,8 +15,6 @@ const props = defineProps({
 });
 const editorStore = useEditorStore();
 const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
-
-defineExpose({ blockHTMLContent: blockInnerComponent.value?.blockHTMLContent });
 let buttonsVisible = ref(false);
 
 function createBlockBelow() {
@@ -33,9 +31,11 @@ watch(
   () => {
     setTimeout(() => {
       if (blockInnerComponent.value) {
-        focusAndPlaceCaretAtEnd(blockInnerComponent.value.blockHTMLContent);
+        focusAndPlaceCaretAtEnd(
+          blockInnerComponent.value.blockContentEditable.blockHTMLContent
+        );
       }
-    }, 0);
+    }, 25);
   }
 );
 </script>

@@ -16,7 +16,6 @@ export function useTextBasedBlock(block: Block) {
     if (block.content === "" || block.content === "\u200B" || block.content === "\n") {
       return true;
     }
-
     return false;
   });
 
@@ -32,8 +31,8 @@ export function useTextBasedBlock(block: Block) {
    */
   watch(
     () => block.content,
-    (inheritedContent) => {
-      if (blockHTMLContent.value?.innerText !== inheritedContent) {
+    (storeBlockContents) => {
+      if (blockHTMLContent.value?.innerText !== storeBlockContents) {
         parseBlockContent();
       }
     }
@@ -76,7 +75,7 @@ export function useTextBasedBlock(block: Block) {
   }
 
   function parseSpecialKeys(event: KeyboardEvent) {
-    if (event.key === "ArrowUp") {
+    if (event.key === "ArrowUp" && !editorStore.commandPaletteOpen) {
       const selection = window.getSelection();
       if (selection) {
         const range = selection.getRangeAt(0);
@@ -87,7 +86,7 @@ export function useTextBasedBlock(block: Block) {
         }
       }
     }
-    if (event.key === "ArrowDown") {
+    if (event.key === "ArrowDown" && !editorStore.commandPaletteOpen) {
       const selection = window.getSelection();
       if (selection) {
         const range = selection.getRangeAt(0);

@@ -1,25 +1,21 @@
 <script lang="ts" setup>
-import { useTextBasedBlock } from "@/composables/text-based-block/text-based-block";
 import type { Block } from "vnotes-types";
-import type { PropType } from "vue";
+import { ref, type PropType } from "vue";
+import ContentEditableComponent from "./ContentEditableComponent.vue";
 
-const props = defineProps({
+defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
-const { blockHTMLContent, parseSpecialKeys, processInput } = useTextBasedBlock(
-  props.block
-);
-defineExpose({ blockHTMLContent });
+const blockContentEditable = ref<HTMLElement | null>(null);
+defineExpose({ blockContentEditable });
 </script>
 
 <template>
-  <h2
+  <ContentEditableComponent
+    :block="block"
+    tag="h2"
+    ref="blockContentEditable"
     class="block__content--heading__medium note-editor__content-editable"
-    contenteditable
-    :placeholder="$t('note.blockPlaceholder')"
-    ref="blockHTMLContent"
-    @keydown="parseSpecialKeys"
-    @input="processInput"
-  ></h2>
+  />
 </template>
 <style lang="scss"></style>

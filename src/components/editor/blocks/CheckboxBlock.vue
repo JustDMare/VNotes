@@ -1,25 +1,17 @@
 <script lang="ts" setup>
-import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
-import { useTextBasedBlock } from "@/composables/text-based-block/text-based-block";
 import { useEditorStore } from "@/stores/editor";
 import type { CheckboxBlock } from "vnotes-types";
-import { onMounted, ref, watch, type PropType, type Ref } from "vue";
+import { ref, watch, type PropType, type Ref } from "vue";
+import ContentEditableComponent from "./ContentEditableComponent.vue";
 
 const props = defineProps({
   block: { type: Object as PropType<CheckboxBlock>, required: true },
 });
 const checkboxChecked: Ref<boolean> = ref(props.block.uniqueProperties.selected);
-const { blockHTMLContent, parseSpecialKeys, processInput } = useTextBasedBlock(
-  props.block
-);
-const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
+const blockContentEditable = ref<HTMLElement | null>(null);
 
-defineExpose({ blockHTMLContent });
+defineExpose({ blockContentEditable });
 const editorStore = useEditorStore();
-
-onMounted(() => {
-  focusBlockOnCreation();
-});
 
 watch(
   () => props.block.uniqueProperties.selected,
@@ -49,18 +41,16 @@ function onCheckboxChange(): void {
         :id="block._id"
       />
     </label>
-    <p
+    <ContentEditableComponent
+      :block="block"
+      tag="p"
+      ref="blockContentEditable"
       class="block__content--checkbox__text note-editor__content-editable"
       :class="{
         'block__content--checkbox__text--checked':
           checkboxChecked && block.content.length,
       }"
-      ref="blockHTMLContent"
-      contenteditable
-      :placeholder="$t('note.blockPlaceholder')"
-      @keydown="parseSpecialKeys"
-      @input="processInput"
-    ></p>
+    />
   </div>
 </template>
 <style lang="scss" scoped>

@@ -4,7 +4,6 @@ export function focusAndPlaceCaretAtEnd(element: HTMLElement) {
   if (selection) {
     const range = document.createRange();
     let nodeToFocus = element.lastChild as Node;
-    console.log(nodeToFocus);
     if (!nodeToFocus) {
       nodeToFocus = element;
     }
