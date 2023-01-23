@@ -30,33 +30,48 @@ export function useBlockRenderContent(
   //QUE SE PUEDA MOVER EL FOCO DE UN BLOQUE A OTRO.
   function parseBlockContent() {
     const contentToParse = block.content;
+
     if (contentToParse === "") {
       return;
     }
+
     if (blockHTMLContent.value) {
+      // Clear the HTML to trigger the re-render.
       blockHTMLContent.value.innerHTML = "";
       const contentForTextNodes = contentToParse.split("\n");
-      contentForTextNodes.forEach((nodeContent, index) => {
-        if (blockHTMLContent.value === null) {
-          return;
-        }
+      createBlockTextNodes(contentForTextNodes);
+    }
+  }
 
-        if (nodeContent.includes("\u200B")) {
-          const firstEmptyCharIndex = nodeContent.indexOf("\u200B");
-          nodeContent = nodeContent.replace(/\u200B/g, (emptyChar, index) =>
-            index === firstEmptyCharIndex ? emptyChar : ""
-          );
-          if (nodeContent !== "\u200B") {
-            nodeContent = nodeContent.replace(/\u200B/g, "");
-          }
-        }
-        const textNode = document.createTextNode(nodeContent);
-        blockHTMLContent.value.appendChild(textNode);
-        if (index < contentForTextNodes.length - 1) {
-          const lineBreakNode = document.createTextNode("\n");
-          blockHTMLContent.value.append(lineBreakNode);
-        }
-      });
+  // Helper functions
+
+  //Documentar
+  function createBlockTextNodes(contentForTextNodes: string[]) {
+    contentForTextNodes.forEach((nodeContent, index) => {
+      if (blockHTMLContent.value === null) {
+        return;
+      }
+      removeRepeatedEmptyCharInNode(nodeContent);
+
+      const textNode = document.createTextNode(nodeContent);
+      blockHTMLContent.value.appendChild(textNode);
+      if (index < contentForTextNodes.length - 1) {
+        const lineBreakNode = document.createTextNode("\n");
+        blockHTMLContent.value.append(lineBreakNode);
+      }
+    });
+  }
+
+  //Documentar
+  function removeRepeatedEmptyCharInNode(nodeContent: string) {
+    if (nodeContent.includes("\u200B")) {
+      const firstEmptyCharIndex = nodeContent.indexOf("\u200B");
+      nodeContent = nodeContent.replace(/\u200B/g, (emptyChar, index) =>
+        index === firstEmptyCharIndex ? emptyChar : ""
+      );
+      if (nodeContent !== "\u200B") {
+        nodeContent = nodeContent.replace(/\u200B/g, "");
+      }
     }
   }
 }
