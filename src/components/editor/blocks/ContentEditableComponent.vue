@@ -20,14 +20,21 @@ const blockHTMLContent: Ref<HTMLElement | null> = ref(null);
 useBlockRenderContent(props.block, blockHTMLContent);
 useFocusBlockOnCreation(blockHTMLContent);
 const isContentEmpty = useIsContentEmpty(toRef(props.block, "content"));
-const handleArrowKeys = useHandleArrowKeys(blockHTMLContent);
+const { handleArrowUpKey, handleArrowDownKey } = useHandleArrowKeys(blockHTMLContent);
 const { handleBackspaceOnContentEditable, handleBackspaceOnEmptyBlock } =
   useHandleBackspace(props.block, blockHTMLContent);
 const handleShiftEnter = useHandleShiftEnter(props.block, blockHTMLContent);
 
 function handleSpecialKeys(event: KeyboardEvent) {
-  handleArrowKeys(event);
-  handleShiftEnter(event);
+  if (event.key === "ArrowUp" && !editorStore.commandPaletteOpen) {
+    handleArrowUpKey(event);
+  }
+  if (event.key === "ArrowDown" && !editorStore.commandPaletteOpen) {
+    handleArrowDownKey(event);
+  }
+  if (event.key === "Enter" && event.shiftKey && !editorStore.commandPaletteOpen) {
+    handleShiftEnter(event);
+  }
   handleBackspaceOnEmptyBlock(event);
   handleBackspaceOnContentEditable(event);
 

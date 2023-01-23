@@ -1,4 +1,3 @@
-import { useEditorStore } from "@/stores/editor";
 import {
   focusUpAndAlignCaretInSameVertical,
   focusDownAndAlignCaretInSameVertical,
@@ -7,40 +6,36 @@ import type { Ref } from "vue";
 import { findContentEditables } from "./utils/find-content-editables";
 
 export function useHandleArrowKeys(blockHTMLContent: Ref<HTMLElement | null>) {
-  const editorStore = useEditorStore();
-
-  function handleArrowKeys(event: KeyboardEvent) {
-    if (event.key === "ArrowUp" && !editorStore.commandPaletteOpen) {
-      const selection = window.getSelection();
-      if (selection) {
-        const range = selection.getRangeAt(0);
-        range.collapse(true);
-        if (!range.startContainer.previousSibling) {
-          event.preventDefault();
-          focusPreviousContentEditable();
-        }
-      }
-    }
-    if (event.key === "ArrowDown" && !editorStore.commandPaletteOpen) {
-      const selection = window.getSelection();
-      if (selection) {
-        const range = selection.getRangeAt(0);
-        range.collapse(true);
-        const nextSibling: HTMLElement = range.startContainer.nextSibling as HTMLElement;
-        let isBlockButtonsWrapperNextSibling = false;
-        if (nextSibling && nextSibling.className) {
-          isBlockButtonsWrapperNextSibling = nextSibling.className.includes("wrapper");
-        }
-        if (!nextSibling || isBlockButtonsWrapperNextSibling) {
-          event.preventDefault();
-          focusNextContentEditable();
-        }
+  //TODO: DOCUMENT
+  function handleArrowUpKey(event: KeyboardEvent) {
+    const selection = window.getSelection();
+    if (selection) {
+      const range = selection.getRangeAt(0);
+      range.collapse(true);
+      if (!range.startContainer.previousSibling) {
+        event.preventDefault();
+        focusPreviousContentEditable();
       }
     }
   }
-  return handleArrowKeys;
+  function handleArrowDownKey(event: KeyboardEvent) {
+    const selection = window.getSelection();
+    if (selection) {
+      const range = selection.getRangeAt(0);
+      range.collapse(true);
+      const nextSibling: HTMLElement = range.startContainer.nextSibling as HTMLElement;
+      let isBlockButtonsWrapperNextSibling = false;
+      if (nextSibling && nextSibling.className) {
+        isBlockButtonsWrapperNextSibling = nextSibling.className.includes("wrapper");
+      }
+      if (!nextSibling || isBlockButtonsWrapperNextSibling) {
+        event.preventDefault();
+        focusNextContentEditable();
+      }
+    }
+  }
 
-  // Helper functions
+  return { handleArrowUpKey, handleArrowDownKey };
 
   function focusPreviousContentEditable() {
     const elements = findContentEditables();

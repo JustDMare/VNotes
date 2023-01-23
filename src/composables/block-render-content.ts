@@ -19,19 +19,19 @@ export function useBlockRenderContent(
     () => block.content,
     (storeBlockContents) => {
       if (blockHTMLContent.value?.innerText !== storeBlockContents) {
-        parseBlockContent();
+        parseBlockContentAndRenderNodes();
       }
     }
   );
   onMounted(() => {
-    parseBlockContent();
+    parseBlockContentAndRenderNodes();
   });
   //DOCUMENTAR Y MENCIONAR EN LA DOCOUMENTACION COMO SE HA TRABAJADO CON LOS NODOS PARA
   //QUE SE PUEDA MOVER EL FOCO DE UN BLOQUE A OTRO. MENCIONAR QUE SE HA HECHO ASI YA QUE
   //EL BEHAVIOUR POR DEFECTO ES QUE SE RENDERICE TODO EN UN MISMO NODO COSA QUE
   //DIFICULTABA MOVER EL FOCO YA QUE SHIFT + ENTER HACIA QUE LOS BLOCKS SE RENDERIZASEN DE
   //MANERA DIFERENTE A COMO SE RENDERIZABAN AL VENIR DE LA BASE DE DATOS.
-  function parseBlockContent() {
+  function parseBlockContentAndRenderNodes() {
     const contentToParse = block.content;
 
     if (contentToParse === "") {
