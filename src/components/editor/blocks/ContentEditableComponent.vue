@@ -35,9 +35,12 @@ function handleSpecialKeys(event: KeyboardEvent) {
   if (event.key === "Enter" && event.shiftKey && !editorStore.commandPaletteOpen) {
     handleShiftEnter(event);
   }
-  handleBackspaceOnEmptyBlock(event);
-  handleBackspaceOnContentEditable(event);
-
+  if (event.key === "Backspace") {
+    handleBackspaceOnEmptyBlock(event);
+  }
+  if (event.key === "Backspace" && blockHTMLContent.value?.innerText.length) {
+    handleBackspaceOnContentEditable(event);
+  }
   if (event.key === "/") {
     editorStore.setCommandPaletteOpen(true);
     editorStore.setBlockOpeningCommandPalette(props.block);
