@@ -27,7 +27,10 @@ export function useBlockRenderContent(
     parseBlockContent();
   });
   //DOCUMENTAR Y MENCIONAR EN LA DOCOUMENTACION COMO SE HA TRABAJADO CON LOS NODOS PARA
-  //QUE SE PUEDA MOVER EL FOCO DE UN BLOQUE A OTRO.
+  //QUE SE PUEDA MOVER EL FOCO DE UN BLOQUE A OTRO. MENCIONAR QUE SE HA HECHO ASI YA QUE
+  //EL BEHAVIOUR POR DEFECTO ES QUE SE RENDERICE TODO EN UN MISMO NODO COSA QUE
+  //DIFICULTABA MOVER EL FOCO YA QUE SHIFT + ENTER HACIA QUE LOS BLOCKS SE RENDERIZASEN DE
+  //MANERA DIFERENTE A COMO SE RENDERIZABAN AL VENIR DE LA BASE DE DATOS.
   function parseBlockContent() {
     const contentToParse = block.content;
 
@@ -36,8 +39,7 @@ export function useBlockRenderContent(
     }
 
     if (blockHTMLContent.value) {
-      // Clear the HTML to trigger the re-render.
-      blockHTMLContent.value.innerHTML = "";
+      blockHTMLContent.value.innerHTML = ""; // Clear the HTML to trigger the re-render.
       const contentForTextNodes = contentToParse.split("\n");
       createBlockTextNodes(contentForTextNodes);
     }
