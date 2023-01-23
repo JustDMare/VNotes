@@ -13,6 +13,7 @@ const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
   tag: { type: String, default: "p", required: true },
 });
+
 const editorStore = useEditorStore();
 const blockHTMLContent: Ref<HTMLElement | null> = ref(null);
 
