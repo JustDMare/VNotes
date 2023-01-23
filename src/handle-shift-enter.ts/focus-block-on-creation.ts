@@ -3,7 +3,6 @@ import { onMounted, type Ref } from "vue";
 
 export function useFocusBlockOnCreation(blockHTMLContent: Ref<HTMLElement | null>) {
   const editorStore = useEditorStore();
-
   onMounted(() => {
     focusBlockOnCreation();
   });
