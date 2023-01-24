@@ -96,6 +96,8 @@ export function useHandleBackspace(block: Block, blockHTMLContent: Ref<HTMLEleme
       removingAllCharactersWithSelection || removingLastCharacter;
     const nodeIsOnlyNode = blockHTMLContent.value.childNodes.length === 1;
 
+    //To avoid the problem of the empty node being counted inside the previous node and
+    //the creation of a <br> element, add an empty character to the node
     if (removingAllCaractersFromNode && !nodeIsOnlyNode) {
       event.preventDefault();
       currentNode.nodeValue = "\u200B";
