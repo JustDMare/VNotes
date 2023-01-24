@@ -35,8 +35,6 @@ export function useHandleArrowKeys(blockHTMLContent: Ref<HTMLElement | null>) {
     }
   }
 
-  return { handleArrowUpKey, handleArrowDownKey };
-
   function focusPreviousContentEditable() {
     const elements = findContentEditables();
     const index = elements.findIndex((element) => element === blockHTMLContent.value);
@@ -53,4 +51,5 @@ export function useHandleArrowKeys(blockHTMLContent: Ref<HTMLElement | null>) {
       focusDownAndAlignCaretInSameVertical(elementToFocus);
     }
   }
+  return { handleArrowUpKey, handleArrowDownKey };
 }

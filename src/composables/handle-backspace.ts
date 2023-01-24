@@ -10,35 +10,64 @@ export function useHandleBackspace(
 ) {
   const editorStore = useEditorStore();
 
+  function handleDeleteBlockShortcut(event: KeyboardEvent) {
+    event.preventDefault();
+    deleteBlockAndFocusPrevious();
+  }
+
   function handleBackspaceOnEmptyBlock(event: KeyboardEvent) {
-    if (event.metaKey || event.ctrlKey) {
-      event.preventDefault();
-      deleteBlockAndFocusPrevious();
-    } else if (
-      (blockHTMLContent.value?.innerText === "" ||
-        !blockHTMLContent.value?.innerHTML.length ||
-        blockHTMLContent.value?.innerText === "\u200B" ||
-        blockHTMLContent.value?.innerText === "\n") &&
-      !editorStore.commandPaletteOpen
-    ) {
-      event.preventDefault();
-      deleteBlockAndFocusPrevious();
-    } else if (
-      blockHTMLContent.value?.childNodes.length === 2 &&
-      ofCourseItIsFirefox() &&
-      blockHTMLContent.value?.lastChild?.nodeName === "BR" &&
-      !editorStore.commandPaletteOpen
-    ) {
+    if (editorStore.commandPaletteOpen) {
+      return;
+    }
+    if (!blockHTMLContent.value) {
+      return;
+    }
+
+    const isBlockDeleted = deleteBlockIfEmpty(event);
+    if (isBlockDeleted) {
+      return;
+    }
+    //Check for Firefox's special case
+    if (ofCourseItIsFirefox()) {
+      deleteBlockInFirefoxIfEmpty(event);
+    }
+    //Checks if the block' s HTML ref's content is empty. If it is, delete it right away.
+    function deleteBlockIfEmpty(event: KeyboardEvent) {
+      const blockHTMLInnerText = blockHTMLContent.value?.innerText;
       if (
-        blockHTMLContent.value?.firstChild?.textContent === "\u200B" ||
-        blockHTMLContent.value?.firstChild?.textContent === "\n" ||
-        blockHTMLContent.value?.firstChild?.textContent === ""
+        blockHTMLInnerText === "" ||
+        !blockHTMLContent.value?.innerHTML.length ||
+        blockHTMLInnerText === "\u200B" ||
+        blockHTMLInnerText === "\n"
       ) {
         event.preventDefault();
         deleteBlockAndFocusPrevious();
+        return true;
+      }
+      return false;
+    }
+
+    // If the browser is Firefox, the first node is empty and the last node is
+    // a BR tag. If it is, delete the block.
+    function deleteBlockInFirefoxIfEmpty(event: KeyboardEvent) {
+      if (
+        blockHTMLContent.value?.childNodes.length === 2 &&
+        blockHTMLContent.value?.lastChild?.nodeName === "BR"
+      ) {
+        const blockHTMLFirstChildTextContent =
+          blockHTMLContent.value?.firstChild?.textContent;
+        if (
+          blockHTMLFirstChildTextContent === "\u200B" ||
+          blockHTMLFirstChildTextContent === "\n" ||
+          blockHTMLFirstChildTextContent === ""
+        ) {
+          event.preventDefault();
+          deleteBlockAndFocusPrevious();
+        }
       }
     }
   }
+
   //TODO: Documentar. Maybe change the name to a more fitting one
   //TODO: Change all if (selection/blockHTMLContent) to return if they are falsy
   function handleBackspaceOnContentEditable(event: KeyboardEvent) {
@@ -91,7 +120,11 @@ export function useHandleBackspace(
     }
   }
 
-  return { handleBackspaceOnContentEditable, handleBackspaceOnEmptyBlock };
+  return {
+    handleDeleteBlockShortcut,
+    handleBackspaceOnContentEditable,
+    handleBackspaceOnEmptyBlock,
+  };
 
   // Helper funictions
 
