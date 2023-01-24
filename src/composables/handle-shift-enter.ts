@@ -25,13 +25,27 @@ export function useHandleShiftEnter(
     if (currentNodeIndex === -1) {
       return;
     }
-    const newLineNode = document.createTextNode("\n");
-    blockHTMLContent.value.childNodes[currentNodeIndex].after(newLineNode);
+    const newTextNode = createNewTextNodeBelow(currentNodeIndex);
+    if (!newTextNode) {
+      return;
+    }
+
+    range.setStart(newTextNode, 1);
+    range.setEnd(newTextNode, 1);
+  }
+
+  function createNewTextNodeBelow(currentNodeIndex: number): Node | null {
+    if (!blockHTMLContent.value) {
+      return null;
+    }
+    console.log(currentNodeIndex);
+    const lineBreakNode = document.createTextNode("\n");
+    blockHTMLContent.value.childNodes[currentNodeIndex].after(lineBreakNode);
+
     const newTextNode = document.createTextNode("\u200B");
     blockHTMLContent.value.childNodes[currentNodeIndex + 1].after(newTextNode);
     editorStore.updateBlockContent(block._id, blockHTMLContent.value.innerText);
-    range.setStart(newTextNode, 1);
-    range.setEnd(newTextNode, 1);
+    return newTextNode;
   }
 
   return handleShiftEnter;
