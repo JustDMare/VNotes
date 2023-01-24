@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { NoteIcon } from "@/components/icons";
+import { useEditorStore } from "@/stores/editor";
 import type { NavigationNoteReference } from "vnotes-types";
 import type { PropType } from "vue";
-
-//TODO: Remember to change the button for a RouterLink
+import { RouterLink } from "vue-router";
 
 defineProps({
   noteReference: {
@@ -11,15 +11,25 @@ defineProps({
     required: true,
   },
 });
+const editorStore = useEditorStore();
 </script>
 
 <template>
   <li class="nav__note">
-    <router-link class="sidebar__item nav__item" :to="`/${noteReference._id}`">
+    <router-link
+      :to="`/${noteReference._id}`"
+      class="sidebar__item nav__item"
+      :class="{ 'is-note-in-editor': noteReference._id === editorStore.noteInEditor?._id }"
+    >
       <NoteIcon class="nav__icon nav__icon--note" />
       <span class="nav__item__text">{{ noteReference.title }}</span>
     </router-link>
   </li>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.sidebar__item.nav__item.is-note-in-editor {
+  background-color: var(--color-base-70);
+  color: var(--color-base-20);
+}
+</style>

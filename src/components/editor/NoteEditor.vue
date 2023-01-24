@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BlockList from "./BlockList.vue";
 import { useEditorStore } from "@/stores/editor";
-import { onMounted, onUnmounted, ref, toRef, unref, watch, type PropType, type Ref } from "vue";
+import { onMounted, onUnmounted, ref, toRef, watch, type PropType, type Ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useHandleArrowKeys } from "@/composables/handle-arrow-keys";
 import { useIsContentEmpty } from "@/composables/is-content-empty";
@@ -12,9 +12,10 @@ const editorStore = useEditorStore();
 const props = defineProps({ note: { type: Object as PropType<Note>, required: true } });
 
 const noteTitle: Ref<HTMLHeadingElement | null> = ref(null);
-const initialNoteTitle = unref(props.note.title);
+const initialNoteTitle = ref(props.note.title);
 const { handleArrowDownKey } = useHandleArrowKeys(noteTitle);
-const isContentEmpty = useIsContentEmpty(toRef(props.note, "title"));
+let isContentEmpty = useIsContentEmpty(toRef(props.note, "title"));
+
 onMounted(() => {
   addEventListener("keydown", handleEditorShortcuts);
 });
@@ -86,8 +87,7 @@ watch(
   () => props.note.title,
   (storeNoteTitle) => {
     if (noteTitle.value && noteTitle.value.innerText !== storeNoteTitle) {
-      console.log("innerText", noteTitle.value.innerText);
-      console.log("store", storeNoteTitle);
+      initialNoteTitle.value = storeNoteTitle;
       noteTitle.value.innerText = storeNoteTitle;
     }
   }
