@@ -9,12 +9,15 @@ const editorStore = useEditorStore();
 const scrollStateClass = computed(() => {
   return editorStore.commandPaletteOpen ? "disable-scroll" : "allow-scroll";
 });
+const note = computed(() => {
+  return editorStore.noteInEditor;
+});
 </script>
 
 <template>
-  <div id="workspace" :class="scrollStateClass">
+  <div v-if="note" id="workspace" :class="scrollStateClass">
     <NoteWorkspaceHeader id="ws__header" />
-    <NoteEditor id="ws__editor" />
+    <NoteEditor :note="note" id="ws__editor" />
   </div>
 </template>
 
