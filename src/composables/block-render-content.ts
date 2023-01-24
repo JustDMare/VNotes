@@ -1,10 +1,7 @@
 import type { Block } from "vnotes-types";
 import { watch, onMounted, type Ref } from "vue";
 
-export function useBlockRenderContent(
-  block: Block,
-  blockHTMLContent: Ref<HTMLElement | null>
-) {
+export function useBlockRenderContent(block: Block, blockHTMLContent: Ref<HTMLElement | null>) {
   //TODO: Documentar que este watch comprueba los cambios que
   //puedan venir de la store central para sustituir los datos actuales por los heredados
   // Sirve como failsafe para guardar los datos previos en caso de error.
@@ -45,15 +42,14 @@ export function useBlockRenderContent(
     }
   }
 
-  // Helper functions
-
   //Documentar
   function createBlockTextNodes(contentForTextNodes: string[]) {
     contentForTextNodes.forEach((nodeContent, index) => {
       if (blockHTMLContent.value === null) {
         return;
       }
-      removeRepeatedEmptyCharInNode(nodeContent);
+      nodeContent = removeRepeatedZeroWidthCharInNode(nodeContent);
+      nodeContent = removeLeadingZeroWidthSpaceInNonEmptyNode(nodeContent);
 
       const textNode = document.createTextNode(nodeContent);
       blockHTMLContent.value.appendChild(textNode);
@@ -65,15 +61,19 @@ export function useBlockRenderContent(
   }
 
   //Documentar
-  function removeRepeatedEmptyCharInNode(nodeContent: string) {
+  function removeRepeatedZeroWidthCharInNode(nodeContent: string) {
     if (nodeContent.includes("\u200B")) {
-      const firstEmptyCharIndex = nodeContent.indexOf("\u200B");
+      const firstZeroWidthCharIndex = 0; //Only the first one is not deleted
       nodeContent = nodeContent.replace(/\u200B/g, (emptyChar, index) =>
-        index === firstEmptyCharIndex ? emptyChar : ""
+        index === firstZeroWidthCharIndex ? emptyChar : ""
       );
-      if (nodeContent !== "\u200B") {
-        nodeContent = nodeContent.replace(/\u200B/g, "");
-      }
     }
+    return nodeContent;
+  }
+  function removeLeadingZeroWidthSpaceInNonEmptyNode(nodeContent: string) {
+    if (nodeContent !== "\u200B" && nodeContent.startsWith("\u200B")) {
+      nodeContent = nodeContent.slice(1);
+    }
+    return nodeContent;
   }
 }
