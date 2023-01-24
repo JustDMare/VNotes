@@ -15,8 +15,6 @@ const props = defineProps({
 });
 const editorStore = useEditorStore();
 const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
-
-defineExpose({ blockHTMLContent: blockInnerComponent.value?.blockHTMLContent });
 let buttonsVisible = ref(false);
 
 function createBlockBelow() {
@@ -33,9 +31,9 @@ watch(
   () => {
     setTimeout(() => {
       if (blockInnerComponent.value) {
-        focusAndPlaceCaretAtEnd(blockInnerComponent.value.blockHTMLContent);
+        focusAndPlaceCaretAtEnd(blockInnerComponent.value.blockContentEditable.blockHTMLContent);
       }
-    }, 0);
+    }, 25);
   }
 );
 </script>
@@ -137,8 +135,8 @@ watch(
   content: "\A0";
   color: rgba(0, 0, 0, 1);
 }
-:deep([contenteditable]:focus:empty::before) {
-  content: "Type '/' for commands";
+:deep(.block__show-placeholder:focus::before) {
+  content: attr(placeholder);
   color: rgba(0, 0, 0, 0.5);
 }
 

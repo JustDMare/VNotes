@@ -49,10 +49,7 @@ function computeCoordinates(
 ) {
   const x = blockX;
   let y = 0;
-  if (
-    blockY + blockHeight + dialogHeight > window.innerHeight ||
-    isPositionedOnTop.value
-  ) {
+  if (blockY + blockHeight + dialogHeight > window.innerHeight || isPositionedOnTop.value) {
     isPositionedOnTop.value = true;
     y = blockY - dialogHeight;
   } else {

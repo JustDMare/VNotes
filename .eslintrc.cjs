@@ -30,10 +30,7 @@ module.exports = {
   rules: {
     curly: ["error", "all"],
     eqeqeq: ["error", "always", { null: "ignore" }],
-    "max-len": [
-      "error",
-      { code: 90, ignoreComments: false, ignorePattern: 'd="([\\s\\S]*?)"' },
-    ],
+    "max-len": ["error", { code: 100, ignoreComments: false, ignorePattern: 'd="([\\s\\S]*?)"' }],
     "unused-imports/no-unused-imports": "error",
     "no-dupe-class-members": "off",
     "no-duplicate-imports": "error",
@@ -44,5 +41,6 @@ module.exports = {
     "vue/eqeqeq": "error",
     "vuejs-accessibility/mouse-events-have-key-events": "off",
     "vuejs-accessibility/form-control-has-label": "off",
+    "vuejs-accessibility/heading-has-content": "off",
   },
 };

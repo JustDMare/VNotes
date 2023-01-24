@@ -21,8 +21,7 @@ export const useEditorStore = defineStore("editor", {
 
   getters: {
     getBlockInEditorById: (state) => {
-      return (_id: string) =>
-        state.noteInEditor?.content.find((block: Block) => block._id === _id);
+      return (_id: string) => state.noteInEditor?.content.find((block: Block) => block._id === _id);
     },
   },
   actions: {

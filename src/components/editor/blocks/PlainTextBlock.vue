@@ -1,33 +1,21 @@
 <script lang="ts" setup>
-import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
-import { useTextBasedBlock } from "@/composables/text-based-block";
 import type { Block } from "vnotes-types";
-import { onMounted, type PropType } from "vue";
+import { ref, type PropType } from "vue";
+import ContentEditableComponent from "./ContentEditableComponent.vue";
 
-const props = defineProps({
+defineProps({
   block: { type: Object as PropType<Block>, required: true },
 });
-
-const { initialBlockContent, blockHTMLContent, parseSpecialKeys, processInput } =
-  useTextBasedBlock(props.block);
-const { focusBlockOnCreation } = useFocusBlockOnCreation(blockHTMLContent);
-defineExpose({ blockHTMLContent });
-
-onMounted(() => {
-  focusBlockOnCreation();
-});
+const blockContentEditable = ref<typeof ContentEditableComponent | null>(null);
+defineExpose({ blockContentEditable });
 </script>
 
 <template>
-  <p
+  <ContentEditableComponent
+    :block="block"
+    tag="p"
+    ref="blockContentEditable"
     class="block__content--text note-editor__content-editable"
-    ref="blockHTMLContent"
-    contenteditable
-    @keydown="parseSpecialKeys"
-    @input="processInput"
-    :placeholder="$t('note.blockPlaceholder')"
-  >
-    {{ initialBlockContent }}
-  </p>
+  ></ContentEditableComponent>
 </template>
 <style lang="scss"></style>

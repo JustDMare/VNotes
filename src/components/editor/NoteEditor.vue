@@ -1,40 +1,77 @@
 <script setup lang="ts">
 import BlockList from "./BlockList.vue";
 import { useEditorStore } from "@/stores/editor";
-import { computed, onMounted, onUnmounted, ref, watch, type Ref } from "vue";
+import { onMounted, onUnmounted, ref, toRef, unref, watch, type PropType, type Ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
+import { useHandleArrowKeys } from "@/composables/handle-arrow-keys";
+import { useIsContentEmpty } from "@/composables/is-content-empty";
+import type { Note } from "vnotes-types";
+import { ofCourseItIsFirefox } from "@/utils";
 
 const editorStore = useEditorStore();
-const note = computed(() => {
-  return editorStore.noteInEditor;
-});
+const props = defineProps({ note: { type: Object as PropType<Note>, required: true } });
 
 const noteTitle: Ref<HTMLHeadingElement | null> = ref(null);
+const initialNoteTitle = unref(props.note.title);
+const { handleArrowDownKey } = useHandleArrowKeys(noteTitle);
+const isContentEmpty = useIsContentEmpty(toRef(props.note, "title"));
+onMounted(() => {
+  addEventListener("keydown", handleEditorShortcuts);
+});
 
-function parseSpecialKeys(event: KeyboardEvent) {
-  if (event.code === "Enter" && !event.shiftKey) {
+onUnmounted(() => {
+  removeEventListener("keydown", handleEditorShortcuts);
+});
+
+function handleSpecialKeys(event: KeyboardEvent) {
+  if (event.key === "ArrowDown" && !editorStore.commandPaletteOpen) {
+    event.preventDefault();
+    handleArrowDownKey(event);
+  }
+  if (event.code === "Enter") {
     event.preventDefault();
     editorStore.createBlockBelowTitle();
+  }
+  if (event.code === "Enter" && event.shiftKey) {
+    event.preventDefault();
+  }
+  //Firefox special case to be able to work with the placeholder property
+  if (event.code === "Backspace") {
+    const selection = window.getSelection();
+    if (!selection || !noteTitle.value) {
+      return;
+    }
+    const range = selection.getRangeAt(0);
+    const currentNode = range.startContainer;
+    const currentNodeText = currentNode.textContent;
+    if (!currentNodeText) {
+      return;
+    }
+    const removingLastCharacter =
+      currentNode.textContent?.length === 1 && range.startOffset === 1 && range.endOffset === 1;
+
+    const removingAllCharactersWithSelection =
+      range.startOffset === 0 && range.endOffset === currentNodeText.length;
+
+    const removingAllCaractersFromNode =
+      removingAllCharactersWithSelection || removingLastCharacter;
+    const nodeIsOnlyNode = noteTitle.value.childNodes.length === 1;
+
+    if (ofCourseItIsFirefox() && removingAllCaractersFromNode && nodeIsOnlyNode) {
+      noteTitle.value.removeChild(currentNode);
+    }
+  }
+}
+
+function handleEditorShortcuts(event: KeyboardEvent) {
+  if (event.key === "s" && (event.ctrlKey || event.metaKey)) {
+    event.preventDefault();
+    editorStore.saveNoteChanges();
   }
 }
 function processInput(event: Event) {
   const input = event.target as HTMLElement;
   editorStore.updateNoteTitle(input.innerText);
-}
-
-onMounted(() => {
-  addEventListener("keydown", parseEditorShortcuts);
-});
-
-onUnmounted(() => {
-  removeEventListener("keydown", parseEditorShortcuts);
-});
-
-function parseEditorShortcuts(event: KeyboardEvent) {
-  if (event.key === "s" && (event.ctrlKey || event.metaKey)) {
-    event.preventDefault();
-    editorStore.saveNoteChanges();
-  }
 }
 
 onBeforeRouteUpdate((to, from) => {
@@ -43,12 +80,15 @@ onBeforeRouteUpdate((to, from) => {
     editorStore.fetchNote(noteId);
   }
 });
+
 //TODO: Document
 watch(
-  () => note.value,
-  (note, oldNote) => {
-    if (noteTitle.value && note && note.title !== oldNote?.title) {
-      noteTitle.value.innerHTML = note.title;
+  () => props.note.title,
+  (storeNoteTitle) => {
+    if (noteTitle.value && noteTitle.value.innerText !== storeNoteTitle) {
+      console.log("innerText", noteTitle.value.innerText);
+      console.log("store", storeNoteTitle);
+      noteTitle.value.innerText = storeNoteTitle;
     }
   }
 );
@@ -58,16 +98,16 @@ watch(
     <article id="note-editor__content" v-if="note">
       <header>
         <h1
-          v-once
           contenteditable
           :placeholder="$t('note.titlePlaceholder')"
           id="note-editor__content__title"
           class="note-editor__content-editable"
+          :class="{ 'show-placeholder': isContentEmpty }"
           ref="noteTitle"
-          @keydown="parseSpecialKeys"
+          @keydown="handleSpecialKeys"
           @input="processInput"
-          v-html="note.title"
-        ></h1>
+          v-text="initialNoteTitle"
+        />
       </header>
       <div id="note-editor__content__list">
         <BlockList />
@@ -100,12 +140,15 @@ watch(
 }
 
 [contenteditable] {
-  word-wrap: break-word;
-  word-break: break-all;
-  white-space: pre-line;
+  word-break: break-word;
+  white-space: pre-wrap;
   outline-style: none;
   &:focus {
     outline: 0px solid transparent;
+  }
+  &:not(:focus):empty::before {
+    content: "\A0";
+    color: rgba(0, 0, 0, 1);
   }
   &:empty::before {
     content: attr(placeholder);
@@ -113,5 +156,10 @@ watch(
     display: block; /* For Firefox */
     opacity: 0.5;
   }
+}
+
+.show-placeholder:focus::before {
+  content: attr(placeholder);
+  color: rgba(0, 0, 0, 0.5);
 }
 </style>
