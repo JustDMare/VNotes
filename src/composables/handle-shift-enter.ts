@@ -2,10 +2,7 @@ import { useEditorStore } from "@/stores/editor";
 import type { Block } from "vnotes-types";
 import type { Ref } from "vue";
 
-export function useHandleShiftEnter(
-  block: Block,
-  blockHTMLContent: Ref<HTMLElement | null>
-) {
+export function useHandleShiftEnter(block: Block, blockHTMLContent: Ref<HTMLElement | null>) {
   const editorStore = useEditorStore();
 
   //TODO: Document. Modified the original shit+enter to add the nodes in a similar way to

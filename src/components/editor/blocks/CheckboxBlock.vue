@@ -21,11 +21,7 @@ watch(
 );
 
 function onCheckboxChange(): void {
-  editorStore.updateBlockUniqueProperty(
-    props.block._id,
-    "selected",
-    !checkboxChecked.value
-  );
+  editorStore.updateBlockUniqueProperty(props.block._id, "selected", !checkboxChecked.value);
 }
 </script>
 
@@ -47,8 +43,7 @@ function onCheckboxChange(): void {
       ref="blockContentEditable"
       class="block__content--checkbox__text note-editor__content-editable"
       :class="{
-        'block__content--checkbox__text--checked':
-          checkboxChecked && block.content.length,
+        'block__content--checkbox__text--checked': checkboxChecked && block.content.length,
       }"
     />
   </div>
@@ -84,8 +79,8 @@ function onCheckboxChange(): void {
     cursor: pointer;
 
     &:checked {
-      background: var(--color-base-10) url("@/assets/icons/checked-icon.svg") no-repeat
-        center center / cover;
+      background: var(--color-base-10) url("@/assets/icons/checked-icon.svg") no-repeat center
+        center / cover;
     }
   }
   &__text {

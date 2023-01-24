@@ -48,8 +48,7 @@ function toggleContentVisibility(): void {
 .nav__folder {
   &__content {
     --nav-folder-content--left-margin: calc(
-      var(--sidebar-item--padding) + var(--sidebar-item--margin) + var(--nav-icon-size) /
-        2
+      var(--sidebar-item--padding) + var(--sidebar-item--margin) + var(--nav-icon-size) / 2
     );
     margin-left: var(--nav-folder-content--left-margin);
     border-left: 1px solid var(--color-base-50);

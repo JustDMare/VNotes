@@ -31,9 +31,7 @@ watch(
   () => {
     setTimeout(() => {
       if (blockInnerComponent.value) {
-        focusAndPlaceCaretAtEnd(
-          blockInnerComponent.value.blockContentEditable.blockHTMLContent
-        );
+        focusAndPlaceCaretAtEnd(blockInnerComponent.value.blockContentEditable.blockHTMLContent);
       }
     }, 25);
   }

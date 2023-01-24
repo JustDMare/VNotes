@@ -1,7 +1,4 @@
-import {
-  focusUpAndAlignCaretInSameVertical,
-  focusDownAndAlignCaretInSameVertical,
-} from "@/utils";
+import { focusUpAndAlignCaretInSameVertical, focusDownAndAlignCaretInSameVertical } from "@/utils";
 import type { Ref } from "vue";
 import { findContentEditables } from "./utils/find-content-editables";
 
