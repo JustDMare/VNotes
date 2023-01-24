@@ -56,7 +56,16 @@ export const useEditorStore = defineStore("editor", {
           .then((json) => {
             const userSpaceStore = useUserSpaceStore();
             userSpaceStore.fetchAllUserSpaceContent();
-            this.noteInEditor = json.note;
+            if (!this.noteInEditor) {
+              this.noteInEditor = json.note;
+            } else {
+              this.noteInEditor._id = json.note._id;
+              this.noteInEditor.parentId = json.note.parentId;
+              this.noteInEditor.content = json.note.content;
+              this.noteInEditor.title = json.note.title;
+              this.noteInEditor.createdTime = json.note.createdTime;
+              this.noteInEditor.lastUpdatedTime = json.note.lastUpdatedTime;
+            }
           })
           .catch((error) => console.log(error));
       }
