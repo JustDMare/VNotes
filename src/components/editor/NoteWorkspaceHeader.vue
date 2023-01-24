@@ -11,14 +11,20 @@ const noteLastUpdatedTime = computed(() => {
   }
   return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
 });
+const isSavingNote = computed(() => editorStore.isSavingNote);
 </script>
 
 <template>
   <menu id="ws__header">
     <div class="ws__header__save-section">
-      <span class="ws__header__save-section__text" v-if="noteLastUpdatedTime">
+      <div
+        v-if="isSavingNote"
+        class="ws__header__save_section__saving-animation donut-animation"
+      ></div>
+      <span v-else-if="noteLastUpdatedTime" class="ws__header__save-section__text">
         {{ $t("header.lastSaved", { date: noteLastUpdatedTime }) }}
       </span>
+
       <button
         :title="$t('tooltips.saveButton')"
         class="ws__header__btn ws__header__save-section__button"
@@ -65,5 +71,23 @@ const noteLastUpdatedTime = computed(() => {
     background: var(--color-base-80);
     color: var(--x=color-base-0);
   }
+}
+@keyframes donut-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.donut-animation {
+  display: inline-block;
+  border: 3px solid var(--color-base-70);
+  border-left-color: var(--color-base-30);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: donut-spin 1s linear infinite;
 }
 </style>

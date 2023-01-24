@@ -17,6 +17,7 @@ export const useEditorStore = defineStore("editor", {
     blockCreated: false as boolean,
     commandPaletteOpen: false as boolean,
     blockOpeningCommandPalette: null as Block | null,
+    isSavingNote: false as boolean,
   }),
 
   getters: {
@@ -39,36 +40,42 @@ export const useEditorStore = defineStore("editor", {
     },
     //TODO: Document and better error handling
     saveNoteChanges() {
-      if (this.noteInEditor) {
-        fetch("http://localhost:3030/notes/update-content", {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify({
-            _id: this.noteInEditor._id,
-            title: this.noteInEditor.title,
-            content: this.noteInEditor.content,
-          }),
-        })
-          .then((data) => data.json())
-          .then((json) => {
-            const userSpaceStore = useUserSpaceStore();
-            userSpaceStore.fetchAllUserSpaceContent();
-            if (!this.noteInEditor) {
-              this.noteInEditor = json.note;
-            } else {
-              this.noteInEditor._id = json.note._id;
-              this.noteInEditor.parentId = json.note.parentId;
-              this.noteInEditor.content = json.note.content;
-              this.noteInEditor.title = json.note.title;
-              this.noteInEditor.createdTime = json.note.createdTime;
-              this.noteInEditor.lastUpdatedTime = json.note.lastUpdatedTime;
-            }
-          })
-          .catch((error) => console.log(error));
+      if (!this.noteInEditor) {
+        return;
       }
+      this.isSavingNote = true;
+      fetch("http://localhost:3030/notes/update-content", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          _id: this.noteInEditor._id,
+          title: this.noteInEditor.title,
+          content: this.noteInEditor.content,
+        }),
+      })
+        .then((data) => data.json())
+        .then((json) => {
+          const userSpaceStore = useUserSpaceStore();
+          userSpaceStore.fetchAllUserSpaceContent();
+          if (!this.noteInEditor) {
+            this.noteInEditor = json.note;
+          } else {
+            this.noteInEditor._id = json.note._id;
+            this.noteInEditor.parentId = json.note.parentId;
+            this.noteInEditor.content = json.note.content;
+            this.noteInEditor.title = json.note.title;
+            this.noteInEditor.createdTime = json.note.createdTime;
+            this.noteInEditor.lastUpdatedTime = json.note.lastUpdatedTime;
+          }
+        })
+        .catch((error) => console.log(error));
+      setTimeout(() => {
+        // It's so fast that I need this timeout so I can showcase my spinning donut :D
+        this.isSavingNote = false;
+      }, 500);
     },
 
     //TODO: DOCUMENT ACTIONS
