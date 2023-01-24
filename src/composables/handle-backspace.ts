@@ -102,7 +102,7 @@ export function useHandleBackspace(block: Block, blockHTMLContent: Ref<HTMLEleme
       event.preventDefault();
       currentNode.nodeValue = "\u200B";
     }
-    //Firefox special case to be able to work with the palceholder property
+    //Firefox special case to be able to work with the placeholder property
     if (ofCourseItIsFirefox() && removingAllCaractersFromNode && nodeIsOnlyNode) {
       blockHTMLContent.value.removeChild(currentNode);
     }

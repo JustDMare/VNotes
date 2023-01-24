@@ -1,27 +1,18 @@
 <script setup lang="ts">
 import BlockList from "./BlockList.vue";
 import { useEditorStore } from "@/stores/editor";
-import {
-  computed,
-  onMounted,
-  onUnmounted,
-  ref,
-  toRef,
-  watch,
-  type ComputedRef,
-  type PropType,
-  type Ref,
-} from "vue";
+import { onMounted, onUnmounted, ref, toRef, unref, watch, type PropType, type Ref } from "vue";
 import { onBeforeRouteUpdate } from "vue-router";
 import { useHandleArrowKeys } from "@/composables/handle-arrow-keys";
 import { useIsContentEmpty } from "@/composables/is-content-empty";
 import type { Note } from "vnotes-types";
+import { ofCourseItIsFirefox } from "@/utils";
 
 const editorStore = useEditorStore();
 const props = defineProps({ note: { type: Object as PropType<Note>, required: true } });
 
 const noteTitle: Ref<HTMLHeadingElement | null> = ref(null);
-const initialNoteTitle = props.note.title;
+const initialNoteTitle = unref(props.note.title);
 const { handleArrowDownKey } = useHandleArrowKeys(noteTitle);
 const isContentEmpty = useIsContentEmpty(toRef(props.note, "title"));
 onMounted(() => {
@@ -43,6 +34,32 @@ function handleSpecialKeys(event: KeyboardEvent) {
   }
   if (event.code === "Enter" && event.shiftKey) {
     event.preventDefault();
+  }
+  //Firefox special case to be able to work with the placeholder property
+  if (event.code === "Backspace") {
+    const selection = window.getSelection();
+    if (!selection || !noteTitle.value) {
+      return;
+    }
+    const range = selection.getRangeAt(0);
+    const currentNode = range.startContainer;
+    const currentNodeText = currentNode.textContent;
+    if (!currentNodeText) {
+      return;
+    }
+    const removingLastCharacter =
+      currentNode.textContent?.length === 1 && range.startOffset === 1 && range.endOffset === 1;
+
+    const removingAllCharactersWithSelection =
+      range.startOffset === 0 && range.endOffset === currentNodeText.length;
+
+    const removingAllCaractersFromNode =
+      removingAllCharactersWithSelection || removingLastCharacter;
+    const nodeIsOnlyNode = noteTitle.value.childNodes.length === 1;
+
+    if (ofCourseItIsFirefox() && removingAllCaractersFromNode && nodeIsOnlyNode) {
+      noteTitle.value.removeChild(currentNode);
+    }
   }
 }
 
