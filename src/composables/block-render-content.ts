@@ -1,7 +1,7 @@
 import type { Block } from "vnotes-types";
 import { watch, onMounted, type Ref } from "vue";
 
-export function useBlockRenderContent(block: Block, blockHTMLContent: Ref<HTMLElement | null>) {
+export function useRenderBlockContent(block: Block, blockHTMLContent: Ref<HTMLElement | null>) {
   //TODO: Documentar que este watch comprueba los cambios que
   //puedan venir de la store central para sustituir los datos actuales por los heredados
   // Sirve como failsafe para guardar los datos previos en caso de error.

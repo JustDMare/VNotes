@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useBlockRenderContent } from "@/composables/block-render-content";
+import { useRenderBlockContent } from "@/composables/block-render-content";
 import { useFocusBlockOnCreation } from "@/composables/focus-block-on-creation";
 import { useHandleArrowKeys } from "@/composables/handle-arrow-keys";
 import { useHandleBackspace } from "@/composables/handle-backspace";
@@ -17,7 +17,7 @@ const props = defineProps({
 const editorStore = useEditorStore();
 const blockHTMLContent: Ref<HTMLElement | null> = ref(null);
 
-useBlockRenderContent(props.block, blockHTMLContent);
+useRenderBlockContent(props.block, blockHTMLContent);
 useFocusBlockOnCreation(blockHTMLContent);
 const isContentEmpty = useIsContentEmpty(toRef(props.block, "content"));
 const { handleArrowUpKey, handleArrowDownKey } = useHandleArrowKeys(blockHTMLContent);
