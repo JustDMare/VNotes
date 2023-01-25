@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@auth0/auth0-vue": "^2.0.0",
     "match-sorter": "^6.3.0",
     "pinia": "^2.0.13",
     "sortablejs": "^1.15.0",
