@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useAuth0 } from "@auth0/auth0-vue";
 import { ref, type Ref } from "vue";
 import SidebarNavigation from "./navigation/SidebarNavigation.vue";
+
+const auth0 = useAuth0();
 
 const sidebar: Ref<HTMLDivElement | null> = ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
@@ -24,10 +27,15 @@ function onMouseDown(): void {
     false
   );
 }
+function handleLogout(): void {
+  console.log("logout");
+  auth0.logout();
+}
 </script>
 
 <template>
   <aside ref="sidebar" id="sidebar">
+    <button @click="handleLogout">Logout</button>
     <SidebarNavigation id="sidebar-nav" />
     <div class="resizer" ref="resizer">
       <span @mousedown.prevent="onMouseDown" class="resizer-delimiter"></span>

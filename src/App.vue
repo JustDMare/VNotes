@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { RouterView } from "vue-router";
+import { useEditorStore } from "./stores/editor";
 import { useUserSpaceStore } from "./stores/user-space";
 
-const userSpaceStore = useUserSpaceStore();
-
-onMounted(() => {
-  userSpaceStore.fetchAllUserSpaceContent();
-});
+useUserSpaceStore(); //Needed so the store is initialized\
+useEditorStore(); //Needed so the store is initialized
 </script>
 
 <template>
