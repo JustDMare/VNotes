@@ -16,15 +16,12 @@ export const useUserSpaceStore = defineStore("userSpace", {
     //TODO: Error Handling and Documentation
     async fetchAllUserSpaceContent(): Promise<void> {
       this.authAccessToken = await this.auth0.getAccessTokenSilently();
-      console.log(this.auth0.idTokenClaims);
-      console.log(this.auth0.user);
       fetch("http://localhost:3030/user-space/", {
         headers: {
           Authorization: `Bearer ${this.authAccessToken}`,
         },
       }).then((data) =>
         data.json().then((json) => {
-          console.log("hi");
           this.userSpace._id = json.userSpace._id;
           this.userSpace.content = json.contentTree;
         })
