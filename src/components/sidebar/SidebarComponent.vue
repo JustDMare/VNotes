@@ -50,6 +50,14 @@ function onMouseDown(): void {
   background-color: var(--color-base-90);
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.08) inset;
   display: flex;
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 300px;
+  min-width: 220px;
+  max-width: 480px;
 }
 :deep(.sidebar__item) {
   font-size: 0.875rem;

@@ -15,7 +15,12 @@ function toggleDropdown(): void {
 
 <template>
   <div class="user-dropdown">
-    <button class="user-dropdown__button" v-show="user.name" @click="toggleDropdown">
+    <button
+      class="user-dropdown__button"
+      title="Press to open the user options menu"
+      v-show="user.name"
+      @click="toggleDropdown"
+    >
       <img
         v-show="user.picture"
         :src="user.picture"
@@ -40,6 +45,7 @@ function toggleDropdown(): void {
   justify-content: center;
   flex-direction: column;
   background-color: transparent;
+  border-bottom: 1px solid var(--color-base-70);
 
   &__button {
     display: flex;
@@ -52,15 +58,14 @@ function toggleDropdown(): void {
     height: 100%;
     padding: 8px 16px;
     background-color: var(--color-base-100);
-    border-bottom: 1px solid var(--color-base-70);
+    gap: 12px;
     &:hover {
       background-color: var(--color-base-80);
     }
     &__image {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      margin-right: 8px;
+      width: 28px;
+      height: 28px;
+      border-radius: 3px;
     }
     &__name {
       font-size: 0.875rem;
@@ -70,11 +75,17 @@ function toggleDropdown(): void {
   }
   &__menu {
     position: absolute;
-    top: 100%;
+    display: flex;
+    flex-direction: column;
+    top: calc(100%);
     right: 0;
     background-color: var(--color-base-100);
     z-index: 1;
     width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid var(--color-base-80);
+    box-shadow: 0px 12px 12px 0px rgba(0, 0, 0, 0.2);
     &__option {
       display: flex;
       background-color: var(--color-base-100);
@@ -88,7 +99,6 @@ function toggleDropdown(): void {
       color: var(--color-base-30);
       cursor: pointer;
       transition: all 0.2s ease-in;
-      border-bottom: 1px solid var(--color-base-70);
       &:hover {
         background-color: var(--color-base-80);
         color: var(--color-base-10);
