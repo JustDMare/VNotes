@@ -7,7 +7,6 @@ export const useUserSpaceStore = defineStore("userSpace", {
     userSpace: {
       _id: "",
       content: { folders: [], notes: [] },
-      userToken: "ThisIsAUserToken",
     } as UserSpace,
     auth0: useAuth0(),
     authAccessToken: "",
@@ -19,7 +18,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
       this.authAccessToken = await this.auth0.getAccessTokenSilently();
       console.log(this.auth0.idTokenClaims);
       console.log(this.auth0.user);
-      fetch(`http://localhost:3030/user-space/${this.userSpace.userToken}`, {
+      fetch("http://localhost:3030/user-space/", {
         headers: {
           Authorization: `Bearer ${this.authAccessToken}`,
         },
@@ -27,7 +26,6 @@ export const useUserSpaceStore = defineStore("userSpace", {
         data.json().then((json) => {
           console.log("hi");
           this.userSpace._id = json.userSpace._id;
-          this.userSpace.userToken = json.userSpace.userToken;
           this.userSpace.content = json.contentTree;
         })
       );

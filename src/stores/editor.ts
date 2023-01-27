@@ -46,15 +46,17 @@ export const useEditorStore = defineStore("editor", {
         });
     },
     //TODO: Document and better error handling
-    saveNoteChanges() {
+    async saveNoteChanges() {
       if (!this.noteInEditor) {
         return;
       }
+      const accessToken = await this.auth0.getAccessTokenSilently();
       this.isSavingNote = true;
       fetch("http://localhost:3030/notes/update-content", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         method: "POST",
         body: JSON.stringify({
