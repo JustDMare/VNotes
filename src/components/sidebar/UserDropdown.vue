@@ -59,9 +59,11 @@ function toggleDropdown(): void {
     padding: 8px 16px;
     background-color: var(--color-base-100);
     gap: 12px;
+    transition: background-color 0.2s ease-in;
     &:hover {
       background-color: var(--color-base-80);
     }
+
     &__image {
       width: 28px;
       height: 28px;
@@ -86,6 +88,7 @@ function toggleDropdown(): void {
     align-items: center;
     border-bottom: 1px solid var(--color-base-80);
     box-shadow: 0px 12px 12px 0px rgba(0, 0, 0, 0.2);
+
     &__option {
       display: flex;
       background-color: var(--color-base-100);
@@ -99,6 +102,7 @@ function toggleDropdown(): void {
       color: var(--color-base-30);
       cursor: pointer;
       transition: all 0.2s ease-in;
+      transition: background-color 0.2s ease-in;
       &:hover {
         background-color: var(--color-base-80);
         color: var(--color-base-10);
