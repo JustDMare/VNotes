@@ -28,7 +28,6 @@ function onMouseDown(): void {
   );
 }
 function handleLogout(): void {
-  console.log("logout");
   auth0.logout();
 }
 </script>

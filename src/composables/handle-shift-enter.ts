@@ -35,7 +35,6 @@ export function useHandleShiftEnter(block: Block, blockHTMLContent: Ref<HTMLElem
     if (!blockHTMLContent.value) {
       return null;
     }
-    console.log(currentNodeIndex);
     const lineBreakNode = document.createTextNode("\n");
     blockHTMLContent.value.childNodes[currentNodeIndex].after(lineBreakNode);
 
