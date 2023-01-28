@@ -5,6 +5,7 @@ import { ref } from "vue";
 const { user, logout } = useAuth0();
 const showDropdown = ref(false);
 const dropdownMenu = ref<HTMLElement | null>(null);
+const dropdownButton = ref<HTMLElement | null>(null);
 
 function handleLogout(): void {
   logout();
@@ -18,8 +19,13 @@ function toggleDropdown(): void {
   }
 }
 function handleClickOutside(event: MouseEvent) {
-  if (dropdownMenu.value && !dropdownMenu.value.contains(event.target as Node)) {
-    showDropdown.value = false;
+  if (
+    dropdownMenu.value &&
+    !dropdownMenu.value.contains(event.target as Node) &&
+    dropdownButton.value &&
+    !dropdownButton.value.contains(event.target as Node)
+  ) {
+    toggleDropdown();
   }
 }
 </script>
@@ -28,6 +34,7 @@ function handleClickOutside(event: MouseEvent) {
   <div class="user-dropdown">
     <button
       class="user-dropdown__button"
+      ref="dropdownButton"
       title="Press to open the user options menu"
       v-show="user.name"
       @click="toggleDropdown"
@@ -57,7 +64,7 @@ function handleClickOutside(event: MouseEvent) {
   justify-content: center;
   flex-direction: column;
   background-color: transparent;
-  border-bottom: 1px solid var(--color-base-70);
+  height: 3.5rem;
 
   &__button {
     display: flex;
