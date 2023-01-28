@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
 import SidebarNavigation from "./navigation/SidebarNavigation.vue";
-import UserDropdown from "./UserDropdown.vue";
+import SidebarNewFolderAndNoteButtons from "./SidebarNewFolderAndNoteButtons.vue";
+import SidebarUserDropdown from "./SidebarUserDropdown.vue";
 
 const sidebar: Ref<HTMLDivElement | null> = ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
@@ -30,7 +31,8 @@ function onMouseDown(): void {
 <template>
   <aside ref="sidebar" id="sidebar">
     <div id="sidebar-content">
-      <UserDropdown />
+      <SidebarUserDropdown />
+      <SidebarNewFolderAndNoteButtons />
       <SidebarNavigation id="sidebar-nav" />
     </div>
     <div class="resizer" ref="resizer">
