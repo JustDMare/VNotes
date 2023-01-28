@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
 import SidebarNavigation from "./navigation/SidebarNavigation.vue";
+import UserDropdown from "./UserDropdown.vue";
 
 const sidebar: Ref<HTMLDivElement | null> = ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
@@ -28,7 +29,10 @@ function onMouseDown(): void {
 
 <template>
   <aside ref="sidebar" id="sidebar">
-    <SidebarNavigation id="sidebar-nav" />
+    <div id="sidebar-content">
+      <UserDropdown />
+      <SidebarNavigation id="sidebar-nav" />
+    </div>
     <div class="resizer" ref="resizer">
       <span @mousedown.prevent="onMouseDown" class="resizer-delimiter"></span>
     </div>
@@ -46,6 +50,14 @@ function onMouseDown(): void {
   background-color: var(--color-base-90);
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.08) inset;
   display: flex;
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 300px;
+  min-width: 220px;
+  max-width: 480px;
 }
 :deep(.sidebar__item) {
   font-size: 0.875rem;
@@ -62,6 +74,13 @@ function onMouseDown(): void {
     background-color: var(--color-base-80);
     color: var(--color-base-10);
   }
+}
+#sidebar-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  // overflow-y: auto;
+  overflow-x: hidden;
 }
 #sidebar-nav {
   width: 100%;

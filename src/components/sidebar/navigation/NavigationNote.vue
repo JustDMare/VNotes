@@ -17,7 +17,7 @@ const editorStore = useEditorStore();
 <template>
   <li class="nav__note">
     <router-link
-      :to="`/${noteReference._id}`"
+      :to="`/workspace/${noteReference._id}`"
       class="sidebar__item nav__item"
       :class="{ 'is-note-in-editor': noteReference._id === editorStore.noteInEditor?._id }"
     >

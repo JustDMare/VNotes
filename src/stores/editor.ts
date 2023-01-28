@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-vue";
 import { useUserSpaceStore } from "@/stores/user-space";
 import type {
   AllPropertyTypesFromInterface,
@@ -18,6 +19,7 @@ export const useEditorStore = defineStore("editor", {
     commandPaletteOpen: false as boolean,
     blockOpeningCommandPalette: null as Block | null,
     isSavingNote: false as boolean,
+    auth0: useAuth0(),
   }),
 
   getters: {
@@ -27,8 +29,13 @@ export const useEditorStore = defineStore("editor", {
   },
   actions: {
     //TODO: Document and better error handling
-    fetchNote(noteId: string) {
-      fetch(`http://localhost:3030/notes/${noteId}`)
+    async fetchNote(noteId: string) {
+      const accessToken = await this.auth0.getAccessTokenSilently();
+      fetch(`http://localhost:3030/notes/${noteId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
         .then((data) => data.json())
         .then((json) => {
           this.noteInEditor = json.note;
@@ -39,15 +46,17 @@ export const useEditorStore = defineStore("editor", {
         });
     },
     //TODO: Document and better error handling
-    saveNoteChanges() {
+    async saveNoteChanges() {
       if (!this.noteInEditor) {
         return;
       }
+      const accessToken = await this.auth0.getAccessTokenSilently();
       this.isSavingNote = true;
       fetch("http://localhost:3030/notes/update-content", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         method: "POST",
         body: JSON.stringify({

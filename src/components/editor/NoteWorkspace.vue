@@ -27,6 +27,12 @@ const note = computed(() => {
   flex-direction: column;
   position: relative;
   overflow-x: hidden;
+  flex-basis: 0;
+  flex-grow: 1;
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
 }
 #ws__header {
   position: sticky;

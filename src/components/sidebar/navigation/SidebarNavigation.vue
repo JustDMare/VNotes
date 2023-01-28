@@ -46,6 +46,7 @@ const sidebarContent = computed(() => {
     display: flex;
     flex-direction: column;
     row-gap: 2px;
+    cursor: pointer;
   }
   &,
   .nav__folder__content {
