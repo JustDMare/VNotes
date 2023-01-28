@@ -59,10 +59,8 @@ function computeCoordinates(
 }
 
 function handleClickOutside(event: MouseEvent) {
-  if (cmdPalette.value) {
-    if (cmdPalette.value && !cmdPalette.value.contains(event.target as Node)) {
-      editorStore.setCommandPaletteOpen(false);
-    }
+  if (cmdPalette.value && !cmdPalette.value.contains(event.target as Node)) {
+    editorStore.setCommandPaletteOpen(false);
   }
 }
 
