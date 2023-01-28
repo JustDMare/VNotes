@@ -109,11 +109,11 @@ watch(
     border-radius: 4px;
     color: var(--color-base-50);
     cursor: pointer;
+    transition: all 0.25s ease-in-out;
     &__icon {
       width: 100%;
       height: 100%;
     }
-
     &:hover {
       background-color: var(--color-base-80);
       color: var(--color-base-30);
@@ -128,6 +128,7 @@ watch(
       flex-direction: row;
       column-gap: 2px;
       z-index: 0;
+      transition: all 1s ease-in-out;
     }
   }
 }

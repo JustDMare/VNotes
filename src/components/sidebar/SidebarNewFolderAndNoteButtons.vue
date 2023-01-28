@@ -4,14 +4,14 @@ import { NewNoteIcon, NewFolderIcon } from "../icons";
 
 <template>
   <div class="sidebar__new-btns">
-    <btn class="sidebar__new-btns__btn btn--new-folder">
+    <button class="sidebar__new-btns__btn btn--new-folder">
       <NewFolderIcon class="sidebar__new-btns__btn__icon" />
       <span class="sidebar__new-btns__btn__text">New Folder</span>
-    </btn>
-    <btn class="sidebar__new-btns__btn btn--new-note">
+    </button>
+    <button class="sidebar__new-btns__btn btn--new-note">
       <NewNoteIcon class="sidebar__new-btns__btn__icon" />
       <span class="sidebar__new-btns__btn__text">New Note</span>
-    </btn>
+    </button>
   </div>
 </template>
 

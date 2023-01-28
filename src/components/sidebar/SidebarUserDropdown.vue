@@ -43,8 +43,7 @@ function handleClickOutside(event: MouseEvent) {
         v-show="user.picture"
         :src="user.picture"
         referrerpolicy="no-referrer"
-        alt="Profile image
-    of the user"
+        alt="Profile image of the user"
         class="user-dropdown__button__image"
       />
       <span class="user-dropdown__button__name">{{ user.name }}</span>
