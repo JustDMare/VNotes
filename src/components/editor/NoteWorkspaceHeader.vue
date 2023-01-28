@@ -56,13 +56,14 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
   }
 }
 .ws__header__btn {
-  background: var(--color-base-100);
-  color: var(--color-text);
-  border: 0;
-  border: 1px solid var(--color-base-80);
-  border-radius: 4px;
+  //Could be turned into a button--primmary class
+  justify-content: center;
   display: flex;
   align-items: center;
+  background: var(--color-base-100);
+  color: var(--color-text);
+  border: 1px solid var(--color-base-80);
+  border-radius: 4px;
   gap: 6px;
   padding: 6px;
   cursor: pointer;
@@ -70,6 +71,9 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
   &:hover {
     background: var(--color-base-80);
     color: var(--x=color-base-0);
+  }
+  &:active {
+    transform: scale(0.95);
   }
 }
 @keyframes donut-spin {

@@ -108,6 +108,7 @@ watch(
     background: transparent;
     border-radius: 4px;
     color: var(--color-base-50);
+    cursor: pointer;
     &__icon {
       width: 100%;
       height: 100%;

@@ -58,8 +58,8 @@ function onMouseDown(): void {
   padding: 0;
   box-sizing: border-box;
   width: 300px;
-  min-width: 220px;
-  max-width: 480px;
+  min-width: 250px;
+  max-width: 500px;
 }
 :deep(.sidebar__item) {
   font-size: 0.875rem;
