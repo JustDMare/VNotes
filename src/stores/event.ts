@@ -1,38 +1,41 @@
 import { defineStore } from "pinia";
 
+interface CreateAndRenameItemDialogEvent {
+  isOpen: boolean;
+  type: "create-folder" | "rename-folder" | "create-note" | "rename-note" | null;
+  renamedFolderId: string | null;
+  parentFolderId: string | null;
+}
+
 export const useEventStore = defineStore("event", {
   state: () => ({
-    nameFolderOrNoteDialog: {
+    createAndRenameItemDialogEvent: {
       isOpen: false,
-      type: null as "folder" | "note" | null,
-      title: "",
-      mainButtonText: "",
-      inputPlaceholder: "",
-    },
+      type: null,
+      renamedFolderId: null,
+      parentFolderId: null,
+    } as CreateAndRenameItemDialogEvent,
   }),
   getters: {},
   actions: {
-    openNameFolderOrNoteDialog(
-      title: string,
-      mainButtonText: string,
-      inputPlaceholder: string,
-      type: "folder" | "note"
+    openCreateAndRenameItemDialog(
+      type: NonNullable<CreateAndRenameItemDialogEvent["type"]>,
+      parentFolderId: string | null = null,
+      renamedFolderId: string | null = null
     ) {
-      Object.assign(this.nameFolderOrNoteDialog, {
+      Object.assign(this.createAndRenameItemDialogEvent, {
         isOpen: true,
         type,
-        title,
-        mainButtonText,
-        inputPlaceholder,
+        parentFolderId,
+        renamedFolderId,
       });
     },
-    closeNameFolderOrNoteDialog() {
-      Object.assign(this.nameFolderOrNoteDialog, {
+    closeCreateAndRenameItemDialog() {
+      Object.assign(this.createAndRenameItemDialogEvent, {
         isOpen: false,
         type: null,
-        title: "",
-        mainButtonText: "",
-        inputPlaceholder: "",
+        parentFolderId: null,
+        renamedFolderId: null,
       });
     },
   },

@@ -5,10 +5,10 @@ import { useEventStore } from "@/stores/event";
 const eventStore = useEventStore();
 
 function createNewNote() {
-  eventStore.openNameFolderOrNoteDialog("New Note", "Create Note", "inputNoteName", "note");
+  eventStore.openCreateAndRenameItemDialog("create-note");
 }
 function createNewFolder() {
-  eventStore.openNameFolderOrNoteDialog("New Folder", "Create Folder", "inputFolderName", "folder");
+  eventStore.openCreateAndRenameItemDialog("create-folder");
 }
 </script>
 
@@ -30,7 +30,7 @@ function createNewFolder() {
   display: flex;
   flex-direction: row;
   column-gap: 8px;
-  margin-top: 16px;
+  margin: 16px 0 8px;
   padding: 4px 8px;
   justify-content: stretch;
   &__btn {
@@ -47,10 +47,9 @@ function createNewFolder() {
     padding: 6px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-
     &:hover {
       background: var(--color-base-80);
-      color: var(--x=color-base-0);
+      color: var(--color-base-0);
     }
     &:active {
       transform: scale(0.95);

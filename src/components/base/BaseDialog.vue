@@ -60,7 +60,6 @@ function pressMainButton() {
       <slot name="dialog-body"></slot>
     </main>
     <footer class="base-dialog__footer">
-      <button @click="closeDialog" class="base-dialog__footer__cancel-btn">Cancel</button>
       <button
         :disabled="isMainButtonDisabled"
         @click="pressMainButton"
@@ -80,14 +79,14 @@ function pressMainButton() {
   margin: auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   row-gap: 24px;
-  min-width: 200px;
+  width: 350px;
   padding: 8px 8px;
   background-color: var(--color-base-100);
   border-radius: 4px;
   border: 1px solid var(--color-base-80);
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-
   &__header {
     display: flex;
     align-items: center;
@@ -95,7 +94,7 @@ function pressMainButton() {
     padding: 6px;
     border-bottom: 1px solid var(--color-base-80);
     &__title {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 500;
     }
     &__close-btn {
@@ -105,6 +104,41 @@ function pressMainButton() {
       &__icon {
         width: 1.5rem;
         height: 1.5rem;
+      }
+    }
+  }
+  &__body {
+    padding: 6px;
+  }
+  &__footer {
+    display: flex;
+    justify-content: center;
+    padding: 6px;
+    &__main-btn {
+      width: 100%;
+      //Below could be turned into a btn--primary class
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      background: var(--color-base-100);
+      color: var(--color-text);
+      border: 1px solid var(--color-base-80);
+      border-radius: 4px;
+      gap: 6px;
+      padding: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background: var(--color-base-80);
+        color: var(--x=color-base-0);
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+      &:disabled {
+        background-color: var(--color-base-70);
+        color: var(--color-base-90);
+        cursor: not-allowed;
       }
     }
   }
