@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { NewNoteIcon, NewFolderIcon } from "../icons";
-import { useUserSpaceStore } from "@/stores/user-space";
+import { useEventStore } from "@/stores/event";
 
-const userSpaceStore = useUserSpaceStore();
+const eventStore = useEventStore();
 
 function createNewNote() {
-  userSpaceStore.createNewNote("Untitled", null);
+  eventStore.openNameFolderOrNoteDialog("New Note", "Create Note", "inputNoteName", "note");
 }
 function createNewFolder() {
-  userSpaceStore.createNewFolder("Untitled", null);
+  eventStore.openNameFolderOrNoteDialog("New Folder", "Create Folder", "inputFolderName", "folder");
 }
 </script>
 
@@ -47,6 +47,7 @@ function createNewFolder() {
     padding: 6px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+
     &:hover {
       background: var(--color-base-80);
       color: var(--x=color-base-0);

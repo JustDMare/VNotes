@@ -29,7 +29,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
         })
       );
     },
-    async createNewFolder(folderName: string, parentId: string | null): Promise<void> {
+    async createFolder(folderName: string, parentId: string | null): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();
       fetch("http://localhost:3030/folders/create", {
         method: "POST",
@@ -49,7 +49,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
           console.log(error);
         });
     },
-    async createNewNote(noteTitle: string, parentId: string | null): Promise<void> {
+    async createNote(noteTitle: string, parentId: string | null): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();
       fetch("http://localhost:3030/notes/create", {
         method: "POST",
