@@ -32,7 +32,7 @@ export function createRouter(app: App): Router {
       },
     ],
   });
-  router.beforeEach((to, from) => {
+  router.beforeEach((to) => {
     if (to.name !== "landing") {
       const authPromise = createAuthGuard(app);
       Promise.resolve(authPromise(to));

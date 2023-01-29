@@ -1,14 +1,24 @@
 <script lang="ts" setup>
 import { NewNoteIcon, NewFolderIcon } from "../icons";
+import { useUserSpaceStore } from "@/stores/user-space";
+
+const userSpaceStore = useUserSpaceStore();
+
+function createNewNote() {
+  userSpaceStore.createNewNote("Untitled", null);
+}
+function createNewFolder() {
+  userSpaceStore.createNewFolder("Untitled", null);
+}
 </script>
 
 <template>
   <div class="sidebar__new-btns">
-    <button class="sidebar__new-btns__btn btn--new-folder">
+    <button @click="createNewFolder" class="sidebar__new-btns__btn btn--new-folder">
       <NewFolderIcon class="sidebar__new-btns__btn__icon" />
       <span class="sidebar__new-btns__btn__text">New Folder</span>
     </button>
-    <button class="sidebar__new-btns__btn btn--new-note">
+    <button @click="createNewNote" class="sidebar__new-btns__btn btn--new-note">
       <NewNoteIcon class="sidebar__new-btns__btn__icon" />
       <span class="sidebar__new-btns__btn__text">New Note</span>
     </button>
