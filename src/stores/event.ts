@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
-interface CreateAndRenameItemDialogEvent {
+//TODO: Move to a separate file?
+export interface CreateAndRenameItemDialogEvent {
   isOpen: boolean;
   type: "create-folder" | "rename-folder" | "create-note" | "rename-note" | null;
   renamedFolderId: string | null;

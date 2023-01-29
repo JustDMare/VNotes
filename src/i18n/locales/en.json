@@ -44,5 +44,27 @@
       }
     },
     "noCommands": "No commands found"
+  },
+  "createAndRenameItemDialog": {
+    "create-folder": {
+      "title": "Create new folder",
+      "inputPlaceholder": "Folder name",
+      "mainButtonText": "Create folder"
+    },
+    "rename-folder": {
+      "title": "Rename folder",
+      "inputPlaceholder": "Folder name",
+      "mainButtonText": "Rename folder"
+    },
+    "create-note": {
+      "title": "Create new note",
+      "inputPlaceholder": "Note name",
+      "mainButtonText": "Create note"
+    },
+    "rename-note": {
+      "title": "Rename note",
+      "inputPlaceholder": "Note name",
+      "mainButtonText": "Rename note"
+    }
   }
 }

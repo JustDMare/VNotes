@@ -44,5 +44,27 @@
       }
     },
     "noCommands": "No se han encontrado comandos"
+  },
+  "createAndRenameItemDialog": {
+    "create-folder": {
+      "title": "Crear nueva carpeta",
+      "inputPlaceholder": "Nombre de la carpeta",
+      "mainButtonText": "Crear carpeta"
+    },
+    "rename-folder": {
+      "title": "Renombrar carpeta",
+      "inputPlaceholder": "Nombre de la carpeta",
+      "mainButtonText": "Renombrar carpeta"
+    },
+    "create-note": {
+      "title": "Crear nueva nota",
+      "inputPlaceholder": "Nombre de la nota",
+      "mainButtonText": "Crear nota"
+    },
+    "rename-note": {
+      "title": "Renombrar nota",
+      "inputPlaceholder": "Nombre de la nota",
+      "mainButtonText": "Renombrar nota"
+    }
   }
 }

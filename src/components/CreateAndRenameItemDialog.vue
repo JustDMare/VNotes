@@ -3,9 +3,11 @@ import { useEventStore } from "@/stores/event";
 import { useUserSpaceStore } from "@/stores/user-space";
 import { computed, nextTick, ref, watchEffect } from "vue";
 import BaseDialog from "./base/BaseDialog.vue";
+import { i18n } from "@/i18n/i18n.plugin";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
+const t = ref(i18n.global.t);
 
 const inputBox = ref<HTMLInputElement | null>(null);
 const isDialogOpen = ref(false);
@@ -20,9 +22,13 @@ const isInputEmpty = computed(() => inputText.value.trim() === "");
 watchEffect(() => {
   if (dialogEventParams.value.isOpen) {
     isDialogOpen.value = true;
-    dialogTitle.value = "";
-    dialogMainButtonText.value = "";
-    dialogInputPlaceholder.value = "";
+    dialogTitle.value = t.value(`createAndRenameItemDialog.${dialogEventParams.value.type}.title`);
+    dialogMainButtonText.value = t.value(
+      `createAndRenameItemDialog.${dialogEventParams.value.type}.mainButtonText`
+    );
+    dialogInputPlaceholder.value = t.value(
+      `createAndRenameItemDialog.${dialogEventParams.value.type}.inputPlaceholder`
+    );
 
     nextTick(() => inputBox.value?.focus());
   } else {
@@ -34,13 +40,16 @@ watchEffect(() => {
 });
 
 function closeDialog() {
-  console.log("closeDialog");
   eventStore.closeCreateAndRenameItemDialog();
   inputText.value = "";
 }
+//TODO: Add title to the buttons and input and translations for the userDropdown
+//TODO: Check stylings
+// Add the possibility to rename folders and notes
+//Add the possibility to create folders and notes under a note
 
 function handlePressedMainButton() {
-  if (!isInputEmpty.value) {
+  if (isInputEmpty.value) {
     return;
   }
   if (dialogEventParams.value.type === "create-folder") {
