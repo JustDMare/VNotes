@@ -1,15 +1,18 @@
 <script lang="ts" setup>
 import { useAuth0 } from "@auth0/auth0-vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
-const { user, logout } = useAuth0();
+const auth0 = useAuth0();
 const showDropdown = ref(false);
 const dropdownMenu = ref<HTMLElement | null>(null);
 const dropdownButton = ref<HTMLElement | null>(null);
 
 function handleLogout(): void {
-  logout();
+  auth0.logout();
 }
+
+const authUser = computed(() => auth0.user.value);
+
 function toggleDropdown(): void {
   showDropdown.value = !showDropdown.value;
   if (showDropdown.value) {
@@ -31,22 +34,22 @@ function handleClickOutside(event: MouseEvent) {
 </script>
 
 <template>
-  <div class="user-dropdown">
+  <div class="user-dropdown" v-if="authUser">
     <button
       class="user-dropdown__button"
       ref="dropdownButton"
       title="Press to open the user options menu"
-      v-show="user.name"
+      v-show="authUser.name"
       @click="toggleDropdown"
     >
       <img
-        v-show="user.picture"
-        :src="user.picture"
+        v-show="authUser.picture"
+        :src="authUser.picture"
         referrerpolicy="no-referrer"
         alt="Profile image of the user"
         class="user-dropdown__button__image"
       />
-      <span class="user-dropdown__button__name">{{ user.name }}</span>
+      <span class="user-dropdown__button__name">{{ authUser.name }}</span>
     </button>
     <div class="user-dropdown__menu" ref="dropdownMenu" v-show="showDropdown">
       <button class="user-dropdown__menu__option" @click="handleLogout">Logout</button>

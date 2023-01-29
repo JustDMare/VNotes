@@ -24,7 +24,6 @@ export function createRouter(app: App): Router {
         path: "/workspace/:id",
         name: "editor",
         component: MainView,
-
         beforeEnter(to) {
           const editorStore = useEditorStore();
           const noteId = <string>to.params.id;
