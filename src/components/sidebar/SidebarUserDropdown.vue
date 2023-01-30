@@ -68,6 +68,7 @@ const authUser = computed(() => auth0.user.value);
     padding: 8px 16px;
     gap: 12px;
     transition: background-color 0.2s ease-in;
+    background-color: var(--color-base-100);
     &:hover {
       background-color: var(--color-base-80);
     }

@@ -30,7 +30,7 @@ function handleClickOutside(event: MouseEvent) {
     <button class="base-dropdown__button" ref="dropdownButton" @click="toggleDropdown">
       <slot name="button-content"></slot>
     </button>
-    <div class="base-dropdown__menu" ref="dropdownMenu" v-show="showDropdown">
+    <div class="base-dropdown__menu" ref="dropdownMenu" v-if="showDropdown">
       <slot name="menu"></slot>
     </div>
   </div>
@@ -52,7 +52,7 @@ function handleClickOutside(event: MouseEvent) {
     display: flex;
     align-items: center;
     align-self: flex-start;
-    background-color: var(--color-base-100);
+    background-color: transparent;
     cursor: pointer;
   }
   &__menu {
@@ -61,7 +61,7 @@ function handleClickOutside(event: MouseEvent) {
     right: 0;
     display: flex;
     flex-direction: column;
-    z-index: 4;
+    z-index: 5;
     justify-content: center;
     align-items: center;
     background-color: var(--color-base-100);
