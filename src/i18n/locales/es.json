@@ -76,7 +76,8 @@
     },
     "userDropdownButton": "Pulsar para acceder al menu de opciones de usuario",
     "newFolderButton": "Pulsar para crear una nueva carpeta en raíz",
-    "newNoteButton": "Pulsar para crear una nueva nota en raíz"
+    "newNoteButton": "Pulsar para crear una nueva nota en raíz",
+    "navigationItemOptionsButton": "Pulsar para acceder a las opciones de este elemento"
   },
   "altText": {
     "userDropdownProfilePicture": "Imagen de perfil del usuario"
