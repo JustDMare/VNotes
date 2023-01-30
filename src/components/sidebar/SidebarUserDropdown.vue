@@ -38,7 +38,7 @@ function handleClickOutside(event: MouseEvent) {
     <button
       class="user-dropdown__button"
       ref="dropdownButton"
-      title="Press to open the user options menu"
+      :title="$t('tooltips.userDropdownButton')"
       v-show="authUser.name"
       @click="toggleDropdown"
     >
@@ -46,13 +46,15 @@ function handleClickOutside(event: MouseEvent) {
         v-show="authUser.picture"
         :src="authUser.picture"
         referrerpolicy="no-referrer"
-        alt="Profile image of the user"
+        :alt="$t('altText.userDropdownProfilePicture')"
         class="user-dropdown__button__image"
       />
       <span class="user-dropdown__button__name">{{ authUser.name }}</span>
     </button>
     <div class="user-dropdown__menu" ref="dropdownMenu" v-show="showDropdown">
-      <button class="user-dropdown__menu__option" @click="handleLogout">Logout</button>
+      <button class="user-dropdown__menu__option" @click="handleLogout">
+        {{ $t("auth.logout") }}
+      </button>
     </div>
   </div>
 </template>

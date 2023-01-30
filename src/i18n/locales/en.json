@@ -7,12 +7,13 @@
     "lastSaved": "Last saved: {date}",
     "saveChanges": "Save"
   },
-  "tooltips": {
-    "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S",
-    "block": {
-      "gripButton": "Hold and drag to move the block",
-      "addBlockButton": "Add a new block below"
-    }
+  "sidebar": {
+    "newFolderButton": "New folder",
+    "newNoteButton": "New note"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout"
   },
   "commandPalette": {
     "convertBlockType": {
@@ -66,5 +67,18 @@
       "inputPlaceholder": "Note name",
       "mainButtonText": "Rename note"
     }
+  },
+  "tooltips": {
+    "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S",
+    "block": {
+      "gripButton": "Hold and drag to move the block",
+      "addBlockButton": "Add a new block below"
+    },
+    "userDropdownButton": "Press to open the user options menu",
+    "newFolderButton": "Press to create a new folder in root",
+    "newNoteButton": "Press to create a new note in root"
+  },
+  "altText": {
+    "userDropdownProfilePicture": "Profile image of the user"
   }
 }

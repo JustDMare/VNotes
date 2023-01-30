@@ -14,13 +14,21 @@ function createNewFolder() {
 
 <template>
   <div class="sidebar__new-btns">
-    <button @click="createNewFolder" class="sidebar__new-btns__btn btn--new-folder">
+    <button
+      @click="createNewFolder"
+      :title="$t('tooltips.newFolderButton')"
+      class="sidebar__new-btns__btn btn--new-folder"
+    >
       <NewFolderIcon class="sidebar__new-btns__btn__icon" />
-      <span class="sidebar__new-btns__btn__text">New Folder</span>
+      <span class="sidebar__new-btns__btn__text">{{ $t("sidebar.newFolderButton") }}</span>
     </button>
-    <button @click="createNewNote" class="sidebar__new-btns__btn btn--new-note">
+    <button
+      :title="$t('tooltips.newNoteButton')"
+      @click="createNewNote"
+      class="sidebar__new-btns__btn btn--new-note"
+    >
       <NewNoteIcon class="sidebar__new-btns__btn__icon" />
-      <span class="sidebar__new-btns__btn__text">New Note</span>
+      <span class="sidebar__new-btns__btn__text">{{ $t("sidebar.newNoteButton") }}</span>
     </button>
   </div>
 </template>

@@ -7,12 +7,13 @@
     "lastSaved": "Ultima vez guardado: {date}",
     "saveChanges": "Guardar cambios"
   },
-  "tooltips": {
-    "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S",
-    "block": {
-      "gripButton": "Mantener pulsado y arrastrar para mover el bloque",
-      "addBlockButton": "Añadir nuevo bloque debajo"
-    }
+  "sidebar": {
+    "newFolderButton": "Nueva carpeta",
+    "newNoteButton": "Nueva nota"
+  },
+  "auth": {
+    "login": "Iniciar sesion",
+    "logout": "Salir de sesion"
   },
   "commandPalette": {
     "convertBlockType": {
@@ -66,5 +67,18 @@
       "inputPlaceholder": "Nombre de la nota",
       "mainButtonText": "Renombrar nota"
     }
+  },
+  "tooltips": {
+    "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S",
+    "block": {
+      "gripButton": "Mantener pulsado y arrastrar para mover el bloque",
+      "addBlockButton": "Añadir nuevo bloque debajo"
+    },
+    "userDropdownButton": "Pulsar para acceder al menu de opciones de usuario",
+    "newFolderButton": "Pulsar para crear una nueva carpeta en raíz",
+    "newNoteButton": "Pulsar para crear una nueva nota en raíz"
+  },
+  "altText": {
+    "userDropdownProfilePicture": "Imagen de perfil del usuario"
   }
 }
