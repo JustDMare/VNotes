@@ -36,8 +36,8 @@ function handleClickOutside(event: MouseEvent) {
   </div>
 </template>
 
-<style lang="scss" scoped>
-.base_dropdown {
+<style lang="scss">
+.base-dropdown {
   position: relative;
   z-index: 4;
   display: flex;
@@ -48,8 +48,11 @@ function handleClickOutside(event: MouseEvent) {
   &__button {
     width: 100%;
     height: 100%;
+    border: none;
     display: flex;
     align-items: center;
+    align-self: flex-start;
+    background-color: var(--color-base-100);
     background-color: var(--color-base-100);
     cursor: pointer;
   }
@@ -60,6 +63,9 @@ function handleClickOutside(event: MouseEvent) {
     display: flex;
     flex-direction: column;
     z-index: 4;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-base-100);
     & > * {
       width: 100%;
       cursor: pointer;
