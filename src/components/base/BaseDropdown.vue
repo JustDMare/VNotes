@@ -53,7 +53,6 @@ function handleClickOutside(event: MouseEvent) {
     align-items: center;
     align-self: flex-start;
     background-color: var(--color-base-100);
-    background-color: var(--color-base-100);
     cursor: pointer;
   }
   &__menu {
