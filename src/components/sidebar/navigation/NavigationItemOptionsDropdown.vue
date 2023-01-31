@@ -10,6 +10,20 @@ defineProps({
     required: true,
   },
 });
+/*TODO: To fix this shit 
+  - Make the menu non relative (either with fixed or some other way)
+  - Have 2 layers of activation:
+    - First layer will use the v-if to render the menu.
+    - Second layer will use the v-show to actually show the menu.
+  - The flow will be as follows:
+    - the v-if will be triggered when the user clicks the button.
+    - once the v-if is activated, wait for the NextTick so the component is rendered.
+    - Calculate the position at which the component should be placed based on the button's
+      location.
+    - Set the position of the menu.
+    - Activate the v-show to show the menu.
+I think this should work. Albeit a bit complicated, it should be the best option right now
+*/
 </script>
 
 <template>
