@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { NoteIcon } from "@/components/icons";
 import { useEditorStore } from "@/stores/editor";
+import type { NavigationItemOption } from "@/types";
 import type { NavigationNoteReference } from "vnotes-types";
 import type { PropType } from "vue";
 import { RouterLink } from "vue-router";
+import NavigationItemOptionsDropdown from "./NavigationItemOptionsDropdown.vue";
 
 defineProps({
   noteReference: {
@@ -12,6 +14,8 @@ defineProps({
   },
 });
 const editorStore = useEditorStore();
+
+const noteOptions: NavigationItemOption[] = [];
 </script>
 
 <template>
@@ -24,6 +28,7 @@ const editorStore = useEditorStore();
         <NoteIcon class="nav__icon nav__icon--note" />
         <span class="nav__item__text">{{ noteReference.title }}</span>
       </router-link>
+      <NavigationItemOptionsDropdown :options="noteOptions" />
     </div>
   </li>
 </template>

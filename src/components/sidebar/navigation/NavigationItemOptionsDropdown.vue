@@ -37,8 +37,17 @@ defineProps({
 <style lang="scss" scoped>
 .nav-item__options {
   &__icon {
+    height: var(--nav-icon-size);
+    width: var(--nav-icon-size);
   }
   &__menu-button {
+  }
+  :deep(.base-dropdown__button) {
+    justify-content: center;
+    border-radius: 2px;
+  }
+  :deep(.base-dropdown__menu) {
+    width: 200px;
   }
 }
 </style>

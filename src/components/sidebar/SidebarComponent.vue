@@ -64,28 +64,17 @@ function onMouseDown(): void {
 :deep(.sidebar__item) {
   display: grid;
   grid-template-columns: 9fr 24px;
-
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 2px 0 2px 0;
   margin: 0 var(--sidebar-item--margin) 0 var(--sidebar-item--margin);
   background-color: transparent;
-
   transition: all 0.2s ease-in;
   &:hover {
     background-color: var(--color-base-80);
     color: var(--color-base-10);
   }
 }
-:deep(.nav__item) {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-base-30);
-  padding: 1px 0 1px var(--sidebar-item--padding);
 
-  border: 0;
-  background-color: transparent;
-  text-align: start;
-}
 #sidebar-content {
   display: flex;
   flex-direction: column;

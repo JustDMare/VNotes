@@ -59,6 +59,14 @@ const sidebarContent = computed(() => {
     column-gap: 2px;
     text-decoration: none;
     line-height: 1.3;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-base-30);
+    padding: 1px 0 1px var(--sidebar-item--padding);
+    border: 0;
+    background-color: transparent;
+    text-align: start;
+
     &__text,
     &__content-number {
       padding: 0 6px;
