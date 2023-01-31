@@ -22,7 +22,7 @@ defineProps({
     </template>
     <template #menu>
       <button
-        class="nav-item__options__menu-button"
+        class="nav-item__options__menu__button"
         v-for="option in options"
         :key="option.name"
         @click="option.action"
@@ -40,14 +40,23 @@ defineProps({
     height: var(--nav-icon-size);
     width: var(--nav-icon-size);
   }
-  &__menu-button {
+  &__menu__button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px;
+    background-color: transparent;
+    z-index: 6;
   }
   :deep(.base-dropdown__button) {
     justify-content: center;
     border-radius: 2px;
   }
   :deep(.base-dropdown__menu) {
+    z-index: 6;
     width: 200px;
+    background-color: var(--color-base-10);
   }
 }
 </style>
