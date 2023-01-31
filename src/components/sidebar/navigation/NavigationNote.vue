@@ -15,7 +15,22 @@ defineProps({
 });
 const editorStore = useEditorStore();
 
-const noteOptions: NavigationItemOption[] = [];
+const noteOptions: NavigationItemOption[] = [
+  {
+    name: "Rename",
+    icon: NoteIcon,
+    action: () => {
+      console.log("Rename");
+    },
+  },
+  {
+    name: "Delete",
+    icon: NoteIcon,
+    action: () => {
+      console.log("Delete");
+    },
+  },
+];
 </script>
 
 <template>
