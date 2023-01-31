@@ -58,10 +58,12 @@ function onMouseDown(): void {
   padding: 0;
   box-sizing: border-box;
   width: 300px;
-  min-width: 250px;
+  min-width: 280px;
   max-width: 500px;
 }
 :deep(.sidebar__item) {
+  display: grid;
+  grid-template-columns: 9fr 24px;
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--color-base-30);

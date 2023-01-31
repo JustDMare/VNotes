@@ -50,6 +50,7 @@ function handleClickOutside(event: MouseEvent) {
     height: 100%;
     border: none;
     display: flex;
+    padding: 0;
     align-items: center;
     align-self: flex-start;
     background-color: transparent;
