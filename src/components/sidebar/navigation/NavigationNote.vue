@@ -16,14 +16,16 @@ const editorStore = useEditorStore();
 
 <template>
   <li class="nav__note">
-    <router-link
-      :to="`/workspace/${noteReference._id}`"
-      class="sidebar__item nav__item"
-      :class="{ 'is-note-in-editor': noteReference._id === editorStore.noteInEditor?._id }"
-    >
-      <NoteIcon class="nav__icon nav__icon--note" />
-      <span class="nav__item__text">{{ noteReference.title }}</span>
-    </router-link>
+    <div class="sidebar__item">
+      <router-link
+        :to="`/workspace/${noteReference._id}`"
+        class="nav__item"
+        :class="{ 'is-note-in-editor': noteReference._id === editorStore.noteInEditor?._id }"
+      >
+        <NoteIcon class="nav__icon nav__icon--note" />
+        <span class="nav__item__text">{{ noteReference.title }}</span>
+      </router-link>
+    </div>
   </li>
 </template>
 

@@ -40,7 +40,7 @@ const folderOptions: NavigationItemOption[] = [
 <template>
   <li class="nav__folder">
     <div class="sidebar__item">
-      <button class="sidebar__item nav__item" @click="toggleContentVisibility">
+      <button class="nav__item" @click="toggleContentVisibility">
         <ChevronRightIcon
           class="nav__icon nav__icon--chevron"
           :class="{ 'nav__icon--chevron--down': showContents }"
