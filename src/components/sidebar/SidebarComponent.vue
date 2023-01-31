@@ -79,11 +79,13 @@ function onMouseDown(): void {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
 }
 #sidebar-nav {
   width: 100%;
+  height: 100%;
   overflow-y: auto;
   border-top: 1px solid var(--color-base-80);
 }
