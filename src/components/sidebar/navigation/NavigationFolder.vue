@@ -71,8 +71,8 @@ const folderOptions: NavigationItemOption[] = [
 .nav__folder {
   &__content {
     --nav-folder-content--left-margin: calc(
-      var(--sidebar-item--padding) + var(--sidebar-item--margin) + var(--nav-icon-size) / 2
-    );
+      var(--sidebar-item--padding) + var(--sidebar-item--margin) + var(--nav-icon-size) / 2 - 0.5px
+    ); // 0.5px to compensate for the border
     margin-left: var(--nav-folder-content--left-margin);
     border-left: 1px solid var(--color-base-50);
   }
