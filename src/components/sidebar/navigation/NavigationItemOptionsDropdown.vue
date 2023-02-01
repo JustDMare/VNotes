@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-// eslint-disable-next-line max-len
-import BaseAbsolutelyPositionedDropdown from "@/components/base/BaseAbsolutelyPositionedDropdown.vue";
+import BaseDropdownAbsolutePosition from "@/components/base/BaseDropdownAbsolutePosition.vue";
 import { OptionsButtonIcon } from "@/components/icons";
 import type { NavigationItemOption } from "@/types";
 import type { PropType } from "vue";
@@ -14,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-  <BaseAbsolutelyPositionedDropdown class="nav-item__options">
+  <BaseDropdownAbsolutePosition class="nav-item__options">
     <template #button-content>
       <OptionsButtonIcon
         :title="$t('tooltips.navigationItemOptionsButton')"
@@ -32,7 +31,7 @@ defineProps({
         <span>{{ option.name }}</span>
       </button>
     </template>
-  </BaseAbsolutelyPositionedDropdown>
+  </BaseDropdownAbsolutePosition>
 </template>
 
 <style lang="scss" scoped>
@@ -47,6 +46,8 @@ defineProps({
   &__menu__button {
     display: flex;
     flex-direction: row;
+    justify-content: start;
+    column-gap: 6px;
     align-items: center;
     padding: 4px;
     background-color: var(--color-base-100);
@@ -71,7 +72,11 @@ defineProps({
     width: fit-content;
     align-items: stretch;
     justify-items: stretch;
+    padding: 8px 3rem 8px 6px;
+    row-gap: 6px;
+    border-radius: 3px;
     background-color: var(--color-base-100);
+    box-shadow: 0px 0px 22px -3px rgba(0, 0, 0, 0.2);
   }
 }
 </style>
