@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useAuth0 } from "@auth0/auth0-vue";
 import { computed } from "vue";
-import BaseDropdown from "../base/BaseDropdown.vue";
+import BaseRelativeDropdown from "../base/BaseRelativeDropdown.vue";
 
 const auth0 = useAuth0();
 
@@ -13,7 +13,7 @@ const authUser = computed(() => auth0.user.value);
 </script>
 
 <template>
-  <BaseDropdown class="user-dropdown" v-if="authUser">
+  <BaseRelativeDropdown class="user-dropdown" v-if="authUser">
     <template #button-content>
       <img
         v-show="authUser.picture"
@@ -29,7 +29,7 @@ const authUser = computed(() => auth0.user.value);
         {{ $t("auth.logout") }}
       </button>
     </template>
-  </BaseDropdown>
+  </BaseRelativeDropdown>
 </template>
 
 <style lang="scss" scoped>

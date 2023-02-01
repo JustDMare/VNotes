@@ -116,7 +116,7 @@ watch(
   </main>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 #note-editor {
   width: 100%;
 
@@ -139,7 +139,7 @@ watch(
   }
 }
 
-[contenteditable] {
+:deep([contenteditable]) {
   word-break: break-word;
   white-space: pre-wrap;
   outline-style: none;
