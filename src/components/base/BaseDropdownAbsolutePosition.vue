@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { nextTick, ref } from "vue";
 
+const MENU_MARGIN_FROM_BUTTON = 8;
+const MENU_LEFT_DISPLACEMENT = 1 / 4;
+
 const showDropdown = ref(false);
 const renderDropdown = ref(false);
 const dropdownMenu = ref<HTMLElement | null>(null);
@@ -25,10 +28,13 @@ function calculateDropdownPosition(): void {
   const buttonRect = dropdownButton.value.getBoundingClientRect();
   const menuRect = dropdownMenu.value.getBoundingClientRect();
   const dropdownMenuStyle = dropdownMenu.value.style;
-  dropdownMenuStyle.top = `${buttonRect.bottom + 4}px`;
-  dropdownMenuStyle.left = `${buttonRect.right - menuRect.width / 2}px`;
 
-  showDropdown.value = true;
+  if (menuRect.height + buttonRect.bottom > window.innerHeight) {
+    dropdownMenuStyle.top = `${buttonRect.top - menuRect.height - MENU_MARGIN_FROM_BUTTON}px`;
+  } else {
+    dropdownMenuStyle.top = `${buttonRect.bottom + MENU_MARGIN_FROM_BUTTON}px`;
+  }
+  dropdownMenuStyle.left = `${buttonRect.right - menuRect.width * MENU_LEFT_DISPLACEMENT}px`;
   document.addEventListener("mousedown", handleClickOutside);
 }
 
