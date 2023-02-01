@@ -68,6 +68,7 @@ function onMouseDown(): void {
   padding: 2px 0 2px 0;
   margin: 0 var(--sidebar-item--margin) 0 var(--sidebar-item--margin);
   background-color: transparent;
+  color: var(--color-base-30);
   transition: all 0.2s ease-in;
   &:hover {
     background-color: var(--color-base-80);

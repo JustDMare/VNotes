@@ -19,17 +19,14 @@ function toggleDropdown(): void {
 }
 
 function calculateDropdownPosition(): void {
-  console.log(dropdownButton.value);
-  console.log(dropdownMenu.value);
   if (!dropdownButton.value || !dropdownMenu.value) {
     return;
   }
   const buttonRect = dropdownButton.value.getBoundingClientRect();
   const menuRect = dropdownMenu.value.getBoundingClientRect();
-  console.log(menuRect);
   const dropdownMenuStyle = dropdownMenu.value.style;
   dropdownMenuStyle.top = `${buttonRect.bottom + 4}px`;
-  dropdownMenuStyle.left = `${buttonRect.right - menuRect.width / 4}px`;
+  dropdownMenuStyle.left = `${buttonRect.right - menuRect.width / 2}px`;
 
   showDropdown.value = true;
   document.addEventListener("mousedown", handleClickOutside);

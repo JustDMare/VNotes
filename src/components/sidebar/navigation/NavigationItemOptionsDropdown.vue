@@ -37,10 +37,12 @@ defineProps({
 
 <style lang="scss" scoped>
 .nav-item__options {
+  width: 20px;
+  height: 20px;
+
   &__icon {
     height: var(--nav-icon-size);
     width: var(--nav-icon-size);
-    z-index: 1;
   }
   &__menu__button {
     display: flex;
@@ -48,16 +50,24 @@ defineProps({
     align-items: center;
     padding: 4px;
     background-color: var(--color-base-100);
-    z-index: 6;
+    border: none;
     justify-self: stretch;
   }
   :deep(.base-dropdown__button) {
     justify-content: center;
-    border-radius: 2px;
+    color: var(--color-base-30);
+    border-radius: 3px;
+    transition: all 0.2s ease-in;
+    &:hover {
+      color: var(--color-base-10);
+      background-color: var(--color-base-60);
+    }
+    &:active {
+      transform: scale(0.95);
+    }
   }
   :deep(.base-dropdown__menu) {
     position: fixed;
-    z-index: 6;
     width: fit-content;
     align-items: stretch;
     justify-items: stretch;

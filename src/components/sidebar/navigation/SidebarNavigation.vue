@@ -60,7 +60,7 @@ const sidebarContent = computed(() => {
     line-height: 1.3;
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-base-30);
+    color: inherit;
     padding: 1px 0 1px var(--sidebar-item--padding);
     border: 0;
     background-color: transparent;
