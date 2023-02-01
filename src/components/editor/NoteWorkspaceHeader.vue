@@ -51,7 +51,7 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
   gap: 8px;
   align-items: center;
   &__text {
-    font-size: 0.875rem;
+    font-size: 14px;
     color: var(--color-base-40);
   }
 }
