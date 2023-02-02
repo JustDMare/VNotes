@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import getCommandList from "@/commands/command-list";
-import type { PaletteCommand } from "@/commands/interfaces";
+import getCommandList from "@/commands/command-palette/command-list";
+import type { PaletteCommand } from "@/commands/command-palette/interfaces";
 import { useEditorStore } from "@/stores/editor";
 import { computed, ref, shallowRef, watch } from "vue";
 import { matchSorter } from "match-sorter";
