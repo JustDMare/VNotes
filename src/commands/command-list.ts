@@ -1,4 +1,4 @@
-import type { Command } from "./interfaces";
+import type { PaletteCommand } from "./interfaces";
 import {
   CheckboxIcon,
   HeadingBigIcon,
@@ -12,12 +12,12 @@ import convertBlockTypeCommand from "./convert-block-type";
 import deleteBlockCommand from "./delete-block";
 
 //TODO: Document this
-function getCommandList(): Command[] {
+function getCommandList(): PaletteCommand[] {
   const allCommands = getConvertBlockTypeCommands().concat(getEditorCommands());
   return allCommands;
 }
 
-function getConvertBlockTypeCommands(): Command[] {
+function getConvertBlockTypeCommands(): PaletteCommand[] {
   const t = i18n.global.t;
   return [
     {
@@ -58,7 +58,7 @@ function getConvertBlockTypeCommands(): Command[] {
   ];
 }
 
-function getEditorCommands(): Command[] {
+function getEditorCommands(): PaletteCommand[] {
   const t = i18n.global.t;
   return [
     {

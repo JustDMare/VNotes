@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { ChevronRightIcon, FolderIcon } from "@/components/icons";
-import NoteIcon from "@/components/icons/NoteIcon.vue";
-import { useEventStore } from "@/stores/event";
-import type { NavigationItemOption } from "@/types";
 import type { Folder } from "vnotes-types";
 import { ref, type PropType } from "vue";
 import NavigationItemOptionsDropdown from "./NavigationItemOptionsDropdown.vue";
 import NavigationNote from "./NavigationNote.vue";
-
-const eventStore = useEventStore();
+import { getFolderOptions } from "@/commands/navigation-item-options/folder";
 
 const props = defineProps({
   folderReference: {
@@ -19,40 +15,11 @@ const props = defineProps({
 let showContents = ref(false);
 let optionsDropdownIsOpen = ref(false);
 
+const folderOptions = getFolderOptions(props.folderReference._id);
+
 function toggleContentVisibility(): void {
   showContents.value = !showContents.value;
 }
-
-const folderOptions: NavigationItemOption[] = [
-  {
-    name: "Create sub-folder",
-    icon: NoteIcon,
-    action: () => {
-      eventStore.openCreateAndRenameItemDialog("create-folder", props.folderReference._id);
-    },
-  },
-  {
-    name: "Create note here",
-    icon: NoteIcon,
-    action: () => {
-      console.log("Rename");
-    },
-  },
-  {
-    name: "Rename",
-    icon: NoteIcon,
-    action: () => {
-      console.log("Rename");
-    },
-  },
-  {
-    name: "Delete",
-    icon: NoteIcon,
-    action: () => {
-      console.log("Delete");
-    },
-  },
-];
 </script>
 
 <template>

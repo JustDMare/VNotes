@@ -1,36 +1,20 @@
 <script setup lang="ts">
+import { getNoteOptions } from "@/commands/navigation-item-options/note";
 import { NoteIcon } from "@/components/icons";
 import { useEditorStore } from "@/stores/editor";
-import type { NavigationItemOption } from "@/types";
 import type { NavigationNoteReference } from "vnotes-types";
 import type { PropType } from "vue";
 import { RouterLink } from "vue-router";
 import NavigationItemOptionsDropdown from "./NavigationItemOptionsDropdown.vue";
 
-defineProps({
+const props = defineProps({
   noteReference: {
     type: Object as PropType<NavigationNoteReference>,
     required: true,
   },
 });
 const editorStore = useEditorStore();
-
-const noteOptions: NavigationItemOption[] = [
-  {
-    name: "Rename",
-    icon: NoteIcon,
-    action: () => {
-      console.log("Rename");
-    },
-  },
-  {
-    name: "Delete",
-    icon: NoteIcon,
-    action: () => {
-      console.log("Delete");
-    },
-  },
-];
+const noteOptions = getNoteOptions(props.noteReference._id);
 </script>
 
 <template>

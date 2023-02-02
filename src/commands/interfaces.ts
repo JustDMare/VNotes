@@ -1,6 +1,6 @@
 import type { Component } from "vue";
 
-export interface Command {
+export interface PaletteCommand {
   icon: Component;
   name: string;
   execute: () => void;
