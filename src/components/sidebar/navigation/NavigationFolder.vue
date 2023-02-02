@@ -14,17 +14,27 @@ const props = defineProps({
 });
 let showContents = ref(false);
 let optionsDropdownIsOpen = ref(false);
+let showOptionsButton = ref(false);
 
 const folderOptions = getFolderOptions(props.folderReference._id);
 
 function toggleContentVisibility(): void {
   showContents.value = !showContents.value;
 }
+//TODO: Could be refactored into a composable
+function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
+  showOptionsButton.value = newShowOptionsButtonValue;
+}
 </script>
 
 <template>
   <li class="nav__folder">
-    <div class="sidebar__item" :class="{ 'sidebar__item--highlight': optionsDropdownIsOpen }">
+    <div
+      @mouseover="setShowOptionsButton(true)"
+      @mouseleave="setShowOptionsButton(false)"
+      class="sidebar__item"
+      :class="{ 'sidebar__item--highlight': optionsDropdownIsOpen }"
+    >
       <button class="nav__item" @click="toggleContentVisibility">
         <ChevronRightIcon
           class="nav__icon nav__icon--chevron"
@@ -36,6 +46,7 @@ function toggleContentVisibility(): void {
       </button>
       <NavigationItemOptionsDropdown
         :options="folderOptions"
+        v-show="showOptionsButton || optionsDropdownIsOpen"
         @options-dropdown-opened="optionsDropdownIsOpen = true"
         @options-dropdown-closed="optionsDropdownIsOpen = false"
       />
