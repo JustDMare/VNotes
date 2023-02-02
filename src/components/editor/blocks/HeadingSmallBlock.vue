@@ -15,7 +15,7 @@ defineExpose({ blockContentEditable });
     :block="block"
     tag="h3"
     ref="blockContentEditable"
-    class="block__content--heading__small note-editor__content-editable"
+    class="block__content--heading__small"
   />
 </template>
 <style lang="scss"></style>

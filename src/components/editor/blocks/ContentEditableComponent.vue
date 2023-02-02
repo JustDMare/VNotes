@@ -70,6 +70,7 @@ defineExpose({ blockHTMLContent });
     ref="blockHTMLContent"
     @keydown="handleSpecialKeys"
     @input="processInput"
+    class="note-editor__content-editable"
     :class="{ 'block__show-placeholder': isContentEmpty }"
   />
 </template>

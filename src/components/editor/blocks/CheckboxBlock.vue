@@ -41,7 +41,7 @@ function onCheckboxChange(): void {
       :block="block"
       tag="p"
       ref="blockContentEditable"
-      class="block__content--checkbox__text note-editor__content-editable"
+      class="block__content--checkbox__text"
       :class="{
         'block__content--checkbox__text--checked': checkboxChecked && block.content.length,
       }"
