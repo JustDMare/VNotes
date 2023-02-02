@@ -5,19 +5,21 @@ const MENU_MARGIN_FROM_BUTTON = 8;
 const MENU_LEFT_DISPLACEMENT = 1 / 4;
 
 const showDropdown = ref(false);
-const renderDropdown = ref(false);
 const dropdownMenu = ref<HTMLElement | null>(null);
 const dropdownButton = ref<HTMLElement | null>(null);
 
+const emit = defineEmits(["dropdownOpened", "dropdownClosed"]);
+
 function toggleDropdown(): void {
-  renderDropdown.value = !renderDropdown.value;
-  if (renderDropdown.value) {
+  showDropdown.value = !showDropdown.value;
+  if (showDropdown.value) {
     nextTick(() => {
       calculateDropdownPosition();
     });
+    emit("dropdownOpened");
   } else {
-    showDropdown.value = false;
     document.removeEventListener("mousedown", handleClickOutside);
+    emit("dropdownClosed");
   }
 }
 
@@ -51,18 +53,23 @@ function handleClickOutside(event: MouseEvent) {
 </script>
 
 <template>
-  <div class="base-dropdown">
-    <button class="base-dropdown__button" ref="dropdownButton" @click="toggleDropdown">
+  <div class="base-dropdown--absolute">
+    <button
+      class="base-dropdown--absolute__button"
+      :class="{ 'button--active': showDropdown }"
+      ref="dropdownButton"
+      @click="toggleDropdown"
+    >
       <slot name="button-content"></slot>
     </button>
-    <div class="base-dropdown__menu" ref="dropdownMenu" v-if="renderDropdown">
+    <div class="base-dropdown--absolute__menu" ref="dropdownMenu" v-if="showDropdown">
       <slot name="menu"></slot>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.base-dropdown {
+.base-dropdown--absolute {
   display: flex;
   flex-direction: column;
   align-items: center;

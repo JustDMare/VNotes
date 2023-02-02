@@ -63,7 +63,7 @@ const authUser = computed(() => auth0.user.value);
     }
   }
 
-  :deep(.base-dropdown__button) {
+  :deep(.base-dropdown--relative__button) {
     height: 3.5rem;
     padding: 8px 16px;
     gap: 12px;
@@ -74,7 +74,7 @@ const authUser = computed(() => auth0.user.value);
     }
   }
 
-  :deep(.base-dropdown__menu) {
+  :deep(.base-dropdown--relative__menu) {
     width: 100%;
     border-bottom: 1px solid var(--color-base-80);
     box-shadow: 0px 12px 12px 0px rgba(0, 0, 0, 0.2);

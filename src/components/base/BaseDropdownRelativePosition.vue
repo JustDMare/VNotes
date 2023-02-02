@@ -26,18 +26,18 @@ function handleClickOutside(event: MouseEvent) {
 </script>
 
 <template>
-  <div class="base-dropdown">
-    <button class="base-dropdown__button" ref="dropdownButton" @click="toggleDropdown">
+  <div class="base-dropdown--relative">
+    <button class="base-dropdown--relative__button" ref="dropdownButton" @click="toggleDropdown">
       <slot name="button-content"></slot>
     </button>
-    <div class="base-dropdown__menu" ref="dropdownMenu" v-if="showDropdown">
+    <div class="base-dropdown--relative__menu" ref="dropdownMenu" v-if="showDropdown">
       <slot name="menu"></slot>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.base-dropdown {
+.base-dropdown--relative {
   position: relative;
   display: flex;
   flex-direction: column;

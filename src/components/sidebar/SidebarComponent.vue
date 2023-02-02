@@ -75,6 +75,10 @@ function onMouseDown(): void {
     color: var(--color-base-10);
   }
 }
+:deep(.sidebar__item--highlight) {
+  background-color: var(--color-base-80);
+  color: var(--color-base-10);
+}
 
 #sidebar-content {
   display: flex;

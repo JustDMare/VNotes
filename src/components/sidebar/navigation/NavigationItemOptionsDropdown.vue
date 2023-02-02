@@ -10,10 +10,15 @@ defineProps({
     required: true,
   },
 });
+defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
 </script>
 
 <template>
-  <BaseDropdownAbsolutePosition class="nav-item__options">
+  <BaseDropdownAbsolutePosition
+    @dropdown-opened="$emit('optionsDropdownOpened')"
+    @dropdown-closed="$emit('optionsDropdownClosed')"
+    class="nav-item__options"
+  >
     <template #button-content>
       <OptionsButtonIcon
         :title="$t('tooltips.navigationItemOptionsButton')"
@@ -25,7 +30,7 @@ defineProps({
         class="nav-item__options__menu__button"
         v-for="option in options"
         :key="option.name"
-        @click="option.action"
+        @click="option.action()"
       >
         <component :is="option.icon" :title="option.name" />
         <span>{{ option.name }}</span>
@@ -54,7 +59,7 @@ defineProps({
     border: none;
     justify-self: stretch;
   }
-  :deep(.base-dropdown__button) {
+  :deep(.base-dropdown--absolute__button) {
     justify-content: center;
     color: var(--color-base-30);
     border-radius: 3px;
@@ -63,11 +68,15 @@ defineProps({
       color: var(--color-base-10);
       background-color: var(--color-base-60);
     }
+    &.button--active {
+      color: var(--color-base-10);
+      background-color: var(--color-base-60);
+    }
     &:active {
       transform: scale(0.95);
     }
   }
-  :deep(.base-dropdown__menu) {
+  :deep(.base-dropdown--absolute__menu) {
     position: fixed;
     width: fit-content;
     align-items: stretch;
