@@ -10,7 +10,7 @@ export function getNoteOptions(noteId: string): NavigationItemOption[] {
       name: "Rename",
       icon: NoteIcon,
       action: () => {
-        eventStore.openCreateAndRenameItemDialog("rename-note", noteId);
+        eventStore.openRenameItemDialog("rename-note", noteId);
       },
     },
     {

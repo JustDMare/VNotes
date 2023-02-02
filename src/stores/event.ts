@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 export interface CreateAndRenameItemDialogEvent {
   isOpen: boolean;
   type: "create-folder" | "rename-folder" | "create-note" | "rename-note" | null;
-  renamedFolderId: string | null;
+  renamedItemId: string | null;
   parentFolderId: string | null;
 }
 
@@ -13,22 +13,30 @@ export const useEventStore = defineStore("event", {
     createAndRenameItemDialogEvent: {
       isOpen: false,
       type: null,
-      renamedFolderId: null,
+      renamedItemId: null,
       parentFolderId: null,
     } as CreateAndRenameItemDialogEvent,
   }),
   getters: {},
   actions: {
-    openCreateAndRenameItemDialog(
+    openCreateItemDialog(
       type: NonNullable<CreateAndRenameItemDialogEvent["type"]>,
-      parentFolderId: string | null = null,
-      renamedFolderId: string | null = null
+      parentFolderId: string | null = null
     ) {
       Object.assign(this.createAndRenameItemDialogEvent, {
         isOpen: true,
         type,
         parentFolderId,
-        renamedFolderId,
+      });
+    },
+    openRenameItemDialog(
+      type: NonNullable<CreateAndRenameItemDialogEvent["type"]>,
+      renamedItemId: string
+    ) {
+      Object.assign(this.createAndRenameItemDialogEvent, {
+        isOpen: true,
+        type,
+        renamedItemId,
       });
     },
     closeCreateAndRenameItemDialog() {
@@ -36,7 +44,7 @@ export const useEventStore = defineStore("event", {
         isOpen: false,
         type: null,
         parentFolderId: null,
-        renamedFolderId: null,
+        renamedItemId: null,
       });
     },
   },

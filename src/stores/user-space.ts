@@ -2,6 +2,7 @@ import { useEditorStore } from "@/stores/editor";
 import { defineStore } from "pinia";
 import type { UserSpace } from "vnotes-types";
 import { useAuth0 } from "@auth0/auth0-vue";
+import { i18n } from "@/i18n/i18n.plugin";
 
 export const useUserSpaceStore = defineStore("userSpace", {
   state: () => ({
@@ -18,7 +19,9 @@ export const useUserSpaceStore = defineStore("userSpace", {
     //TODO: Error Handling and Documentation
     async fetchAllUserSpaceContent(): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();
-      fetch("http://localhost:3030/user-space", {
+      const locale = i18n.global.locale.value;
+      console.log(locale);
+      fetch(`http://localhost:3030/user-space/${locale}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -91,11 +94,10 @@ export const useUserSpaceStore = defineStore("userSpace", {
         .then((data) =>
           data
             .json()
-            .then(async (json) => {
+            .then(async () => {
               await this.fetchAllUserSpaceContent().catch((error) => {
                 console.log(error);
               });
-              this.editorStore.fetchNote(json.note._id);
             })
             .catch((error) => {
               console.log(error);
@@ -146,11 +148,10 @@ export const useUserSpaceStore = defineStore("userSpace", {
         .then((data) =>
           data
             .json()
-            .then(async (json) => {
+            .then(async () => {
               await this.fetchAllUserSpaceContent().catch((error) => {
                 console.log(error);
               });
-              this.editorStore.fetchNote(json.note._id);
             })
             .catch((error) => {
               console.log(error);

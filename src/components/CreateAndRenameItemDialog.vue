@@ -43,25 +43,30 @@ function closeDialog() {
   eventStore.closeCreateAndRenameItemDialog();
   inputText.value = "";
 }
-//TODO: Add title to the buttons and input and translations for the userDropdown
-//TODO: Check stylings
-// Add the possibility to rename folders and notes
-//Add the possibility to create folders and notes under a note
 
 function handlePressedMainButton() {
   if (isInputEmpty.value) {
     return;
   }
-  if (dialogEventParams.value.type === "create-folder") {
-    userSpaceStore.createFolder(inputText.value, dialogEventParams.value.parentFolderId);
-  } else if (dialogEventParams.value.type === "create-note") {
-    userSpaceStore.createNote(inputText.value, dialogEventParams.value.parentFolderId);
+  switch (dialogEventParams.value.type) {
+    case "create-folder":
+      userSpaceStore.createFolder(inputText.value, dialogEventParams.value.parentFolderId);
+      break;
+    case "create-note":
+      userSpaceStore.createNote(inputText.value, dialogEventParams.value.parentFolderId);
+      break;
+    case "rename-folder":
+      if (dialogEventParams.value.renamedItemId) {
+        console.log(dialogEventParams.value.renamedItemId, inputText.value);
+        userSpaceStore.renameFolder(dialogEventParams.value.renamedItemId, inputText.value);
+      }
+      break;
+    case "rename-note":
+      if (dialogEventParams.value.renamedItemId) {
+        userSpaceStore.renameNote(dialogEventParams.value.renamedItemId, inputText.value);
+      }
+      break;
   }
-  //  else if (dialogEventParams.value.type === "rename-folder") {
-  //   userSpaceStore.renameFolder(dialogEventParams.value.folderId, inputText.value);
-  // } else if (dialogEventParams.value.type === "rename-note") {
-  //   userSpaceStore.renameNote(dialogEventParams.value.noteId, inputText.value);
-  // }
   closeDialog();
 }
 </script>

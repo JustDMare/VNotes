@@ -10,21 +10,21 @@ export function getFolderOptions(folderId: string): NavigationItemOption[] {
       name: "New sub-folder",
       icon: NoteIcon,
       action: () => {
-        eventStore.openCreateAndRenameItemDialog("create-folder", folderId);
+        eventStore.openCreateItemDialog("create-folder", folderId);
       },
     },
     {
       name: "New note",
       icon: NoteIcon,
       action: () => {
-        eventStore.openCreateAndRenameItemDialog("create-note", folderId);
+        eventStore.openCreateItemDialog("create-note", folderId);
       },
     },
     {
       name: "Rename",
       icon: NoteIcon,
       action: () => {
-        eventStore.openCreateAndRenameItemDialog("rename-folder", folderId);
+        eventStore.openRenameItemDialog("rename-folder", folderId);
       },
     },
     {

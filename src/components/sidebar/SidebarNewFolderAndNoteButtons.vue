@@ -5,10 +5,10 @@ import { useEventStore } from "@/stores/event";
 const eventStore = useEventStore();
 
 function createNewNote() {
-  eventStore.openCreateAndRenameItemDialog("create-note");
+  eventStore.openCreateItemDialog("create-note");
 }
 function createNewFolder() {
-  eventStore.openCreateAndRenameItemDialog("create-folder");
+  eventStore.openCreateItemDialog("create-folder");
 }
 </script>
 
