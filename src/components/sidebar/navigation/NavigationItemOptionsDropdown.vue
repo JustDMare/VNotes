@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import BaseDropdownAbsolutePosition from "@/components/base/BaseDropdownAbsolutePosition.vue";
 import { OptionsButtonIcon } from "@/components/icons";
-import type { NavigationItemOption } from "@/types";
+import type { NavigationItemOption } from "@/commands/navigation-item-options/interfaces";
 import type { PropType } from "vue";
 
 defineProps({
@@ -50,14 +50,21 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
   }
   &__menu__button {
     display: flex;
+    width: 100%;
     flex-direction: row;
     justify-content: start;
-    column-gap: 6px;
     align-items: center;
-    padding: 4px;
+    column-gap: 6px;
+    padding: 6px 1.5rem 6px 6px;
+    border-radius: 3px;
     background-color: var(--color-base-100);
     border: none;
     justify-self: stretch;
+    transition: all 0.2s ease-in;
+    &:hover {
+      background-color: var(--color-base-80);
+      color: var(--color-base-10);
+    }
   }
   :deep(.base-dropdown--absolute__button) {
     justify-content: center;
@@ -81,8 +88,7 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
     width: fit-content;
     align-items: stretch;
     justify-items: stretch;
-    padding: 8px 3rem 8px 6px;
-    row-gap: 6px;
+    padding: 6px;
     border-radius: 3px;
     background-color: var(--color-base-100);
     box-shadow: 0px 0px 22px -3px rgba(0, 0, 0, 0.2);
