@@ -40,6 +40,7 @@ function toggleContentVisibility(): void {
         @options-dropdown-closed="optionsDropdownIsOpen = false"
       />
     </div>
+    <!--TODO: Can be refactored into a component-->
     <ul class="nav__folder__content" v-if="showContents">
       <NavigationFolder
         v-for="subfolderReference in folderReference.content.folders"

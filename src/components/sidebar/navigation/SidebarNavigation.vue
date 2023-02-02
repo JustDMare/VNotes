@@ -12,6 +12,7 @@ const sidebarContent = computed(() => {
 
 <template>
   <nav>
+    <!--TODO: Can be refactored into a component-->
     <ul class="nav">
       <NavigationFolder
         v-for="folderReference in sidebarContent.folders"
