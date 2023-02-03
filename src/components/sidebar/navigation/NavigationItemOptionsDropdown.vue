@@ -43,6 +43,8 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
 .nav-item__options {
   width: 20px;
   height: 20px;
+  justify-self: end;
+  margin-right: 2px;
 
   &__icon {
     height: var(--nav-icon-size);

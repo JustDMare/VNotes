@@ -20,7 +20,6 @@ export const useUserSpaceStore = defineStore("userSpace", {
     async fetchAllUserSpaceContent(): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();
       const locale = i18n.global.locale.value;
-      console.log(locale);
       fetch(`http://localhost:3030/user-space/${locale}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
