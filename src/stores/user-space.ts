@@ -134,58 +134,5 @@ export const useUserSpaceStore = defineStore("userSpace", {
           console.log(error);
         });
     },
-    async deleteFolder(folderId: string): Promise<void> {
-      const accessToken = await this.auth0.getAccessTokenSilently();
-      fetch(`http://localhost:3030/folders/delete/${folderId}`, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((data) =>
-          data
-            .json()
-            .then(async () => {
-              await this.fetchAllUserSpaceContent().catch((error) => {
-                console.log(error);
-              });
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-        )
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    async deleteNote(noteId: string): Promise<void> {
-      const accessToken = await this.auth0.getAccessTokenSilently();
-      fetch(`http://localhost:3030/notes/delete/${noteId}`, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((data) =>
-          data
-            .json()
-            .then(async (json) => {
-              await this.fetchAllUserSpaceContent().catch((error) => {
-                console.log(error);
-              });
-              this.editorStore.fetchNote(json.note._id);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-        )
-        .catch((error) => {
-          console.log(error);
-        });
-    },
   },
 });
