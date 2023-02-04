@@ -51,11 +51,13 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
   gap: 8px;
   align-items: center;
   &__text {
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 500;
     color: var(--color-base-40);
   }
 }
 .ws__header__btn {
+  font-size: 14px;
   //Could be turned into a button--primmary class
   justify-content: center;
   display: flex;
@@ -74,6 +76,9 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
   }
   &:active {
     transform: scale(0.95);
+  }
+  span {
+    font-size: inherit;
   }
 }
 @keyframes donut-spin {
