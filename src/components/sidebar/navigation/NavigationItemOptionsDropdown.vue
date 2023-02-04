@@ -14,32 +14,46 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
 </script>
 
 <template>
-  <BaseDropdownAbsolutePosition
-    @dropdown-opened="$emit('optionsDropdownOpened')"
-    @dropdown-closed="$emit('optionsDropdownClosed')"
-    class="nav-item__options"
-  >
-    <template #button-content>
-      <OptionsButtonIcon
-        :title="$t('tooltips.navigationItemOptionsButton')"
-        class="nav-item__options__icon"
-      />
-    </template>
-    <template #menu>
-      <button
-        class="nav-item__options__menu__button"
-        v-for="option in options"
-        :key="option.name"
-        @click="option.action()"
-      >
-        <component :is="option.icon" :title="option.name" />
-        <span>{{ option.name }}</span>
-      </button>
-    </template>
-  </BaseDropdownAbsolutePosition>
+  <Transition name="fade">
+    <BaseDropdownAbsolutePosition
+      @dropdown-opened="$emit('optionsDropdownOpened')"
+      @dropdown-closed="$emit('optionsDropdownClosed')"
+      class="nav-item__options"
+    >
+      <template #button-content>
+        <OptionsButtonIcon
+          :title="$t('tooltips.navigationItemOptionsButton')"
+          class="nav-item__options__icon"
+        />
+      </template>
+      <template #menu="{ closeOnClick }">
+        <button
+          class="nav-item__options__menu__button"
+          v-for="option in options"
+          :key="option.name"
+          @click="
+            option.action();
+            closeOnClick();
+          "
+        >
+          <component :is="option.icon" :title="option.name" />
+          <span>{{ option.name }}</span>
+        </button>
+      </template>
+    </BaseDropdownAbsolutePosition>
+  </Transition>
 </template>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease-in;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .nav-item__options {
   width: 20px;
   height: 20px;

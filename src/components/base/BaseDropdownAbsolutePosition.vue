@@ -63,7 +63,7 @@ function handleClickOutside(event: MouseEvent) {
       <slot name="button-content"></slot>
     </button>
     <div class="base-dropdown--absolute__menu" ref="dropdownMenu" v-if="showDropdown">
-      <slot name="menu"></slot>
+      <slot name="menu" :closeOnClick="toggleDropdown"></slot>
     </div>
   </div>
 </template>
