@@ -89,6 +89,7 @@ const sidebarContent = computed(() => {
   .nav__icon {
     width: var(--nav-icon-size);
     height: var(--nav-icon-size);
+    align-self: center;
 
     &--chevron {
       grid-column: 1;
