@@ -12,7 +12,7 @@ function login() {
 
 <template>
   <div>
-    <button @click="login">Login</button>
+    <button @click="login">{{ $t("auth.login") }}</button>
   </div>
 </template>
 

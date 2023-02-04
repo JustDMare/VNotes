@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
 import SidebarNavigation from "./navigation/SidebarNavigation.vue";
-import UserDropdown from "./UserDropdown.vue";
+import SidebarNewFolderAndNoteButtons from "./SidebarNewFolderAndNoteButtons.vue";
+import SidebarUserDropdown from "./SidebarUserDropdown.vue";
 
 const sidebar: Ref<HTMLDivElement | null> = ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
@@ -30,7 +31,8 @@ function onMouseDown(): void {
 <template>
   <aside ref="sidebar" id="sidebar">
     <div id="sidebar-content">
-      <UserDropdown />
+      <SidebarUserDropdown />
+      <SidebarNewFolderAndNoteButtons />
       <SidebarNavigation id="sidebar-nav" />
     </div>
     <div class="resizer" ref="resizer">
@@ -42,7 +44,7 @@ function onMouseDown(): void {
 <style scoped lang="scss">
 //variables
 #sidebar {
-  --sidebar-item--padding: 8px;
+  --sidebar-item--padding: 4px;
   --sidebar-item--margin: 6px;
 }
 
@@ -56,34 +58,41 @@ function onMouseDown(): void {
   padding: 0;
   box-sizing: border-box;
   width: 300px;
-  min-width: 220px;
-  max-width: 480px;
+  min-width: 280px;
+  max-width: 500px;
 }
 :deep(.sidebar__item) {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-base-30);
-  border-radius: 2px;
-  padding: 2px 0 2px var(--sidebar-item--padding);
+  display: grid;
+  grid-template-columns: 9fr 24px;
+  border-radius: 3px;
+  padding: 2px 0 2px 0;
   margin: 0 var(--sidebar-item--margin) 0 var(--sidebar-item--margin);
   background-color: transparent;
-  border: 0;
-  text-align: start;
+  color: var(--color-base-30);
   transition: all 0.2s ease-in;
   &:hover {
     background-color: var(--color-base-80);
     color: var(--color-base-10);
   }
 }
+:deep(.sidebar__item--highlight) {
+  background-color: var(--color-base-80);
+  color: var(--color-base-10);
+}
+
 #sidebar-content {
   display: flex;
   flex-direction: column;
   width: 100%;
-  // overflow-y: auto;
+  height: 100%;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 #sidebar-nav {
   width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  border-top: 1px solid var(--color-base-80);
 }
 .resizer {
   flex-basis: 1px;

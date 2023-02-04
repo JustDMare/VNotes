@@ -15,7 +15,7 @@ defineExpose({ blockContentEditable });
     :block="block"
     tag="p"
     ref="blockContentEditable"
-    class="block__content--text note-editor__content-editable"
+    class="block__content--text"
   ></ContentEditableComponent>
 </template>
 <style lang="scss"></style>

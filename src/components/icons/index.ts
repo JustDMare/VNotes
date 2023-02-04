@@ -10,3 +10,7 @@ export { default as HeadingMediumIcon } from "./HeadingMediumIcon.vue";
 export { default as HeadingSmallIcon } from "./HeadingSmallIcon.vue";
 export { default as CheckboxIcon } from "./CheckboxIcon.vue";
 export { default as TrashIcon } from "./TrashIcon.vue";
+export { default as NewNoteIcon } from "./NewNoteIcon.vue";
+export { default as NewFolderIcon } from "./NewFolderIcon.vue";
+export { default as CrossIcon } from "./CrossIcon.vue";
+export { default as OptionsButtonIcon } from "./OptionsButtonIcon.vue";

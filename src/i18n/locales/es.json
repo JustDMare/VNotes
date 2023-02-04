@@ -4,15 +4,16 @@
     "blockPlaceholder": "Escribe '/' para acceder a los comandos"
   },
   "header": {
-    "lastSaved": "Ultima vez guardado: {date}",
-    "saveChanges": "Guardar cambios"
+    "lastSaved": "Último guardado: {date}",
+    "saveChanges": "Guardar"
   },
-  "tooltips": {
-    "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S",
-    "block": {
-      "gripButton": "Mantener pulsado y arrastrar para mover el bloque",
-      "addBlockButton": "Añadir nuevo bloque debajo"
-    }
+  "sidebar": {
+    "newFolderButton": "Nueva carpeta",
+    "newNoteButton": "Nueva nota"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "logout": "Salir de sesión"
   },
   "commandPalette": {
     "convertBlockType": {
@@ -44,5 +45,47 @@
       }
     },
     "noCommands": "No se han encontrado comandos"
+  },
+  "navigationItemOptions": {
+    "rename": "Renombrar",
+    "delete": "Eliminar",
+    "newNote": "Nueva nota",
+    "newFolder": "Nueva carpeta"
+  },
+  "createAndRenameItemDialog": {
+    "create-folder": {
+      "title": "Crear nueva carpeta",
+      "inputPlaceholder": "Nombre de la carpeta",
+      "mainButtonText": "Crear carpeta"
+    },
+    "rename-folder": {
+      "title": "Renombrar carpeta",
+      "inputPlaceholder": "Nombre de la carpeta",
+      "mainButtonText": "Renombrar carpeta"
+    },
+    "create-note": {
+      "title": "Crear nueva nota",
+      "inputPlaceholder": "Nombre de la nota",
+      "mainButtonText": "Crear nota"
+    },
+    "rename-note": {
+      "title": "Renombrar nota",
+      "inputPlaceholder": "Nombre de la nota",
+      "mainButtonText": "Renombrar nota"
+    }
+  },
+  "tooltips": {
+    "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S",
+    "block": {
+      "gripButton": "Mantener pulsado y arrastrar para mover el bloque",
+      "addBlockButton": "Añadir nuevo bloque debajo"
+    },
+    "userDropdownButton": "Pulsar para acceder al menú de opciones de usuario",
+    "newFolderButton": "Pulsar para crear una nueva carpeta en raíz",
+    "newNoteButton": "Pulsar para crear una nueva nota en raíz",
+    "navigationItemOptionsButton": "Pulsar para acceder a las opciones de este elemento"
+  },
+  "altText": {
+    "userDropdownProfilePicture": "Imagen de perfil del usuario"
   }
 }

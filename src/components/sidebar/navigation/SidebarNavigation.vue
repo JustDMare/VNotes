@@ -12,6 +12,7 @@ const sidebarContent = computed(() => {
 
 <template>
   <nav>
+    <!--TODO: Can be refactored into a component-->
     <ul class="nav">
       <NavigationFolder
         v-for="folderReference in sidebarContent.folders"
@@ -33,7 +34,9 @@ const sidebarContent = computed(() => {
   --nav-icon-size: 1rem;
 }
 .nav {
-  padding-top: 0.5rem;
+  list-style: none;
+
+  padding: 0.5rem 8px 0 8px;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -46,9 +49,8 @@ const sidebarContent = computed(() => {
     display: flex;
     flex-direction: column;
     row-gap: 2px;
-    cursor: pointer;
   }
-  &,
+
   .nav__folder__content {
     list-style: none;
     padding-inline-start: 0;
@@ -59,6 +61,15 @@ const sidebarContent = computed(() => {
     column-gap: 2px;
     text-decoration: none;
     line-height: 1.3;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: inherit;
+    padding: 1px 0 1px var(--sidebar-item--padding);
+    border: 0;
+    background-color: transparent;
+    text-align: start;
+    cursor: pointer;
+
     &__text,
     &__content-number {
       padding: 0 6px;
@@ -78,6 +89,7 @@ const sidebarContent = computed(() => {
   .nav__icon {
     width: var(--nav-icon-size);
     height: var(--nav-icon-size);
+    align-self: center;
 
     &--chevron {
       grid-column: 1;

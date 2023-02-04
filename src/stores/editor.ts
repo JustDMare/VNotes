@@ -38,7 +38,7 @@ export const useEditorStore = defineStore("editor", {
       })
         .then((data) => data.json())
         .then((json) => {
-          this.noteInEditor = json.note;
+          this.setNoteInEditor(json.note);
         })
         .catch((error) => {
           this.noteInEditor = null;
@@ -69,16 +69,7 @@ export const useEditorStore = defineStore("editor", {
         .then((json) => {
           const userSpaceStore = useUserSpaceStore();
           userSpaceStore.fetchAllUserSpaceContent();
-          if (!this.noteInEditor) {
-            this.noteInEditor = json.note;
-          } else {
-            this.noteInEditor._id = json.note._id;
-            this.noteInEditor.parentId = json.note.parentId;
-            this.noteInEditor.content = json.note.content;
-            this.noteInEditor.title = json.note.title;
-            this.noteInEditor.createdTime = json.note.createdTime;
-            this.noteInEditor.lastUpdatedTime = json.note.lastUpdatedTime;
-          }
+          this.setNoteInEditor(json.note);
         })
         .catch((error) => console.log(error));
       setTimeout(() => {
@@ -185,6 +176,18 @@ export const useEditorStore = defineStore("editor", {
       }
       const item = this.noteInEditor.content.splice(from, 1)[0];
       this.noteInEditor.content.splice(to, 0, item);
+    },
+    setNoteInEditor(note: Note): void {
+      if (!this.noteInEditor) {
+        this.noteInEditor = note;
+      } else {
+        this.noteInEditor._id = note._id;
+        this.noteInEditor.parentId = note.parentId;
+        this.noteInEditor.content = note.content;
+        this.noteInEditor.title = note.title;
+        this.noteInEditor.createdTime = note.createdTime;
+        this.noteInEditor.lastUpdatedTime = note.lastUpdatedTime;
+      }
     },
   },
 });

@@ -2,6 +2,7 @@
 import { SidebarComponent } from "@/components/sidebar";
 import { NoteWorkspace } from "@/components/editor";
 import CommandPalette from "@/components/editor/command-palette/CommandPalette.vue";
+import CreateAndRenameItemDialog from "@/components/CreateAndRenameItemDialog.vue";
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import CommandPalette from "@/components/editor/command-palette/CommandPalette.v
     <SidebarComponent id="sidebar" />
     <NoteWorkspace id="workspace" />
     <CommandPalette />
+    <CreateAndRenameItemDialog />
   </div>
 </template>
 

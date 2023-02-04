@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import getCommandList from "@/commands/command-list";
-import type { Command } from "@/commands/interfaces";
+import getCommandList from "@/commands/command-palette/command-list";
+import type { PaletteCommand } from "@/commands/command-palette/interfaces";
 import { useEditorStore } from "@/stores/editor";
 import { computed, ref, shallowRef, watch } from "vue";
 import { matchSorter } from "match-sorter";
@@ -12,14 +12,14 @@ const props = defineProps({
   showCommandPalette: { type: Boolean, required: true },
 });
 
-const commands = shallowRef<Command[]>(getCommandList());
+const commands = shallowRef<PaletteCommand[]>(getCommandList());
 const blockContentBeforeCommand = ref("");
 const searchTerm = ref("");
 const highlightedCommandIndex = ref(0);
 
 //TODO: Bug: If the new type of block is the same as the previous one, doesn't delete the
 //search term. It should delete it. (Add to testing findings?)
-function executeCommand(command: Command) {
+function executeCommand(command: PaletteCommand) {
   command.execute();
   if (editorStore.blockOpeningCommandPalette) {
     editorStore.blockOpeningCommandPalette.content = blockContentBeforeCommand.value;

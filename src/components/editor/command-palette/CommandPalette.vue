@@ -98,7 +98,7 @@ watch(
   <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette">
     <CommandList
       @commandListChanged="recalculatePosition"
-      :showCommandPalette="showCommandPalette"
+      :show-command-palette="showCommandPalette"
     />
   </dialog>
 </template>

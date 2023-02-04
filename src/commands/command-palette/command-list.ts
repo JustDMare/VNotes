@@ -1,4 +1,4 @@
-import type { Command } from "./interfaces";
+import type { PaletteCommand } from "../command-palette/interfaces";
 import {
   CheckboxIcon,
   HeadingBigIcon,
@@ -8,16 +8,16 @@ import {
   TrashIcon,
 } from "@/components/icons";
 import { i18n } from "@/i18n/i18n.plugin";
-import convertBlockTypeCommand from "./convert-block-type";
-import deleteBlockCommand from "./delete-block";
+import convertBlockTypeCommand from "../command-palette/convert-block-type";
+import deleteBlockCommand from "../command-palette/delete-block";
 
 //TODO: Document this
-function getCommandList(): Command[] {
+function getCommandList(): PaletteCommand[] {
   const allCommands = getConvertBlockTypeCommands().concat(getEditorCommands());
   return allCommands;
 }
 
-function getConvertBlockTypeCommands(): Command[] {
+function getConvertBlockTypeCommands(): PaletteCommand[] {
   const t = i18n.global.t;
   return [
     {
@@ -58,7 +58,7 @@ function getConvertBlockTypeCommands(): Command[] {
   ];
 }
 
-function getEditorCommands(): Command[] {
+function getEditorCommands(): PaletteCommand[] {
   const t = i18n.global.t;
   return [
     {

@@ -1,9 +1,7 @@
 import type { Component } from "vue";
 
-export interface Command {
-  icon: Component;
+export interface BaseCommand {
   name: string;
+  icon: Component;
   execute: () => void;
-  description: string;
-  tag?: string;
 }
