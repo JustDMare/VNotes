@@ -29,6 +29,8 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
     <div
       @mouseover="setShowOptionsButton(true)"
       @mouseleave="setShowOptionsButton(false)"
+      @focusin="setShowOptionsButton(true)"
+      @focusout="setShowOptionsButton(false)"
       class="sidebar__item"
       :class="[
         { 'is-note-in-editor': noteReference._id === editorStore.noteInEditor?._id },
