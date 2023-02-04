@@ -34,7 +34,7 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
           class="nav-item__options__menu__button"
           v-for="option in options"
           :key="option.name"
-          @click="option.action(), closeOnClick()"
+          @click="option.execute(), closeOnClick()"
         >
           <component :is="option.icon" :title="option.name" />
           <span>{{ option.name }}</span>

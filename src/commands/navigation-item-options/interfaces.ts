@@ -1,7 +1,3 @@
-import type { Component } from "vue";
+import type { BaseCommand } from "../interfaces";
 
-export interface NavigationItemOption {
-  name: string;
-  icon: Component;
-  action: () => void;
-}
+export type NavigationItemOption = BaseCommand;

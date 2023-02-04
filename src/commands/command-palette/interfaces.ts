@@ -1,9 +1,6 @@
-import type { Component } from "vue";
+import type { BaseCommand } from "../interfaces";
 
-export interface PaletteCommand {
-  icon: Component;
-  name: string;
-  execute: () => void;
+export interface PaletteCommand extends BaseCommand {
   description: string;
   tag?: string;
 }

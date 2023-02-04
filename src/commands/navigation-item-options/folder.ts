@@ -11,28 +11,28 @@ export function getFolderOptions(folderId: string): NavigationItemOption[] {
     {
       name: t("navigationItemOptions.newFolder"),
       icon: NewFolderIcon,
-      action: () => {
+      execute: () => {
         eventStore.openCreateItemDialog("create-folder", folderId);
       },
     },
     {
       name: t("navigationItemOptions.newNote"),
       icon: NewNoteIcon,
-      action: () => {
+      execute: () => {
         eventStore.openCreateItemDialog("create-note", folderId);
       },
     },
     {
       name: t("navigationItemOptions.rename"),
       icon: RenameIcon,
-      action: () => {
+      execute: () => {
         eventStore.openRenameItemDialog("rename-folder", folderId);
       },
     },
     {
       name: t("navigationItemOptions.delete"),
       icon: TrashIcon,
-      action: () => {
+      execute: () => {
         console.log("Delete");
       },
     },

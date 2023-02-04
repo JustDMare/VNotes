@@ -57,7 +57,6 @@ function handlePressedMainButton() {
       break;
     case "rename-folder":
       if (dialogEventParams.value.renamedItemId) {
-        console.log(dialogEventParams.value.renamedItemId, inputText.value);
         userSpaceStore.renameFolder(dialogEventParams.value.renamedItemId, inputText.value);
       }
       break;

@@ -11,14 +11,14 @@ export function getNoteOptions(noteId: string): NavigationItemOption[] {
     {
       name: t("navigationItemOptions.rename"),
       icon: RenameIcon,
-      action: () => {
+      execute: () => {
         eventStore.openRenameItemDialog("rename-note", noteId);
       },
     },
     {
       name: t("navigationItemOptions.delete"),
       icon: TrashIcon,
-      action: () => {
+      execute: () => {
         console.log("Delete");
       },
     },
