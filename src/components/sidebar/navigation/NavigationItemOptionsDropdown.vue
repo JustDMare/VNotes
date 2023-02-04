@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-import BaseDropdownAbsolutePosition from "@/components/base/BaseDropdownAbsolutePosition.vue";
+import BaseDropdown from "@/components/base/BaseDropdown.vue";
 import { OptionsButtonIcon } from "@/components/icons";
 import type { NavigationItemOption } from "@/commands/navigation-item-options/interfaces";
 import type { PropType } from "vue";
+
+const MENU_MARGIN_FROM_BUTTON = 8;
+const MENU_LEFT_DISPLACEMENT = 0.25;
 
 defineProps({
   options: {
@@ -15,10 +18,12 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
 
 <template>
   <Transition name="fade">
-    <BaseDropdownAbsolutePosition
+    <BaseDropdown
       @dropdown-opened="$emit('optionsDropdownOpened')"
       @dropdown-closed="$emit('optionsDropdownClosed')"
       class="nav-item__options"
+      :menu-margin-from-button-in-px="MENU_MARGIN_FROM_BUTTON"
+      :menu-percentage-left-alignment="MENU_LEFT_DISPLACEMENT"
     >
       <template #button-content>
         <OptionsButtonIcon
@@ -31,29 +36,17 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
           class="nav-item__options__menu__button"
           v-for="option in options"
           :key="option.name"
-          @click="
-            option.action();
-            closeOnClick();
-          "
+          @click="option.action(), closeOnClick()"
         >
           <component :is="option.icon" :title="option.name" />
           <span>{{ option.name }}</span>
         </button>
       </template>
-    </BaseDropdownAbsolutePosition>
+    </BaseDropdown>
   </Transition>
 </template>
 
 <style lang="scss" scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease-in;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 .nav-item__options {
   width: 20px;
   height: 20px;
@@ -82,32 +75,41 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
       color: var(--color-base-10);
     }
   }
-  :deep(.base-dropdown--absolute__button) {
-    justify-content: center;
-    color: var(--color-base-30);
-    border-radius: 3px;
-    transition: all 0.2s ease-in;
-    &:hover {
-      color: var(--color-base-10);
-      background-color: var(--color-base-60);
-    }
-    &.button--active {
-      color: var(--color-base-10);
-      background-color: var(--color-base-60);
-    }
-    &:active {
-      transform: scale(0.95);
-    }
+}
+:deep(.base-dropdown__button) {
+  justify-content: center;
+  color: var(--color-base-30);
+  border-radius: 3px;
+  transition: all 0.2s ease-in;
+  &:hover {
+    color: var(--color-base-10);
+    background-color: var(--color-base-60);
   }
-  :deep(.base-dropdown--absolute__menu) {
-    position: fixed;
-    width: fit-content;
-    align-items: stretch;
-    justify-items: stretch;
-    padding: 6px;
-    border-radius: 3px;
-    background-color: var(--color-base-100);
-    box-shadow: 0px 0px 22px -3px rgba(0, 0, 0, 0.2);
+  &.button--active {
+    color: var(--color-base-10);
+    background-color: var(--color-base-60);
   }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+:deep(.base-dropdown__menu) {
+  position: fixed;
+  width: fit-content;
+  align-items: stretch;
+  justify-items: stretch;
+  padding: 6px;
+  border-radius: 3px;
+  background-color: var(--color-base-100);
+  box-shadow: 0px 0px 22px -3px rgba(0, 0, 0, 0.2);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease-in;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

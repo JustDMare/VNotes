@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useAuth0 } from "@auth0/auth0-vue";
 import { computed } from "vue";
-import BaseDropdownRelativePosition from "../base/BaseDropdownRelativePosition.vue";
+import BaseDropdown from "../base/BaseDropdown.vue";
 
 const auth0 = useAuth0();
 
@@ -13,7 +13,7 @@ const authUser = computed(() => auth0.user.value);
 </script>
 
 <template>
-  <BaseDropdownRelativePosition class="user-dropdown" v-if="authUser">
+  <BaseDropdown class="user-dropdown" v-if="authUser">
     <template #button-content>
       <img
         v-show="authUser.picture"
@@ -29,7 +29,7 @@ const authUser = computed(() => auth0.user.value);
         {{ $t("auth.logout") }}
       </button>
     </template>
-  </BaseDropdownRelativePosition>
+  </BaseDropdown>
 </template>
 
 <style lang="scss" scoped>
@@ -63,7 +63,7 @@ const authUser = computed(() => auth0.user.value);
     }
   }
 
-  :deep(.base-dropdown--relative__button) {
+  :deep(.base-dropdown__button) {
     height: 3.5rem;
     padding: 8px 16px;
     gap: 12px;
@@ -74,7 +74,7 @@ const authUser = computed(() => auth0.user.value);
     }
   }
 
-  :deep(.base-dropdown--relative__menu) {
+  :deep(.base-dropdown__menu) {
     width: 100%;
     border-bottom: 1px solid var(--color-base-80);
     box-shadow: 0px 12px 12px 0px rgba(0, 0, 0, 0.2);

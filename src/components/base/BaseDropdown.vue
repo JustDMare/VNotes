@@ -1,14 +1,21 @@
 <script lang="ts" setup>
 import { nextTick, ref } from "vue";
 
-const MENU_MARGIN_FROM_BUTTON = 8;
-const MENU_LEFT_DISPLACEMENT = 1 / 4;
-
 const showDropdown = ref(false);
 const dropdownMenu = ref<HTMLElement | null>(null);
 const dropdownButton = ref<HTMLElement | null>(null);
 
 const emit = defineEmits(["dropdownOpened", "dropdownClosed"]);
+const props = defineProps({
+  menuMarginFromButtonInPx: {
+    type: Number,
+    default: 0,
+  },
+  menuPercentageLeftAlignment: {
+    type: Number,
+    default: 1,
+  },
+});
 
 function toggleDropdown(): void {
   showDropdown.value = !showDropdown.value;
@@ -32,11 +39,20 @@ function calculateDropdownPosition(): void {
   const dropdownMenuStyle = dropdownMenu.value.style;
 
   if (menuRect.height + buttonRect.bottom > window.innerHeight) {
-    dropdownMenuStyle.top = `${buttonRect.top - menuRect.height - MENU_MARGIN_FROM_BUTTON}px`;
+    dropdownMenuStyle.top = `${
+      buttonRect.top - menuRect.height - props.menuMarginFromButtonInPx
+    }px`;
   } else {
-    dropdownMenuStyle.top = `${buttonRect.bottom + MENU_MARGIN_FROM_BUTTON}px`;
+    dropdownMenuStyle.top = `${buttonRect.bottom + props.menuMarginFromButtonInPx}px`;
   }
-  dropdownMenuStyle.left = `${buttonRect.right - menuRect.width * MENU_LEFT_DISPLACEMENT}px`;
+  //TODO: Document that this is done like this because if its done by using the
+  //buttonRect.left, the menu will be slightly off the button and will overlap the sidebar
+  //resizer for the SidebarUserDropdown. This way, by taking the button's rightmost
+  //position (just out of the resizer) and then displacing the menu a percentage of its
+  //width, the menu will be perfectly aligned and not overlap the resizer.
+  dropdownMenuStyle.left = `${
+    buttonRect.right - menuRect.width * props.menuPercentageLeftAlignment
+  }px`;
   document.addEventListener("mousedown", handleClickOutside);
 }
 
@@ -53,23 +69,23 @@ function handleClickOutside(event: MouseEvent) {
 </script>
 
 <template>
-  <div class="base-dropdown--absolute">
+  <div class="base-dropdown">
     <button
-      class="base-dropdown--absolute__button"
+      class="base-dropdown__button"
       :class="{ 'button--active': showDropdown }"
       ref="dropdownButton"
       @click="toggleDropdown"
     >
       <slot name="button-content"></slot>
     </button>
-    <div class="base-dropdown--absolute__menu" ref="dropdownMenu" v-if="showDropdown">
+    <div class="base-dropdown__menu" ref="dropdownMenu" v-if="showDropdown">
       <slot name="menu" :closeOnClick="toggleDropdown"></slot>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.base-dropdown--absolute {
+.base-dropdown {
   display: flex;
   flex-direction: column;
   align-items: center;
