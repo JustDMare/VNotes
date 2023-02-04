@@ -46,6 +46,12 @@
     },
     "noCommands": "No se han encontrado comandos"
   },
+  "navigationItemOptions": {
+    "rename": "Renombrar",
+    "delete": "Eliminar",
+    "newNote": "Nueva nota",
+    "newFolder": "Nueva carpeta"
+  },
   "createAndRenameItemDialog": {
     "create-folder": {
       "title": "Crear nueva carpeta",

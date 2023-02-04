@@ -46,6 +46,12 @@
     },
     "noCommands": "No commands found"
   },
+  "navigationItemOptions": {
+    "rename": "Rename",
+    "delete": "Delete",
+    "newFolder": "New folder",
+    "newNote": "New note"
+  },
   "createAndRenameItemDialog": {
     "create-folder": {
       "title": "Create new folder",

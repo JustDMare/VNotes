@@ -22,14 +22,12 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
       @dropdown-opened="$emit('optionsDropdownOpened')"
       @dropdown-closed="$emit('optionsDropdownClosed')"
       class="nav-item__options"
+      :title="$t('tooltips.navigationItemOptionsButton')"
       :menu-margin-from-button-in-px="MENU_MARGIN_FROM_BUTTON"
       :menu-percentage-left-alignment="MENU_LEFT_DISPLACEMENT"
     >
       <template #button-content>
-        <OptionsButtonIcon
-          :title="$t('tooltips.navigationItemOptionsButton')"
-          class="nav-item__options__icon"
-        />
+        <OptionsButtonIcon class="nav-item__options__icon" />
       </template>
       <template #menu="{ closeOnClick }">
         <button
