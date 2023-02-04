@@ -1,7 +1,8 @@
 import { useEventStore } from "@/stores/event";
-import { NoteIcon } from "@/components/icons";
+import { NewFolderIcon, NewNoteIcon, TrashIcon } from "@/components/icons";
 import type { NavigationItemOption } from "./interfaces";
 import { i18n } from "@/i18n/i18n.plugin";
+import RenameIcon from "@/components/icons/RenameIcon.vue";
 
 export function getFolderOptions(folderId: string): NavigationItemOption[] {
   const eventStore = useEventStore();
@@ -9,28 +10,28 @@ export function getFolderOptions(folderId: string): NavigationItemOption[] {
   return [
     {
       name: t("navigationItemOptions.newFolder"),
-      icon: NoteIcon,
+      icon: NewFolderIcon,
       action: () => {
         eventStore.openCreateItemDialog("create-folder", folderId);
       },
     },
     {
       name: t("navigationItemOptions.newNote"),
-      icon: NoteIcon,
+      icon: NewNoteIcon,
       action: () => {
         eventStore.openCreateItemDialog("create-note", folderId);
       },
     },
     {
       name: t("navigationItemOptions.rename"),
-      icon: NoteIcon,
+      icon: RenameIcon,
       action: () => {
         eventStore.openRenameItemDialog("rename-folder", folderId);
       },
     },
     {
       name: t("navigationItemOptions.delete"),
-      icon: NoteIcon,
+      icon: TrashIcon,
       action: () => {
         console.log("Delete");
       },
