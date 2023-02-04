@@ -34,7 +34,9 @@ const sidebarContent = computed(() => {
   --nav-icon-size: 1rem;
 }
 .nav {
-  padding-top: 0.5rem;
+  list-style: none;
+
+  padding: 0.5rem 8px 0 8px;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -48,7 +50,7 @@ const sidebarContent = computed(() => {
     flex-direction: column;
     row-gap: 2px;
   }
-  &,
+
   .nav__folder__content {
     list-style: none;
     padding-inline-start: 0;

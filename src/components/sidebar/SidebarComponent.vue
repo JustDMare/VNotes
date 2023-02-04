@@ -44,7 +44,7 @@ function onMouseDown(): void {
 <style scoped lang="scss">
 //variables
 #sidebar {
-  --sidebar-item--padding: 8px;
+  --sidebar-item--padding: 4px;
   --sidebar-item--margin: 6px;
 }
 
