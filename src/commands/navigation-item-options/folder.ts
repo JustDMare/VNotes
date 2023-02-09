@@ -33,7 +33,7 @@ export function getFolderOptions(folderId: string): NavigationItemOption[] {
       name: t("navigationItemOptions.delete"),
       icon: TrashIcon,
       execute: () => {
-        console.log("Delete");
+        eventStore.openDeleteItemDialog("delete-folder", folderId);
       },
     },
   ];

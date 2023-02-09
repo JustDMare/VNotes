@@ -19,7 +19,7 @@ export function getNoteOptions(noteId: string): NavigationItemOption[] {
       name: t("navigationItemOptions.delete"),
       icon: TrashIcon,
       execute: () => {
-        console.log("Delete");
+        eventStore.openDeleteItemDialog("delete-note", noteId);
       },
     },
   ];
