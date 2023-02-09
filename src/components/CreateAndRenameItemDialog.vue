@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useEventStore } from "@/stores/event";
 import { useUserSpaceStore } from "@/stores/user-space";
-import { computed, nextTick, ref, watchEffect } from "vue";
+import { computed, nextTick, ref, toRef, watchEffect } from "vue";
 import BaseDialog from "./base/BaseDialog.vue";
 import { i18n } from "@/i18n/i18n.plugin";
 
@@ -10,29 +10,26 @@ const userSpaceStore = useUserSpaceStore();
 const t = ref(i18n.global.t);
 
 const inputBox = ref<HTMLInputElement | null>(null);
-const isDialogOpen = ref(false);
 const inputText = ref("");
 const dialogTitle = ref("");
 const dialogMainButtonText = ref("");
 const dialogInputPlaceholder = ref("");
 
-const dialogEventParams = computed(() => eventStore.createAndRenameItemDialogEvent);
+const dialogEvent = toRef(eventStore, "createAndRenameItemDialogEvent");
 const isInputEmpty = computed(() => inputText.value.trim() === "");
 
 watchEffect(() => {
-  if (dialogEventParams.value.isOpen) {
-    isDialogOpen.value = true;
-    dialogTitle.value = t.value(`createAndRenameItemDialog.${dialogEventParams.value.type}.title`);
+  if (dialogEvent.value.isOpen) {
+    dialogTitle.value = t.value(`createAndRenameItemDialog.${dialogEvent.value.type}.title`);
     dialogMainButtonText.value = t.value(
-      `createAndRenameItemDialog.${dialogEventParams.value.type}.mainButtonText`
+      `createAndRenameItemDialog.${dialogEvent.value.type}.mainButtonText`
     );
     dialogInputPlaceholder.value = t.value(
-      `createAndRenameItemDialog.${dialogEventParams.value.type}.inputPlaceholder`
+      `createAndRenameItemDialog.${dialogEvent.value.type}.inputPlaceholder`
     );
 
     nextTick(() => inputBox.value?.focus());
   } else {
-    isDialogOpen.value = false;
     dialogTitle.value = "";
     dialogMainButtonText.value = "";
     dialogInputPlaceholder.value = "";
@@ -48,21 +45,21 @@ function handlePressedMainButton() {
   if (isInputEmpty.value) {
     return;
   }
-  switch (dialogEventParams.value.type) {
+  switch (dialogEvent.value.type) {
     case "create-folder":
-      userSpaceStore.createFolder(inputText.value, dialogEventParams.value.parentFolderId);
+      userSpaceStore.createFolder(inputText.value, dialogEvent.value.parentFolderId);
       break;
     case "create-note":
-      userSpaceStore.createNote(inputText.value, dialogEventParams.value.parentFolderId);
+      userSpaceStore.createNote(inputText.value, dialogEvent.value.parentFolderId);
       break;
     case "rename-folder":
-      if (dialogEventParams.value.renamedItemId) {
-        userSpaceStore.renameFolder(dialogEventParams.value.renamedItemId, inputText.value);
+      if (dialogEvent.value.renamedItemId) {
+        userSpaceStore.renameFolder(dialogEvent.value.renamedItemId, inputText.value);
       }
       break;
     case "rename-note":
-      if (dialogEventParams.value.renamedItemId) {
-        userSpaceStore.renameNote(dialogEventParams.value.renamedItemId, inputText.value);
+      if (dialogEvent.value.renamedItemId) {
+        userSpaceStore.renameNote(dialogEvent.value.renamedItemId, inputText.value);
       }
       break;
   }
@@ -72,13 +69,13 @@ function handlePressedMainButton() {
 
 <template>
   <BaseDialog
-    :open="isDialogOpen"
+    :open="dialogEvent.isOpen"
     :title="dialogTitle"
     :main-button-text="dialogMainButtonText"
     @close="closeDialog"
     @pressed-main-button="handlePressedMainButton"
     :is-main-button-disabled="isInputEmpty"
-    v-show="isDialogOpen"
+    v-show="dialogEvent.isOpen"
   >
     <template #dialog-body>
       <label for="nameFolderOrNoteInput">
