@@ -67,9 +67,13 @@ function closeDialog() {
     @close="closeDialog"
   >
     <template #dialog-body>
-      <p>{{ dialogBodyText }}</p>
+      <p v-html="dialogBodyText"></p>
     </template>
   </BaseDialog>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.item-name) {
+  font-weight: 600;
+}
+</style>

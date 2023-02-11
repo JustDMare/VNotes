@@ -81,7 +81,9 @@ function pressMainButton() {
   flex-direction: column;
   justify-content: center;
   row-gap: 24px;
-  width: 350px;
+  width: 50%;
+  max-width: 500px;
+  min-width: 350px;
   padding: 8px 8px;
   background-color: var(--color-base-100);
   border-radius: 4px;
