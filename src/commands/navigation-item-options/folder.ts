@@ -4,7 +4,7 @@ import type { NavigationItemOption } from "./interfaces";
 import { i18n } from "@/i18n/i18n.plugin";
 import RenameIcon from "@/components/icons/RenameIcon.vue";
 
-export function getFolderOptions(folderId: string): NavigationItemOption[] {
+export function getFolderOptions(folderId: string, folderName: string): NavigationItemOption[] {
   const eventStore = useEventStore();
   const t = i18n.global.t;
   return [
@@ -33,7 +33,7 @@ export function getFolderOptions(folderId: string): NavigationItemOption[] {
       name: t("navigationItemOptions.delete"),
       icon: TrashIcon,
       execute: () => {
-        eventStore.openDeleteItemDialog("delete-folder", folderId);
+        eventStore.openDeleteItemDialog("delete-folder", folderId, folderName);
       },
     },
   ];

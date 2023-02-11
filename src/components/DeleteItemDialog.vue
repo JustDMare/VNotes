@@ -9,11 +9,30 @@ const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
 const t = ref(i18n.global.t);
 
+const dialogTitle = ref("");
+const dialogMainButtonText = ref("");
+const dialogBodyText = ref("");
+
 const dialogEvent = toRef(eventStore, "deleteItemDialogEvent");
 
 watchEffect(() => {
   if (dialogEvent.value.isOpen) {
-    console.log(dialogEvent.value);
+    const itemName = dialogEvent.value.deletedItemName;
+    const itemType =
+      dialogEvent.value.type === "delete-folder"
+        ? t.value("itemType.folder")
+        : t.value("itemType.note");
+
+    dialogTitle.value = t.value("deleteItemDialog.title", { itemType });
+    dialogBodyText.value =
+      dialogEvent.value.type === "delete-folder"
+        ? t.value("deleteItemDialog.bodyTextFolder", { itemName })
+        : t.value("deleteItemDialog.bodyTextNote", { itemName });
+    dialogMainButtonText.value = t.value("deleteItemDialog.mainButtonText");
+  } else {
+    dialogTitle.value = "";
+    dialogBodyText.value = "";
+    dialogMainButtonText.value = "";
   }
 });
 function handlePressedConfirmButton() {
@@ -29,6 +48,7 @@ function handlePressedConfirmButton() {
       }
       break;
   }
+  closeDialog();
 }
 
 function closeDialog() {
@@ -40,14 +60,14 @@ function closeDialog() {
   <BaseDialog
     :open="dialogEvent.isOpen"
     v-show="dialogEvent.isOpen"
-    title="Delete folder"
-    mainButtonText="Delete"
+    :title="dialogTitle"
+    :mainButtonText="dialogMainButtonText"
     :isMainButtonDisabled="false"
     @pressed-main-button="handlePressedConfirmButton"
     @close="closeDialog"
   >
     <template #dialog-body>
-      <p class="delete-item-dialog__body__text">Do you want to delete this?</p>
+      <p>{{ dialogBodyText }}</p>
     </template>
   </BaseDialog>
 </template>

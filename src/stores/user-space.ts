@@ -136,29 +136,22 @@ export const useUserSpaceStore = defineStore("userSpace", {
     },
     async deleteFolder(folderId: string): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();
-      fetch(`http://localhost:3030/folders/delete/${folderId}`, {
+      const response = await fetch(`http://localhost:3030/folders/delete/${folderId}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
-      })
-        .then((data) =>
-          data
-            .json()
-            .then(async () => {
-              await this.fetchAllUserSpaceContent().catch((error) => {
-                console.log(error);
-              });
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-        )
-        .catch((error) => {
-          console.log(error);
-        });
+      });
+      const jsonData = await response.json();
+      if (jsonData.error) {
+        console.log(jsonData.error);
+        return;
+      }
+      this.fetchAllUserSpaceContent().catch((error) => {
+        console.log(error);
+      });
     },
     async deleteNote(noteId: string): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();

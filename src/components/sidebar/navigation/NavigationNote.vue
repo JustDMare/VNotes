@@ -14,7 +14,7 @@ const props = defineProps({
   },
 });
 const editorStore = useEditorStore();
-const noteOptions = getNoteOptions(props.noteReference._id);
+const noteOptions = getNoteOptions(props.noteReference._id, props.noteReference.title);
 let optionsDropdownIsOpen = ref(false);
 let showOptionsButton = ref(false);
 

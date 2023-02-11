@@ -11,6 +11,7 @@ export interface DeleteItemDialogEvent {
   isOpen: boolean;
   type: "delete-folder" | "delete-note" | null;
   deletedItemId: string | null;
+  deletedItemName: string | null;
 }
 
 export const useEventStore = defineStore("event", {
@@ -25,6 +26,7 @@ export const useEventStore = defineStore("event", {
       isOpen: false,
       type: null,
       deletedItemId: null,
+      deletedItemName: null,
     } as DeleteItemDialogEvent,
   }),
   getters: {},
@@ -57,11 +59,16 @@ export const useEventStore = defineStore("event", {
         renamedItemId: null,
       });
     },
-    openDeleteItemDialog(type: NonNullable<DeleteItemDialogEvent["type"]>, deletedItemId: string) {
+    openDeleteItemDialog(
+      type: NonNullable<DeleteItemDialogEvent["type"]>,
+      deletedItemId: string,
+      deletedItemName: string
+    ) {
       Object.assign(this.deleteItemDialogEvent, {
         isOpen: true,
         type,
         deletedItemId,
+        deletedItemName,
       });
     },
     closeDeleteItemDialog() {
@@ -69,6 +76,7 @@ export const useEventStore = defineStore("event", {
         isOpen: false,
         type: null,
         deletedItemId: null,
+        deletedItemName: null,
       });
     },
   },

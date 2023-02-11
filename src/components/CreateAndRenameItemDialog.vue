@@ -97,7 +97,7 @@ function handlePressedMainButton() {
 .dialog__input {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-base-70);
   border-radius: 4px;
   font-size: 14px;
   &:focus {

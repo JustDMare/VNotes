@@ -74,6 +74,16 @@
       "mainButtonText": "Renombrar nota"
     }
   },
+  "itemType": {
+    "folder": "carpeta",
+    "note": "nota"
+  },
+  "deleteItemDialog": {
+    "title": "Eliminar {itemType}",
+    "mainButtonText": "Eliminar",
+    "bodyTextFolder": "¿Estás seguro de que quieres eliminar la carpeta \"{itemName}\" y todos sus contenidos?",
+    "bodyTextNote": "¿Estás seguro de que quieres eliminar la nota \"{itemName}\"?"
+  },
   "tooltips": {
     "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S",
     "block": {
