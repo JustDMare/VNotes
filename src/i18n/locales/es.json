@@ -81,8 +81,9 @@
   "deleteItemDialog": {
     "title": "Eliminar {itemType}",
     "mainButtonText": "Eliminar",
-    "bodyTextFolder": "¿Está seguro de querer eliminar <span class='item-name'>\"{itemName}\"</span>?<br/><br/>Todos sus contenidos también se eliminarán.",
-    "bodyTextNote": "¿Está seguro de querer eliminar <span class='item-name'>\"{itemName}\"</span>?"
+    "bodyTextStart": "¿Está seguro de querer eliminar ",
+    "bodyTextEnd": "?",
+    "bodyTextEndFolder": "Todos sus contenidos también se eliminarán."
   },
   "tooltips": {
     "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S",

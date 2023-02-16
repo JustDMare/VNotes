@@ -167,7 +167,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
             .then(async () => {
               if (this.editorStore.noteInEditor?._id === noteId) {
                 this.editorStore.removeNoteFromEditor();
-                this.router.push({ name: "Workspace" });
+                this.router.push({ name: "workspace" });
               } else {
                 await this.fetchAllUserSpaceContent().catch((error) => {
                   console.log(error);

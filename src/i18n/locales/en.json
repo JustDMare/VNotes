@@ -81,8 +81,9 @@
   "deleteItemDialog": {
     "title": "Delete {itemType}",
     "mainButtonText": "Delete {itemType}",
-    "bodyTextFolder": "Are you sure you want to delete <span class='item-name'>\"{itemName}\"</span>?<br/><br/>All of its contents will be deleted as well.",
-    "bodyTextNote": "Are you sure you want to delete <span class='item-name'>\"{itemName}\"</span>?"
+    "bodyTextStart": "Are you sure you want to delete ",
+    "bodyTextEnd": "?",
+    "bodyTextEndFolder": "All of its contents will be deleted as well."
   },
   "tooltips": {
     "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S",

@@ -17,17 +17,12 @@ const dialogEvent = toRef(eventStore, "deleteItemDialogEvent");
 
 watchEffect(() => {
   if (dialogEvent.value.isOpen) {
-    const itemName = dialogEvent.value.deletedItemName;
     const itemType =
       dialogEvent.value.type === "delete-folder"
         ? t.value("itemType.folder")
         : t.value("itemType.note");
 
     dialogTitle.value = t.value("deleteItemDialog.title", { itemType });
-    dialogBodyText.value =
-      dialogEvent.value.type === "delete-folder"
-        ? t.value("deleteItemDialog.bodyTextFolder", { itemName })
-        : t.value("deleteItemDialog.bodyTextNote", { itemName });
     dialogMainButtonText.value = t.value("deleteItemDialog.mainButtonText");
   } else {
     dialogTitle.value = "";
@@ -67,7 +62,15 @@ function closeDialog() {
     @close="closeDialog"
   >
     <template #dialog-body>
-      <p v-html="dialogBodyText"></p>
+      <p>
+        <span>{{ $t("deleteItemDialog.bodyTextStart") }}</span>
+        <span class="item-name">{{ dialogEvent.deletedItemName }}</span>
+        <span>{{ $t("deleteItemDialog.bodyTextEnd") }}</span>
+        <span v-if="dialogEvent.type === 'delete-folder'">
+          <br />
+          {{ $t("deleteItemDialog.bodyTextEndFolder") }}</span
+        >
+      </p>
     </template>
   </BaseDialog>
 </template>
