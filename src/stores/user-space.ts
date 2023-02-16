@@ -65,11 +65,8 @@ export const useUserSpaceStore = defineStore("userSpace", {
         .then((data) =>
           data
             .json()
-            .then(async (json) => {
-              await this.fetchAllUserSpaceContent().catch((error) => {
-                console.log(error);
-              });
-              this.editorStore.fetchNote(json.note._id);
+            .then((json) => {
+              this.router.push({ name: "editor", params: { id: json.note._id } });
             })
             .catch((error) => {
               console.log(error);
@@ -153,6 +150,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
         console.log(error);
       });
     },
+    //TODO: Go to /workspace if the deleted note is the one in the editor
     async deleteNote(noteId: string): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();
       fetch(`http://localhost:3030/notes/delete/${noteId}`, {
@@ -167,9 +165,14 @@ export const useUserSpaceStore = defineStore("userSpace", {
           data
             .json()
             .then(async () => {
-              await this.fetchAllUserSpaceContent().catch((error) => {
-                console.log(error);
-              });
+              if (this.editorStore.noteInEditor?._id === noteId) {
+                this.editorStore.removeNoteFromEditor();
+                this.router.push({ name: "Workspace" });
+              } else {
+                await this.fetchAllUserSpaceContent().catch((error) => {
+                  console.log(error);
+                });
+              }
             })
             .catch((error) => {
               console.log(error);

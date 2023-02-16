@@ -112,9 +112,10 @@ export const useEditorStore = defineStore("editor", {
       if (block.type === blockType) {
         return;
       }
-      //TODO: Add to testing findings that a block returned from backend (not newly
-      //created) used to break when converting to a block type that had unique properties
-      //because of the lack of `block.uniqueProperties === undefined` check
+      /*
+      TODO: Add to testing findings that a block returned from backend (not newly created)
+      used to break when converting to a block type that had unique properties because of
+      the lack of `block.uniqueProperties === undefined` check*/
       if (
         blockType === "checkbox" &&
         (!block.uniqueProperties || block.uniqueProperties.selected === undefined)
@@ -188,6 +189,9 @@ export const useEditorStore = defineStore("editor", {
         this.noteInEditor.createdTime = note.createdTime;
         this.noteInEditor.lastUpdatedTime = note.lastUpdatedTime;
       }
+    },
+    removeNoteFromEditor(): void {
+      this.noteInEditor = null;
     },
   },
 });

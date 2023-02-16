@@ -1,14 +1,26 @@
-import { createApp } from "vue";
+import { createApp, markRaw } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import { createRouter } from "./router";
 import { i18n } from "./i18n/i18n.plugin";
 import { createAuth0 } from "@auth0/auth0-vue";
+import type { Router } from "vue-router";
 
 const app = createApp(App);
 
 const router = createRouter(app);
-app.use(createPinia());
+const pinia = createPinia();
+
+declare module "pinia" {
+  export interface PiniaCustomProperties {
+    router: Router;
+  }
+}
+pinia.use(({ store }) => {
+  store.router = markRaw(router);
+});
+
+app.use(pinia);
 app.use(router);
 app.use(
   createAuth0({
