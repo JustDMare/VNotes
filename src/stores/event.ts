@@ -14,6 +14,13 @@ export interface DeleteItemDialogEvent {
   deletedItemName: string | null;
 }
 
+export interface MoveItemDialogEvent {
+  isOpen: boolean;
+  type: "move-folder" | "move-note" | null;
+  movedItemId: string | null;
+  newParentId: string | null;
+}
+
 export const useEventStore = defineStore("event", {
   state: () => ({
     createAndRenameItemDialogEvent: {
@@ -28,6 +35,12 @@ export const useEventStore = defineStore("event", {
       deletedItemId: null,
       deletedItemName: null,
     } as DeleteItemDialogEvent,
+    moveItemDialogEvent: {
+      isOpen: false,
+      type: null,
+      movedItemId: null,
+      newParentId: null,
+    } as MoveItemDialogEvent,
   }),
   getters: {},
   actions: {
@@ -77,6 +90,26 @@ export const useEventStore = defineStore("event", {
         type: null,
         deletedItemId: null,
         deletedItemName: null,
+      });
+    },
+    openMoveItemDialog(
+      type: NonNullable<DeleteItemDialogEvent["type"]>,
+      movedItemId: string,
+      newParentId: string
+    ) {
+      Object.assign(this.moveItemDialogEvent, {
+        isOpen: true,
+        type,
+        movedItemId,
+        newParentId,
+      });
+    },
+    closeMoveItemDialog() {
+      Object.assign(this.moveItemDialogEvent, {
+        isOpen: false,
+        type: null,
+        movedItemId: null,
+        newParentId: null,
       });
     },
   },
