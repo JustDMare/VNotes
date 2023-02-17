@@ -64,7 +64,7 @@ function closeDialog() {
     <template #dialog-body>
       <p>
         <span>{{ $t("deleteItemDialog.bodyTextStart") }}</span>
-        <span class="item-name">{{ dialogEvent.deletedItemName }}</span>
+        <span class="item-name">"{{ dialogEvent.deletedItemName }}"</span>
         <span>{{ $t("deleteItemDialog.bodyTextEnd") }}</span>
         <span v-if="dialogEvent.type === 'delete-folder'">
           <br />
