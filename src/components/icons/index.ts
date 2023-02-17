@@ -14,3 +14,4 @@ export { default as NewNoteIcon } from "./NewNoteIcon.vue";
 export { default as NewFolderIcon } from "./NewFolderIcon.vue";
 export { default as CrossIcon } from "./CrossIcon.vue";
 export { default as OptionsButtonIcon } from "./OptionsButtonIcon.vue";
+export { default as MoveItemIcon } from "./MoveItemIcon.vue";
