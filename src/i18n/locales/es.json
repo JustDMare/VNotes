@@ -79,7 +79,6 @@
       "mainButtonText": "Renombrar nota"
     }
   },
-
   "deleteItemDialog": {
     "title": "Eliminar {itemType}",
     "mainButtonText": "Eliminar",

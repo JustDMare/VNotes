@@ -50,7 +50,8 @@
     "rename": "Rename",
     "delete": "Delete",
     "newFolder": "New folder",
-    "newNote": "New note"
+    "newNote": "New note",
+    "moveItem": "Move to..."
   },
   "itemType": {
     "folder": "folder",
@@ -75,8 +76,7 @@
     "rename-note": {
       "title": "Rename note",
       "inputPlaceholder": "Note title",
-      "mainButtonText": "Rename note",
-      "moveItem": "Move to..."
+      "mainButtonText": "Rename note"
     }
   },
   "deleteItemDialog": {
