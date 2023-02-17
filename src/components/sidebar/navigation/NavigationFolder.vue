@@ -16,7 +16,7 @@ let showContents = ref(false);
 let optionsDropdownIsOpen = ref(false);
 let showOptionsButton = ref(false);
 
-const folderOptions = getFolderOptions(props.folderReference._id);
+const folderOptions = getFolderOptions(props.folderReference._id, props.folderReference.name);
 
 function toggleContentVisibility(): void {
   showContents.value = !showContents.value;

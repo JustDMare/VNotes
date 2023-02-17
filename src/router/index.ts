@@ -19,6 +19,10 @@ export function createRouter(app: App): Router {
         path: "/workspace",
         name: "workspace",
         component: MainView,
+        beforeEnter() {
+          const editorStore = useEditorStore();
+          editorStore.removeNoteFromEditor();
+        },
       },
       {
         path: "/workspace/:id",

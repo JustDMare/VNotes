@@ -65,11 +65,8 @@ export const useUserSpaceStore = defineStore("userSpace", {
         .then((data) =>
           data
             .json()
-            .then(async (json) => {
-              await this.fetchAllUserSpaceContent().catch((error) => {
-                console.log(error);
-              });
-              this.editorStore.fetchNote(json.note._id);
+            .then((json) => {
+              this.router.push({ name: "editor", params: { id: json.note._id } });
             })
             .catch((error) => {
               console.log(error);
@@ -125,6 +122,71 @@ export const useUserSpaceStore = defineStore("userSpace", {
                 console.log(error);
               });
               this.editorStore.fetchNote(json.note._id);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        )
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async deleteFolder(folderId: string): Promise<void> {
+      const accessToken = await this.auth0.getAccessTokenSilently();
+      const noteInEditorId = this.editorStore.noteInEditor?._id;
+      let deleteRequestParams = undefined;
+      if (noteInEditorId) {
+        deleteRequestParams = {
+          noteId: noteInEditorId,
+        };
+      }
+      const response = await fetch(
+        `http://localhost:3030/folders/delete/${folderId}?` +
+          new URLSearchParams(deleteRequestParams),
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const jsonData = await response.json();
+      if (jsonData.error) {
+        console.log(jsonData.error);
+        return;
+      }
+      if (jsonData.noteBelongsToFolder) {
+        this.router.push({ name: "workspace" });
+      } else {
+        this.fetchAllUserSpaceContent().catch((error) => {
+          console.log(error);
+        });
+      }
+    },
+    //TODO: Go to /workspace if the deleted note is the one in the editor
+    async deleteNote(noteId: string): Promise<void> {
+      const accessToken = await this.auth0.getAccessTokenSilently();
+      fetch(`http://localhost:3030/notes/delete/${noteId}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((data) =>
+          data
+            .json()
+            .then(async () => {
+              if (this.editorStore.noteInEditor?._id === noteId) {
+                this.router.push({ name: "workspace" });
+              } else {
+                await this.fetchAllUserSpaceContent().catch((error) => {
+                  console.log(error);
+                });
+              }
             })
             .catch((error) => {
               console.log(error);

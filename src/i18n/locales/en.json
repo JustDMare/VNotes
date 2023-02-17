@@ -74,6 +74,17 @@
       "mainButtonText": "Rename note"
     }
   },
+  "itemType": {
+    "folder": "folder",
+    "note": "note"
+  },
+  "deleteItemDialog": {
+    "title": "Delete {itemType}",
+    "mainButtonText": "Delete {itemType}",
+    "bodyTextStart": "Are you sure you want to delete ",
+    "bodyTextEnd": "?",
+    "bodyTextEndFolder": "All of its contents will be deleted as well."
+  },
   "tooltips": {
     "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S",
     "block": {
