@@ -52,6 +52,10 @@
     "newFolder": "New folder",
     "newNote": "New note"
   },
+  "itemType": {
+    "folder": "folder",
+    "note": "note"
+  },
   "createAndRenameItemDialog": {
     "create-folder": {
       "title": "Create new folder",
@@ -65,18 +69,15 @@
     },
     "create-note": {
       "title": "Create new note",
-      "inputPlaceholder": "Note name",
+      "inputPlaceholder": "Note title",
       "mainButtonText": "Create note"
     },
     "rename-note": {
       "title": "Rename note",
-      "inputPlaceholder": "Note name",
-      "mainButtonText": "Rename note"
+      "inputPlaceholder": "Note title",
+      "mainButtonText": "Rename note",
+      "moveItem": "Move to..."
     }
-  },
-  "itemType": {
-    "folder": "folder",
-    "note": "note"
   },
   "deleteItemDialog": {
     "title": "Delete {itemType}",
@@ -84,6 +85,13 @@
     "bodyTextStart": "Are you sure you want to delete ",
     "bodyTextEnd": "?",
     "bodyTextEndFolder": "All of its contents will be deleted as well."
+  },
+  "moveItemDialog": {
+    "title": "Move {itemType} to...",
+    "mainButtonText": "Move {itemType}",
+    "bodyTextStart": "Move ",
+    "bodyTextEnd": " to:",
+    "rootFolder": "Root folder"
   },
   "tooltips": {
     "saveButton": "Press to save changes\nor use Ctrl+S/Cmd+S",
