@@ -133,22 +133,37 @@ export const useUserSpaceStore = defineStore("userSpace", {
     },
     async deleteFolder(folderId: string): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();
-      const response = await fetch(`http://localhost:3030/folders/delete/${folderId}`, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const noteInEditorId = this.editorStore.noteInEditor?._id;
+      let deleteRequestParams = undefined;
+      if (noteInEditorId) {
+        deleteRequestParams = {
+          noteId: noteInEditorId,
+        };
+      }
+      const response = await fetch(
+        `http://localhost:3030/folders/delete/${folderId}?` +
+          new URLSearchParams(deleteRequestParams),
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       const jsonData = await response.json();
       if (jsonData.error) {
         console.log(jsonData.error);
         return;
       }
-      this.fetchAllUserSpaceContent().catch((error) => {
-        console.log(error);
-      });
+      if (jsonData.noteBelongsToFolder) {
+        this.router.push({ name: "workspace" });
+      } else {
+        this.fetchAllUserSpaceContent().catch((error) => {
+          console.log(error);
+        });
+      }
     },
     //TODO: Go to /workspace if the deleted note is the one in the editor
     async deleteNote(noteId: string): Promise<void> {
@@ -166,7 +181,6 @@ export const useUserSpaceStore = defineStore("userSpace", {
             .json()
             .then(async () => {
               if (this.editorStore.noteInEditor?._id === noteId) {
-                this.editorStore.removeNoteFromEditor();
                 this.router.push({ name: "workspace" });
               } else {
                 await this.fetchAllUserSpaceContent().catch((error) => {

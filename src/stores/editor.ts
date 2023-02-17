@@ -41,7 +41,7 @@ export const useEditorStore = defineStore("editor", {
           this.setNoteInEditor(json.note);
         })
         .catch((error) => {
-          this.noteInEditor = null;
+          this.router.push({ name: "workspace" });
           console.log(error);
         });
     },
