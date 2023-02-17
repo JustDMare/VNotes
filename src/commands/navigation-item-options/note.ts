@@ -1,5 +1,5 @@
 import { useEventStore } from "@/stores/event";
-import { TrashIcon } from "@/components/icons";
+import { MoveItemIcon, TrashIcon } from "@/components/icons";
 import type { NavigationItemOption } from "./interfaces";
 import { i18n } from "@/i18n/i18n.plugin";
 import RenameIcon from "@/components/icons/RenameIcon.vue";
@@ -13,6 +13,13 @@ export function getNoteOptions(noteId: string, noteTitle: string): NavigationIte
       icon: RenameIcon,
       execute: () => {
         eventStore.openRenameItemDialog("rename-note", noteId);
+      },
+    },
+    {
+      name: t("navigationItemOptions.moveItem"),
+      icon: MoveItemIcon,
+      execute: () => {
+        console.log("Move");
       },
     },
     {
