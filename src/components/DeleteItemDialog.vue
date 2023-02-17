@@ -57,7 +57,6 @@ function closeDialog() {
     v-show="dialogEvent.isOpen"
     :title="dialogTitle"
     :mainButtonText="dialogMainButtonText"
-    :isMainButtonDisabled="false"
     @pressed-main-button="handlePressedConfirmButton"
     @close="closeDialog"
   >

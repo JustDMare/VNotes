@@ -13,7 +13,7 @@ const authUser = computed(() => auth0.user.value);
 </script>
 
 <template>
-  <BaseDropdown :title="$t('tooltips.userDropdownButton')" class="user-dropdown" v-if="authUser">
+  <BaseDropdown class="user-dropdown" v-if="authUser" :tooltip="$t('tooltips.userDropdownButton')">
     <template #button-content>
       <img
         v-show="authUser.picture"
