@@ -18,6 +18,7 @@ export interface MoveItemDialogEvent {
   isOpen: boolean;
   type: "move-folder" | "move-note" | null;
   movedItemId: string | null;
+  movedItemName: string | null;
   newParentId: string | null;
 }
 
@@ -93,15 +94,16 @@ export const useEventStore = defineStore("event", {
       });
     },
     openMoveItemDialog(
-      type: NonNullable<DeleteItemDialogEvent["type"]>,
+      type: NonNullable<MoveItemDialogEvent["type"]>,
+
       movedItemId: string,
-      newParentId: string
+      movedItemName: string
     ) {
       Object.assign(this.moveItemDialogEvent, {
         isOpen: true,
         type,
         movedItemId,
-        newParentId,
+        movedItemName,
       });
     },
     closeMoveItemDialog() {

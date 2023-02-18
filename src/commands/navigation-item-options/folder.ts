@@ -33,7 +33,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
       name: t("navigationItemOptions.moveItem"),
       icon: MoveItemIcon,
       execute: () => {
-        console.log("Move");
+        eventStore.openMoveItemDialog("move-folder", folderId, folderName);
       },
     },
     {

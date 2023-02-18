@@ -19,7 +19,7 @@ export function getNoteOptions(noteId: string, noteTitle: string): NavigationIte
       name: t("navigationItemOptions.moveItem"),
       icon: MoveItemIcon,
       execute: () => {
-        console.log("Move");
+        eventStore.openMoveItemDialog("move-note", noteId, noteTitle);
       },
     },
     {

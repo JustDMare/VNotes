@@ -11,39 +11,34 @@ const t = ref(i18n.global.t);
 
 const dialogTitle = ref("");
 const dialogMainButtonText = ref("");
-const dialogBodyText = ref("");
 
-const dialogEvent = toRef(eventStore, "deleteItemDialogEvent");
+const dialogEvent = toRef(eventStore, "moveItemDialogEvent");
 
 watchEffect(() => {
   if (dialogEvent.value.isOpen) {
-    dialogTitle.value = "";
-    dialogBodyText.value = "";
-    dialogMainButtonText.value = "";
+    const itemType =
+      dialogEvent.value.type === "move-folder"
+        ? t.value("itemType.folder")
+        : t.value("itemType.note");
+    dialogTitle.value = t.value("moveItemDialog.title", { itemType });
+    dialogMainButtonText.value = t.value("moveItemDialog.mainButtonText");
   } else {
     dialogTitle.value = "";
-    dialogBodyText.value = "";
     dialogMainButtonText.value = "";
   }
 });
 function handlePressedConfirmButton() {
   switch (dialogEvent.value.type) {
-    case "delete-folder":
-      if (dialogEvent.value.deletedItemId) {
-        userSpaceStore.deleteFolder(dialogEvent.value.deletedItemId);
-      }
+    case "move-folder":
       break;
-    case "delete-note":
-      if (dialogEvent.value.deletedItemId) {
-        userSpaceStore.deleteNote(dialogEvent.value.deletedItemId);
-      }
+    case "move-note":
       break;
   }
   closeDialog();
 }
 
 function closeDialog() {
-  eventStore.closeDeleteItemDialog();
+  eventStore.closeMoveItemDialog();
 }
 </script>
 
@@ -56,8 +51,18 @@ function closeDialog() {
     @pressed-main-button="handlePressedConfirmButton"
     @close="closeDialog"
   >
-    <template #dialog-body> </template>
+    <template #dialog-body>
+      <p>
+        <span>{{ $t("moveItemDialog.bodyTextStart") }}</span>
+        <span class="item-name">"{{ dialogEvent.movedItemName }}"</span>
+        <span>{{ $t("moveItemDialog.bodyTextEnd") }}</span>
+      </p>
+    </template>
   </BaseDialog>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.item-name) {
+  font-weight: 600;
+}
+</style>
