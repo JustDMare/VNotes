@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { useEventStore } from "@/stores/event";
-import { useUserSpaceStore } from "@/stores/user-space";
 import { ref, toRef, watchEffect } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
-import BaseDialog from "./base/BaseDialog.vue";
+import BaseDialog from "../../base/BaseDialog.vue";
+import MoveItemDialogTargetFolderList from "./MoveItemDialogTargetFolderList.vue";
 
 const eventStore = useEventStore();
-const userSpaceStore = useUserSpaceStore();
+
 const t = ref(i18n.global.t);
 
 const dialogTitle = ref("");
@@ -57,6 +57,7 @@ function closeDialog() {
         <span class="item-name">"{{ dialogEvent.movedItemName }}"</span>
         <span>{{ $t("moveItemDialog.bodyTextEnd") }}</span>
       </p>
+      <MoveItemDialogTargetFolderList />
     </template>
   </BaseDialog>
 </template>
