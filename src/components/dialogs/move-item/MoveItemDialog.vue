@@ -39,7 +39,12 @@ function handlePressedConfirmButton() {
 }
 
 function closeDialog() {
+  selectedNewParentFolderId.value = null;
   eventStore.closeMoveItemDialog();
+}
+function handleFolderSelected(folderId: string | null) {
+  console.log("handleFolderSelected", folderId);
+  selectedNewParentFolderId.value = folderId;
 }
 </script>
 
@@ -58,7 +63,10 @@ function closeDialog() {
         <span class="item-name">"{{ dialogEvent.movedItemName }}"</span>
         <span>{{ $t("moveItemDialog.bodyTextEnd") }}</span>
       </p>
-      <MoveItemDialogTargetFolderList :selected-new-parent-folder-id="selectedNewParentFolderId" />
+      <MoveItemDialogTargetFolderList
+        :selected-new-parent-folder-id="selectedNewParentFolderId"
+        @folder-selected="handleFolderSelected"
+      />
     </template>
   </BaseDialog>
 </template>

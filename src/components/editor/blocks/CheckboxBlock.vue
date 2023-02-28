@@ -69,15 +69,15 @@ function onCheckboxChange(): void {
     -moz-appearance: none;
     background: var(--color-base-90);
     border: 1px var(--color-base-30) solid;
-
     border-radius: 3px;
     height: 1em;
     width: 1em;
     align-self: center;
     transition: all 0.25s ease-in-out;
-
     cursor: pointer;
-
+    &:hover {
+      background: var(--color-base-80);
+    }
     &:checked {
       background: var(--color-base-10) url("@/assets/icons/checked-icon.svg") no-repeat center
         center / cover;

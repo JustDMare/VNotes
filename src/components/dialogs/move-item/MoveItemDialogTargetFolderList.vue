@@ -8,6 +8,13 @@ const userSpaceStore = useUserSpaceStore();
 const sidebarContent = toRef(userSpaceStore.$state.userSpace, "content");
 
 defineProps<{ selectedNewParentFolderId: string | null }>();
+const emits = defineEmits<{
+  (e: "folder-selected", folderId: string | null): void;
+}>();
+
+function handleFolderSelected(folderId: string | null) {
+  emits("folder-selected", folderId);
+}
 </script>
 
 <template>
@@ -17,6 +24,7 @@ defineProps<{ selectedNewParentFolderId: string | null }>();
         :folder-name="$t('moveItemDialog.rootFolder')"
         :selected-new-parent-folder-id="selectedNewParentFolderId"
         :folder-id="null"
+        @folder-selected="handleFolderSelected"
       />
     </li>
     <MoveItemDialogTargetFolder
@@ -24,8 +32,20 @@ defineProps<{ selectedNewParentFolderId: string | null }>();
       :key="folder._id"
       :folder="folder"
       :selected-new-parent-folder-id="selectedNewParentFolderId"
+      @folder-selected="handleFolderSelected"
     />
   </ul>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+ul,
+:deep(ul) {
+  padding-inline-start: 0;
+}
+:deep(ul) {
+  padding-left: 1rem;
+}
+:deep(li) {
+  list-style-type: none;
+}
+</style>

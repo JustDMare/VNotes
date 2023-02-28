@@ -7,10 +7,10 @@
     >
     <path
         fill="none"
-        stroke="white"
+        stroke="black"
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="2" 
+        stroke-width="3" 
         d="M20 6L9 17l-5-5"
       />
 </svg>

@@ -2,7 +2,14 @@
 import type { Folder } from "vnotes-types";
 import MoveItemDialogTargetFolderButton from "./MoveItemDialogTargetFolderButton.vue";
 
-const props = defineProps<{ folder: Folder; selectedNewParentFolderId: string | null }>();
+defineProps<{ folder: Folder; selectedNewParentFolderId: string | null }>();
+const emits = defineEmits<{
+  (e: "folder-selected", folderId: string | null): void;
+}>();
+
+function handleFolderSelected(folderId: string | null) {
+  emits("folder-selected", folderId);
+}
 </script>
 
 <template>
@@ -11,6 +18,7 @@ const props = defineProps<{ folder: Folder; selectedNewParentFolderId: string | 
       :folder-name="folder.name"
       :folder-id="folder._id"
       :selected-new-parent-folder-id="selectedNewParentFolderId"
+      @folder-selected="handleFolderSelected"
     />
     <ul>
       <MoveItemDialogTargetFolder
@@ -18,6 +26,7 @@ const props = defineProps<{ folder: Folder; selectedNewParentFolderId: string | 
         :key="childFolder._id"
         :folder="childFolder"
         :selected-new-parent-folder-id="selectedNewParentFolderId"
+        @folder-selected="handleFolderSelected"
       />
     </ul>
   </li>
