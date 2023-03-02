@@ -29,21 +29,21 @@ function onCheckboxChange(event: Event) {
 </script>
 
 <template>
-  <label class="move-item-dialog__target-folder__button__content" :for="checkboxId"
+  <label class="move-item__target-list__target__name" :for="checkboxId"
     >{{ folderName }}
     <input
       :id="checkboxId"
       :checked="isSelected"
       @change="onCheckboxChange"
       type="checkbox"
-      class="move-item-dialog__target-folder__button__checkbox"
+      class="move-item__target-list__target__checkbox"
     />
   </label>
 </template>
 
 <style lang="scss" scoped>
-.move-item-dialog {
-  &__target-folder__button__content {
+.move-item__target-list__target {
+  &__name {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -53,7 +53,7 @@ function onCheckboxChange(event: Event) {
       background-color: var(--color-base-80);
     }
   }
-  &__target-folder__button__checkbox {
+  &__checkbox {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;

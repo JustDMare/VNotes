@@ -18,8 +18,8 @@ function handleFolderSelected(folderId: string | null) {
 </script>
 
 <template>
-  <ul>
-    <li>
+  <ul class="move-item__target-list">
+    <li class="move-item__target-list__target-item">
       <MoveItemDialogTargetFolderButton
         :folder-name="$t('moveItemDialog.rootFolder')"
         :selected-new-parent-folder-id="selectedNewParentFolderId"
@@ -38,14 +38,20 @@ function handleFolderSelected(folderId: string | null) {
 </template>
 
 <style lang="scss" scoped>
-ul,
-:deep(ul) {
-  padding-inline-start: 0;
+.move-item__target-list {
+  overflow-y: auto;
+  height: 100%;
 }
-:deep(ul) {
+.move-item__target-list,
+:deep(.move-item__target-list) {
+  padding-inline-start: 0;
+  display: flex;
+  flex-direction: column;
+}
+:deep(.move-item__target-list) {
   padding-left: 1rem;
 }
-:deep(li) {
+:deep(.move-item__target-list__target-item) {
   list-style-type: none;
 }
 </style>
