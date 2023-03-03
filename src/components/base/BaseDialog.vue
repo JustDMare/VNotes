@@ -77,10 +77,10 @@ function pressMainButton() {
   z-index: 5;
   align-self: center;
   margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  row-gap: 24px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  row-gap: 1rem;
   width: 50%;
   max-width: 500px;
   min-width: 350px;
@@ -111,6 +111,8 @@ function pressMainButton() {
   }
   &__body {
     padding: 6px;
+    display: flex;
+    flex-direction: column;
   }
   &__footer {
     display: flex;

@@ -15,6 +15,10 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  tooltip: {
+    type: String,
+    default: "",
+  },
 });
 
 function toggleDropdown(): void {
@@ -72,6 +76,7 @@ function handleClickOutside(event: MouseEvent) {
   <div class="base-dropdown">
     <button
       class="base-dropdown__button"
+      :title="tooltip"
       :class="{ 'button--active': showDropdown }"
       ref="dropdownButton"
       @click="toggleDropdown"

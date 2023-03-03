@@ -1,5 +1,5 @@
 import { useEventStore } from "@/stores/event";
-import { NewFolderIcon, NewNoteIcon, TrashIcon } from "@/components/icons";
+import { MoveItemIcon, NewFolderIcon, NewNoteIcon, TrashIcon } from "@/components/icons";
 import type { NavigationItemOption } from "./interfaces";
 import { i18n } from "@/i18n/i18n.plugin";
 import RenameIcon from "@/components/icons/RenameIcon.vue";
@@ -27,6 +27,13 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
       icon: RenameIcon,
       execute: () => {
         eventStore.openRenameItemDialog("rename-folder", folderId);
+      },
+    },
+    {
+      name: t("navigationItemOptions.moveItem"),
+      icon: MoveItemIcon,
+      execute: () => {
+        eventStore.openMoveItemDialog("move-folder", folderId, folderName);
       },
     },
     {

@@ -2,7 +2,7 @@
 import { useEventStore } from "@/stores/event";
 import { useUserSpaceStore } from "@/stores/user-space";
 import { computed, nextTick, ref, toRef, watchEffect } from "vue";
-import BaseDialog from "./base/BaseDialog.vue";
+import BaseDialog from "../base/BaseDialog.vue";
 import { i18n } from "@/i18n/i18n.plugin";
 
 const eventStore = useEventStore();

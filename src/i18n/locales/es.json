@@ -50,7 +50,12 @@
     "rename": "Renombrar",
     "delete": "Eliminar",
     "newNote": "Nueva nota",
-    "newFolder": "Nueva carpeta"
+    "newFolder": "Nueva carpeta",
+    "moveItem": "Mover a..."
+  },
+  "itemType": {
+    "folder": "carpeta",
+    "note": "nota"
   },
   "createAndRenameItemDialog": {
     "create-folder": {
@@ -74,16 +79,19 @@
       "mainButtonText": "Renombrar nota"
     }
   },
-  "itemType": {
-    "folder": "carpeta",
-    "note": "nota"
-  },
   "deleteItemDialog": {
     "title": "Eliminar {itemType}",
     "mainButtonText": "Eliminar",
     "bodyTextStart": "¿Está seguro de querer eliminar ",
     "bodyTextEnd": "?",
     "bodyTextEndFolder": "Todos sus contenidos también se eliminarán."
+  },
+  "moveItemDialog": {
+    "title": "Mover {itemType} a...",
+    "mainButtonText": "Mover {itemType}",
+    "bodyTextStart": "Mover ",
+    "bodyTextEnd": " a:",
+    "rootFolder": "Carpeta raíz"
   },
   "tooltips": {
     "saveButton": "Pulse para guardar cambios\no use Ctrl+S/Cmd+S",

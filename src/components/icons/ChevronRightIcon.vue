@@ -6,6 +6,12 @@
 export default {};
 </script>
 
+<script setup lang="ts">
+defineProps<{
+  rotateDown: boolean;
+}>();
+</script>
+
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +19,8 @@ export default {};
     height="1em"
     preserveAspectRatio="xMidYMid meet"
     viewBox="0 0 24 24"
-    class="icon"
+    class="icon__chevron"
+    :class="{ 'icon__chevron--down': rotateDown }"
   >
     <path
       fill="none"
@@ -25,3 +32,11 @@ export default {};
     />
   </svg>
 </template>
+<style lang="scss">
+.icon__chevron {
+  transition: transform 0.2s ease-in-out;
+  &--down {
+    transform: rotate(90deg);
+  }
+}
+</style>

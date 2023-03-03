@@ -2,12 +2,10 @@
 import NavigationFolder from "./NavigationFolder.vue";
 import NavigationNote from "./NavigationNote.vue";
 import { useUserSpaceStore } from "@/stores/user-space";
-import { computed } from "vue";
+import { toRef } from "vue";
 
 const userSpaceStore = useUserSpaceStore();
-const sidebarContent = computed(() => {
-  return userSpaceStore.$state.userSpace.content;
-});
+const sidebarContent = toRef(userSpaceStore.$state.userSpace, "content");
 </script>
 
 <template>

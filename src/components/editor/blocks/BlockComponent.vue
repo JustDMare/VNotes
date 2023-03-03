@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { FadeTransition } from "@/components/animations";
 import { GripIcon, PlusIcon } from "@/components/icons";
 import { getBlockComponentMap, getBlockClassMap } from "@/mappings";
 import { useEditorStore } from "@/stores/editor";
@@ -52,27 +53,32 @@ watch(
       :block="block"
       ref="blockInnerComponent"
     ></component>
+
     <div
       class="block__btn-wrapper"
       @mouseover="showButtons"
       @mouseleave="hideButtons"
       @hover="showButtons"
     >
-      <button
-        :title="$t('tooltips.block.addBlockButton')"
-        v-show="buttonsVisible"
-        class="block__btn"
-        @click="createBlockBelow"
-      >
-        <PlusIcon class="block__btn__icon" />
-      </button>
-      <button
-        :title="$t('tooltips.block.gripButton')"
-        v-show="buttonsVisible"
-        class="block__btn grip-btn"
-      >
-        <GripIcon class="block__btn__icon" />
-      </button>
+      <FadeTransition>
+        <button
+          :title="$t('tooltips.block.addBlockButton')"
+          v-show="buttonsVisible"
+          class="block__btn"
+          @click="createBlockBelow"
+        >
+          <PlusIcon class="block__btn__icon" />
+        </button>
+      </FadeTransition>
+      <FadeTransition>
+        <button
+          :title="$t('tooltips.block.gripButton')"
+          v-show="buttonsVisible"
+          class="block__btn grip-btn"
+        >
+          <GripIcon class="block__btn__icon" />
+        </button>
+      </FadeTransition>
     </div>
   </div>
 </template>

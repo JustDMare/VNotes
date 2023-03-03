@@ -38,10 +38,7 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
       :class="{ 'sidebar__item--highlight': optionsDropdownIsOpen }"
     >
       <button class="nav__item" @click="toggleContentVisibility">
-        <ChevronRightIcon
-          class="nav__icon nav__icon--chevron"
-          :class="{ 'nav__icon--chevron--down': showContents }"
-        />
+        <ChevronRightIcon class="nav__icon nav__icon--chevron" :rotate-down="showContents" />
         <FolderIcon class="nav__icon nav__icon--folder" />
         <span class="nav__item__text">{{ folderReference.name }}</span>
         <span class="nav__item__content-number">{{ folderReference.numberOfItems }}</span>
@@ -78,12 +75,6 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
     ); // 0.5px to compensate for the border
     margin-left: var(--nav-folder-content--left-margin);
     border-left: 1px solid var(--color-base-50);
-  }
-}
-.nav__icon--chevron {
-  transition: transform 0.3s;
-  &--down {
-    transform: rotate(90deg);
   }
 }
 </style>
