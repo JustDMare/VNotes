@@ -51,10 +51,6 @@ function handleFolderSelected(folderId: string) {
 </template>
 
 <style lang="scss" scoped>
-.move-item__target-list {
-  overflow-y: auto;
-  height: 100%;
-}
 .move-item__target-list,
 :deep(.move-item__target-list) {
   padding-inline-start: 0;
@@ -62,6 +58,14 @@ function handleFolderSelected(folderId: string) {
   flex-direction: column;
   gap: 4px;
 }
+.move-item__target-list {
+  overflow-y: auto;
+  height: 100%;
+  border: solid 1px var(--color-base-70);
+  border-radius: 4px;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
 :deep(.move-item__target-list) {
   padding-left: 0.5rem;
   margin-left: calc(1rem - 0.5px);

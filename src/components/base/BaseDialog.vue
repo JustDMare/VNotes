@@ -111,6 +111,8 @@ function pressMainButton() {
   }
   &__body {
     padding: 6px;
+    display: flex;
+    flex-direction: column;
   }
   &__footer {
     display: flex;

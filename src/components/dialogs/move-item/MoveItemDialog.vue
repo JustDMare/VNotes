@@ -84,6 +84,9 @@ function handleFolderSelected(folderId: string | null) {
   flex-direction: column;
   overflow-y: hidden;
 }
+:deep(.base-dialog__body) {
+  gap: 0.5rem;
+}
 :deep(.item-name) {
   font-weight: 600;
 }
