@@ -85,6 +85,7 @@ function toggleSubfolderVisibility() {
   -ms-user-select: none;
   user-select: none;
   transition: all 0.25s ease-in-out;
+  cursor: pointer;
   &:hover {
     background-color: var(--color-base-80);
   }
