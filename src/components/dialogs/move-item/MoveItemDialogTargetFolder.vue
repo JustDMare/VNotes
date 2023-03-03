@@ -1,13 +1,16 @@
 <script lang="ts" setup>
 import type { Folder } from "vnotes-types";
-import { ref, watchEffect } from "vue";
+import { ref, toRef, watchEffect } from "vue";
 import MoveItemDialogTargetFolderButton from "./MoveItemDialogTargetFolderLabel.vue";
 import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
+import { useEventStore } from "@/stores/event";
 
 const props = defineProps<{ folder: Folder; selectedNewParentFolderId: string | null }>();
 const emits = defineEmits<{
   (e: "folder-selected", folderId: string): void;
 }>();
+const eventStore = useEventStore();
+const dialogEvent = toRef(eventStore, "moveItemDialogEvent");
 
 const showSubfolders = ref(false);
 const isFolderSelected = ref(props.selectedNewParentFolderId === props.folder._id);
@@ -26,7 +29,7 @@ function toggleSubfolderVisibility() {
 </script>
 
 <template>
-  <li class="move-item__target-list__target-item">
+  <li class="move-item__target-list__target-item" v-if="dialogEvent.movedItemId !== folder._id">
     <div
       class="move-item__target-list__target"
       :class="{ 'move-item__target-list__target--selected': isFolderSelected }"
