@@ -9,6 +9,7 @@ const props = defineProps<{ folder: Folder; selectedNewParentFolderId: string | 
 const emits = defineEmits<{
   (e: "folder-selected", folderId: string): void;
 }>();
+//TODO: I should pass event data as props to avoid coupling. For now this will work
 const eventStore = useEventStore();
 const dialogEvent = toRef(eventStore, "moveItemDialogEvent");
 
@@ -17,6 +18,9 @@ const isFolderSelected = ref(props.selectedNewParentFolderId === props.folder._i
 
 watchEffect(() => {
   isFolderSelected.value = props.selectedNewParentFolderId === props.folder._id;
+  if (!dialogEvent.value.isOpen) {
+    showSubfolders.value = false;
+  }
 });
 
 function handleFolderSelected(folderId: string) {
