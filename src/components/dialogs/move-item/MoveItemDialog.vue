@@ -4,8 +4,10 @@ import { ref, toRef, watchEffect, type Ref } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../../base/BaseDialog.vue";
 import MoveItemDialogTargetFolderList from "./MoveItemDialogTargetFolderList.vue";
+import { useUserSpaceStore } from "@/stores/user-space";
 
 const eventStore = useEventStore();
+const userSpaceStore = useUserSpaceStore();
 
 const t = ref(i18n.global.t);
 
@@ -29,10 +31,19 @@ watchEffect(() => {
   }
 });
 function handlePressedConfirmButton() {
+  if (selectedNewParentFolderId.value === userSpaceStore.userSpace._id) {
+    selectedNewParentFolderId.value = null;
+  }
   switch (dialogEvent.value.type) {
     case "move-folder":
+      if (dialogEvent.value.movedItemId) {
+        userSpaceStore.moveFolder(dialogEvent.value.movedItemId, selectedNewParentFolderId.value);
+      }
       break;
     case "move-note":
+      if (dialogEvent.value.movedItemId) {
+        userSpaceStore.moveNote(dialogEvent.value.movedItemId, selectedNewParentFolderId.value);
+      }
       break;
   }
   closeDialog();
@@ -57,6 +68,7 @@ function handleFolderSelected(folderId: string | null) {
     v-show="dialogEvent.isOpen"
     :title="dialogTitle"
     :mainButtonText="dialogMainButtonText"
+    :is-main-button-disabled="selectedNewParentFolderId === null"
     @pressed-main-button="handlePressedConfirmButton"
     @close="closeDialog"
     class="move-item-dialog"

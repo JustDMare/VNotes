@@ -10,7 +10,7 @@ const sidebarContent = toRef(userSpaceStore.$state.userSpace, "content");
 const t = i18n.global.t;
 
 const rootFolder: Folder = {
-  _id: "root",
+  _id: userSpaceStore.userSpace._id,
   name: t("moveItemDialog.rootFolder"),
   content: {
     folders: [],
