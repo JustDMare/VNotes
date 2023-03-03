@@ -49,9 +49,6 @@ function onCheckboxChange(event: Event) {
     justify-content: space-between;
     cursor: pointer;
     padding: 0.5em 1em;
-    &:hover {
-      background-color: var(--color-base-80);
-    }
   }
   &__checkbox {
     appearance: none;

@@ -59,7 +59,11 @@ function toggleSubfolderVisibility() {
   grid-template-columns: 1rem 1fr;
   align-items: center;
   gap: 4px;
-  padding-inline-start: 0;
+  padding-left: 0.5rem;
+
+  &:hover {
+    background-color: var(--color-base-80);
+  }
 
   &__dropdown-btn {
     display: inline-flex;

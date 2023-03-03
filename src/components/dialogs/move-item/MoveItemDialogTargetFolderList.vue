@@ -49,7 +49,9 @@ function handleFolderSelected(folderId: string | null) {
   flex-direction: column;
 }
 :deep(.move-item__target-list) {
-  padding-left: 1rem;
+  padding-left: 0.5rem;
+  margin-left: calc(1rem - 0.5px);
+  border-left: 1px solid var(--color-base-50);
 }
 :deep(.move-item__target-list__target-item) {
   list-style-type: none;

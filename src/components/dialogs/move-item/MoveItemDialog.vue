@@ -56,6 +56,7 @@ function handleFolderSelected(folderId: string | null) {
     :mainButtonText="dialogMainButtonText"
     @pressed-main-button="handlePressedConfirmButton"
     @close="closeDialog"
+    class="move-item-dialog"
   >
     <template #dialog-body>
       <p>
@@ -72,6 +73,14 @@ function handleFolderSelected(folderId: string | null) {
 </template>
 
 <style lang="scss" scoped>
+.move-item-dialog {
+  height: 80%;
+}
+:deep(.base-dialog__body) {
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
 :deep(.item-name) {
   font-weight: 600;
 }
