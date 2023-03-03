@@ -1,15 +1,20 @@
 <script lang="ts" setup>
 import type { Folder } from "vnotes-types";
-import { ref } from "vue";
-import MoveItemDialogTargetFolderButton from "./MoveItemDialogTargetFolderButton.vue";
+import { ref, watchEffect } from "vue";
+import MoveItemDialogTargetFolderButton from "./MoveItemDialogTargetFolderLabel.vue";
 import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
 
-defineProps<{ folder: Folder; selectedNewParentFolderId: string | null }>();
+const props = defineProps<{ folder: Folder; selectedNewParentFolderId: string | null }>();
 const emits = defineEmits<{
   (e: "folder-selected", folderId: string | null): void;
 }>();
 
 const showSubfolders = ref(false);
+const isFolderSelected = ref(props.selectedNewParentFolderId === props.folder._id);
+
+watchEffect(() => {
+  isFolderSelected.value = props.selectedNewParentFolderId === props.folder._id;
+});
 
 function handleFolderSelected(folderId: string | null) {
   emits("folder-selected", folderId);
@@ -22,16 +27,22 @@ function toggleSubfolderVisibility() {
 
 <template>
   <li class="move-item__target-list__target-item">
-    <div class="move-item__target-list__target">
-      <button
-        class="move-item__target-list__target__dropdown-btn"
-        @click="toggleSubfolderVisibility"
-      >
-        <ChevronRightIcon
-          class="target__icon target__icon--chevron"
-          :rotate-down="showSubfolders"
-        />
-      </button>
+    <div
+      class="move-item__target-list__target"
+      :class="{ 'move-item__target-list__target--selected': isFolderSelected }"
+    >
+      <div class="move-item__target-list__target__dropdown-btn">
+        <button
+          class="move-item__target-list__target__dropdown-btn"
+          @click="toggleSubfolderVisibility"
+          v-if="folder.content.folders.length > 0"
+        >
+          <ChevronRightIcon
+            class="target__icon target__icon--chevron"
+            :rotate-down="showSubfolders"
+          />
+        </button>
+      </div>
 
       <MoveItemDialogTargetFolderButton
         :folder-name="folder.name"
@@ -56,13 +67,26 @@ function toggleSubfolderVisibility() {
 .move-item__target-list__target {
   list-style-type: none;
   display: grid;
-  grid-template-columns: 1rem 1fr;
+  grid-template-columns: 20px 1fr;
   align-items: center;
+  justify-content: stretch;
   gap: 4px;
-  padding-left: 0.5rem;
-
+  padding: 4px 6px 4px 6px;
+  border-radius: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: all 0.25s ease-in-out;
   &:hover {
     background-color: var(--color-base-80);
+  }
+  &--selected {
+    background-color: var(--color-base-70);
+
+    &:hover {
+      background-color: var(--color-base-70);
+    }
   }
 
   &__dropdown-btn {
@@ -70,13 +94,21 @@ function toggleSubfolderVisibility() {
     background: none;
     border: none;
     padding: 0;
-    cursor: pointer;
+    align-self: center;
     align-content: center;
+    justify-content: center;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    &:hover {
+      background-color: var(--color-base-60);
+    }
   }
 }
+
 .target__icon {
-  width: var(--nav-icon-size);
-  height: var(--nav-icon-size);
+  width: 20px;
+  height: 20px;
   align-self: center;
 
   &--chevron {

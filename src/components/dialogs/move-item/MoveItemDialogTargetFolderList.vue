@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useUserSpaceStore } from "@/stores/user-space";
 import { toRef } from "vue";
-import MoveItemDialogTargetFolderButton from "./MoveItemDialogTargetFolderButton.vue";
+import MoveItemDialogTargetFolderLabel from "./MoveItemDialogTargetFolderLabel.vue";
 import MoveItemDialogTargetFolder from "./MoveItemDialogTargetFolder.vue";
 
 const userSpaceStore = useUserSpaceStore();
@@ -20,7 +20,7 @@ function handleFolderSelected(folderId: string | null) {
 <template>
   <ul class="move-item__target-list">
     <li class="move-item__target-list__target-item">
-      <MoveItemDialogTargetFolderButton
+      <MoveItemDialogTargetFolderLabel
         :folder-name="$t('moveItemDialog.rootFolder')"
         :selected-new-parent-folder-id="selectedNewParentFolderId"
         :folder-id="null"
@@ -47,6 +47,7 @@ function handleFolderSelected(folderId: string | null) {
   padding-inline-start: 0;
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 :deep(.move-item__target-list) {
   padding-left: 0.5rem;
@@ -55,5 +56,8 @@ function handleFolderSelected(folderId: string | null) {
 }
 :deep(.move-item__target-list__target-item) {
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 </style>

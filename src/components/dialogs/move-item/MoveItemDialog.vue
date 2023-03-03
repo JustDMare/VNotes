@@ -43,7 +43,10 @@ function closeDialog() {
   eventStore.closeMoveItemDialog();
 }
 function handleFolderSelected(folderId: string | null) {
-  console.log("handleFolderSelected", folderId);
+  if (folderId === selectedNewParentFolderId.value) {
+    selectedNewParentFolderId.value = "";
+    return;
+  }
   selectedNewParentFolderId.value = folderId;
 }
 </script>

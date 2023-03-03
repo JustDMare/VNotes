@@ -48,7 +48,6 @@ function onCheckboxChange(event: Event) {
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    padding: 0.5em 1em;
   }
   &__checkbox {
     appearance: none;
