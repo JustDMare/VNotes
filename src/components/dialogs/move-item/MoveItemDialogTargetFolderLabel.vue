@@ -3,11 +3,11 @@ import { computed, ref, watchEffect } from "vue";
 
 const props = defineProps<{
   folderName: string;
-  folderId: string | null;
+  folderId: string;
   selectedNewParentFolderId: string | null;
 }>();
 const emits = defineEmits<{
-  (e: "folder-selected", folderId: string | null): void;
+  (e: "folder-selected", folderId: string): void;
 }>();
 const isSelected = ref(props.selectedNewParentFolderId === props.folderId);
 watchEffect(() => {
@@ -15,9 +15,6 @@ watchEffect(() => {
 });
 
 const checkboxId = computed(() => {
-  if (props.folderId === null) {
-    return "folder-root";
-  }
   return `folder-${props.folderId}`;
 });
 

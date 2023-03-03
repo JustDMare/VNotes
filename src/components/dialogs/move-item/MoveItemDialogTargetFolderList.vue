@@ -1,32 +1,45 @@
 <script lang="ts" setup>
+import { i18n } from "@/i18n/i18n.plugin";
 import { useUserSpaceStore } from "@/stores/user-space";
+import type { Folder } from "vnotes-types";
 import { toRef } from "vue";
-import MoveItemDialogTargetFolderLabel from "./MoveItemDialogTargetFolderLabel.vue";
 import MoveItemDialogTargetFolder from "./MoveItemDialogTargetFolder.vue";
 
 const userSpaceStore = useUserSpaceStore();
 const sidebarContent = toRef(userSpaceStore.$state.userSpace, "content");
+const t = i18n.global.t;
+
+const rootFolder: Folder = {
+  _id: "root",
+  name: t("moveItemDialog.rootFolder"),
+  content: {
+    folders: [],
+    notes: [],
+  },
+  numberOfItems: 0,
+  createdTime: "",
+  lastUpdatedTime: "",
+};
 
 defineProps<{ selectedNewParentFolderId: string | null }>();
+
 const emits = defineEmits<{
-  (e: "folder-selected", folderId: string | null): void;
+  (e: "folder-selected", folderId: string): void;
 }>();
 
-function handleFolderSelected(folderId: string | null) {
+function handleFolderSelected(folderId: string) {
   emits("folder-selected", folderId);
 }
 </script>
 
 <template>
   <ul class="move-item__target-list">
-    <li class="move-item__target-list__target-item">
-      <MoveItemDialogTargetFolderLabel
-        :folder-name="$t('moveItemDialog.rootFolder')"
-        :selected-new-parent-folder-id="selectedNewParentFolderId"
-        :folder-id="null"
-        @folder-selected="handleFolderSelected"
-      />
-    </li>
+    <MoveItemDialogTargetFolder
+      :selected-new-parent-folder-id="selectedNewParentFolderId"
+      @folder-selected="handleFolderSelected"
+      :folder="rootFolder"
+    />
+
     <MoveItemDialogTargetFolder
       v-for="folder in sidebarContent.folders"
       :key="folder._id"

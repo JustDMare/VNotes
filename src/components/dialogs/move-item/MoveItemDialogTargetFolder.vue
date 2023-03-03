@@ -6,7 +6,7 @@ import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
 
 const props = defineProps<{ folder: Folder; selectedNewParentFolderId: string | null }>();
 const emits = defineEmits<{
-  (e: "folder-selected", folderId: string | null): void;
+  (e: "folder-selected", folderId: string): void;
 }>();
 
 const showSubfolders = ref(false);
@@ -16,7 +16,7 @@ watchEffect(() => {
   isFolderSelected.value = props.selectedNewParentFolderId === props.folder._id;
 });
 
-function handleFolderSelected(folderId: string | null) {
+function handleFolderSelected(folderId: string) {
   emits("folder-selected", folderId);
 }
 

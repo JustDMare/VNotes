@@ -11,7 +11,7 @@ const t = ref(i18n.global.t);
 
 const dialogTitle = ref("");
 const dialogMainButtonText = ref("");
-const selectedNewParentFolderId: Ref<string | null> = ref("");
+const selectedNewParentFolderId: Ref<string | null> = ref(null);
 
 const dialogEvent = toRef(eventStore, "moveItemDialogEvent");
 
@@ -44,7 +44,7 @@ function closeDialog() {
 }
 function handleFolderSelected(folderId: string | null) {
   if (folderId === selectedNewParentFolderId.value) {
-    selectedNewParentFolderId.value = "";
+    selectedNewParentFolderId.value = null;
     return;
   }
   selectedNewParentFolderId.value = folderId;
