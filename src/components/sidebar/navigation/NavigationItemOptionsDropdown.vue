@@ -3,6 +3,7 @@ import BaseDropdown from "@/components/base/BaseDropdown.vue";
 import { OptionsButtonIcon } from "@/components/icons";
 import type { NavigationItemOption } from "@/commands/navigation-item-options/interfaces";
 import type { PropType } from "vue";
+import { FadeTransition } from "@/components/animations";
 
 const MENU_MARGIN_FROM_BUTTON = 8;
 const MENU_LEFT_DISPLACEMENT = 0.25;
@@ -17,7 +18,7 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
 </script>
 
 <template>
-  <Transition name="fade">
+  <FadeTransition>
     <BaseDropdown
       @dropdown-opened="$emit('optionsDropdownOpened')"
       @dropdown-closed="$emit('optionsDropdownClosed')"
@@ -41,7 +42,7 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
         </button>
       </template>
     </BaseDropdown>
-  </Transition>
+  </FadeTransition>
 </template>
 
 <style lang="scss" scoped>
@@ -100,14 +101,5 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
   border-radius: 3px;
   background-color: var(--color-base-100);
   box-shadow: 0px 0px 22px -3px rgba(0, 0, 0, 0.2);
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease-in;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

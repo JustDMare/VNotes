@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { FadeTransition } from "@/components/animations";
 import { computed, ref, watchEffect } from "vue";
 
 const props = defineProps<{
@@ -28,13 +29,16 @@ function onCheckboxChange(event: Event) {
 <template>
   <label class="move-item__target-list__target__name" :for="checkboxId"
     >{{ folderName }}
-    <input
-      :id="checkboxId"
-      :checked="isSelected"
-      @change="onCheckboxChange"
-      type="checkbox"
-      class="move-item__target-list__target__checkbox"
-    />
+    <FadeTransition>
+      <input
+        v-show="isSelected"
+        :id="checkboxId"
+        :checked="isSelected"
+        @change="onCheckboxChange"
+        type="checkbox"
+        class="move-item__target-list__target__checkbox"
+      />
+    </FadeTransition>
   </label>
 </template>
 
