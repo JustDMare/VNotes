@@ -27,7 +27,8 @@ function handleFolderSelected(folderId: string) {
   emits("folder-selected", folderId);
 }
 
-function toggleSubfolderVisibility() {
+function toggleSubfolderVisibility(event: MouseEvent) {
+  event.stopImmediatePropagation();
   showSubfolders.value = !showSubfolders.value;
 }
 </script>
@@ -37,12 +38,15 @@ function toggleSubfolderVisibility() {
     <div
       class="move-item__target-list__target"
       :class="{ 'move-item__target-list__target--selected': isFolderSelected }"
+      @click="handleFolderSelected(folder._id)"
+      @keydown.space="handleFolderSelected(folder._id)"
+      tabindex="0"
     >
       <div class="move-item__target-list__target__dropdown-btn">
         <button
-          class="move-item__target-list__target__dropdown-btn"
-          @click="toggleSubfolderVisibility"
           v-if="folder.content.folders.length > 0"
+          @click="toggleSubfolderVisibility"
+          class="move-item__target-list__target__dropdown-btn"
         >
           <ChevronRightIcon
             class="target__icon target__icon--chevron"
