@@ -11,29 +11,52 @@ const t = ref(i18n.global.t);
 
 const dialogTitle = ref("");
 const dialogMainButtonText = ref("");
-const dialogBodyText = ref("");
 
 const dialogEvent = toRef(eventStore, "userSpaceSettingsDialogEvent");
 
 function closeDialog() {
-  eventStore.closeDeleteItemDialog();
+  eventStore.closeUserSpaceSettingsDialog();
 }
 </script>
 
 <template>
-  <BaseDialog
-    :open="dialogEvent.isOpen"
-    v-show="dialogEvent.isOpen"
-    :title="dialogTitle"
-    :mainButtonText="dialogMainButtonText"
-    @close="closeDialog"
-  >
-    <template #dialog-body> </template>
-  </BaseDialog>
+  <section v-show="dialogEvent.isOpen" class="user-space-settings-dialog">
+    <div
+      @click="closeDialog"
+      @keydown.Escape="closeDialog"
+      class="user-space-settings-dialog__backdrop"
+    ></div>
+    <BaseDialog
+      :title="dialogTitle"
+      :main-button-text="dialogMainButtonText"
+      :open="dialogEvent.isOpen"
+      :show-footer="false"
+      @close="closeDialog"
+    ></BaseDialog>
+  </section>
 </template>
 
 <style lang="scss" scoped>
-:deep(.item-name) {
-  font-weight: 600;
+.user-space-settings-dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+
+  &__backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 }
 </style>

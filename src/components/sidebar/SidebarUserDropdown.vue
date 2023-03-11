@@ -26,11 +26,14 @@ const authUser = computed(() => auth0.user.value);
       />
       <span class="user-dropdown__profile-name">{{ authUser.name }}</span>
     </template>
-    <template #menu>
-      <button class="user-dropdown__option" @click="eventStore.openUserSpaceSettingsDialog()">
+    <template #menu="{ closeOnClick }">
+      <button
+        class="user-dropdown__option"
+        @click="eventStore.openUserSpaceSettingsDialog(), closeOnClick()"
+      >
         {{ $t("userSettings.userDropdownButton") }}
       </button>
-      <button class="user-dropdown__option" @click="handleLogout">
+      <button class="user-dropdown__option" @click="handleLogout, closeOnClick()">
         {{ $t("auth.logout") }}
       </button>
     </template>
@@ -54,7 +57,7 @@ const authUser = computed(() => auth0.user.value);
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 8px 16px;
+    padding: 12px 16px;
     border: none;
     font-size: 12px;
     font-weight: 500;
