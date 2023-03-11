@@ -2,7 +2,12 @@
 import { SidebarComponent } from "@/components/sidebar";
 import { NoteWorkspace } from "@/components/editor";
 import CommandPalette from "@/components/editor/command-palette/CommandPalette.vue";
-import { CreateAndRenameItemDialog, MoveItemDialog, DeleteItemDialog } from "@/components/dialogs";
+import {
+  CreateAndRenameItemDialog,
+  MoveItemDialog,
+  DeleteItemDialog,
+  UserSpaceSettingsDialog,
+} from "@/components/dialogs";
 </script>
 
 <template>
@@ -13,6 +18,7 @@ import { CreateAndRenameItemDialog, MoveItemDialog, DeleteItemDialog } from "@/c
     <CreateAndRenameItemDialog />
     <DeleteItemDialog />
     <MoveItemDialog />
+    <UserSpaceSettingsDialog />
   </div>
 </template>
 

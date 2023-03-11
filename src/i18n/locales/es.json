@@ -46,6 +46,9 @@
     },
     "noCommands": "No se han encontrado comandos"
   },
+  "userSettings": {
+    "userDropdownButton": "Ajustes"
+  },
   "navigationItemOptions": {
     "rename": "Renombrar",
     "delete": "Eliminar",

@@ -46,6 +46,9 @@
     },
     "noCommands": "No commands found"
   },
+  "userSettings": {
+    "userDropdownButton": "Settings"
+  },
   "navigationItemOptions": {
     "rename": "Rename",
     "delete": "Delete",
