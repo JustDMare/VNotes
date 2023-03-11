@@ -4,6 +4,7 @@ import { useUserSpaceStore } from "@/stores/user-space";
 import { ref, toRef } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../base/BaseDialog.vue";
+import LanguageSelector from "../LanguageSelector.vue";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
@@ -21,18 +22,17 @@ function closeDialog() {
 
 <template>
   <section v-show="dialogEvent.isOpen" class="user-space-settings-dialog">
-    <div
-      @click="closeDialog"
-      @keydown.Escape="closeDialog"
-      class="user-space-settings-dialog__backdrop"
-    ></div>
     <BaseDialog
       :title="dialogTitle"
       :main-button-text="dialogMainButtonText"
       :open="dialogEvent.isOpen"
       :show-footer="false"
       @close="closeDialog"
-    ></BaseDialog>
+    >
+      <template #dialog-body>
+        <LanguageSelector />
+      </template>
+    </BaseDialog>
   </section>
 </template>
 
@@ -49,14 +49,6 @@ function closeDialog() {
   width: 100%;
   height: 100%;
   z-index: 11;
-
-  &__backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
+  background-color: rgba(0, 0, 0, 0.5);
 }
 </style>

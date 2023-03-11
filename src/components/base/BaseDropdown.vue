@@ -41,6 +41,7 @@ function calculateDropdownPosition(): void {
   const buttonRect = dropdownButton.value.getBoundingClientRect();
   const menuRect = dropdownMenu.value.getBoundingClientRect();
   const dropdownMenuStyle = dropdownMenu.value.style;
+  console.log(buttonRect, menuRect);
 
   if (menuRect.height + buttonRect.bottom > window.innerHeight) {
     dropdownMenuStyle.top = `${
@@ -57,6 +58,7 @@ function calculateDropdownPosition(): void {
   dropdownMenuStyle.left = `${
     buttonRect.right - menuRect.width * props.menuPercentageLeftAlignment
   }px`;
+  console.log(dropdownMenuStyle.top, dropdownMenuStyle.left);
   document.addEventListener("mousedown", handleClickOutside);
 }
 

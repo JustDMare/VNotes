@@ -14,12 +14,12 @@ import {
   <div id="main-view">
     <SidebarComponent id="sidebar" />
     <NoteWorkspace id="workspace" />
-    <CommandPalette />
-    <CreateAndRenameItemDialog />
-    <DeleteItemDialog />
-    <MoveItemDialog />
-    <UserSpaceSettingsDialog />
   </div>
+  <CommandPalette />
+  <CreateAndRenameItemDialog />
+  <DeleteItemDialog />
+  <MoveItemDialog />
+  <UserSpaceSettingsDialog />
 </template>
 
 <style lang="scss" scoped>
@@ -27,5 +27,18 @@ import {
   display: flex;
   flex-direction: row;
   height: 100%;
+}
+#dialogs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
 }
 </style>

@@ -75,6 +75,10 @@ function pressMainButton() {
 <style lang="scss" scoped>
 .base-dialog {
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 11;
   align-self: center;
   margin: auto;

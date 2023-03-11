@@ -2,7 +2,7 @@ import { createI18n } from "vue-i18n";
 import { LOCALES } from "./i18n.types";
 import { en, es } from "./locales";
 
-export const defaultLocale = LOCALES.ES;
+export const defaultLocale = LOCALES.EN;
 
 //TODO: Typecheck messages
 
