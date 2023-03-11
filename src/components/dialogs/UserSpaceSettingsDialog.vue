@@ -1,16 +1,13 @@
 <script lang="ts" setup>
 import { useEventStore } from "@/stores/event";
-import { useUserSpaceStore } from "@/stores/user-space";
 import { ref, toRef } from "vue";
-import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../base/BaseDialog.vue";
 import LanguageSelector from "../LanguageSelector.vue";
 
 const eventStore = useEventStore();
-const userSpaceStore = useUserSpaceStore();
-const t = ref(i18n.global.t);
 
 const dialogTitle = ref("");
+//TODO: See if I can remove this consts from all the Dialogs
 const dialogMainButtonText = ref("");
 
 const dialogEvent = toRef(eventStore, "userSpaceSettingsDialogEvent");
