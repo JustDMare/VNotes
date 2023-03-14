@@ -46,6 +46,11 @@
     },
     "noCommands": "No se han encontrado comandos"
   },
+  "userSettings": {
+    "userDropdownButton": "Ajustes",
+    "dialogTitle": "Ajustes de usuario",
+    "languageSelector": "Idioma:"
+  },
   "navigationItemOptions": {
     "rename": "Renombrar",
     "delete": "Eliminar",

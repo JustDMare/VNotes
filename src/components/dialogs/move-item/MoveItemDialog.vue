@@ -10,25 +10,18 @@ const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
 
 const t = ref(i18n.global.t);
-
-const dialogTitle = ref("");
-const dialogMainButtonText = ref("");
-const selectedNewParentFolderId: Ref<string | null> = ref(null);
-
 const dialogEvent = toRef(eventStore, "moveItemDialogEvent");
 
+const selectedNewParentFolderId: Ref<string | null> = ref(null);
+const itemType: Ref<string> = ref("");
+
 watchEffect(() => {
-  if (dialogEvent.value.isOpen) {
-    const itemType =
-      dialogEvent.value.type === "move-folder"
-        ? t.value("itemType.folder")
-        : t.value("itemType.note");
-    dialogTitle.value = t.value("moveItemDialog.title", { itemType });
-    dialogMainButtonText.value = t.value("moveItemDialog.mainButtonText");
-  } else {
-    dialogTitle.value = "";
-    dialogMainButtonText.value = "";
+  if (!dialogEvent.value.isOpen) {
+    return;
   }
+  dialogEvent.value.type === "move-folder"
+    ? (itemType.value = t.value("itemType.folder"))
+    : (itemType.value = t.value("itemType.note"));
 });
 function handlePressedConfirmButton() {
   if (selectedNewParentFolderId.value === userSpaceStore.userSpace._id) {
@@ -66,8 +59,8 @@ function handleFolderSelected(folderId: string | null) {
   <BaseDialog
     :open="dialogEvent.isOpen"
     v-show="dialogEvent.isOpen"
-    :title="dialogTitle"
-    :mainButtonText="dialogMainButtonText"
+    :title="$t('moveItemDialog.title', { itemType })"
+    :mainButtonText="$t('moveItemDialog.mainButtonText')"
     :is-main-button-disabled="selectedNewParentFolderId === null"
     @pressed-main-button="handlePressedConfirmButton"
     @close="closeDialog"

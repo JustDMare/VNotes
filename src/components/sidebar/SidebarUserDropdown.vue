@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import { useEventStore } from "@/stores/event";
 import { useAuth0 } from "@auth0/auth0-vue";
 import { computed } from "vue";
 import BaseDropdown from "../base/BaseDropdown.vue";
 
 const auth0 = useAuth0();
+const eventStore = useEventStore();
 
 function handleLogout(): void {
   auth0.logout();
@@ -24,8 +26,14 @@ const authUser = computed(() => auth0.user.value);
       />
       <span class="user-dropdown__profile-name">{{ authUser.name }}</span>
     </template>
-    <template #menu>
-      <button class="user-dropdown__option" @click="handleLogout">
+    <template #menu="{ closeOnClick }">
+      <button
+        class="user-dropdown__option"
+        @click="eventStore.openUserSettingsDialog(), closeOnClick()"
+      >
+        {{ $t("userSettings.userDropdownButton") }}
+      </button>
+      <button class="user-dropdown__option" @click="handleLogout, closeOnClick()">
         {{ $t("auth.logout") }}
       </button>
     </template>
@@ -49,7 +57,7 @@ const authUser = computed(() => auth0.user.value);
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 8px 16px;
+    padding: 12px 16px;
     border: none;
     font-size: 12px;
     font-weight: 500;

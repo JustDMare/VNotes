@@ -22,6 +22,10 @@ export interface MoveItemDialogEvent {
   newParentId: string | null;
 }
 
+export interface UserSettingsDialogEvent {
+  isOpen: boolean;
+}
+
 export const useEventStore = defineStore("event", {
   state: () => ({
     createAndRenameItemDialogEvent: {
@@ -42,6 +46,9 @@ export const useEventStore = defineStore("event", {
       movedItemId: null,
       newParentId: null,
     } as MoveItemDialogEvent,
+    userSettingsDialogEvent: {
+      isOpen: false,
+    } as UserSettingsDialogEvent,
   }),
   getters: {},
   actions: {
@@ -112,6 +119,16 @@ export const useEventStore = defineStore("event", {
         type: null,
         movedItemId: null,
         newParentId: null,
+      });
+    },
+    openUserSettingsDialog() {
+      Object.assign(this.userSettingsDialogEvent, {
+        isOpen: true,
+      });
+    },
+    closeUserSettingsDialog() {
+      Object.assign(this.userSettingsDialogEvent, {
+        isOpen: false,
       });
     },
   },

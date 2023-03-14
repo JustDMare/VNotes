@@ -3,12 +3,16 @@ import { useEditorStore } from "@/stores/editor";
 import type { Block } from "vnotes-types";
 import { computed, ref } from "vue";
 import { BlockComponent } from "./blocks";
-import { Sortable as SortableComponent } from "sortablejs-vue3";
-import type Sortable from "sortablejs";
+import { Sortable } from "sortablejs-vue3";
+import type { SortableOptions, SortableEvent } from "sortablejs";
 
 const editorStore = useEditorStore();
 const dragging = ref(false);
-const sortableOptions = { handle: ".grip-btn", animation: 250 };
+const sortableOptions: SortableOptions = {
+  handle: ".grip-btn",
+  animation: 250,
+  easing: "ease-in-out",
+};
 
 const blockList = computed(() => {
   if (!editorStore.noteInEditor) {
@@ -17,7 +21,7 @@ const blockList = computed(() => {
   return editorStore.noteInEditor.content as Block[];
 });
 
-function onEnd(event: Sortable.SortableEvent) {
+function onEnd(event: SortableEvent) {
   dragging.value = false;
   if (event.oldIndex !== undefined && event.newIndex !== undefined) {
     editorStore.moveBlockInNote(event.oldIndex, event.newIndex);
@@ -26,7 +30,7 @@ function onEnd(event: Sortable.SortableEvent) {
 </script>
 
 <template>
-  <SortableComponent
+  <Sortable
     :list="blockList"
     item-key="_id"
     tag="div"
@@ -40,7 +44,7 @@ function onEnd(event: Sortable.SortableEvent) {
     <template #item="{ element }">
       <BlockComponent :block="element" :key="element._id"></BlockComponent>
     </template>
-  </SortableComponent>
+  </Sortable>
 </template>
 
 <style scoped lang="scss">

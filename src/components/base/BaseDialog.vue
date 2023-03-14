@@ -4,9 +4,10 @@ import { CrossIcon } from "../icons";
 
 const props = defineProps({
   title: { type: String, required: true },
-  mainButtonText: { type: String, required: true },
+  mainButtonText: { type: String, required: false, default: "" },
   open: { type: Boolean, required: true },
   isMainButtonDisabled: { type: Boolean, required: false, default: false },
+  showFooter: { type: Boolean, required: false, default: true },
 });
 const emits = defineEmits(["close", "pressed-main-button"]);
 
@@ -59,7 +60,7 @@ function pressMainButton() {
     <main class="base-dialog__body">
       <slot name="dialog-body"></slot>
     </main>
-    <footer class="base-dialog__footer">
+    <footer v-if="showFooter" class="base-dialog__footer">
       <button
         :disabled="isMainButtonDisabled"
         @click="pressMainButton"
@@ -74,7 +75,11 @@ function pressMainButton() {
 <style lang="scss" scoped>
 .base-dialog {
   position: absolute;
-  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 11;
   align-self: center;
   margin: auto;
   display: grid;

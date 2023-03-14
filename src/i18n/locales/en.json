@@ -46,6 +46,11 @@
     },
     "noCommands": "No commands found"
   },
+  "userSettings": {
+    "userDropdownButton": "Settings",
+    "dialogTitle": "User settings",
+    "languageSelector": "Language:"
+  },
   "navigationItemOptions": {
     "rename": "Rename",
     "delete": "Delete",

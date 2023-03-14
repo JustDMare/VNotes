@@ -3,36 +3,19 @@ import { useEventStore } from "@/stores/event";
 import { useUserSpaceStore } from "@/stores/user-space";
 import { computed, nextTick, ref, toRef, watchEffect } from "vue";
 import BaseDialog from "../base/BaseDialog.vue";
-import { i18n } from "@/i18n/i18n.plugin";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
-const t = ref(i18n.global.t);
 
 const inputBox = ref<HTMLInputElement | null>(null);
 const inputText = ref("");
-const dialogTitle = ref("");
-const dialogMainButtonText = ref("");
-const dialogInputPlaceholder = ref("");
 
 const dialogEvent = toRef(eventStore, "createAndRenameItemDialogEvent");
 const isInputEmpty = computed(() => inputText.value.trim() === "");
 
 watchEffect(() => {
   if (dialogEvent.value.isOpen) {
-    dialogTitle.value = t.value(`createAndRenameItemDialog.${dialogEvent.value.type}.title`);
-    dialogMainButtonText.value = t.value(
-      `createAndRenameItemDialog.${dialogEvent.value.type}.mainButtonText`
-    );
-    dialogInputPlaceholder.value = t.value(
-      `createAndRenameItemDialog.${dialogEvent.value.type}.inputPlaceholder`
-    );
-
     nextTick(() => inputBox.value?.focus());
-  } else {
-    dialogTitle.value = "";
-    dialogMainButtonText.value = "";
-    dialogInputPlaceholder.value = "";
   }
 });
 
@@ -70,8 +53,8 @@ function handlePressedMainButton() {
 <template>
   <BaseDialog
     :open="dialogEvent.isOpen"
-    :title="dialogTitle"
-    :main-button-text="dialogMainButtonText"
+    :title="$t(`createAndRenameItemDialog.${dialogEvent.type}.title`)"
+    :main-button-text="$t(`createAndRenameItemDialog.${dialogEvent.type}.mainButtonText`)"
     @close="closeDialog"
     @pressed-main-button="handlePressedMainButton"
     :is-main-button-disabled="isInputEmpty"
@@ -82,7 +65,7 @@ function handlePressedMainButton() {
         <input
           v-model="inputText"
           id="nameFolderOrNoteInput"
-          :placeholder="dialogInputPlaceholder"
+          :placeholder="$t(`createAndRenameItemDialog.${dialogEvent.type}.inputPlaceholder`)"
           type="text"
           ref="inputBox"
           autocomplete="off"
