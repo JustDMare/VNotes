@@ -22,7 +22,7 @@ export interface MoveItemDialogEvent {
   newParentId: string | null;
 }
 
-export interface UserSpaceSettingsDialogEvent {
+export interface UserSettingsDialogEvent {
   isOpen: boolean;
 }
 
@@ -46,9 +46,9 @@ export const useEventStore = defineStore("event", {
       movedItemId: null,
       newParentId: null,
     } as MoveItemDialogEvent,
-    userSpaceSettingsDialogEvent: {
+    userSettingsDialogEvent: {
       isOpen: false,
-    } as UserSpaceSettingsDialogEvent,
+    } as UserSettingsDialogEvent,
   }),
   getters: {},
   actions: {
@@ -121,13 +121,13 @@ export const useEventStore = defineStore("event", {
         newParentId: null,
       });
     },
-    openUserSpaceSettingsDialog() {
-      Object.assign(this.userSpaceSettingsDialogEvent, {
+    openUserSettingsDialog() {
+      Object.assign(this.userSettingsDialogEvent, {
         isOpen: true,
       });
     },
-    closeUserSpaceSettingsDialog() {
-      Object.assign(this.userSpaceSettingsDialogEvent, {
+    closeUserSettingsDialog() {
+      Object.assign(this.userSettingsDialogEvent, {
         isOpen: false,
       });
     },

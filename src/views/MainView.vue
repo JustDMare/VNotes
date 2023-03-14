@@ -6,7 +6,7 @@ import {
   CreateAndRenameItemDialog,
   MoveItemDialog,
   DeleteItemDialog,
-  UserSpaceSettingsDialog,
+  UserSettingsDialog,
 } from "@/components/dialogs";
 </script>
 
@@ -19,7 +19,7 @@ import {
   <CreateAndRenameItemDialog />
   <DeleteItemDialog />
   <MoveItemDialog />
-  <UserSpaceSettingsDialog />
+  <UserSettingsDialog />
 </template>
 
 <style lang="scss" scoped>

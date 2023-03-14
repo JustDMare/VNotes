@@ -29,7 +29,7 @@ const authUser = computed(() => auth0.user.value);
     <template #menu="{ closeOnClick }">
       <button
         class="user-dropdown__option"
-        @click="eventStore.openUserSpaceSettingsDialog(), closeOnClick()"
+        @click="eventStore.openUserSettingsDialog(), closeOnClick()"
       >
         {{ $t("userSettings.userDropdownButton") }}
       </button>

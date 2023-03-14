@@ -4,7 +4,7 @@ import { CrossIcon } from "../icons";
 
 const props = defineProps({
   title: { type: String, required: true },
-  mainButtonText: { type: String, required: true },
+  mainButtonText: { type: String, required: false, default: "" },
   open: { type: Boolean, required: true },
   isMainButtonDisabled: { type: Boolean, required: false, default: false },
   showFooter: { type: Boolean, required: false, default: true },

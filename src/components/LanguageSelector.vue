@@ -4,7 +4,7 @@ import { localeValues, LOCALES } from "@/i18n/i18n.types";
 
 <template>
   <div class="language-selector">
-    <select v-model="$i18n.locale">
+    <select tabindex="0" v-model="$i18n.locale">
       <option v-for="locale in LOCALES" :key="locale" :value="locale">
         {{ localeValues[locale].caption }}
       </option>

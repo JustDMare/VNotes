@@ -1,40 +1,38 @@
 <script lang="ts" setup>
 import { useEventStore } from "@/stores/event";
-import { ref, toRef } from "vue";
+import { toRef } from "vue";
 import BaseDialog from "../base/BaseDialog.vue";
 import LanguageSelector from "../LanguageSelector.vue";
 
 const eventStore = useEventStore();
 
-const dialogTitle = ref("");
-//TODO: See if I can remove this consts from all the Dialogs
-const dialogMainButtonText = ref("");
-
-const dialogEvent = toRef(eventStore, "userSpaceSettingsDialogEvent");
+const dialogEvent = toRef(eventStore, "userSettingsDialogEvent");
 
 function closeDialog() {
-  eventStore.closeUserSpaceSettingsDialog();
+  eventStore.closeUserSettingsDialog();
 }
 </script>
 
 <template>
-  <section v-show="dialogEvent.isOpen" class="user-space-settings-dialog">
+  <section v-show="dialogEvent.isOpen" class="user-settings-dialog">
     <BaseDialog
-      :title="dialogTitle"
-      :main-button-text="dialogMainButtonText"
+      :title="$t('userSettings.dialogTitle')"
       :open="dialogEvent.isOpen"
       :show-footer="false"
       @close="closeDialog"
     >
       <template #dialog-body>
-        <LanguageSelector />
+        <div class="language-section">
+          <p class="language-section__label">{{ $t("userSettings.languageSelector") }}</p>
+          <LanguageSelector />
+        </div>
       </template>
     </BaseDialog>
   </section>
 </template>
 
 <style lang="scss" scoped>
-.user-space-settings-dialog {
+.user-settings-dialog {
   position: absolute;
   top: 0;
   left: 0;
@@ -47,5 +45,11 @@ function closeDialog() {
   height: 100%;
   z-index: 11;
   background-color: rgba(0, 0, 0, 0.5);
+  .language-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
 }
 </style>
