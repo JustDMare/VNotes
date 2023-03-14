@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useEventStore } from "@/stores/event";
 import { useUserSpaceStore } from "@/stores/user-space";
-import { ref, toRef, watchEffect } from "vue";
+import { ref, toRef, watchEffect, type Ref } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../base/BaseDialog.vue";
 
@@ -9,26 +9,16 @@ const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
 const t = ref(i18n.global.t);
 
-const dialogTitle = ref("");
-const dialogMainButtonText = ref("");
-const dialogBodyText = ref("");
-
 const dialogEvent = toRef(eventStore, "deleteItemDialogEvent");
+const itemType: Ref<string> = ref("");
 
 watchEffect(() => {
-  if (dialogEvent.value.isOpen) {
-    const itemType =
-      dialogEvent.value.type === "delete-folder"
-        ? t.value("itemType.folder")
-        : t.value("itemType.note");
-
-    dialogTitle.value = t.value("deleteItemDialog.title", { itemType });
-    dialogMainButtonText.value = t.value("deleteItemDialog.mainButtonText");
-  } else {
-    dialogTitle.value = "";
-    dialogBodyText.value = "";
-    dialogMainButtonText.value = "";
+  if (!dialogEvent.value.isOpen) {
+    return;
   }
+  dialogEvent.value.type === "delete-folder"
+    ? (itemType.value = t.value("itemType.folder"))
+    : (itemType.value = t.value("itemType.note"));
 });
 function handlePressedConfirmButton() {
   switch (dialogEvent.value.type) {
@@ -55,8 +45,8 @@ function closeDialog() {
   <BaseDialog
     :open="dialogEvent.isOpen"
     v-show="dialogEvent.isOpen"
-    :title="dialogTitle"
-    :mainButtonText="dialogMainButtonText"
+    :title="$t('deleteItemDialog.title', { itemType })"
+    :mainButtonText="$t('deleteItemDialog.mainButtonText')"
     @pressed-main-button="handlePressedConfirmButton"
     @close="closeDialog"
   >
