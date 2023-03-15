@@ -107,7 +107,8 @@
     "userDropdownButton": "Press to open the user options menu",
     "newFolderButton": "Press to create a new folder in root",
     "newNoteButton": "Press to create a new note in root",
-    "navigationItemOptionsButton": "Press to open this item's options menu"
+    "navigationItemOptionsButton": "Press to open this item's options menu",
+    "sidebarButton": "Press to open or close the sidebar"
   },
   "altText": {
     "userDropdownProfilePicture": "Profile image of the user"

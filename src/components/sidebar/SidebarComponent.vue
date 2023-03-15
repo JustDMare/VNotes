@@ -72,6 +72,8 @@ function onMouseDown(): void {
   padding: 0;
   box-sizing: border-box;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  //Hide the sidebar or contents completely after the transition ends since the width=0 still leaves
+  //the border of the resizer visible
 
   &--open {
     width: 300px;

@@ -23,7 +23,11 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
 
 <template>
   <menu id="ws__header">
-    <button @click="$emit('toggle-sidebar')" class="ws__header__btn ws__header__toggle-sidebar-btn">
+    <button
+      @click="$emit('toggle-sidebar')"
+      class="ws__header__btn ws__header__toggle-sidebar-btn"
+      :title="$t('tooltips.sidebarButton')"
+    >
       <SidebarCloseIcon v-if="isSidebarOpen" />
       <SidebarOpenIcon v-else />
     </button>
