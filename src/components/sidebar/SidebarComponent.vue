@@ -35,28 +35,26 @@ function onMouseDown(): void {
 </script>
 
 <template>
-  <Transition name="slide-in">
-    <aside v-show="isSidebarOpen" ref="sidebar" id="sidebar">
-      <div id="sidebar-content">
-        <SidebarUserDropdown />
-        <SidebarNewFolderAndNoteButtons />
-        <SidebarNavigation id="sidebar-nav" />
-      </div>
-      <div class="resizer" ref="resizer">
-        <span @mousedown.prevent="onMouseDown" class="resizer-delimiter"></span>
-      </div>
-    </aside>
-  </Transition>
+  <aside ref="sidebar" class="sidebar" :class="isSidebarOpen ? 'sidebar--open' : 'sidebar--closed'">
+    <div id="sidebar-content">
+      <SidebarUserDropdown />
+      <SidebarNewFolderAndNoteButtons />
+      <SidebarNavigation id="sidebar-nav" />
+    </div>
+    <div class="resizer" ref="resizer">
+      <span @mousedown.prevent="onMouseDown" class="resizer-delimiter"></span>
+    </div>
+  </aside>
 </template>
 
 <style scoped lang="scss">
 //variables
-#sidebar {
+.sidebar {
   --sidebar-item--padding: 4px;
   --sidebar-item--margin: 6px;
 }
 
-#sidebar {
+.sidebar {
   background-color: var(--color-base-90);
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.08) inset;
   display: flex;
@@ -65,10 +63,18 @@ function onMouseDown(): void {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  width: 300px;
-  min-width: 280px;
-  max-width: 500px;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  &--open {
+    width: 300px;
+    min-width: 280px;
+    max-width: 500px;
+  }
+  &--closed {
+    width: 0;
+    min-width: 0;
+  }
 }
+
 :deep(.sidebar__item) {
   display: grid;
   grid-template-columns: 9fr 24px;
@@ -101,16 +107,6 @@ function onMouseDown(): void {
   height: 100%;
   overflow-y: auto;
   border-top: 1px solid var(--color-base-80);
-}
-
-.slide-in-enter-active,
-.slide-in-leave-active {
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
-}
-
-.slide-in-enter-from,
-.slide-in-leave-to {
-  transform: translateX(-100%);
 }
 
 .resizer {
