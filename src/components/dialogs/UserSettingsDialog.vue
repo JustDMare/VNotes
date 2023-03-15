@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useEventStore } from "@/stores/event";
 import { toRef } from "vue";
+import { FadeTransition } from "../animations";
 import BaseDialog from "../base/BaseDialog.vue";
 import LanguageSelector from "../LanguageSelector.vue";
 
@@ -14,21 +15,23 @@ function closeDialog() {
 </script>
 
 <template>
-  <section v-show="dialogEvent.isOpen" class="user-settings-dialog">
-    <BaseDialog
-      :title="$t('userSettings.dialogTitle')"
-      :open="dialogEvent.isOpen"
-      :show-footer="false"
-      @close="closeDialog"
-    >
-      <template #dialog-body>
-        <div class="language-section">
-          <p class="language-section__label">{{ $t("userSettings.languageSelector") }}</p>
-          <LanguageSelector />
-        </div>
-      </template>
-    </BaseDialog>
-  </section>
+  <FadeTransition>
+    <section v-if="dialogEvent.isOpen" class="user-settings-dialog">
+      <BaseDialog
+        :title="$t('userSettings.dialogTitle')"
+        :open="dialogEvent.isOpen"
+        :show-footer="false"
+        @close="closeDialog"
+      >
+        <template #dialog-body>
+          <div class="language-section">
+            <p class="language-section__label">{{ $t("userSettings.languageSelector") }}</p>
+            <LanguageSelector />
+          </div>
+        </template>
+      </BaseDialog>
+    </section>
+  </FadeTransition>
 </template>
 
 <style lang="scss" scoped>
@@ -45,6 +48,7 @@ function closeDialog() {
   height: 100%;
   z-index: 11;
   background-color: rgba(0, 0, 0, 0.5);
+
   .language-section {
     display: flex;
     flex-direction: row;

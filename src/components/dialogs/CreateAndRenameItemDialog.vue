@@ -2,6 +2,7 @@
 import { useEventStore } from "@/stores/event";
 import { useUserSpaceStore } from "@/stores/user-space";
 import { computed, nextTick, ref, toRef, watchEffect } from "vue";
+import { FadeTransition } from "../animations";
 import BaseDialog from "../base/BaseDialog.vue";
 
 const eventStore = useEventStore();
@@ -51,29 +52,31 @@ function handlePressedMainButton() {
 </script>
 
 <template>
-  <BaseDialog
-    :open="dialogEvent.isOpen"
-    :title="$t(`createAndRenameItemDialog.${dialogEvent.type}.title`)"
-    :main-button-text="$t(`createAndRenameItemDialog.${dialogEvent.type}.mainButtonText`)"
-    @close="closeDialog"
-    @pressed-main-button="handlePressedMainButton"
-    :is-main-button-disabled="isInputEmpty"
-    v-show="dialogEvent.isOpen"
-  >
-    <template #dialog-body>
-      <label for="nameFolderOrNoteInput">
-        <input
-          v-model="inputText"
-          id="nameFolderOrNoteInput"
-          :placeholder="$t(`createAndRenameItemDialog.${dialogEvent.type}.inputPlaceholder`)"
-          type="text"
-          ref="inputBox"
-          autocomplete="off"
-          class="dialog__input"
-        />
-      </label>
-    </template>
-  </BaseDialog>
+  <FadeTransition>
+    <BaseDialog
+      :open="dialogEvent.isOpen"
+      :title="$t(`createAndRenameItemDialog.${dialogEvent.type}.title`)"
+      :main-button-text="$t(`createAndRenameItemDialog.${dialogEvent.type}.mainButtonText`)"
+      @close="closeDialog"
+      @pressed-main-button="handlePressedMainButton"
+      :is-main-button-disabled="isInputEmpty"
+      v-if="dialogEvent.isOpen"
+    >
+      <template #dialog-body>
+        <label for="nameFolderOrNoteInput">
+          <input
+            v-model="inputText"
+            id="nameFolderOrNoteInput"
+            :placeholder="$t(`createAndRenameItemDialog.${dialogEvent.type}.inputPlaceholder`)"
+            type="text"
+            ref="inputBox"
+            autocomplete="off"
+            class="dialog__input"
+          />
+        </label>
+      </template>
+    </BaseDialog>
+  </FadeTransition>
 </template>
 
 <style lang="scss" scoped>
