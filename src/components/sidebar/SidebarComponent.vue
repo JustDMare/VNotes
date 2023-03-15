@@ -12,22 +12,30 @@ defineProps({
 });
 const sidebar: Ref<HTMLDivElement | null> = ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
+const originalTransition = ref("");
 
 function resize(event: MouseEvent): void {
   const size = `${event.x}px`;
   if (sidebar.value && sidebar.value) {
+    sidebar.value.style.transition = "none";
     sidebar.value.style.flexBasis = size;
     document.body.style.cursor = "col-resize";
   }
 }
 
 function onMouseDown(): void {
+  if (sidebar.value) {
+    originalTransition.value = sidebar.value.style.transition;
+  }
   document.addEventListener("mousemove", resize, false);
   document.addEventListener(
     "mouseup",
     () => {
       document.removeEventListener("mousemove", resize, false);
       document.body.style.cursor = "default";
+      if (sidebar.value) {
+        sidebar.value.style.transition = originalTransition.value;
+      }
     },
     false
   );
@@ -63,15 +71,17 @@ function onMouseDown(): void {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+
   &--open {
     width: 300px;
     min-width: 280px;
     max-width: 500px;
   }
   &--closed {
-    width: 0;
-    min-width: 0;
+    width: 0 !important;
+    min-width: 0 !important;
+    flex-basis: 0 !important;
   }
 }
 
