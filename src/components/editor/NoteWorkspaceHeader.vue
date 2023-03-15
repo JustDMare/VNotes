@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { formatLongDateAndTime } from "@/utils";
 import { useEditorStore } from "@/stores/editor";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { SaveIcon, SidebarCloseIcon, SidebarOpenIcon } from "../icons";
 const editorStore = useEditorStore();
 
+defineProps({
+  isSidebarOpen: {
+    type: Boolean,
+    required: true,
+  },
+});
+defineEmits(["toggle-sidebar"]);
 const noteLastUpdatedTime = computed(() => {
   if (!editorStore.noteInEditor) {
     return null;
@@ -12,12 +19,11 @@ const noteLastUpdatedTime = computed(() => {
   return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
 });
 const isSavingNote = computed(() => editorStore.isSavingNote);
-const isSidebarOpen = ref(true);
 </script>
 
 <template>
   <menu id="ws__header">
-    <button @click="isSidebarOpen = !isSidebarOpen" class="sidebar-icon">
+    <button @click="$emit('toggle-sidebar')" class="sidebar-icon">
       <SidebarCloseIcon v-if="isSidebarOpen" />
       <SidebarOpenIcon v-else />
     </button>
