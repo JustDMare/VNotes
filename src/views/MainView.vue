@@ -18,7 +18,7 @@ function onToggleSidebar() {
 
 <template>
   <div id="main-view">
-    <SidebarComponent v-if="isSidebarOpen" id="sidebar" />
+    <SidebarComponent id="sidebar" :is-sidebar-open="isSidebarOpen" />
     <NoteWorkspace
       :is-sidebar-open="isSidebarOpen"
       @toggle-sidebar="onToggleSidebar"

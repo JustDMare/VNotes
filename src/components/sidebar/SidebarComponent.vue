@@ -4,6 +4,12 @@ import SidebarNavigation from "./navigation/SidebarNavigation.vue";
 import SidebarNewFolderAndNoteButtons from "./SidebarNewFolderAndNoteButtons.vue";
 import SidebarUserDropdown from "./SidebarUserDropdown.vue";
 
+defineProps({
+  isSidebarOpen: {
+    type: Boolean,
+    required: true,
+  },
+});
 const sidebar: Ref<HTMLDivElement | null> = ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
 
@@ -29,16 +35,18 @@ function onMouseDown(): void {
 </script>
 
 <template>
-  <aside ref="sidebar" id="sidebar">
-    <div id="sidebar-content">
-      <SidebarUserDropdown />
-      <SidebarNewFolderAndNoteButtons />
-      <SidebarNavigation id="sidebar-nav" />
-    </div>
-    <div class="resizer" ref="resizer">
-      <span @mousedown.prevent="onMouseDown" class="resizer-delimiter"></span>
-    </div>
-  </aside>
+  <Transition name="slide-in">
+    <aside v-show="isSidebarOpen" ref="sidebar" id="sidebar">
+      <div id="sidebar-content">
+        <SidebarUserDropdown />
+        <SidebarNewFolderAndNoteButtons />
+        <SidebarNavigation id="sidebar-nav" />
+      </div>
+      <div class="resizer" ref="resizer">
+        <span @mousedown.prevent="onMouseDown" class="resizer-delimiter"></span>
+      </div>
+    </aside>
+  </Transition>
 </template>
 
 <style scoped lang="scss">
@@ -94,6 +102,17 @@ function onMouseDown(): void {
   overflow-y: auto;
   border-top: 1px solid var(--color-base-80);
 }
+
+.slide-in-enter-active,
+.slide-in-leave-active {
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.slide-in-enter-from,
+.slide-in-leave-to {
+  transform: translateX(-100%);
+}
+
 .resizer {
   flex-basis: 1px;
   z-index: 4;
