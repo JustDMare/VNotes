@@ -5,7 +5,7 @@ import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../../base/BaseDialog.vue";
 import MoveItemDialogTargetFolderList from "./MoveItemDialogTargetFolderList.vue";
 import { useUserSpaceStore } from "@/stores/user-space";
-import { FadeTransition } from "@/components/animations";
+import { ScaleTransition } from "@/components/animations";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
@@ -57,7 +57,7 @@ function handleFolderSelected(folderId: string | null) {
 </script>
 
 <template>
-  <FadeTransition>
+  <ScaleTransition>
     <BaseDialog
       :open="dialogEvent.isOpen"
       v-if="dialogEvent.isOpen"
@@ -80,7 +80,7 @@ function handleFolderSelected(folderId: string | null) {
         />
       </template>
     </BaseDialog>
-  </FadeTransition>
+  </ScaleTransition>
 </template>
 
 <style lang="scss" scoped>

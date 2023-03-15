@@ -2,7 +2,7 @@
 import { useEventStore } from "@/stores/event";
 import { useUserSpaceStore } from "@/stores/user-space";
 import { computed, nextTick, ref, toRef, watchEffect } from "vue";
-import { FadeTransition } from "../animations";
+import { ScaleTransition } from "../animations";
 import BaseDialog from "../base/BaseDialog.vue";
 
 const eventStore = useEventStore();
@@ -52,7 +52,7 @@ function handlePressedMainButton() {
 </script>
 
 <template>
-  <FadeTransition>
+  <ScaleTransition>
     <BaseDialog
       :open="dialogEvent.isOpen"
       :title="$t(`createAndRenameItemDialog.${dialogEvent.type}.title`)"
@@ -76,7 +76,7 @@ function handlePressedMainButton() {
         </label>
       </template>
     </BaseDialog>
-  </FadeTransition>
+  </ScaleTransition>
 </template>
 
 <style lang="scss" scoped>

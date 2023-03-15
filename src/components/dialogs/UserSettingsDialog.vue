@@ -1,21 +1,23 @@
 <script lang="ts" setup>
 import { useEventStore } from "@/stores/event";
-import { toRef } from "vue";
-import { FadeTransition } from "../animations";
+import { ref, toRef } from "vue";
+import { ScaleTransition } from "../animations";
 import BaseDialog from "../base/BaseDialog.vue";
 import LanguageSelector from "../LanguageSelector.vue";
 
 const eventStore = useEventStore();
 
 const dialogEvent = toRef(eventStore, "userSettingsDialogEvent");
+const showDialog = ref(false);
 
 function closeDialog() {
+  showDialog.value = false;
   eventStore.closeUserSettingsDialog();
 }
 </script>
 
 <template>
-  <FadeTransition>
+  <ScaleTransition>
     <section v-if="dialogEvent.isOpen" class="user-settings-dialog">
       <BaseDialog
         :title="$t('userSettings.dialogTitle')"
@@ -31,7 +33,7 @@ function closeDialog() {
         </template>
       </BaseDialog>
     </section>
-  </FadeTransition>
+  </ScaleTransition>
 </template>
 
 <style lang="scss" scoped>
@@ -47,8 +49,6 @@ function closeDialog() {
   width: 100%;
   height: 100%;
   z-index: 11;
-  background-color: rgba(0, 0, 0, 0.5);
-
   .language-section {
     display: flex;
     flex-direction: row;

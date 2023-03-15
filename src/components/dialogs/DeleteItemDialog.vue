@@ -4,7 +4,7 @@ import { useUserSpaceStore } from "@/stores/user-space";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../base/BaseDialog.vue";
-import { FadeTransition } from "../animations";
+import { ScaleTransition } from "../animations";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
@@ -43,7 +43,7 @@ function closeDialog() {
 </script>
 
 <template>
-  <FadeTransition>
+  <ScaleTransition>
     <BaseDialog
       :open="dialogEvent.isOpen"
       v-if="dialogEvent.isOpen"
@@ -64,7 +64,7 @@ function closeDialog() {
         </p>
       </template>
     </BaseDialog>
-  </FadeTransition>
+  </ScaleTransition>
 </template>
 
 <style lang="scss" scoped>
