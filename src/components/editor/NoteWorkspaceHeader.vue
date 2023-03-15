@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { formatLongDateAndTime } from "@/utils";
 import { useEditorStore } from "@/stores/editor";
-import { computed } from "vue";
-import { SaveIcon } from "../icons";
+import { computed, ref } from "vue";
+import { SaveIcon, SidebarCloseIcon, SidebarOpenIcon } from "../icons";
 const editorStore = useEditorStore();
 
 const noteLastUpdatedTime = computed(() => {
@@ -12,10 +12,15 @@ const noteLastUpdatedTime = computed(() => {
   return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
 });
 const isSavingNote = computed(() => editorStore.isSavingNote);
+const isSidebarOpen = ref(true);
 </script>
 
 <template>
   <menu id="ws__header">
+    <button @click="isSidebarOpen = !isSidebarOpen" class="sidebar-icon">
+      <SidebarCloseIcon v-if="isSidebarOpen" />
+      <SidebarOpenIcon v-else />
+    </button>
     <div class="ws__header__save-section">
       <div
         v-if="isSavingNote"
@@ -42,7 +47,7 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
   display: flex;
   background-color: var(--color-base-100);
   padding: 12px;
-  justify-content: end;
+  justify-content: space-between;
   box-shadow: -8px 13px 43px 0px rgba(0, 0, 0, 0.03);
   align-items: center;
 }
