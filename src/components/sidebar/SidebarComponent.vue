@@ -72,19 +72,39 @@ function onMouseDown(): void {
   padding: 0;
   box-sizing: border-box;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-  //Hide the sidebar or contents completely after the transition ends since the width=0 still leaves
-  //the border of the resizer visible
-
   &--open {
     width: 300px;
     min-width: 280px;
     max-width: 500px;
+    > #sidebar-content {
+      transition: opacity 0.2s ease-in 0.05s;
+      opacity: 1;
+    }
   }
   &--closed {
     width: 0 !important;
     min-width: 0 !important;
     flex-basis: 0 !important;
+    > #sidebar-content {
+      transition: opacity 0.05s ease-in;
+      opacity: 0;
+    }
   }
+}
+
+#sidebar-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+#sidebar-nav {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  border-top: 1px solid var(--color-base-80);
 }
 
 :deep(.sidebar__item) {
@@ -104,21 +124,6 @@ function onMouseDown(): void {
 :deep(.sidebar__item--highlight) {
   background-color: var(--color-base-80);
   color: var(--color-base-10);
-}
-
-#sidebar-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-#sidebar-nav {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  border-top: 1px solid var(--color-base-80);
 }
 
 .resizer {
