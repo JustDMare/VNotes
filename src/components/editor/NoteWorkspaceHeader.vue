@@ -2,9 +2,16 @@
 import { formatLongDateAndTime } from "@/utils";
 import { useEditorStore } from "@/stores/editor";
 import { computed } from "vue";
-import { SaveIcon } from "../icons";
+import { SaveIcon, SidebarCloseIcon, SidebarOpenIcon } from "../icons";
 const editorStore = useEditorStore();
 
+defineProps({
+  isSidebarOpen: {
+    type: Boolean,
+    required: true,
+  },
+});
+defineEmits(["toggle-sidebar"]);
 const noteLastUpdatedTime = computed(() => {
   if (!editorStore.noteInEditor) {
     return null;
@@ -16,6 +23,14 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
 
 <template>
   <menu id="ws__header">
+    <button
+      @click="$emit('toggle-sidebar')"
+      class="ws__header__btn ws__header__toggle-sidebar-btn"
+      :title="$t('tooltips.sidebarButton')"
+    >
+      <SidebarCloseIcon v-if="isSidebarOpen" />
+      <SidebarOpenIcon v-else />
+    </button>
     <div class="ws__header__save-section">
       <div
         v-if="isSavingNote"
@@ -42,45 +57,51 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
   display: flex;
   background-color: var(--color-base-100);
   padding: 12px;
-  justify-content: end;
+  justify-content: space-between;
   box-shadow: -8px 13px 43px 0px rgba(0, 0, 0, 0.03);
   align-items: center;
 }
-.ws__header__save-section {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  &__text {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--color-base-40);
+.ws__header {
+  &__btn {
+    font-size: 14px;
+    //Could be turned into a button--primmary class
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background: var(--color-base-100);
+    color: var(--color-text);
+    border: 1px solid var(--color-base-80);
+    border-radius: 4px;
+    gap: 6px;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background: var(--color-base-80);
+      color: var(--x=color-base-0);
+    }
+    &:active {
+      transform: scale(0.95);
+    }
+    span {
+      font-size: inherit;
+    }
+  }
+  &__toggle-sidebar-btn {
+    border: none;
+  }
+  &__save-section {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    &__text {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-base-40);
+    }
   }
 }
-.ws__header__btn {
-  font-size: 14px;
-  //Could be turned into a button--primmary class
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  background: var(--color-base-100);
-  color: var(--color-text);
-  border: 1px solid var(--color-base-80);
-  border-radius: 4px;
-  gap: 6px;
-  padding: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  &:hover {
-    background: var(--color-base-80);
-    color: var(--x=color-base-0);
-  }
-  &:active {
-    transform: scale(0.95);
-  }
-  span {
-    font-size: inherit;
-  }
-}
+
 @keyframes donut-spin {
   0% {
     transform: rotate(0deg);

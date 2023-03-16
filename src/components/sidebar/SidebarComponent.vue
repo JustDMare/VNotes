@@ -4,24 +4,38 @@ import SidebarNavigation from "./navigation/SidebarNavigation.vue";
 import SidebarNewFolderAndNoteButtons from "./SidebarNewFolderAndNoteButtons.vue";
 import SidebarUserDropdown from "./SidebarUserDropdown.vue";
 
+defineProps({
+  isSidebarOpen: {
+    type: Boolean,
+    required: true,
+  },
+});
 const sidebar: Ref<HTMLDivElement | null> = ref(null);
 const resizer: Ref<HTMLDivElement | null> = ref(null);
+const originalTransition = ref("");
 
 function resize(event: MouseEvent): void {
   const size = `${event.x}px`;
   if (sidebar.value && sidebar.value) {
+    sidebar.value.style.transition = "none";
     sidebar.value.style.flexBasis = size;
     document.body.style.cursor = "col-resize";
   }
 }
 
 function onMouseDown(): void {
+  if (sidebar.value) {
+    originalTransition.value = sidebar.value.style.transition;
+  }
   document.addEventListener("mousemove", resize, false);
   document.addEventListener(
     "mouseup",
     () => {
       document.removeEventListener("mousemove", resize, false);
       document.body.style.cursor = "default";
+      if (sidebar.value) {
+        sidebar.value.style.transition = originalTransition.value;
+      }
     },
     false
   );
@@ -29,7 +43,7 @@ function onMouseDown(): void {
 </script>
 
 <template>
-  <aside ref="sidebar" id="sidebar">
+  <aside ref="sidebar" class="sidebar" :class="isSidebarOpen ? 'sidebar--open' : 'sidebar--closed'">
     <div id="sidebar-content">
       <SidebarUserDropdown />
       <SidebarNewFolderAndNoteButtons />
@@ -43,12 +57,12 @@ function onMouseDown(): void {
 
 <style scoped lang="scss">
 //variables
-#sidebar {
+.sidebar {
   --sidebar-item--padding: 4px;
   --sidebar-item--margin: 6px;
 }
 
-#sidebar {
+.sidebar {
   background-color: var(--color-base-90);
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.08) inset;
   display: flex;
@@ -57,10 +71,42 @@ function onMouseDown(): void {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  width: 300px;
-  min-width: 280px;
-  max-width: 500px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  &--open {
+    width: 300px;
+    min-width: 280px;
+    max-width: 500px;
+    > #sidebar-content {
+      transition: opacity 0.2s ease-in 0.05s;
+      opacity: 1;
+    }
+  }
+  &--closed {
+    width: 0 !important;
+    min-width: 0 !important;
+    flex-basis: 0 !important;
+    > #sidebar-content {
+      transition: opacity 0.05s ease-in;
+      opacity: 0;
+    }
+  }
 }
+
+#sidebar-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+#sidebar-nav {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  border-top: 1px solid var(--color-base-80);
+}
+
 :deep(.sidebar__item) {
   display: grid;
   grid-template-columns: 9fr 24px;
@@ -80,20 +126,6 @@ function onMouseDown(): void {
   color: var(--color-base-10);
 }
 
-#sidebar-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-#sidebar-nav {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  border-top: 1px solid var(--color-base-80);
-}
 .resizer {
   flex-basis: 1px;
   z-index: 4;

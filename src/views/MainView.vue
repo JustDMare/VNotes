@@ -8,12 +8,22 @@ import {
   DeleteItemDialog,
   UserSettingsDialog,
 } from "@/components/dialogs";
+import { ref } from "vue";
+
+const isSidebarOpen = ref(true);
+function onToggleSidebar() {
+  isSidebarOpen.value = !isSidebarOpen.value;
+}
 </script>
 
 <template>
   <div id="main-view">
-    <SidebarComponent id="sidebar" />
-    <NoteWorkspace id="workspace" />
+    <SidebarComponent id="sidebar" :is-sidebar-open="isSidebarOpen" />
+    <NoteWorkspace
+      :is-sidebar-open="isSidebarOpen"
+      @toggle-sidebar="onToggleSidebar"
+      id="workspace"
+    />
   </div>
   <CommandPalette />
   <CreateAndRenameItemDialog />

@@ -4,6 +4,7 @@ import { useUserSpaceStore } from "@/stores/user-space";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../base/BaseDialog.vue";
+import { ScaleTransition } from "../animations";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
@@ -42,26 +43,28 @@ function closeDialog() {
 </script>
 
 <template>
-  <BaseDialog
-    :open="dialogEvent.isOpen"
-    v-show="dialogEvent.isOpen"
-    :title="$t('deleteItemDialog.title', { itemType })"
-    :mainButtonText="$t('deleteItemDialog.mainButtonText')"
-    @pressed-main-button="handlePressedConfirmButton"
-    @close="closeDialog"
-  >
-    <template #dialog-body>
-      <p>
-        <span>{{ $t("deleteItemDialog.bodyTextStart") }}</span>
-        <span class="item-name">"{{ dialogEvent.deletedItemName }}"</span>
-        <span>{{ $t("deleteItemDialog.bodyTextEnd") }}</span>
-        <span v-if="dialogEvent.type === 'delete-folder'">
-          <br />
-          {{ $t("deleteItemDialog.bodyTextEndFolder") }}</span
-        >
-      </p>
-    </template>
-  </BaseDialog>
+  <ScaleTransition>
+    <BaseDialog
+      :open="dialogEvent.isOpen"
+      v-if="dialogEvent.isOpen"
+      :title="$t('deleteItemDialog.title', { itemType })"
+      :mainButtonText="$t('deleteItemDialog.mainButtonText')"
+      @pressed-main-button="handlePressedConfirmButton"
+      @close="closeDialog"
+    >
+      <template #dialog-body>
+        <p>
+          <span>{{ $t("deleteItemDialog.bodyTextStart") }}</span>
+          <span class="item-name">"{{ dialogEvent.deletedItemName }}"</span>
+          <span>{{ $t("deleteItemDialog.bodyTextEnd") }}</span>
+          <span v-if="dialogEvent.type === 'delete-folder'">
+            <br />
+            {{ $t("deleteItemDialog.bodyTextEndFolder") }}</span
+          >
+        </p>
+      </template>
+    </BaseDialog>
+  </ScaleTransition>
 </template>
 
 <style lang="scss" scoped>

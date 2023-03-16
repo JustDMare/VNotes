@@ -5,18 +5,31 @@ import { useEditorStore } from "@/stores/editor";
 import { computed } from "vue";
 
 const editorStore = useEditorStore();
-
+defineProps({
+  isSidebarOpen: {
+    type: Boolean,
+    required: true,
+  },
+});
+const emits = defineEmits(["toggle-sidebar"]);
 const scrollStateClass = computed(() => {
   return editorStore.commandPaletteOpen ? "disable-scroll" : "allow-scroll";
 });
 const note = computed(() => {
   return editorStore.noteInEditor;
 });
+function onToggleSidebar() {
+  emits("toggle-sidebar");
+}
 </script>
 
 <template>
   <div v-if="note" id="workspace" :class="scrollStateClass">
-    <NoteWorkspaceHeader id="ws__header" />
+    <NoteWorkspaceHeader
+      :is-sidebar-open="isSidebarOpen"
+      @toggle-sidebar="onToggleSidebar"
+      id="ws__header"
+    />
     <NoteEditor :note="note" id="ws__editor" />
   </div>
 </template>

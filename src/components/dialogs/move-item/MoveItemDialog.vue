@@ -5,6 +5,7 @@ import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../../base/BaseDialog.vue";
 import MoveItemDialogTargetFolderList from "./MoveItemDialogTargetFolderList.vue";
 import { useUserSpaceStore } from "@/stores/user-space";
+import { ScaleTransition } from "@/components/animations";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
@@ -56,28 +57,30 @@ function handleFolderSelected(folderId: string | null) {
 </script>
 
 <template>
-  <BaseDialog
-    :open="dialogEvent.isOpen"
-    v-show="dialogEvent.isOpen"
-    :title="$t('moveItemDialog.title', { itemType })"
-    :mainButtonText="$t('moveItemDialog.mainButtonText')"
-    :is-main-button-disabled="selectedNewParentFolderId === null"
-    @pressed-main-button="handlePressedConfirmButton"
-    @close="closeDialog"
-    class="move-item-dialog"
-  >
-    <template #dialog-body>
-      <p>
-        <span>{{ $t("moveItemDialog.bodyTextStart") }}</span>
-        <span class="item-name">"{{ dialogEvent.movedItemName }}"</span>
-        <span>{{ $t("moveItemDialog.bodyTextEnd") }}</span>
-      </p>
-      <MoveItemDialogTargetFolderList
-        :selected-new-parent-folder-id="selectedNewParentFolderId"
-        @folder-selected="handleFolderSelected"
-      />
-    </template>
-  </BaseDialog>
+  <ScaleTransition>
+    <BaseDialog
+      :open="dialogEvent.isOpen"
+      v-if="dialogEvent.isOpen"
+      :title="$t('moveItemDialog.title', { itemType })"
+      :mainButtonText="$t('moveItemDialog.mainButtonText')"
+      :is-main-button-disabled="selectedNewParentFolderId === null"
+      @pressed-main-button="handlePressedConfirmButton"
+      @close="closeDialog"
+      class="move-item-dialog"
+    >
+      <template #dialog-body>
+        <p>
+          <span>{{ $t("moveItemDialog.bodyTextStart") }}</span>
+          <span class="item-name">"{{ dialogEvent.movedItemName }}"</span>
+          <span>{{ $t("moveItemDialog.bodyTextEnd") }}</span>
+        </p>
+        <MoveItemDialogTargetFolderList
+          :selected-new-parent-folder-id="selectedNewParentFolderId"
+          @folder-selected="handleFolderSelected"
+        />
+      </template>
+    </BaseDialog>
+  </ScaleTransition>
 </template>
 
 <style lang="scss" scoped>

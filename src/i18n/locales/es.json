@@ -107,7 +107,8 @@
     "userDropdownButton": "Pulsar para acceder al menú de opciones de usuario",
     "newFolderButton": "Pulsar para crear una nueva carpeta en raíz",
     "newNoteButton": "Pulsar para crear una nueva nota en raíz",
-    "navigationItemOptionsButton": "Pulsar para acceder a las opciones de este elemento"
+    "navigationItemOptionsButton": "Pulsar para acceder a las opciones de este elemento",
+    "sidebarButton": "Pulsar para mostrar u ocultar el menú de navegación"
   },
   "altText": {
     "userDropdownProfilePicture": "Imagen de perfil del usuario"
