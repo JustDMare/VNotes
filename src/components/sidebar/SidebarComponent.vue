@@ -89,6 +89,9 @@ function onMouseDown(): void {
       transition: opacity 0.05s ease-in;
       opacity: 0;
     }
+    > .resizer {
+      display: none;
+    }
   }
 }
 
