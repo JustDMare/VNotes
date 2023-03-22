@@ -60,7 +60,7 @@ function handleFolderSelected(folderId: string | null) {
   <ScaleTransition>
     <BaseDialog
       :open="dialogEvent.isOpen"
-      v-if="dialogEvent.isOpen"
+      v-show="dialogEvent.isOpen"
       :title="$t('moveItemDialog.title', { itemType })"
       :mainButtonText="$t('moveItemDialog.mainButtonText')"
       :is-main-button-disabled="selectedNewParentFolderId === null"

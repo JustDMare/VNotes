@@ -1,22 +1,35 @@
 <script lang="ts" setup>
+import { i18n } from "@/i18n/i18n.plugin";
 import { useEventStore } from "@/stores/event";
 import { useUserSpaceStore } from "@/stores/user-space";
-import { computed, nextTick, ref, toRef, watchEffect } from "vue";
+import { computed, nextTick, ref, toRef, watchEffect, type Ref } from "vue";
 import { ScaleTransition } from "../animations";
 import BaseDialog from "../base/BaseDialog.vue";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
+const t = ref(i18n.global.t);
 
 const inputBox = ref<HTMLInputElement | null>(null);
 const inputText = ref("");
 
 const dialogEvent = toRef(eventStore, "createAndRenameItemDialogEvent");
+const dialogEventType = toRef(dialogEvent.value, "type");
 const isInputEmpty = computed(() => inputText.value.trim() === "");
+const itemType: Ref<string> = ref("");
+const actionType: Ref<"rename" | "create" | null> = ref(null);
 
 watchEffect(() => {
   if (dialogEvent.value.isOpen) {
     nextTick(() => inputBox.value?.focus());
+    dialogEventType.value === "create-folder" || dialogEventType.value === "rename-folder"
+      ? (itemType.value = t.value("itemType.folder"))
+      : (itemType.value = t.value("itemType.note"));
+  }
+  if (dialogEventType.value === "rename-folder" || dialogEventType.value === "rename-note") {
+    actionType.value = "rename";
+  } else if (dialogEventType.value === "create-folder" || dialogEventType.value === "create-note") {
+    actionType.value = "create";
   }
 });
 
@@ -29,7 +42,7 @@ function handlePressedMainButton() {
   if (isInputEmpty.value) {
     return;
   }
-  switch (dialogEvent.value.type) {
+  switch (dialogEventType.value) {
     case "create-folder":
       userSpaceStore.createFolder(inputText.value, dialogEvent.value.parentFolderId);
       break;
@@ -55,19 +68,21 @@ function handlePressedMainButton() {
   <ScaleTransition>
     <BaseDialog
       :open="dialogEvent.isOpen"
-      :title="$t(`createAndRenameItemDialog.${dialogEvent.type}.title`)"
-      :main-button-text="$t(`createAndRenameItemDialog.${dialogEvent.type}.mainButtonText`)"
+      :title="$t(`createAndRenameItemDialog.${actionType}.title`, { itemType })"
+      :main-button-text="$t(`createAndRenameItemDialog.${actionType}.mainButtonText`, { itemType })"
       @close="closeDialog"
       @pressed-main-button="handlePressedMainButton"
       :is-main-button-disabled="isInputEmpty"
-      v-if="dialogEvent.isOpen"
+      v-show="dialogEvent.isOpen"
     >
       <template #dialog-body>
         <label for="nameFolderOrNoteInput">
           <input
             v-model="inputText"
             id="nameFolderOrNoteInput"
-            :placeholder="$t(`createAndRenameItemDialog.${dialogEvent.type}.inputPlaceholder`)"
+            :placeholder="
+              $t(`createAndRenameItemDialog.${actionType}.inputPlaceholder`, { itemType })
+            "
             type="text"
             ref="inputBox"
             autocomplete="off"

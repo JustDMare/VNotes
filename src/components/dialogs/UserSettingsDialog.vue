@@ -18,7 +18,7 @@ function closeDialog() {
 
 <template>
   <ScaleTransition>
-    <section v-if="dialogEvent.isOpen" class="user-settings-dialog">
+    <section v-show="dialogEvent.isOpen" class="user-settings-dialog">
       <BaseDialog
         :title="$t('userSettings.dialogTitle')"
         :open="dialogEvent.isOpen"
