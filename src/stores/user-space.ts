@@ -10,6 +10,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
       _id: "",
       content: { folders: [], notes: [] },
     } as UserSpace,
+    parentHashTable: new Object(null),
     editorStore: useEditorStore(),
     auth0: useAuth0(),
   }),
@@ -28,6 +29,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
         data.json().then((json) => {
           this.userSpace._id = json.userSpace._id;
           this.userSpace.content = json.contentTree;
+          this.parentHashTable = json.parentHashTable;
         })
       );
     },
