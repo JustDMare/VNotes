@@ -10,7 +10,8 @@ export const useUserSpaceStore = defineStore("userSpace", {
       _id: "",
       content: { folders: [], notes: [] },
     } as UserSpace,
-    parentHashTable: new Object(null),
+    //TODO: Use a map instead? (also in backend)
+    parentHashTable: new Object(null) as Record<string, string>,
     editorStore: useEditorStore(),
     auth0: useAuth0(),
   }),

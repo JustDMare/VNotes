@@ -5,14 +5,28 @@
 
 import { useEditorStore } from "@/stores/editor";
 import { useUserSpaceStore } from "@/stores/user-space";
+import type { Folder } from "vnotes-types";
 import { computed } from "vue";
 
 const userSpaceStore = useUserSpaceStore();
 const editorStore = useEditorStore();
 
-//TODO: I think it'll be better to return the temporal hashmap from the backend that is
-//used to compute the nested folder structure to make it easy to find the breadcrumbs
 const breadcrumbs = computed(() => {
+  const note = editorStore.noteInEditor;
+  if (note) {
+    const breadcrumbs: Folder[] = [];
+    let parents: string[] = [];
+    let parentId = note.parentId;
+    while (parentId) {
+      parents.push(parentId);
+      parentId = userSpaceStore.parentHashTable[parentId];
+    }
+    parents = parents.reverse();
+    parents.forEach((parent: string) => {
+      //TODO: I have to rethink this
+      //breadcrumbs.push(userSpaceStore.userSpace.content.folders[parent]);
+    });
+  }
   return [];
 });
 </script>
