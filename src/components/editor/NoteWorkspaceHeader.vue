@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { formatLongDateAndTime } from "@/utils";
 import { useEditorStore } from "@/stores/editor";
+import { formatLongDateAndTime } from "@/utils";
 import { computed } from "vue";
 import { SaveIcon, SidebarCloseIcon, SidebarOpenIcon } from "../icons";
+import HeaderBreadcrumbs from "./HeaderBreadcrumbs.vue";
+
 const editorStore = useEditorStore();
 
 defineProps({
@@ -22,15 +24,18 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
 </script>
 
 <template>
-  <menu id="ws__header">
-    <button
-      @click="$emit('toggle-sidebar')"
-      class="ws__header__btn ws__header__toggle-sidebar-btn"
-      :title="$t('tooltips.sidebarButton')"
-    >
-      <SidebarCloseIcon v-if="isSidebarOpen" />
-      <SidebarOpenIcon v-else />
-    </button>
+  <menu class="ws__header">
+    <div class="ws__header--align-left">
+      <button
+        @click="$emit('toggle-sidebar')"
+        class="ws__header__btn ws__header__toggle-sidebar-btn"
+        :title="$t('tooltips.sidebarButton')"
+      >
+        <SidebarCloseIcon v-if="isSidebarOpen" />
+        <SidebarOpenIcon v-else />
+      </button>
+      <HeaderBreadcrumbs />
+    </div>
     <div class="ws__header__save-section">
       <div
         v-if="isSavingNote"
@@ -53,15 +58,18 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
 </template>
 
 <style scoped lang="scss">
-#ws__header {
+.ws__header {
   display: flex;
   background-color: var(--color-base-100);
   padding: 12px;
   justify-content: space-between;
   box-shadow: -8px 13px 43px 0px rgba(0, 0, 0, 0.03);
   align-items: center;
-}
-.ws__header {
+  &--align-left {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+  }
   &__btn {
     font-size: 14px;
     //Could be turned into a button--primmary class
