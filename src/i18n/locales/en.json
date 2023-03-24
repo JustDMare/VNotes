@@ -63,25 +63,15 @@
     "note": "note"
   },
   "createAndRenameItemDialog": {
-    "create-folder": {
-      "title": "Create new folder",
-      "inputPlaceholder": "Folder name",
-      "mainButtonText": "Create folder"
+    "create": {
+      "title": "Create {itemType}",
+      "inputPlaceholder": "Name of the {itemType}",
+      "mainButtonText": "Create {itemType}"
     },
-    "rename-folder": {
-      "title": "Rename folder",
-      "inputPlaceholder": "Folder name",
-      "mainButtonText": "Rename folder"
-    },
-    "create-note": {
-      "title": "Create new note",
-      "inputPlaceholder": "Note title",
-      "mainButtonText": "Create note"
-    },
-    "rename-note": {
-      "title": "Rename note",
-      "inputPlaceholder": "Note title",
-      "mainButtonText": "Rename note"
+    "rename": {
+      "title": "Rename {itemType}",
+      "inputPlaceholder": "New name of the {itemType}",
+      "mainButtonText": "Rename {itemType}"
     }
   },
   "deleteItemDialog": {

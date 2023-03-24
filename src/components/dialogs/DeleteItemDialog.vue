@@ -46,7 +46,7 @@ function closeDialog() {
   <ScaleTransition>
     <BaseDialog
       :open="dialogEvent.isOpen"
-      v-if="dialogEvent.isOpen"
+      v-show="dialogEvent.isOpen"
       :title="$t('deleteItemDialog.title', { itemType })"
       :mainButtonText="$t('deleteItemDialog.mainButtonText')"
       @pressed-main-button="handlePressedConfirmButton"

@@ -63,25 +63,15 @@
     "note": "nota"
   },
   "createAndRenameItemDialog": {
-    "create-folder": {
-      "title": "Crear nueva carpeta",
-      "inputPlaceholder": "Nombre de la carpeta",
-      "mainButtonText": "Crear carpeta"
+    "create": {
+      "title": "Crear {itemType}",
+      "inputPlaceholder": "Nombre de la {itemType}",
+      "mainButtonText": "Crear {itemType}"
     },
-    "rename-folder": {
-      "title": "Renombrar carpeta",
-      "inputPlaceholder": "Nombre de la carpeta",
-      "mainButtonText": "Renombrar carpeta"
-    },
-    "create-note": {
-      "title": "Crear nueva nota",
-      "inputPlaceholder": "Nombre de la nota",
-      "mainButtonText": "Crear nota"
-    },
-    "rename-note": {
-      "title": "Renombrar nota",
-      "inputPlaceholder": "Nombre de la nota",
-      "mainButtonText": "Renombrar nota"
+    "rename": {
+      "title": "Renombrar {itemType}",
+      "inputPlaceholder": "Nombre de la {itemType}",
+      "mainButtonText": "Renombrar {itemType}"
     }
   },
   "deleteItemDialog": {

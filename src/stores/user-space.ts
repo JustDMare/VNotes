@@ -10,6 +10,8 @@ export const useUserSpaceStore = defineStore("userSpace", {
       _id: "",
       content: { folders: [], notes: [] },
     } as UserSpace,
+    //TODO: Use a map instead? (also in backend)
+    parentHashTable: new Object(null) as Record<string, string>,
     editorStore: useEditorStore(),
     auth0: useAuth0(),
   }),
@@ -28,6 +30,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
         data.json().then((json) => {
           this.userSpace._id = json.userSpace._id;
           this.userSpace.content = json.contentTree;
+          this.parentHashTable = json.parentHashTable;
         })
       );
     },

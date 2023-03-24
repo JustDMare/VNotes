@@ -7,9 +7,7 @@ export default {};
 </script>
 
 <script setup lang="ts">
-defineProps<{
-  rotateDown: boolean;
-}>();
+defineProps({ rotateDown: { type: Boolean, required: false, default: false } });
 </script>
 
 <template>

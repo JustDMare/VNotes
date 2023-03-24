@@ -28,7 +28,7 @@ function handleDialogKeydown(event: KeyboardEvent) {
     event.stopImmediatePropagation();
     closeDialog();
   }
-  if (event.key === "Enter" && !props.isMainButtonDisabled) {
+  if (event.key === "Enter" && !props.isMainButtonDisabled && props.showFooter) {
     event.preventDefault();
     event.stopImmediatePropagation();
     pressMainButton();
