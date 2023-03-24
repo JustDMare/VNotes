@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import { useEditorStore } from "@/stores/editor";
-import { formatLongDateAndTime } from "@/utils";
-import { computed } from "vue";
-import { SaveIcon, SidebarCloseIcon, SidebarOpenIcon } from "../icons";
+import { SidebarCloseIcon, SidebarOpenIcon } from "../icons";
 import HeaderBreadcrumbs from "./HeaderBreadcrumbs.vue";
-
-const editorStore = useEditorStore();
+import HeaderSaveButton from "./HeaderSaveButton.vue";
 
 defineProps({
   isSidebarOpen: {
@@ -14,22 +10,14 @@ defineProps({
   },
 });
 defineEmits(["toggle-sidebar"]);
-const noteLastUpdatedTime = computed(() => {
-  if (!editorStore.noteInEditor) {
-    return null;
-  }
-  return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
-});
-const isSavingNote = computed(() => editorStore.isSavingNote);
-//TODO: Refactor Save button to clean code
 </script>
 
 <template>
   <menu class="ws__header">
-    <div class="ws__header--align-left">
+    <div class="ws__header__nav-section">
       <button
         @click="$emit('toggle-sidebar')"
-        class="ws__header__btn ws__header__toggle-sidebar-btn"
+        class="ws__header__btn ws__header__btn--toggle-sidebar"
         :title="$t('tooltips.sidebarButton')"
       >
         <SidebarCloseIcon v-if="isSidebarOpen" />
@@ -37,24 +25,7 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
       </button>
       <HeaderBreadcrumbs />
     </div>
-    <div class="ws__header__save-section">
-      <div
-        v-if="isSavingNote"
-        class="ws__header__save_section__saving-animation donut-animation"
-      ></div>
-      <span v-else-if="noteLastUpdatedTime" class="ws__header__save-section__text">
-        {{ $t("header.lastSaved", { date: noteLastUpdatedTime }) }}
-      </span>
-
-      <button
-        :title="$t('tooltips.saveButton')"
-        class="ws__header__btn ws__header__save-section__button"
-        @click="editorStore.saveNoteChanges()"
-      >
-        <SaveIcon />
-        <span>{{ $t("header.saveChanges") }}</span>
-      </button>
-    </div>
+    <HeaderSaveButton />
   </menu>
 </template>
 
@@ -66,67 +37,39 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
   justify-content: space-between;
   box-shadow: -8px 13px 43px 0px rgba(0, 0, 0, 0.03);
   align-items: center;
-  &--align-left {
+  &__nav-section {
     display: flex;
     align-items: center;
     column-gap: 12px;
   }
-  &__btn {
-    font-size: 14px;
-    //Could be turned into a button--primmary class
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    background: var(--color-base-100);
-    color: var(--color-text);
-    border: 1px solid var(--color-base-80);
-    border-radius: 4px;
-    gap: 6px;
-    padding: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    &:hover {
-      background: var(--color-base-80);
-      color: var(--x=color-base-0);
-    }
-    &:active {
-      transform: scale(0.95);
-    }
-    span {
-      font-size: inherit;
-    }
-  }
-  &__toggle-sidebar-btn {
-    border: none;
-  }
-  &__save-section {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    &__text {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--color-base-40);
-    }
-  }
 }
 
-@keyframes donut-spin {
-  0% {
-    transform: rotate(0deg);
+:deep(.ws__header__btn) {
+  font-size: 14px;
+  //Could be turned into a button--primary class
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background: var(--color-base-100);
+  color: var(--color-text);
+  border: 1px solid var(--color-base-80);
+  border-radius: 4px;
+  gap: 6px;
+  padding: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background: var(--color-base-80);
+    color: var(--x=color-base-0);
   }
-  100% {
-    transform: rotate(360deg);
+  &:active {
+    transform: scale(0.95);
+  }
+  span {
+    font-size: inherit;
   }
 }
-
-.donut-animation {
-  display: inline-block;
-  border: 3px solid var(--color-base-70);
-  border-left-color: var(--color-base-30);
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  animation: donut-spin 1s linear infinite;
+.ws__header__btn--toggle-sidebar {
+  border: none;
 }
 </style>
