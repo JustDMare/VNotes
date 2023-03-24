@@ -51,7 +51,7 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
       />
     </div>
     <!--TODO: Can be refactored into a component-->
-    <ul class="nav__folder__content" v-if="showContents">
+    <ul class="nav__folder__content" v-show="showContents">
       <NavigationFolder
         v-for="subfolderReference in folderReference.content.folders"
         :key="subfolderReference._id"
