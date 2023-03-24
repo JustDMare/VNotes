@@ -44,7 +44,6 @@ function computeBreadcrumbs() {
   }
   return breadcrumbs;
 }
-//TODO: MISSING BETTER STYLING
 </script>
 
 <template>
