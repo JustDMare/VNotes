@@ -50,7 +50,7 @@ function computeBreadcrumbs() {
 <template>
   <div class="header__breadcrumbs" v-if="note">
     <BreadcrumbComponent v-for="folder in breadcrumbs" :key="folder._id" :name="folder.name" />
-    <BreadcrumbComponent :name="note.title" :show-icon="false" />
+    <BreadcrumbComponent class="header__breadcrumbs__note" :name="note.title" :show-icon="false" />
   </div>
 </template>
 
@@ -58,5 +58,9 @@ function computeBreadcrumbs() {
 .header__breadcrumbs {
   display: flex;
   flex-direction: row;
+  &__note > :deep(.breadcrumb__text) {
+    font-weight: 600;
+    font-style: italic;
+  }
 }
 </style>

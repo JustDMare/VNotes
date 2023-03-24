@@ -17,7 +17,7 @@ defineProps({
 <template>
   <div class="breadcrumb">
     <span class="breadcrumb__text">{{ name }}</span>
-    <ChevronRightIcon class="icon" v-if="showIcon" />
+    <ChevronRightIcon class="breadcrumb__icon" v-if="showIcon" />
   </div>
 </template>
 
@@ -28,6 +28,9 @@ defineProps({
   align-items: center;
   &__text {
     font-size: 14px;
+  }
+  &__icon {
+    color: var(--color-base-40);
   }
 }
 </style>
