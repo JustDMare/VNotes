@@ -21,6 +21,7 @@ const noteLastUpdatedTime = computed(() => {
   return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
 });
 const isSavingNote = computed(() => editorStore.isSavingNote);
+//TODO: Refactor Save button to clean code
 </script>
 
 <template>
