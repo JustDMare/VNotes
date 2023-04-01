@@ -17,3 +17,4 @@ export { default as OptionsButtonIcon } from "./OptionsButtonIcon.vue";
 export { default as MoveItemIcon } from "./MoveItemIcon.vue";
 export { default as SidebarCloseIcon } from "./SidebarCloseIcon.vue";
 export { default as SidebarOpenIcon } from "./SidebarOpenIcon.vue";
+export { default as LogInIcon } from "./LogInIcon.vue";
