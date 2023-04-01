@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useAuth0 } from "@auth0/auth0-vue";
 import { LogInIcon } from "@/components/icons";
+import LanguageSelector from "@/components/LanguageSelector.vue";
 const { loginWithRedirect } = useAuth0();
 
 function login() {
@@ -13,66 +14,71 @@ function login() {
 </script>
 
 <template>
-  <article>
-    <header>
-      <h1>VNotes</h1>
-      <button @click="login">
-        <LogInIcon /> <span>{{ $t("auth.login") }}</span>
+  <article class="landing">
+    <header class="landing__header">
+      <LanguageSelector class="landing__header__lang-selector" />
+      <h1 class="landing__header__title">VNotes</h1>
+      <button class="landing__header__login-btn" @click="login">
+        <LogInIcon class="login-btn__icon" />
+        <span class="login-btn__text">{{ $t("auth.login") }}</span>
       </button>
     </header>
     <main>
-      <section>
-        <p>
+      <section class="landing__body">
+        <p class="landing__body__paragraph">
           VNotes is an intuitive and minimalistic writing app that draws inspiration from
           widely-used productivity tools like Notion, Craft, and Obsidian. The primary goal of
           VNotes is to provide users with a streamlined UI/UX, and focusing on simplicity and
           user-friendliness.
         </p>
-        <p>
+        <p class="landing__body__paragraph">
           VNotes was developed by Daniel Adrian Mare as part of his Final Degree Project at the
           University of Oviedo under the guidance of tutor José Manuel Redondo López.
         </p>
         <img src="@/assets/landing-image.png" alt="screenshot of the application" />
-        <h2>Technologies</h2>
-        <p>
+        <h2 class="landing__body__title2">Technologies</h2>
+        <p class="landing__body__paragraph">
           <span>
             The application has been divided into a traditional frontend-backend architecture using
             the technologies listed below. For a more comprehesive list on all the third party
             packages and their licensing, visit the
           </span>
-          <a href="https://github.com/JustDMare/VNotes/blob/main/NOTICE">frontend Notice file </a>
+          <a href="https://github.com/JustDMare/VNotes/blob/main/NOTICE">frontend NOTICE file </a>
           <span> and the </span>
           <a href="https://github.com/JustDMare/VNotes-Server/blob/main/NOTICE"
-            >backend Notice file</a
+            >backend NOTICE file</a
           >
         </p>
-        <h3>Frontend</h3>
+        <h3 class="landing__body__title3">Frontend</h3>
         <ul>
-          <li>Vuejs 3: Component library used to build the front of the application</li>
+          <li>Vue.js 3: Component library used to build the front of the application.</li>
           <li>
-            Typescript: Used for type checking across the application and across both the backend
-            and frontend
+            Typescript: Used for type checking across the front and for backend-frontend
+            communication.
           </li>
           <li>Vue-router: Vue's solution for routing</li>
-          <li>Vue-i18n: Internationalization library for Vue applications</li>
-          <li>Pinia: State management library created by the Vue team</li>
+          <li>Vue-i18n: Internationalization library for Vue applications.</li>
+          <li>Pinia: State management library created by the Vue team.</li>
           <li>
             Sortablejs-vue: Library to easily implement drag n' drop sorting. Derived from
             Sortablejs and made for Vue 3 apps.
           </li>
-          <li>Match-sorter: Enables search and sort functionality at a frontend level.</li>
+          <li>Match-sorter: Enables simple search and sort functionalities.</li>
         </ul>
         <p>Icons obtained via the Lucide icon set</p>
-        <h3>Backend</h3>
-        <p>
-          The application uses auth0 for authentication and authorization, and MongoDB Atlas for the
+        <h3 class="landing__body__title3">Backend</h3>
+        <p class="landing__body__paragraph">
+          The application uses Auth0 for authentication and authorization, and MongoDB Atlas for the
           database
         </p>
         <ul>
-          <li>Node v16</li>
-          <li>Express</li>
-          <li>Mongoose</li>
-          <li>Typescript</li>
+          <li>Node.js v16: Runtime that allows the use of Javascript for backend development.</li>
+          <li>Express.js: Lightweight framework used for the creation of the backend API</li>
+          <li>Mongoose: ODM library used to interact with MongoDB from the server</li>
+          <li>
+            Typescript: Used mainly to typecheck the Mongoose models and make sure they are
+            compatible with the frontend
+          </li>
         </ul>
       </section>
     </main>
