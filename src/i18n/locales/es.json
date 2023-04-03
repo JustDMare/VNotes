@@ -102,5 +102,71 @@
   },
   "altText": {
     "userDropdownProfilePicture": "Imagen de perfil del usuario"
+  },
+  "landingPage": {
+    "appDescription": "VNotes es una aplicación de escritura intuitiva y minimalista inspirada en populares herramientas de productividad como Notion, Craft y Obsidian. El objetivo principal de VNotes es proporcionar a los usuarios una interfaz y experiencia de usuario pulidas, centrándose en la simplicidad y la facilidad de uso.",
+    "developedBy": "VNotes ha sido desarrollado por Daniel Adrian Mare como parte de su Trabajo de Fin de Grado en la Universidad de Oviedo, bajo el tuelaje del profesor José Manuel Redondo López.",
+    "appScreenshotAlt": "Captura de pantalla de la aplicación",
+    "technologies": {
+      "title": "Tecnologías",
+      "notice": {
+        "part1": "",
+        "part2": "",
+        "part3": "",
+        "part4": "",
+        "part5": ""
+      },
+      "frontend": {
+        "title": "Frontend",
+        "iconSet": "",
+        "list": [
+          {
+            "name": "Vue.js 3",
+            "description": ""
+          },
+          {
+            "name": "Typescript",
+            "description": "Vue-router"
+          },
+          {
+            "name": "Vue-i18n",
+            "description": ""
+          },
+          {
+            "name": "Pinia",
+            "description": ""
+          },
+          {
+            "name": "Sortablejs-vue",
+            "description": ""
+          },
+          {
+            "name": "Match-sorter",
+            "description": ""
+          }
+        ]
+      },
+      "backend": {
+        "title": "Backend",
+        "list": [
+          {
+            "name": "Node.js v16",
+            "description": ""
+          },
+          {
+            "name": "Express.js",
+            "description": "Vue-router"
+          },
+          {
+            "name": "Mongoose",
+            "description": ""
+          },
+          {
+            "name": "Typescript",
+            "description": ""
+          }
+        ]
+      }
+    }
   }
 }
