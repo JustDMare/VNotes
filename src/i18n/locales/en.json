@@ -110,7 +110,7 @@
     "technologies": {
       "title": "Technologies",
       "notice": {
-        "part1": "The application has been divided into a traditional frontend-backend architecture using the technologies listed below. For a more comprehesive list on all the third party packages and their licensing, visit the ",
+        "part1": "The application has been structured with a traditional frontend-backend architecture, connected via a REST API, and using the technologies listed below. For a more comprehensive list of all the third-party packages and their licensing, visit the ",
         "part2": "frontend NOTICE file ",
         "part3": "and the ",
         "part4": "backend NOTICE file",
@@ -138,7 +138,7 @@
           },
           {
             "name": "Pinia",
-            "description": "State management library created by the Vue team."
+            "description": "State management library for Vue.js."
           },
           {
             "name": "Sortablejs-vue",
@@ -146,7 +146,7 @@
           },
           {
             "name": "Match-sorter",
-            "description": "Enables simple search and sort functionalities. Used in the command palette."
+            "description": "Library that enables simple sorting and filtering of arrays using fuzzy search. Used in the command palette."
           }
         ]
       },

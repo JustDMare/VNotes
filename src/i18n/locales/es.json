@@ -110,39 +110,43 @@
     "technologies": {
       "title": "Tecnologías",
       "notice": {
-        "part1": "",
-        "part2": "",
-        "part3": "",
-        "part4": "",
-        "part5": ""
+        "part1": "La aplicación se ha estructurado con una arquitectura tradicional de frontend-backend, conectada mediante una API REST, y utilizando las tecnologías enumeradas a continuación. Para obtener una lista más completa de todos los paquetes de terceros y sus licencias, visite el ",
+        "part2": "archivo NOTICE del frontend ",
+        "part3": "y el ",
+        "part4": "archivo NOTICE del backend",
+        "part5": "."
       },
       "frontend": {
         "title": "Frontend",
-        "iconSet": "",
+        "iconSet": "Iconos obtenidos del conjunto de iconos de Lucide.",
         "list": [
           {
             "name": "Vue.js 3",
-            "description": ""
+            "description": "Librería de componentes usada para construir el frontend de la aplicación."
           },
           {
             "name": "Typescript",
-            "description": "Vue-router"
+            "description": "Usado para añadir tipado estático al front y a la comunicación entre frontend y backend."
+          },
+          {
+            "name": "Vue-router",
+            "description": "Solución de enrutamientoy navegación para Vue.js."
           },
           {
             "name": "Vue-i18n",
-            "description": ""
+            "description": "Librería de internacionalización para Vue.js."
           },
           {
             "name": "Pinia",
-            "description": ""
+            "description": "Librería de gestión de estado para Vue.js."
           },
           {
             "name": "Sortablejs-vue",
-            "description": ""
+            "description": "Librería para implementar la funcionalidad de ordenación mediante 'drag and drop'. Derivada de la librería Sortable.js y creada para aplicaciones basadas en Vue 3."
           },
           {
             "name": "Match-sorter",
-            "description": ""
+            "description": "Librería que ofrece ordenado y filtrado de listas usando búsqueda difusa. Usada en la paleta de comandos."
           }
         ]
       },
@@ -151,19 +155,27 @@
         "list": [
           {
             "name": "Node.js v16",
-            "description": ""
+            "description": "Entorno de ejecución que permite el uso de JavaScript para desarrollo de backend."
           },
           {
             "name": "Express.js",
-            "description": "Vue-router"
+            "description": "Framework ligero para Node.js utilizado para la creación de la API REST que conecta el frontend con el backend."
+          },
+          {
+            "name": "MongoDB Atlas",
+            "description": "Base de datos no relacional basada en la nube usada para almacenar los datos de la aplicación."
+          },
+          {
+            "name": "Auth0",
+            "description": "Servicio de autenticación y autorización que permite la gestión de usuarios y la autenticación de los mismos."
           },
           {
             "name": "Mongoose",
-            "description": ""
+            "description": "Librería de modelado de objetos de MongoDB usada para interactuar con la base de datos."
           },
           {
             "name": "Typescript",
-            "description": ""
+            "description": "Usado principalmente para añadir tipado estático a los modelos de Mongoose para asegurar su compatibilidad con el frontend."
           }
         ]
       }
