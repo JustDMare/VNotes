@@ -2,7 +2,7 @@
 import { useEditorStore } from "@/stores/editor";
 import { useUserSpaceStore } from "@/stores/user-space";
 import type { Folder, Note } from "vnotes-types";
-import { computed } from "vue";
+import { ref, toRef, watchEffect } from "vue";
 import BreadcrumbComponent from "./BreadcrumbComponent.vue";
 
 //TODO: On Click I could open a component like NavigationItemOptionsDropdown that allows
@@ -12,13 +12,20 @@ const userSpaceStore = useUserSpaceStore();
 const editorStore = useEditorStore();
 
 const note: Note | null = editorStore.noteInEditor;
+const parentHashtable = toRef(userSpaceStore, "parentHashTable");
 
-const breadcrumbs = computed(() => {
-  return computeBreadcrumbs();
+const breadcrumbs = ref<Folder[]>([]);
+
+watchEffect(() => {
+  if (parentHashtable.value) {
+    console.log("changed");
+    computeBreadcrumbs();
+    console.log(breadcrumbs.value);
+  }
 });
 
 function computeBreadcrumbs() {
-  const breadcrumbs: Folder[] = [];
+  breadcrumbs.value = [];
   if (!note) {
     return breadcrumbs;
   }
@@ -28,7 +35,7 @@ function computeBreadcrumbs() {
   parents.forEach((parent: string) => {
     parentFolder = currentLevelParents.find((folder: Folder) => folder._id === parent);
     if (parentFolder) {
-      breadcrumbs.push(parentFolder);
+      breadcrumbs.value.push(parentFolder);
       currentLevelParents = parentFolder.content.folders;
     }
   });
@@ -36,6 +43,7 @@ function computeBreadcrumbs() {
   function getOrderedParentIds(note: Note) {
     let parents: string[] = [];
     let parentId = note.parentId;
+    console.log(parent);
     while (parentId) {
       parents.push(parentId);
       parentId = userSpaceStore.parentHashTable[parentId];

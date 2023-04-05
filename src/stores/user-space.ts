@@ -30,7 +30,7 @@ export const useUserSpaceStore = defineStore("userSpace", {
         data.json().then((json) => {
           this.userSpace._id = json.userSpace._id;
           this.userSpace.content = json.contentTree;
-          this.parentHashTable = json.parentHashTable;
+          Object.assign(this.parentHashTable, json.parentHashTable);
         })
       );
     },
@@ -240,9 +240,16 @@ export const useUserSpaceStore = defineStore("userSpace", {
           data
             .json()
             .then(async () => {
-              await this.fetchAllUserSpaceContent().catch((error) => {
-                console.log(error);
-              });
+              const editorStore = useEditorStore();
+              await this.fetchAllUserSpaceContent()
+                .then(() => {
+                  if (editorStore.noteInEditor) {
+                    editorStore.setNoteInEditorParentId(newParentId);
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
             })
             .catch((error) => {
               console.log(error);
