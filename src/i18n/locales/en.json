@@ -12,7 +12,7 @@
     "newNoteButton": "New note"
   },
   "auth": {
-    "login": "Log in",
+    "login": "Sign in",
     "logout": "Logout"
   },
   "commandPalette": {
