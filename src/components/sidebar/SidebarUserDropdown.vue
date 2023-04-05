@@ -33,7 +33,7 @@ const authUser = computed(() => auth0.user.value);
       >
         {{ $t("userSettings.userDropdownButton") }}
       </button>
-      <button class="user-dropdown__option" @click="handleLogout, closeOnClick()">
+      <button class="user-dropdown__option" @click="handleLogout(), closeOnClick()">
         {{ $t("auth.logout") }}
       </button>
     </template>

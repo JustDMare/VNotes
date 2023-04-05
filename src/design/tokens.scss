@@ -9,6 +9,7 @@
   //Color Palette
   //TODO: Revisar paleta de colores. Tal vez son demasiado apagados
   --color-text: var(--color-base-10);
+  --color-link: #3377c9;
   --color-base-100: #ffffff;
   --color-base-90: #f8f9fa;
   --color-base-80: #e9ecef;
@@ -22,8 +23,4 @@
   --color-base-0: #000000;
 
   --color-background: var(--color-base-100);
-}
-
-:root {
-  --checkbox-checked: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M20 6L9 17l-5-5'/%3E%3C/svg%3E";
 }

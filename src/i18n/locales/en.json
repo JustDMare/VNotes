@@ -12,7 +12,7 @@
     "newNoteButton": "New note"
   },
   "auth": {
-    "login": "Login",
+    "login": "Sign in",
     "logout": "Logout"
   },
   "commandPalette": {
@@ -102,5 +102,83 @@
   },
   "altText": {
     "userDropdownProfilePicture": "Profile image of the user"
+  },
+  "landingPage": {
+    "appDescription": "VNotes is an intuitive and minimalistic writing app that draws inspiration from widely-used productivity tools like Notion, Craft and Obsidian. The primary goal of  VNotes is to provide users with a streamlined UI/UX, and focusing on user-friendliness.",
+    "developedBy": "VNotes was developed by Daniel Adrian Mare as part of his Final Degree Project at the University of Oviedo under the guidance of professor José Manuel Redondo López.",
+    "appScreenshotAlt": "Screenshot of the application",
+    "technologies": {
+      "title": "Technologies",
+      "notice": {
+        "part1": "The application has been structured with a traditional frontend-backend architecture, connected via a REST API, and using the technologies listed below. For a more comprehensive list of all the third-party packages and their licensing, visit the ",
+        "part2": "frontend NOTICE file ",
+        "part3": "and the ",
+        "part4": "backend NOTICE file",
+        "part5": "."
+      },
+      "frontend": {
+        "title": "Frontend",
+        "iconSet": "Icons obtained via the Lucide icon set",
+        "list": [
+          {
+            "name": "Vue.js 3",
+            "description": "Component library used to build the front of the application."
+          },
+          {
+            "name": "Typescript",
+            "description": "Used for type checking across the front and for backend-frontend communication."
+          },
+          {
+            "name": "Vue-router",
+            "description": "Vue's solution for routing and app navigation."
+          },
+          {
+            "name": "Vue-i18n",
+            "description": "Internationalization library for Vue applications."
+          },
+          {
+            "name": "Pinia",
+            "description": "State management library for Vue.js."
+          },
+          {
+            "name": "Sortablejs-vue",
+            "description": "Library to easily implement drag and drop sorting. Derived from Sortablejs and made for Vue 3 apps."
+          },
+          {
+            "name": "Match-sorter",
+            "description": "Library that enables simple sorting and filtering of arrays using fuzzy search. Used in the command palette."
+          }
+        ]
+      },
+      "backend": {
+        "title": "Backend",
+        "list": [
+          {
+            "name": "Node.js v16",
+            "description": "Runtime that allows the use of Javascript for backend development."
+          },
+          {
+            "name": "Express.js",
+            "description": "Lightweight framework used for the creation of the backend API."
+          },
+          {
+            "name": "MongoDB Atlas",
+            "description": "Non-relational cloud database used for the application's data storage."
+          },
+          {
+            "name": "Auth0",
+            "description": "Authentication and authorization service used for the application's user management."
+          },
+          {
+            "name": "Mongoose",
+            "description": "ODM library used to interact with MongoDB from the server."
+          },
+          {
+            "name": "Typescript",
+            "description": "Used mainly to typecheck the Mongoose models and make sure they are compatible with the frontend."
+          }
+        ]
+      }
+    }
   }
 }
