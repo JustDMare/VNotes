@@ -25,38 +25,34 @@ function login() {
     </header>
     <main>
       <section class="landing__body">
-        <p class="landing__body__paragraph">
-          {{ $t("landingPage.appDescription") }}
-        </p>
-        <p class="landing__body__paragraph">
-          {{ $t("landingPage.developedBy") }}
-        </p>
+        <p>{{ $t("landingPage.appDescription") }}</p>
+        <p>{{ $t("landingPage.developedBy") }}</p>
         <img src="@/assets/landing-image.png" :alt="$t('landingPage.appScreenshotAlt')" />
         <h2 class="landing__body__title2">{{ $t("landingPage.technologies.title") }}</h2>
-        <p class="landing__body__paragraph">
+        <p>
           <span> {{ $t("landingPage.technologies.notice.part1") }}</span>
-          <a href="https://github.com/JustDMare/VNotes/blob/main/NOTICE">
+          <a class="link" href="https://github.com/JustDMare/VNotes/blob/main/NOTICE">
             {{ $t("landingPage.technologies.notice.part2") }}
           </a>
           <span>{{ $t("landingPage.technologies.notice.part3") }}</span>
-          <a href="https://github.com/JustDMare/VNotes-Server/blob/main/NOTICE">
+          <a class="link" href="https://github.com/JustDMare/VNotes-Server/blob/main/NOTICE">
             {{ $t("landingPage.technologies.notice.part4") }}
           </a>
           <span>{{ $t("landingPage.technologies.notice.part5") }}</span>
         </p>
-        <h3 class="landing__body__title3">{{ $t("landingPage.technologies.frontend.title") }}</h3>
-        <ul>
+        <h3>{{ $t("landingPage.technologies.frontend.title") }}</h3>
+        <ul class="technology-list">
           <li v-for="(item, index) in $tm('landingPage.technologies.frontend.list')" :key="index">
-            <span>{{ item.name }}: </span>{{ item.description }}
+            <span class="list-item--bold">{{ item.name }}: </span>{{ item.description }}
           </li>
         </ul>
         <p>{{ $t("landingPage.technologies.frontend.iconSet") }}</p>
-        <h3 class="landing__body__title3">
+        <h3>
           {{ $t("landingPage.technologies.backend.title") }}
         </h3>
-        <ul>
+        <ul class="technology-list">
           <li v-for="(item, index) in $tm('landingPage.technologies.backend.list')" :key="index">
-            <span>{{ item.name }}: </span>{{ item.description }}
+            <span class="list-item--bold">{{ item.name }}: </span>{{ item.description }}
           </li>
         </ul>
       </section>
@@ -74,13 +70,11 @@ function login() {
   &__header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-
     justify-items: end; /* Aligns grid items to the start (left) */
-    align-items: center; /* Aligns grid items to the center (vertically) */
+    align-items: center;
     box-shadow: -8px 13px 43px 0px rgba(0, 0, 0, 0.03);
-
     background-color: var(--color-base-100);
-    padding: 12px;
+    padding: 1rem 2rem;
     &__lang-selector {
       grid-column: 1/1;
       justify-self: start;
@@ -122,22 +116,41 @@ function login() {
       }
     }
   }
-
   main {
     height: 100%;
     width: 100%;
     overflow-y: auto;
-    section {
+    .landing__body {
       display: flex;
       flex-direction: column;
-      padding: 12px;
-      max-width: 900px;
+      padding: 2rem 1rem 1rem;
+      max-width: 800px;
       margin: auto;
       gap: 12px;
-    }
-    img {
-      max-width: 900px;
-      align-self: center;
+      img {
+        max-width: inherit;
+        padding: 1rem;
+        align-self: center;
+      }
+      .link {
+        color: var(--color-link);
+        text-decoration: none;
+
+        &:visited {
+          color: var(--color-base-40);
+        }
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      .technology-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 6px;
+        .list-item--bold {
+          font-weight: 600;
+        }
+      }
     }
   }
 }
