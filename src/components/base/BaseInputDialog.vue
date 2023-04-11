@@ -7,6 +7,7 @@ const props = defineProps({
   mainButtonText: { type: String, required: true },
   isOpen: { type: Boolean, required: true },
   placeholderText: { type: String, required: true },
+  initialInputText: { type: String, required: false, default: "" },
 });
 const emit = defineEmits<{
   (e: "close"): void;
@@ -20,7 +21,12 @@ const isInputEmpty = computed(() => inputText.value.trim() === "");
 
 watchEffect(() => {
   if (props.isOpen) {
-    nextTick(() => inputBox.value?.focus());
+    if (!props.initialInputText) {
+      nextTick(() => inputBox.value?.focus());
+    } else {
+      inputText.value = props.initialInputText;
+      nextTick(() => inputBox.value?.select());
+    }
   } else {
     inputText.value = "";
   }

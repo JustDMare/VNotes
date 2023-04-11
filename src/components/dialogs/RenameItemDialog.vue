@@ -49,6 +49,7 @@ function handlePressedMainButton(inputText: string) {
       :title="$t('renameItemDialog.title', { itemType })"
       :placeholder-text="$t('renameItemDialog.placeholderText', { itemType })"
       :main-button-text="$t('renameItemDialog.mainButtonText', { itemType })"
+      :initial-input-text="dialogEvent.renamedItemName!"
       @close="closeDialog"
       @pressed-main-button="handlePressedMainButton"
     ></BaseInputDialog>
