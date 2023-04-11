@@ -193,6 +193,12 @@ export const useEditorStore = defineStore("editor", {
     removeNoteFromEditor(): void {
       this.noteInEditor = null;
     },
+    setNoteInEditorParentId(parentId: string | null): void {
+      if (this.noteInEditor) {
+        //TODO: Maybe change the TYPES to use null instead of undefined
+        this.noteInEditor.parentId = parentId ?? undefined;
+      }
+    },
   },
 });
 //TODO: Documentar
