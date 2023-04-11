@@ -1,11 +1,16 @@
 import { defineStore } from "pinia";
 
 //TODO: Move to a separate file?
-export interface CreateAndRenameItemDialogEvent {
+export interface CreateItemDialogEvent {
   isOpen: boolean;
-  type: "create-folder" | "rename-folder" | "create-note" | "rename-note" | null;
-  renamedItemId: string | null;
+  type: "create-folder" | "create-note" | null;
   parentFolderId: string | null;
+}
+export interface RenameItemDialogEvent {
+  isOpen: boolean;
+  type: "rename-folder" | "rename-note" | null;
+  renamedItemId: string | null;
+  renamedItemName: string | null;
 }
 export interface DeleteItemDialogEvent {
   isOpen: boolean;
@@ -28,12 +33,17 @@ export interface UserSettingsDialogEvent {
 
 export const useEventStore = defineStore("event", {
   state: () => ({
-    createAndRenameItemDialogEvent: {
+    createItemDialogEvent: {
+      isOpen: false,
+      type: null,
+      parentFolderId: null,
+    } as CreateItemDialogEvent,
+    renameItemDialogEvent: {
       isOpen: false,
       type: null,
       renamedItemId: null,
-      parentFolderId: null,
-    } as CreateAndRenameItemDialogEvent,
+      renamedItemName: null,
+    } as RenameItemDialogEvent,
     deleteItemDialogEvent: {
       isOpen: false,
       type: null,
@@ -53,31 +63,40 @@ export const useEventStore = defineStore("event", {
   getters: {},
   actions: {
     openCreateItemDialog(
-      type: NonNullable<CreateAndRenameItemDialogEvent["type"]>,
+      type: NonNullable<CreateItemDialogEvent["type"]>,
       parentFolderId: string | null = null
     ) {
-      Object.assign(this.createAndRenameItemDialogEvent, {
+      Object.assign(this.createItemDialogEvent, {
         isOpen: true,
         type,
         parentFolderId,
       });
     },
     openRenameItemDialog(
-      type: NonNullable<CreateAndRenameItemDialogEvent["type"]>,
-      renamedItemId: string
+      type: NonNullable<RenameItemDialogEvent["type"]>,
+      renamedItemId: string,
+      renamedItemName: string
     ) {
-      Object.assign(this.createAndRenameItemDialogEvent, {
+      Object.assign(this.renameItemDialogEvent, {
         isOpen: true,
         type,
         renamedItemId,
+        renamedItemName,
       });
     },
-    closeCreateAndRenameItemDialog() {
-      Object.assign(this.createAndRenameItemDialogEvent, {
+    closeCreateItemDialog() {
+      Object.assign(this.createItemDialogEvent, {
         isOpen: false,
         type: null,
         parentFolderId: null,
+      });
+    },
+    closeRenameItemDialog() {
+      Object.assign(this.renameItemDialogEvent, {
+        isOpen: false,
+        type: null,
         renamedItemId: null,
+        renamedItemName: null,
       });
     },
     openDeleteItemDialog(

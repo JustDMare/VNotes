@@ -26,7 +26,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
       name: t("navigationItemOptions.rename"),
       icon: RenameIcon,
       execute: () => {
-        eventStore.openRenameItemDialog("rename-folder", folderId);
+        eventStore.openRenameItemDialog("rename-folder", folderId, folderName);
       },
     },
     {

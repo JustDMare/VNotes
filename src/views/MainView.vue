@@ -3,10 +3,11 @@ import { SidebarComponent } from "@/components/sidebar";
 import { NoteWorkspace } from "@/components/editor";
 import CommandPalette from "@/components/editor/command-palette/CommandPalette.vue";
 import {
-  CreateAndRenameItemDialog,
+  CreateItemDialog,
   MoveItemDialog,
   DeleteItemDialog,
   UserSettingsDialog,
+  RenameItemDialog,
 } from "@/components/dialogs";
 import { ref } from "vue";
 
@@ -26,7 +27,8 @@ function onToggleSidebar() {
     />
   </div>
   <CommandPalette />
-  <CreateAndRenameItemDialog />
+  <CreateItemDialog />
+  <RenameItemDialog />
   <DeleteItemDialog />
   <MoveItemDialog />
   <UserSettingsDialog />

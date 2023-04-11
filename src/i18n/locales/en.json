@@ -62,18 +62,17 @@
     "folder": "folder",
     "note": "note"
   },
-  "createAndRenameItemDialog": {
-    "create": {
-      "title": "Create {itemType}",
-      "inputPlaceholder": "Name of the {itemType}",
-      "mainButtonText": "Create {itemType}"
-    },
-    "rename": {
-      "title": "Rename {itemType}",
-      "inputPlaceholder": "New name of the {itemType}",
-      "mainButtonText": "Rename {itemType}"
-    }
+  "createItemDialog": {
+    "title": "Create {itemType}",
+    "placeholderText": "Name of the {itemType}",
+    "mainButtonText": "Create {itemType}"
   },
+  "renameItemDialog": {
+    "title": "Rename {itemType}",
+    "placeholderText": "New name of the {itemType}",
+    "mainButtonText": "Rename {itemType}"
+  },
+
   "deleteItemDialog": {
     "title": "Delete {itemType}",
     "mainButtonText": "Delete {itemType}",

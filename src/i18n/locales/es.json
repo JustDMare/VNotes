@@ -62,17 +62,15 @@
     "folder": "carpeta",
     "note": "nota"
   },
-  "createAndRenameItemDialog": {
-    "create": {
-      "title": "Crear {itemType}",
-      "inputPlaceholder": "Nombre de la {itemType}",
-      "mainButtonText": "Crear {itemType}"
-    },
-    "rename": {
-      "title": "Renombrar {itemType}",
-      "inputPlaceholder": "Nombre de la {itemType}",
-      "mainButtonText": "Renombrar {itemType}"
-    }
+  "createItemDialog": {
+    "title": "Crear {itemType}",
+    "placeholderText": "Nombre de la {itemType}",
+    "mainButtonText": "Crear {itemType}"
+  },
+  "renameItemDialog": {
+    "title": "Renombrar {itemType}",
+    "placeholderText": "Nombre de la {itemType}",
+    "mainButtonText": "Renombrar {itemType}"
   },
   "deleteItemDialog": {
     "title": "Eliminar {itemType}",
