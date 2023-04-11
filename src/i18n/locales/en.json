@@ -15,6 +15,10 @@
     "login": "Sign in",
     "logout": "Logout"
   },
+  "emptyWorkspace": {
+    "title": "No note selected",
+    "subtitle": "Create or select a note from the sidebar to start editing."
+  },
   "commandPalette": {
     "convertBlockType": {
       "plainText": {
