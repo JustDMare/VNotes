@@ -5,9 +5,6 @@ import type { Folder, Note } from "vnotes-types";
 import { ref, toRef, watchEffect } from "vue";
 import BreadcrumbComponent from "./BreadcrumbComponent.vue";
 
-//TODO: On Click I could open a component like NavigationItemOptionsDropdown that allows
-//me to create/edit/delete/etc in the parents of the note. Or do something similar to
-//Obsidian where it opens the parent folders in the sidebar and highlights them
 const userSpaceStore = useUserSpaceStore();
 const editorStore = useEditorStore();
 
@@ -18,9 +15,7 @@ const breadcrumbs = ref<Folder[]>([]);
 
 watchEffect(() => {
   if (parentHashtable.value) {
-    console.log("changed");
     computeBreadcrumbs();
-    console.log(breadcrumbs.value);
   }
 });
 
@@ -43,7 +38,6 @@ function computeBreadcrumbs() {
   function getOrderedParentIds(note: Note) {
     let parents: string[] = [];
     let parentId = note.parentId;
-    console.log(parent);
     while (parentId) {
       parents.push(parentId);
       parentId = userSpaceStore.parentHashTable[parentId];
