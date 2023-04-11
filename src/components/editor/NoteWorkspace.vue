@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import EmptyWorkspace from "./EmptyWorkspace.vue";
 import NoteEditor from "./NoteEditor.vue";
 import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
 import { useEditorStore } from "@/stores/editor";
@@ -32,6 +33,7 @@ function onToggleSidebar() {
     />
     <NoteEditor :note="note" id="ws__editor" />
   </div>
+  <EmptyWorkspace v-else />
 </template>
 
 <style scoped lang="scss">

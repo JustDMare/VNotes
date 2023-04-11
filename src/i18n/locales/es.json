@@ -15,6 +15,10 @@
     "login": "Iniciar sesión",
     "logout": "Salir de sesión"
   },
+  "emptyWorkspace": {
+    "title": "No hay ninguna nota seleccionada",
+    "subtitle": "Cree o seleccione una nota de la barra lateral para comenzar a escribir."
+  },
   "commandPalette": {
     "convertBlockType": {
       "plainText": {
