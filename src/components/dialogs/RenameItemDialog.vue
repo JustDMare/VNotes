@@ -10,28 +10,32 @@ const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
 const t = ref(i18n.global.t);
 
-const dialogEvent = toRef(eventStore, "createItemDialogEvent");
+const dialogEvent = toRef(eventStore, "renameItemDialogEvent");
 const itemType: Ref<string> = ref("");
 
 watchEffect(() => {
   if (dialogEvent.value.isOpen) {
-    dialogEvent.value.type === "create-folder"
+    dialogEvent.value.type === "rename-folder"
       ? (itemType.value = t.value("itemType.folder"))
       : (itemType.value = t.value("itemType.note"));
   }
 });
 
 function closeDialog() {
-  eventStore.closeCreateItemDialog();
+  eventStore.closeRenameItemDialog();
 }
 
 function handlePressedMainButton(inputText: string) {
   switch (dialogEvent.value.type) {
-    case "create-folder":
-      userSpaceStore.createFolder(inputText, dialogEvent.value.parentFolderId);
+    case "rename-folder":
+      if (dialogEvent.value.renamedItemId) {
+        userSpaceStore.renameFolder(dialogEvent.value.renamedItemId, inputText);
+      }
       break;
-    case "create-note":
-      userSpaceStore.createNote(inputText, dialogEvent.value.parentFolderId);
+    case "rename-note":
+      if (dialogEvent.value.renamedItemId) {
+        userSpaceStore.renameNote(dialogEvent.value.renamedItemId, inputText);
+      }
       break;
   }
   closeDialog();
@@ -42,9 +46,9 @@ function handlePressedMainButton(inputText: string) {
   <ScaleTransition>
     <BaseInputDialog
       :is-open="dialogEvent.isOpen"
-      :title="$t('createItemDialog.title', { itemType })"
-      :placeholder-text="$t('createItemDialog.placeholderText', { itemType })"
-      :main-button-text="$t('createItemDialog.mainButtonText', { itemType })"
+      :title="$t('renameItemDialog.title', { itemType })"
+      :placeholder-text="$t('renameItemDialog.placeholderText', { itemType })"
+      :main-button-text="$t('renameItemDialog.mainButtonText', { itemType })"
       @close="closeDialog"
       @pressed-main-button="handlePressedMainButton"
     ></BaseInputDialog>

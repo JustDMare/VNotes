@@ -92,7 +92,7 @@ export const useEventStore = defineStore("event", {
       });
     },
     closeRenameItemDialog() {
-      Object.assign(this.createItemDialogEvent, {
+      Object.assign(this.renameItemDialogEvent, {
         isOpen: false,
         type: null,
         renamedItemId: null,
