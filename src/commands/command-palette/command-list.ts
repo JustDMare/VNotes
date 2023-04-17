@@ -11,10 +11,14 @@ import { i18n } from "@/i18n/i18n.plugin";
 import convertBlockTypeCommand from "../command-palette/convert-block-type";
 import deleteBlockCommand from "../command-palette/delete-block";
 
+let ALL_COMMANDS: PaletteCommand[] = [];
+
 //TODO: Document this
 function getCommandList(): PaletteCommand[] {
-  const allCommands = getConvertBlockTypeCommands().concat(getEditorCommands());
-  return allCommands;
+  if (!ALL_COMMANDS.length) {
+    ALL_COMMANDS = getConvertBlockTypeCommands().concat(getEditorCommands());
+  }
+  return ALL_COMMANDS;
 }
 
 function getConvertBlockTypeCommands(): PaletteCommand[] {
