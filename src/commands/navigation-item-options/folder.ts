@@ -4,6 +4,15 @@ import type { NavigationItemOption } from "./interfaces";
 import { i18n } from "@/i18n/i18n.plugin";
 import RenameIcon from "@/components/icons/RenameIcon.vue";
 
+/**
+ * Returns an array of predefined `NavigationItemOptions` for a folder, given its
+ * `folderId` and `folderName`.
+ *
+ * @param {string} folderId - The ID of the folder for which the `NavigationItemOptions`
+ * are customized.
+ * @param {string} folderName - The name of the folder for which the
+ * `NavigationItemOptions` are customized.
+ */
 export function getFolderOptions(folderId: string, folderName: string): NavigationItemOption[] {
   const eventStore = useEventStore();
   const t = i18n.global.t;
