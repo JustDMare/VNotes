@@ -4,11 +4,11 @@
  * dialog's body to allow any component implementing it to add its own content.
  *
  * @component BaseDialog
- * @prop {string} title - The title of the dialog.
- * @prop {string} mainButtonText - The text of the main button.
- * @prop {boolean} open - Whether the dialog is open or not.
- * @prop {boolean} isMainButtonDisabled - Whether the main button is disabled or not.
- * @prop {boolean} showFooter - Whether the footer is shown or not.
+ * @prop {String} title - The title of the dialog.
+ * @prop {String} mainButtonText - The text of the main button.
+ * @prop {Boolean} open - Whether the dialog is open or not.
+ * @prop {Boolean} isMainButtonDisabled - Whether the main button is disabled or not.
+ * @prop {Boolean} showFooter - Whether the footer is shown or not.
  * @emits close - Emits when the dialog is closed.
  * @emits pressed-main-button - Emits when the main button is pressed.
  * @slot dialog-body - Slot for the dialog body.
@@ -25,35 +25,47 @@ import { CrossIcon } from "../icons";
 const props = defineProps({
   /**
    * The title of the dialog.
+   *
    * @type {String}
    * @required
    */
   title: { type: String, required: true },
   /**
    * The text of the main button.
+   *
    * @type {String}
    * @default ""
    */
   mainButtonText: { type: String, required: false, default: "" },
   /**
    * Whether the dialog is open or not.
+   *
    * @type {Boolean}
    * @required
    */
   open: { type: Boolean, required: true },
   /**
    * Whether the main button is disabled or not.
+   *
    * @type {Boolean}
    * @default false
    */
   isMainButtonDisabled: { type: Boolean, required: false, default: false },
   /**
    * Whether the footer is shown or not.
+   *
    * @type {Boolean}
    * @default true
    */
   showFooter: { type: Boolean, required: false, default: true },
 });
+
+/**
+ * The ref of the base dialog.
+ * @type {Ref<HTMLElement | null>}
+ */
+const baseDialog: Ref<HTMLElement | null> = ref(null);
+
 const emits = defineEmits<{
   /**
    * Emits when the dialog is closed.
@@ -66,12 +78,6 @@ const emits = defineEmits<{
    */
   (e: "pressed-main-button"): void;
 }>();
-
-/**
- * The ref of the base dialog.
- * @type {Ref<HTMLElement | null>}
- */
-const baseDialog: Ref<HTMLElement | null> = ref(null);
 
 /**
  * Emits the close event.
@@ -96,8 +102,8 @@ function pressMainButton(): void {
 }
 
 /**
- * Handles the click outside the dialog. If the `baseDialog` element does not contain the
- * `event.target` element, the `closeDialog` function is called.
+ * Handles the `mousedown` event, so that if the `baseDialog` element is not the target of
+ * the event, the `closeDialog` function is called.
  *
  * @function handleClickOutside
  * @param {MouseEvent} event - The mouse event.
