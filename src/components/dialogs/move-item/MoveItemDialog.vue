@@ -70,6 +70,7 @@ watchEffect(() => {
  *
  * @function onDialogClose
  * @returns {void}
+ * @listens close - The `close` event emitted by the BaseDialog component.
  */
 function closeDialog(): void {
   selectedNewParentFolderId.value = null;
@@ -89,6 +90,8 @@ function closeDialog(): void {
  *
  * @function handlePressedConfirmButton
  * @returns {void}
+ * @listens pressed-main-button - The `pressed-main-button` event emitted by the
+ * BaseDialog component.
  */
 function handlePressedConfirmButton(): void {
   if (selectedNewParentFolderId.value === userSpaceStore.userSpace._id) {
@@ -121,6 +124,8 @@ function handlePressedConfirmButton(): void {
  * @function handleFolderSelected
  * @param {string | null} folderId - The `_id` of the selected folder.
  * @returns {void}
+ * @listens folder-selected - The `folder-selected` event emitted by the
+ * MoveItemDialogTargetFolderList component.
  */
 function handleFolderSelected(folderId: string | null): void {
   if (folderId === selectedNewParentFolderId.value) {

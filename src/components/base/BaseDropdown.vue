@@ -94,10 +94,14 @@ const emit = defineEmits<{
 /**
  * Toggles the dropdown's visibility. When the dropdown is opened, it calls the
  * `calculateDropdownPosition` to calculate its position. Then adds the `handleClickOutside`
- * listener to the `mousedown` event.
+ * listener to the `mousedown` event and emits the `dropdownOpened` event.
+ *
+ * When the dropdown is closed, it removes the `handleClickOutside` listener from the
+ * `mousedown` event. Then emits the `dropdownClosed` event.
  *
  * @function toggleDropdown
  * @returns {void}
+ * @listens click - on the dropdown button
  * @emits dropdownOpened
  * @emits dropdownClosed
  *
@@ -161,6 +165,7 @@ function calculateDropdownPosition(): void {
  * @function handleClickOutside
  * @param {MouseEvent} event - The event object.
  * @returns {void}
+ * @listens mousedown - on the document
  * @see closeDialog
  */
 function handleClickOutside(event: MouseEvent): void {

@@ -76,6 +76,7 @@ const emits = defineEmits<{
  *
  * @function closeDialog
  * @returns {void}
+ * @listens click - The close button.
  * @emits close
  */
 function closeDialog(): void {
@@ -83,10 +84,11 @@ function closeDialog(): void {
 }
 
 /**
- * Emits the `pressed-main-button` event.
+ * Handles the `click` event on the main button, emitting the `pressed-main-button` event.
  *
  * @function pressMainButton
  * @returns {void}
+ * @listens click - The main button.
  * @emits pressed-main-button
  */
 function pressMainButton(): void {
@@ -100,6 +102,7 @@ function pressMainButton(): void {
  * @function handleClickOutside
  * @param {MouseEvent} event - The mouse event.
  * @returns {void}
+ * @listens mousedown
  */
 function handleClickOutside(event: MouseEvent): void {
   if (baseDialog.value && !baseDialog.value.contains(event.target as Node)) {
@@ -108,13 +111,16 @@ function handleClickOutside(event: MouseEvent): void {
 }
 
 /**
- * Handles the keydown event. If the `Escape` key is pressed, the `closeDialog` function
- * is called. If the `Enter` key is pressed and the main button is not disabled, the
- * `pressMainButton` function is called.
+ * Handles the `keydown` events for `Escape` and `Enter`. If the `Escape` key is pressed,
+ * the `closeDialog` function is called. If the `Enter` key is pressed and the main button
+ * is not disabled, the `pressMainButton` function is called.
  *
  * @function handleDialogKeydown
  * @param {KeyboardEvent} event - The keyboard event.
  * @returns {void}
+ * @listens keydown.Escape - The `Escape` key.
+ * @listens keydown.Enter - The `Enter` key.
+ *
  */
 function handleDialogKeydown(event: KeyboardEvent): void {
   if (event.key === "Escape") {

@@ -111,10 +111,11 @@ watchEffect(() => {
 });
 
 /**
- * Emits the close event
+ * Emits the close event.
  *
  * @function closeDialog
  * @returns {void}
+ * @listens close - The close event emitted by the BaseDialog component.
  * @emits close
  */
 function closeDialog(): void {
@@ -126,6 +127,7 @@ function closeDialog(): void {
  *
  * @function handlePressedMainButton
  * @returns {void}
+ * @listens pressed-main-button - The pressed-main-button event emitted by the BaseDialog component.
  * @emits pressed-main-button
  */
 function handlePressedMainButton(): void {
