@@ -1,6 +1,6 @@
 <script lang="ts">
 /**
- * Component that represents a folder in the move item dialog.
+ * Represents a folder in the MoveItemDialog component.
  *
  * It contains a button that shows the name of the folder and a chevron icon that shows
  * the subfolders of the folder. When the button is clicked, the folder is selected
@@ -80,8 +80,8 @@ const emits = defineEmits<{
  *    the `selectedNewParentFolderId` prop is equal to this folder's `_id`.
  * 2. Closes the subfolders when the dialog is closed.
  *
- * @watchEffect {props.selectedNewParentFolderId}
- * @watchEffect {dialogEvent.isOpen}
+ * @watchEffect props.selectedNewParentFolderId
+ * @watchEffect dialogEvent.isOpen
  */
 watchEffect(() => {
   isFolderSelected.value = props.selectedNewParentFolderId === props.folder._id;

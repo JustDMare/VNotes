@@ -6,8 +6,7 @@ import type { BaseCommand } from "../interfaces";
  * @typedef NavigationItemOption
  * @extends BaseCommand
  *
- * @remarks
- * The `NavigationItemOption` interface is a type alias for the `BaseCommand` interface.
+ * @remarks The `NavigationItemOption` interface is a type alias for the `BaseCommand` interface.
  * This way if some other need for the `NavigationItemOption` interface arises, it can be
  * transformed into a proper interface.
  */

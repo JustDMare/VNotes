@@ -136,11 +136,11 @@ function handleDialogKeydown(event: KeyboardEvent): void {
 }
 
 /**
- * Adds the event handlers `handleClickOutside` and `handleDialogKeydown` for the `mousedown`
- * and `keydown` events respectively if the `props.open` is `true`. Otherwise, it removes those
- * event handlers.
+ * WatchEffect that adds the event handlers `handleClickOutside` and `handleDialogKeydown`
+ * for the `mousedown` and `keydown` events respectively if the `props.open` is `true`.
+ * Otherwise, it removes those event handlers.
  *
- * @watch props.open
+ * @watchEffect props.open
  * @returns {void}
  */
 watchEffect(() => {

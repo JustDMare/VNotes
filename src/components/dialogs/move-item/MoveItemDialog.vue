@@ -51,7 +51,7 @@ const itemType: Ref<string> = ref("");
  * WatchEffect that sets the `itemType` value when the dialog is opened based on whether
  * the moved item is a folder or a note.
  *
- * @watchEffect {dialogEvent.isOpen}
+ * @watchEffect dialogEvent.isOpen
  */
 watchEffect(() => {
   if (!dialogEvent.value.isOpen) {
