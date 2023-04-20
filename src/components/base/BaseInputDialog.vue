@@ -93,10 +93,9 @@ const isInputEmpty: ComputedRef<boolean> = computed(() => inputText.value.trim()
 /**
  * WatchEffect that focuses the input box when the dialog is opened. If
  * `initialInputText` is not empty, it fills the input box with its value and
- * then selects the text.
+ * then selects the text. When the dialog is closed, it resets the input box to an empty state.
  *
- * When the dialog is closed, it resets the input box to an empty state.
- * @watchEffect {isOpen}
+ * @watchEffect {props.isOpen}
  */
 watchEffect(() => {
   if (props.isOpen) {

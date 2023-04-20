@@ -1,5 +1,17 @@
+<script lang="ts">
+/**
+ * Dialog component used to move an item (folder or note) to a different folder (in the
+ * case of folders, it cannot be moved to a child folder) or to the Root folder.
+ *
+ * @component MoveItemDialog
+ */
+export default {
+  name: "MoveItemDialog",
+};
+</script>
+
 <script lang="ts" setup>
-import { useEventStore } from "@/stores/event";
+import { useEventStore, type MoveItemDialogEvent } from "@/stores/event";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../../base/BaseDialog.vue";
@@ -9,13 +21,38 @@ import { ScaleTransition } from "@/components/animations";
 
 const eventStore = useEventStore();
 const userSpaceStore = useUserSpaceStore();
-
 const t = ref(i18n.global.t);
-const dialogEvent = toRef(eventStore, "moveItemDialogEvent");
 
+/**
+ * Ref to the event that opens the dialog.
+ *
+ * @type {Ref<MoveItemDialogEvent>}
+ * @reactive
+ */
+const dialogEvent: Ref<MoveItemDialogEvent> = toRef(eventStore, "moveItemDialogEvent");
+
+/**
+ * The `_id` of the folder that the item will be moved to.
+ *
+ * @type {Ref<string | null>}
+ * @reactive
+ */
 const selectedNewParentFolderId: Ref<string | null> = ref(null);
+
+/**
+ * The type of the item that is being moved.
+ *
+ * @type {Ref<string>}
+ * @reactive
+ */
 const itemType: Ref<string> = ref("");
 
+/**
+ * WatchEffect that sets the `itemType` value when the dialog is opened based on whether
+ * the moved item is a folder or a note.
+ *
+ * @watchEffect {dialogEvent.isOpen}
+ */
 watchEffect(() => {
   if (!dialogEvent.value.isOpen) {
     return;
@@ -24,7 +61,36 @@ watchEffect(() => {
     ? (itemType.value = t.value("itemType.folder"))
     : (itemType.value = t.value("itemType.note"));
 });
-function handlePressedConfirmButton() {
+
+/**
+ * Resets the value of `selectedNewParentFolderId` and calls the EventStore to close the
+ * dialog.
+ *
+ * Serves as a handler for the `close` event emitted by the BaseDialog component.
+ *
+ * @function onDialogClose
+ * @returns {void}
+ */
+function closeDialog(): void {
+  selectedNewParentFolderId.value = null;
+  eventStore.closeMoveItemDialog();
+}
+
+/**
+ * Handles the `pressed-main-button` event emitted by the BaseDialog component.
+ *
+ * If the selected folder is the Root folder, the `selectedNewParentFolderId` is set to
+ * `null`.
+ *
+ * Then, depending on the type of the item that is being moved, either the `moveFolder`
+ * function or the `moveNote` function from the UserSpaceStore is called to set its new parent.
+ *
+ * Finally, the dialog is closed.
+ *
+ * @function handlePressedConfirmButton
+ * @returns {void}
+ */
+function handlePressedConfirmButton(): void {
   if (selectedNewParentFolderId.value === userSpaceStore.userSpace._id) {
     selectedNewParentFolderId.value = null;
   }
@@ -43,11 +109,20 @@ function handlePressedConfirmButton() {
   closeDialog();
 }
 
-function closeDialog() {
-  selectedNewParentFolderId.value = null;
-  eventStore.closeMoveItemDialog();
-}
-function handleFolderSelected(folderId: string | null) {
+/**
+ * Handles the `folder-selected` event emitted by the MoveItemDialogTargetFolderList
+ * component.
+ *
+ * If the selected folder is the same as the one that is already selected, the
+ * `selectedNewParentFolderId` is set to `null`.
+ *
+ * Otherwise, the `selectedNewParentFolderId` is set to the `_id` of the selected folder.
+ *
+ * @function handleFolderSelected
+ * @param {string | null} folderId - The `_id` of the selected folder.
+ * @returns {void}
+ */
+function handleFolderSelected(folderId: string | null): void {
   if (folderId === selectedNewParentFolderId.value) {
     selectedNewParentFolderId.value = null;
     return;
