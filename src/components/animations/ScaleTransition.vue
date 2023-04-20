@@ -1,6 +1,7 @@
 <script lang="ts">
 /**
  * Wrapper component that adds a scale transition to its children.
+ *
  * @component ScaleTransition
  */
 export default {

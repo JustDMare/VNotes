@@ -4,14 +4,6 @@
  * dialog's body to allow any component implementing it to add its own content.
  *
  * @component BaseDialog
- * @prop {String} title - The title of the dialog.
- * @prop {String} mainButtonText - The text of the main button.
- * @prop {Boolean} open - Whether the dialog is open or not.
- * @prop {Boolean} isMainButtonDisabled - Whether the main button is disabled or not.
- * @prop {Boolean} showFooter - Whether the footer is shown or not.
- * @emits close - Emits when the dialog is closed.
- * @emits pressed-main-button - Emits when the main button is pressed.
- * @slot dialog-body - Slot for the dialog body.
  */
 export default {
   name: "BaseDialog",
@@ -68,12 +60,12 @@ const baseDialog: Ref<HTMLElement | null> = ref(null);
 
 const emits = defineEmits<{
   /**
-   * Emits when the dialog is closed.
+   * Emitted when the dialog is closed.
    * @event close
    */
   (e: "close"): void;
   /**
-   * Emits when the main button is pressed.
+   * Emitted when the main button is pressed.
    * @event pressed-main-button
    */
   (e: "pressed-main-button"): void;

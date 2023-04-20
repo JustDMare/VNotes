@@ -5,15 +5,6 @@
  * it to add its own content.
  *
  * @component BaseDropdown
- * @prop {Number} menuMarginFromButtonInPx - The margin between the dropdown menu and the button
- * in pixels.
- * @prop {Number} menuPercentageLeftAlignment - The fraction of the dropdown menu's width that
- * will be used to align it with respect to the left side of the button.
- * @prop {String} tooltip - The tooltip to be shown when hovering over the dropdown button.
- * @emits dropdownOpened - Emits when the dropdown is opened.
- * @emits dropdownClosed - Emits when the dropdown is closed.
- * @slot button-content - Slot for the dropdown button.
- * @slot menu - Slot for the dropdown menu.
  */
 export default {
   name: "BaseDropdown",
@@ -86,14 +77,14 @@ const dropdownButton: Ref<HTMLElement | null> = ref(null);
 
 const emit = defineEmits<{
   /**
-   * Emits when the dropdown is opened.
+   * Emitted when the dropdown is opened.
    *
    * @event dropdownOpened
    */
   (e: "dropdownOpened"): void;
 
   /**
-   * Emits when the dropdown is closed.
+   * Emitted when the dropdown is closed.
    *
    * @event dropdownClosed
    */

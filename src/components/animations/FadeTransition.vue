@@ -1,6 +1,7 @@
 <script lang="ts">
 /**
  * Wrapper component that adds a fade transition to its children.
+ *
  * @component FadeTransition
  */
 export default {
