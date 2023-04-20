@@ -1,3 +1,14 @@
+<script lang="ts">
+/**
+ *
+ *
+ * @component MoveItemDialogTargetFolderLabel
+ */
+export default {
+  name: "MoveItemDialogTargetFolderButton",
+};
+</script>
+
 <script lang="ts" setup>
 import { FadeTransition } from "@/components/animations";
 import { computed, ref, watchEffect } from "vue";

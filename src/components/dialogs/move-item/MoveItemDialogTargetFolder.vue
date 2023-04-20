@@ -18,7 +18,7 @@ export default {
 <script lang="ts" setup>
 import type { Folder } from "vnotes-types";
 import { ref, toRef, watchEffect, type Ref } from "vue";
-import MoveItemDialogTargetFolderButton from "./MoveItemDialogTargetFolderLabel.vue";
+import MoveItemDialogTargetFolderButton from "./MoveItemDialogTargetFolderButton.vue";
 import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
 import { useEventStore, type MoveItemDialogEvent } from "@/stores/event";
 
