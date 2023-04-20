@@ -95,8 +95,8 @@ watchEffect(() => {
  * `folder-selected` event with the folder's `_id` as the payload.
  *
  * @function handleFolderSelected
- * @listens click
- * @listens keydown.space
+ * @listens click - The `click` event on the folder button.
+ * @listens keydown.space - The `keydown.space` event when the the folder button is focused.
  * @emits folder-selected
  */
 function handleFolderSelected() {
@@ -108,7 +108,7 @@ function handleFolderSelected() {
  *
  * @function toggleSubfolderVisibility
  * @param {MouseEvent} event - The `click` event.
- * @listens click
+ * @listens click - The `click` event on the chevron's button.
  */
 function toggleSubfolderVisibility(event: MouseEvent) {
   event.stopImmediatePropagation();
