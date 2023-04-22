@@ -1,17 +1,41 @@
+<script lang="ts">
+/**
+ * Dialog component containing all the settings of the UserSpace. Uses the BaseDialog
+ * component.
+ *
+ * @component UserSettingsDialog
+ * @see BaseInputDialog
+ */
+export default {
+  name: "UserSettingsDialog",
+};
+</script>
+
 <script lang="ts" setup>
-import { useEventStore } from "@/stores/event";
-import { ref, toRef } from "vue";
+import { useEventStore, type UserSettingsDialogEvent } from "@/stores/event";
+import { toRef, type Ref } from "vue";
 import { ScaleTransition } from "../animations";
 import BaseDialog from "../base/BaseDialog.vue";
 import LanguageSelector from "../LanguageSelector.vue";
 
 const eventStore = useEventStore();
 
-const dialogEvent = toRef(eventStore, "userSettingsDialogEvent");
-const showDialog = ref(false);
+/**
+ * Ref to the event that opens the dialog.
+ *
+ * @type {Ref<UserSettingsDialogEvent>}
+ * @reactive
+ */
+const dialogEvent: Ref<UserSettingsDialogEvent> = toRef(eventStore, "userSettingsDialogEvent");
 
-function closeDialog() {
-  showDialog.value = false;
+/**
+ * Handles the `close` event emitted by the BaseDialog component, closing the dialog.
+ *
+ * @function closeDialog
+ * @returns {void}
+ * @listens close - The `close` event emitted by the BaseDialog component.
+ */
+function closeDialog(): void {
   eventStore.closeUserSettingsDialog();
 }
 </script>

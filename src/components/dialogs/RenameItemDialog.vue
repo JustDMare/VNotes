@@ -55,7 +55,7 @@ watchEffect(() => {
 });
 
 /**
- * Handles the `close` event emitted by the BaseInputDialog component.
+ * Handles the `close` event emitted by the BaseInputDialog component, closing the dialog.
  *
  * @function closeDialog
  * @returns {void}
