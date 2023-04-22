@@ -95,7 +95,7 @@ const isInputEmpty: ComputedRef<boolean> = computed(() => inputText.value.trim()
  * `initialInputText` is not empty, it fills the input box with its value and
  * then selects the text. When the dialog is closed, it resets the input box to an empty state.
  *
- * @watchEffect props.isOpen
+ * @watch props.isOpen
  */
 watchEffect(() => {
   if (props.isOpen) {

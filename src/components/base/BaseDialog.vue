@@ -140,7 +140,7 @@ function handleDialogKeydown(event: KeyboardEvent): void {
  * for the `mousedown` and `keydown` events respectively if the `props.open` is `true`.
  * Otherwise, it removes those event handlers.
  *
- * @watchEffect props.open
+ * @watch props.open
  * @returns {void}
  */
 watchEffect(() => {

@@ -51,7 +51,7 @@ const itemType: Ref<string> = ref("");
  * WatchEffect that sets the `itemType` value when the dialog is opened based on whether
  * the moved item is a folder or a note.
  *
- * @watchEffect dialogEvent.isOpen
+ * @watch dialogEvent.isOpen
  */
 watchEffect(() => {
   if (!dialogEvent.value.isOpen) {
@@ -81,19 +81,15 @@ function closeDialog(): void {
  * Handles the `pressed-main-button` event emitted by the BaseDialog component.
  *
  * If the selected folder is the Root folder, the `selectedNewParentFolderId` is set to
- * `null`.
+ * `null`. Then, calls the appropriate method from the UserSpaceStore to move the item to
+ * the selected folder. Finally, the dialog is closed.
  *
- * Then, depending on the type of the item that is being moved, either the `moveFolder`
- * function or the `moveNote` function from the UserSpaceStore is called to set its new parent.
- *
- * Finally, the dialog is closed.
- *
- * @function handlePressedConfirmButton
+ * @function handlePressedMainButton
  * @returns {void}
  * @listens pressed-main-button - The `pressed-main-button` event emitted by the
  * BaseDialog component.
  */
-function handlePressedConfirmButton(): void {
+function handlePressedMainButton(): void {
   if (selectedNewParentFolderId.value === userSpaceStore.userSpace._id) {
     selectedNewParentFolderId.value = null;
   }
@@ -144,7 +140,7 @@ function handleFolderSelected(folderId: string | null): void {
       :title="$t('moveItemDialog.title', { itemType })"
       :mainButtonText="$t('moveItemDialog.mainButtonText')"
       :is-main-button-disabled="selectedNewParentFolderId === null"
-      @pressed-main-button="handlePressedConfirmButton"
+      @pressed-main-button="handlePressedMainButton"
       @close="closeDialog"
       class="move-item-dialog"
     >

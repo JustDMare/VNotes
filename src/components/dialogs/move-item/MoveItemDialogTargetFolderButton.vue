@@ -78,7 +78,7 @@ const emits = defineEmits<{
  * changes. Sets it as true if the `selectedNewParentFolderId` prop is equal to the
  * folder's `_id`. False otherwise.
  *
- * @watchEffect props.selectedNewParentFolderId
+ * @watch props.selectedNewParentFolderId
  */
 watchEffect(() => {
   isSelected.value = props.selectedNewParentFolderId === props.folderId;

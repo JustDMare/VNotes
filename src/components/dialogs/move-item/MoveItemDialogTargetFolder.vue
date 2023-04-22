@@ -82,8 +82,8 @@ const emits = defineEmits<{
  *    the `selectedNewParentFolderId` prop is equal to this folder's `_id`.
  * 2. Closes the subfolders when the dialog is closed.
  *
- * @watchEffect props.selectedNewParentFolderId
- * @watchEffect dialogEvent.isOpen
+ * @watch props.selectedNewParentFolderId
+ * @watch dialogEvent.isOpen
  */
 watchEffect(() => {
   isFolderSelected.value = props.selectedNewParentFolderId === props.folder._id;
