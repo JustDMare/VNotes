@@ -134,7 +134,7 @@ function login() {
       }
       .link {
         color: var(--color-link);
-        text-decoration: none;
+        text-decoration: underline;
 
         &:visited {
           color: var(--color-base-40);
