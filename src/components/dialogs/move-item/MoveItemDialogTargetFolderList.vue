@@ -1,14 +1,53 @@
+<script lang="ts">
+/**
+ * Contains the list of folders to which the item can be moved to. The list contains the
+ * Root folder and all the folders in the user's space.
+ *
+ * @component MoveItemDialogTargetFolderList
+ * @see MoveItemDialogTargetFolder
+ */
+export default {
+  name: "MoveItemDialogTargetFolderList",
+};
+</script>
+
 <script lang="ts" setup>
 import { i18n } from "@/i18n/i18n.plugin";
 import { useUserSpaceStore } from "@/stores/user-space";
 import type { Folder } from "vnotes-types";
-import { toRef } from "vue";
+import { toRef, type Ref } from "vue";
 import MoveItemDialogTargetFolder from "./MoveItemDialogTargetFolder.vue";
 
 const userSpaceStore = useUserSpaceStore();
-const sidebarContent = toRef(userSpaceStore.$state.userSpace, "content");
 const t = i18n.global.t;
 
+defineProps<{
+  /**
+   * The `_id` of the folder that the item will be moved to.
+   * @type {string | null}
+   * @required
+   */
+  selectedNewParentFolderId: string | null;
+}>();
+
+/**
+ * Content of the Root folder of the user's space, containing all the folders and notes.
+ *
+ * @type {Ref<Folder['content']>}
+ * @reactive
+ */
+const sidebarContent: Ref<Folder["content"]> = toRef(userSpaceStore.$state.userSpace, "content");
+
+/**
+ * Representation of the Root folder of the user's space. Required for listing it as a
+ * folder in the MoveItemDialogTargetFolderList.
+ *
+ * @type {Folder}
+ * @remarks The `_id` is set as the same one as the UserSpace as a workaround to be able
+ * to distinguish between the Root folder and other folders in the
+ * MoveItemDialogTargetFolder, since the Root folder is not a real folder, but rather a
+ * lack of having a parent folder.
+ */
 const rootFolder: Folder = {
   _id: userSpaceStore.userSpace._id,
   name: t("moveItemDialog.rootFolder"),
@@ -21,12 +60,24 @@ const rootFolder: Folder = {
   lastUpdatedTime: "",
 };
 
-defineProps<{ selectedNewParentFolderId: string | null }>();
-
 const emits = defineEmits<{
+  /**
+   * Emitted when a folder is selected as the new parent folder for the item.
+   *
+   * @event folder-selected
+   * @param {string} folderId - The `_id` of the folder that was selected.
+   */
   (e: "folder-selected", folderId: string): void;
 }>();
 
+/**
+ * Handles the `folder-selected` event emitted by the MoveItemDialogTargetFolder
+ * component.
+ *
+ * @param {string} folderId - The `_id` of the folder that was selected.
+ * @listens folder-selected - Emitted by the MoveItemDialogTargetFolder component.
+ * @emits folder-selected
+ */
 function handleFolderSelected(folderId: string) {
   emits("folder-selected", folderId);
 }

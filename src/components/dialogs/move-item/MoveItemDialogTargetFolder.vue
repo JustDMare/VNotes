@@ -1,6 +1,8 @@
 <script lang="ts">
 /**
- * Represents a folder in the MoveItemDialog component.
+ * Represents a folder in the MoveItemDialog component. If the folder is the same one as the
+ * one that the item is being moved from, it will not be shown in the listing, along with
+ * its subfolders.
  *
  * It contains a button that shows the name of the folder and a chevron icon that shows
  * the subfolders of the folder. When the button is clicked, the folder is selected
