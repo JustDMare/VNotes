@@ -32,7 +32,7 @@ const t = ref(i18n.global.t);
 const dialogEvent: Ref<DeleteItemDialogEvent> = toRef(eventStore, "deleteItemDialogEvent");
 
 /**
- * The type of the item that is being moved.
+ * The type of the item that is being deleted.
  *
  * @type {Ref<string>}
  * @reactive

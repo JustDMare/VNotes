@@ -32,7 +32,7 @@ const t = ref(i18n.global.t);
 const dialogEvent: Ref<CreateItemDialogEvent> = toRef(eventStore, "createItemDialogEvent");
 
 /**
- * The type of the item that is being moved.
+ * The type of the item that is being created.
  *
  * @type {Ref<string>}
  * @reactive
@@ -54,18 +54,18 @@ watchEffect(() => {
 });
 
 /**
- * Handles the `close` event emitted by the BaseDialog component.
+ * Handles the `close` event emitted by the BaseInputDialog component.
  *
  * @function closeDialog
  * @returns {void}
- * @listens close - The `close` event emitted by the BaseDialog component.
+ * @listens close - The `close` event emitted by the BaseInputDialog component.
  */
 function closeDialog(): void {
   eventStore.closeCreateItemDialog();
 }
 
 /**
- * Handles the `pressed-main-button` event emitted by the BaseDialog component.
+ * Handles the `pressed-main-button` event emitted by the BaseInputDialog component.
  *
  * Creates the folder/note with its name/title being the contents of the input box.
  * Finally, the dialog is closed.
