@@ -2,8 +2,10 @@
 /**
  * Dialog component used to move an item (folder or note) to a different folder (in the
  * case of folders, it cannot be moved to a child folder) or to the Root folder.
+ * Uses the BaseDialog component.
  *
  * @component MoveItemDialog
+ * @see BaseDialog
  */
 export default {
   name: "MoveItemDialog",
