@@ -1,3 +1,18 @@
+<script lang="ts">
+/**
+ * Dynamic block component that renders the correct block component based on the Block's
+ * `type` and its mapping in the `blockComponentMap`, along with its corresponding styling
+ * based on the `blockClassMap` mapping.
+ *
+ * @component BlockComponent
+ * @see getBlockComponentMap
+ * @see getBlockClassMap
+ */
+export default {
+  name: "BlockComponent",
+};
+</script>
+
 <script setup lang="ts">
 import { FadeTransition } from "@/components/animations";
 import { GripIcon, PlusIcon } from "@/components/icons";
@@ -10,13 +25,32 @@ import type { PlainTextBlock } from ".";
 
 const blockComponentMap: ReadonlyMap<BlockType, Component> = getBlockComponentMap();
 const blockClassMap: ReadonlyMap<BlockType, string> = getBlockClassMap();
+const editorStore = useEditorStore();
 
 const props = defineProps({
+  /**
+   * The block object to render.
+   *
+   * @type {Block}
+   * @required
+   */
   block: { type: Object as PropType<Block>, required: true },
 });
-const editorStore = useEditorStore();
+
+/**
+ * Ref to the block's inner component.
+ *
+ * @type {Ref<PlainTextBlock | null>}
+ */
 const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
-let buttonsVisible = ref(false);
+
+/**
+ * Whether the create and move buttons should be visible.
+ *
+ * @type {Ref<boolean>}
+ * @reactive
+ */
+let buttonsVisible: Ref<boolean> = ref(false);
 
 function createBlockBelow() {
   editorStore.createBlockBelowBlockId(props.block._id);
