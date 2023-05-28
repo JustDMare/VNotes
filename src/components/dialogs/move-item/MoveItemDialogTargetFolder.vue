@@ -123,8 +123,8 @@ function toggleSubfolderVisibility(event: MouseEvent) {
     <div
       class="move-item__target-list__target"
       :class="{ 'move-item__target-list__target--selected': isFolderSelected }"
-      @click="handleFolderSelected"
-      @keydown.space="handleFolderSelected"
+      @click="handleFolderSelected(folder._id)"
+      @keydown.space="handleFolderSelected(folder._id)"
       tabindex="0"
     >
       <div class="move-item__target-list__target__dropdown-btn">
