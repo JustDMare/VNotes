@@ -101,8 +101,8 @@ watchEffect(() => {
  * @listens keydown.space - The `keydown.space` event when the the folder button is focused.
  * @emits folder-selected
  */
-function handleFolderSelected() {
-  emits("folder-selected", props.folder._id);
+function handleFolderSelected(folderId: string) {
+  emits("folder-selected", folderId);
 }
 
 /**
