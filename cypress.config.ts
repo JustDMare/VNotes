@@ -1,16 +1,24 @@
 import { defineConfig } from "cypress";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default defineConfig({
-  e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require("./cypress/plugins/index.ts").default(on, config);
-    },
-    baseUrl: "http://localhost:3000",
-  },
+  env: {
+    auth0_username: process.env.CYPRESS_AUTH0_USERNAME,
+    auth0_password: process.env.CYPRESS_AUTH0_PASSWORD,
+    auth0_domain: process.env.VITE_AUTH0_DOMAIN,
+    auth0_audience: process.env.VITE_AUTH0_AUDIENCE,
 
+    auth0_client_id: process.env.VITE_AUTH0_CLIENT_ID,
+    auth0_client_secret: process.env.VITE_AUTH0_CLIENT_SECRET,
+    auth0_scope: process.env.VITE_AUTH0_SCOPE,
+  },
+  e2e: {
+    setupNodeEvents(on, config) {
+      // implement node event listeners here
+    },
+  },
   component: {
     devServer: {
       framework: "vue",
