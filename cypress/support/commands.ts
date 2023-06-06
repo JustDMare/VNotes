@@ -33,7 +33,11 @@ export function loginWithAuth0Command(username: string, password: string) {
     {
       validate: () => {
         // Validate presence of access token in localStorage.
-        cy.wrap(localStorage).invoke("getItem", "authAccessToken").should("exist");
+        cy.getCookie("auth0.m9jwQIE6mjp6w9NxszeSSpTq6tpXJJu6.is.authenticated", {
+          domain: "localhost",
+        }).should((cookie) => {
+          expect(cookie.value).to.equal("true");
+        });
       },
     }
   );

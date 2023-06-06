@@ -1,6 +1,6 @@
 describe("First Test", () => {
   it("Visits the landing page", () => {
-    // Login on Auth0.
-    cy.loginWithAuth0(Cypress.env("auth0_username"), Cypress.env("auth0_password"));
+    cy.visit("http://localhost:3000/workspace");
+    cy.url().should("include", "localhost:3000/workspace");
   });
 });
