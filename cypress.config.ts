@@ -15,9 +15,7 @@ export default defineConfig({
     auth0_scope: process.env.VITE_AUTH0_SCOPE,
   },
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
+    testIsolation: true,
   },
   component: {
     devServer: {

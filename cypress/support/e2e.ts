@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { loginWithAuth0Command } from "./commands";
+import { loginWithAuth0Command } from "./commands/index";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
