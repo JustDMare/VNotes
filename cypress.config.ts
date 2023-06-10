@@ -15,7 +15,7 @@ export default defineConfig({
     auth0_scope: process.env.VITE_AUTH0_SCOPE,
   },
   e2e: {
-    testIsolation: true,
+    testIsolation: false,
   },
   component: {
     devServer: {

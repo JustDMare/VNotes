@@ -6,22 +6,7 @@ export function loginWithAuth0Command(username: string, password: string) {
   });
   log.snapshot("before");
 
-  cy.session(
-    `auth0-${username}`,
-    () => {
-      loginViaAuth0Ui(username, password);
-    },
-    {
-      validate: () => {
-        // Validate presence of access token in localStorage.
-        cy.getCookie("auth0.m9jwQIE6mjp6w9NxszeSSpTq6tpXJJu6.is.authenticated", {
-          domain: "localhost",
-        }).should((cookie) => {
-          expect(cookie.value).to.equal("true");
-        });
-      },
-    }
-  );
+  loginViaAuth0Ui(username, password);
 
   log.snapshot("after");
   log.end();

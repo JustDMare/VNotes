@@ -17,7 +17,3 @@ declare global {
 
 Cypress.Commands.add("mount", mount);
 Cypress.Commands.add("loginWithAuth0", loginWithAuth0Command);
-
-before(() => {
-  cy.loginWithAuth0(Cypress.env("auth0_username"), Cypress.env("auth0_password"));
-});
