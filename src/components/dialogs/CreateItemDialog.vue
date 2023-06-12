@@ -97,6 +97,7 @@ function handlePressedMainButton(inputText: string): void {
       :main-button-text="$t('createItemDialog.mainButtonText', { itemType })"
       @close="closeDialog"
       @pressed-main-button="handlePressedMainButton"
+      :data-test="`create-${itemType}-dialog`"
     ></BaseInputDialog>
   </ScaleTransition>
 </template>

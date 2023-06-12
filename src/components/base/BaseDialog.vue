@@ -158,7 +158,11 @@ watchEffect(() => {
   <dialog :open="open" class="base-dialog" ref="baseDialog">
     <header class="base-dialog__header">
       <h1 class="base-dialog__header__title">{{ title }}</h1>
-      <button @click="closeDialog" class="base-dialog__header__close-btn">
+      <button
+        @click="closeDialog"
+        class="base-dialog__header__close-btn"
+        data-test="base-dialog-close-button"
+      >
         <CrossIcon class="base-dialog__header__close-btn__icon" />
       </button>
     </header>
@@ -170,6 +174,7 @@ watchEffect(() => {
         :disabled="isMainButtonDisabled"
         @click="pressMainButton"
         class="base-dialog__footer__main-btn"
+        data-test="base-dialog-main-button"
       >
         {{ mainButtonText }}
       </button>

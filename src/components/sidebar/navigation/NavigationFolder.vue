@@ -50,17 +50,18 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
         @options-dropdown-closed="optionsDropdownIsOpen = false"
       />
     </div>
-    <!--TODO: Can be refactored into a component-->
     <ul class="nav__folder__content" v-show="showContents">
       <NavigationFolder
         v-for="subfolderReference in folderReference.content.folders"
         :key="subfolderReference._id"
         :folder-reference="subfolderReference"
+        data-test="navigation-folder"
       />
       <NavigationNote
         v-for="noteReference in folderReference.content.notes"
         :key="noteReference._id"
         :note-reference="noteReference"
+        data-test="navigation-note"
       />
     </ul>
   </li>

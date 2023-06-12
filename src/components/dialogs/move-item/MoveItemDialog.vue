@@ -145,6 +145,7 @@ function handleFolderSelected(folderId: string | null): void {
       @pressed-main-button="handlePressedMainButton"
       @close="closeDialog"
       class="move-item-dialog"
+      :data-test="`move-${itemType}-dialog`"
     >
       <template #dialog-body>
         <p>

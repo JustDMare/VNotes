@@ -101,6 +101,7 @@ function closeDialog(): void {
       :mainButtonText="$t('deleteItemDialog.mainButtonText')"
       @pressed-main-button="handlePressedMainButton"
       @close="closeDialog"
+      :data-test="`delete-${itemType}-dialog`"
     >
       <template #dialog-body>
         <p>

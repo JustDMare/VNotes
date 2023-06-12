@@ -48,6 +48,7 @@ function closeDialog(): void {
         :open="dialogEvent.isOpen"
         :show-footer="false"
         @close="closeDialog"
+        data-test="user-settings-dialog"
       >
         <template #dialog-body>
           <div class="language-section">

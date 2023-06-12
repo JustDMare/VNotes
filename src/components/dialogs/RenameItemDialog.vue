@@ -103,6 +103,7 @@ function handlePressedMainButton(inputText: string): void {
       :initial-input-text="dialogEvent.renamedItemName!"
       @close="closeDialog"
       @pressed-main-button="handlePressedMainButton"
+      :data-test="`renamte-${itemType}-dialog`"
     ></BaseInputDialog>
   </ScaleTransition>
 </template>
