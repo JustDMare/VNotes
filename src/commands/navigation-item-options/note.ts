@@ -20,6 +20,7 @@ export function getNoteOptions(noteId: string, noteTitle: string): NavigationIte
     {
       name: t("navigationItemOptions.rename"),
       icon: RenameIcon,
+      dataTest: "nav-rename-note",
       execute: () => {
         eventStore.openRenameItemDialog("rename-note", noteId, noteTitle);
       },
@@ -27,6 +28,7 @@ export function getNoteOptions(noteId: string, noteTitle: string): NavigationIte
     {
       name: t("navigationItemOptions.moveItem"),
       icon: MoveItemIcon,
+      dataTest: "nav-move-note",
       execute: () => {
         eventStore.openMoveItemDialog("move-note", noteId, noteTitle);
       },
@@ -34,6 +36,7 @@ export function getNoteOptions(noteId: string, noteTitle: string): NavigationIte
     {
       name: t("navigationItemOptions.delete"),
       icon: TrashIcon,
+      dataTest: "nav-delete-note",
       execute: () => {
         eventStore.openDeleteItemDialog("delete-note", noteId, noteTitle);
       },

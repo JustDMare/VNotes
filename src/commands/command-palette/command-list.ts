@@ -47,6 +47,7 @@ function getConvertBlockTypeCommands(): PaletteCommand[] {
       execute: convertBlockTypeCommand("text"),
       description: t("commandPalette.convertBlockType.plainText.description"),
       tag: "p",
+      dataTest: "palette-convert-plain-text",
     },
     {
       icon: HeadingBigIcon,
@@ -54,6 +55,7 @@ function getConvertBlockTypeCommands(): PaletteCommand[] {
       execute: convertBlockTypeCommand("heading_big"),
       description: t("commandPalette.convertBlockType.headingBig.description"),
       tag: "h1",
+      dataTest: "palette-convert-h1",
     },
     {
       icon: HeadingMediumIcon,
@@ -61,6 +63,7 @@ function getConvertBlockTypeCommands(): PaletteCommand[] {
       execute: convertBlockTypeCommand("heading_medium"),
       description: t("commandPalette.convertBlockType.headingMedium.description"),
       tag: "h2",
+      dataTest: "palette-convert-h2",
     },
     {
       icon: HeadingSmallIcon,
@@ -68,6 +71,7 @@ function getConvertBlockTypeCommands(): PaletteCommand[] {
       execute: convertBlockTypeCommand("heading_small"),
       description: t("commandPalette.convertBlockType.headingSmall.description"),
       tag: "h3",
+      dataTest: "palette-convert-h3",
     },
     {
       icon: CheckboxIcon,
@@ -75,6 +79,7 @@ function getConvertBlockTypeCommands(): PaletteCommand[] {
       execute: convertBlockTypeCommand("checkbox"),
       description: t("commandPalette.convertBlockType.checkbox.description"),
       tag: "todo",
+      dataTest: "palette-convert-checkbox",
     },
   ];
 }

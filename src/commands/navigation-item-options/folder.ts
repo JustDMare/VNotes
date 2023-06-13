@@ -20,6 +20,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
     {
       name: t("navigationItemOptions.newFolder"),
       icon: NewFolderIcon,
+      dataTest: "nav-create-folder",
       execute: () => {
         eventStore.openCreateItemDialog("create-folder", folderId);
       },
@@ -27,6 +28,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
     {
       name: t("navigationItemOptions.newNote"),
       icon: NewNoteIcon,
+      dataTest: "nav-create-note",
       execute: () => {
         eventStore.openCreateItemDialog("create-note", folderId);
       },
@@ -34,6 +36,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
     {
       name: t("navigationItemOptions.rename"),
       icon: RenameIcon,
+      dataTest: "nav-rename-folder",
       execute: () => {
         eventStore.openRenameItemDialog("rename-folder", folderId, folderName);
       },
@@ -41,6 +44,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
     {
       name: t("navigationItemOptions.moveItem"),
       icon: MoveItemIcon,
+      dataTest: "nav-move-folder",
       execute: () => {
         eventStore.openMoveItemDialog("move-folder", folderId, folderName);
       },
@@ -48,6 +52,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
     {
       name: t("navigationItemOptions.delete"),
       icon: TrashIcon,
+      dataTest: "nav-delete-folder",
       execute: () => {
         eventStore.openDeleteItemDialog("delete-folder", folderId, folderName);
       },
