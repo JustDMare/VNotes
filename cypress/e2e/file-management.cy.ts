@@ -1,3 +1,5 @@
+import { folderCreationSubSuite } from "./sub-suites/file-management";
+
 /* eslint-disable max-len */
 describe("File Management Tests", () => {
   before(() => {
@@ -82,100 +84,5 @@ describe("File Management Tests", () => {
   });
 
   // Folder creation
-  describe("Folder Creation", () => {
-    describe("Does not allow the creation of a new folder with an empty name", () => {
-      before(() => {
-        cy.get(".sidebar__new-btns__btn.btn--new-folder").click();
-        cy.get("[data-test='create-folder-dialog']").should("be.visible");
-      });
-      after(() => {
-        cy.get("#sidebar-nav").click();
-        cy.get("[data-test='create-folder-dialog']").should("not.be.visible");
-      });
-      beforeEach(() => {
-        cy.get("[data-test='navigation-folder']:visible")
-          .its("length")
-          .then((length) => {
-            cy.wrap(length).as("folderCount");
-          });
-      });
-      it("Does not allow the creation of a new folder with the starting empty string", () => {
-        cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").should(
-          "be.disabled"
-        );
-
-        cy.get("[data-test='create-folder-dialog'] input").type("{enter}");
-        cy.get("[data-test='create-folder-dialog']").should("be.visible");
-        cy.get<number>("@folderCount").then((folderCount) => {
-          cy.get("[data-test='navigation-folder']:visible").its("length").should("eq", folderCount);
-        });
-      });
-      it("Does not allow the creation of a new folder with a blank space as a name", () => {
-        cy.get("[data-test='create-folder-dialog'] input").type(" ");
-        cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").should(
-          "be.disabled"
-        );
-        cy.get("[data-test='create-folder-dialog'] input").type("{enter}");
-        cy.get("[data-test='create-folder-dialog']").should("be.visible");
-        cy.get<number>("@folderCount").then((folderCount) => {
-          cy.get("[data-test='navigation-folder']:visible").its("length").should("eq", folderCount);
-        });
-      });
-    });
-    describe("Allows the creation of a new folder at the root directory with a valid name", () => {
-      beforeEach(() => {
-        cy.get(".sidebar__new-btns__btn.btn--new-folder").click();
-        cy.get("[data-test='create-folder-dialog']").should("be.visible");
-        cy.get("[data-test='navigation-folder']:visible")
-          .its("length")
-          .then((length) => {
-            cy.wrap(length).as("folderCount");
-          });
-      });
-      after(() => {
-        cy.get("#sidebar-nav").click();
-        cy.get("[data-test='create-folder-dialog']").should("not.be.visible");
-      });
-      it("Allows the creation of a new folder with a valid name and pressing Enter", () => {
-        cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").should(
-          "be.disabled"
-        );
-
-        cy.get("[data-test='create-folder-dialog'] input").type("CreatedFolder1");
-        cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").should(
-          "be.enabled"
-        );
-        cy.get("[data-test='create-folder-dialog'] input").type("{enter}");
-
-        cy.get("[data-test='create-folder-dialog']").should("be.hidden");
-        cy.get("[data-test='navigation-folder']").contains("CreatedFolder1").should("exist");
-
-        cy.get<number>("@folderCount").then((folderCount) => {
-          cy.get("[data-test='navigation-folder']:visible")
-            .its("length")
-            .should("eq", folderCount + 1);
-        });
-      });
-      it("Allows the creation of a new folder with a valid name and clicking the main button", () => {
-        cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").should(
-          "be.disabled"
-        );
-
-        cy.get("[data-test='create-folder-dialog'] input").type("CreatedFolder2");
-        cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").should(
-          "be.enabled"
-        );
-
-        cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").click();
-
-        cy.get("[data-test='create-folder-dialog']").should("be.hidden");
-        cy.get("[data-test='navigation-folder']").contains("CreatedFolder2").should("exist");
-        cy.get<number>("@folderCount").then((folderCount) => {
-          cy.get("[data-test='navigation-folder']:visible")
-            .its("length")
-            .should("eq", folderCount + 1);
-        });
-      });
-    });
-  });
+  folderCreationSubSuite();
 });
