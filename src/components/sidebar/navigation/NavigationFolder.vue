@@ -28,7 +28,7 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
 </script>
 
 <template>
-  <li class="nav__folder">
+  <li class="nav__folder" data-test="nav-folder">
     <div
       @mouseover="setShowOptionsButton(true)"
       @mouseleave="setShowOptionsButton(false)"
@@ -36,6 +36,7 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
       @focusout="setShowOptionsButton(false)"
       class="sidebar__item"
       :class="{ 'sidebar__item--highlight': optionsDropdownIsOpen }"
+      data-test="nav-folder-content"
     >
       <button class="nav__item" @click="toggleContentVisibility">
         <ChevronRightIcon class="nav__icon nav__icon--chevron" :rotate-down="showContents" />
@@ -55,13 +56,11 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
         v-for="subfolderReference in folderReference.content.folders"
         :key="subfolderReference._id"
         :folder-reference="subfolderReference"
-        data-test="navigation-folder"
       />
       <NavigationNote
         v-for="noteReference in folderReference.content.notes"
         :key="noteReference._id"
         :note-reference="noteReference"
-        data-test="navigation-note"
       />
     </ul>
   </li>

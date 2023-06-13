@@ -3,8 +3,8 @@
 /**
  * This suite tests the creation of folders.
  * The tests are divided into three sub-suites:
- * - Folder Creation with an empty name (forbidden).
- * - Folder Creation with a valid name.
+ * - Folder creation with an empty name (forbidden).
+ * - Folder creation with a valid name.
  * - Folder creation inside another folder.
  * @returns {void}
  */
@@ -12,6 +12,7 @@ export function folderCreationSubSuite(): void {
   describe("Folder Creation", () => {
     folderCreationWithEmptyName();
     folderCreationWithValidName();
+    folderCreationWithinFolder();
   });
 }
 
@@ -31,7 +32,7 @@ function folderCreationWithEmptyName(): void {
       cy.get("[data-test='create-folder-dialog']").should("not.be.visible");
     });
     beforeEach(() => {
-      cy.get("[data-test='navigation-folder']:visible")
+      cy.get("[data-test='nav-folder']:visible")
         .its("length")
         .then((length) => {
           cy.wrap(length).as("folderCount");
@@ -45,7 +46,7 @@ function folderCreationWithEmptyName(): void {
       cy.get("[data-test='create-folder-dialog'] input").type("{enter}");
       cy.get("[data-test='create-folder-dialog']").should("be.visible");
       cy.get<number>("@folderCount").then((folderCount) => {
-        cy.get("[data-test='navigation-folder']:visible").its("length").should("eq", folderCount);
+        cy.get("[data-test='nav-folder']:visible").its("length").should("eq", folderCount);
       });
     });
     it("Does not allow the creation of a new folder with a blank space as a name", () => {
@@ -56,7 +57,7 @@ function folderCreationWithEmptyName(): void {
       cy.get("[data-test='create-folder-dialog'] input").type("{enter}");
       cy.get("[data-test='create-folder-dialog']").should("be.visible");
       cy.get<number>("@folderCount").then((folderCount) => {
-        cy.get("[data-test='navigation-folder']:visible").its("length").should("eq", folderCount);
+        cy.get("[data-test='nav-folder']:visible").its("length").should("eq", folderCount);
       });
     });
   });
@@ -73,7 +74,7 @@ function folderCreationWithValidName(): void {
     beforeEach(() => {
       cy.get(".sidebar__new-btns__btn.btn--new-folder").click();
       cy.get("[data-test='create-folder-dialog']").should("be.visible");
-      cy.get("[data-test='navigation-folder']:visible")
+      cy.get("[data-test='nav-folder']:visible")
         .its("length")
         .then((length) => {
           cy.wrap(length).as("folderCount");
@@ -95,10 +96,10 @@ function folderCreationWithValidName(): void {
       cy.get("[data-test='create-folder-dialog'] input").type("{enter}");
 
       cy.get("[data-test='create-folder-dialog']").should("be.hidden");
-      cy.get("[data-test='navigation-folder']").contains("CreatedFolder1").should("exist");
+      cy.get("[data-test='nav-folder']").contains("CreatedFolder1").should("exist");
 
       cy.get<number>("@folderCount").then((folderCount) => {
-        cy.get("[data-test='navigation-folder']:visible")
+        cy.get("[data-test='nav-folder']:visible")
           .its("length")
           .should("eq", folderCount + 1);
       });
@@ -117,7 +118,7 @@ function folderCreationWithValidName(): void {
 
       cy.get("[data-test='create-folder-dialog']").should("be.hidden");
       cy.get<number>("@folderCount").then((folderCount) => {
-        cy.get("[data-test='navigation-folder']:visible")
+        cy.get("[data-test='nav-folder']:visible")
           .its("length")
           .should("eq", folderCount + 1);
       });
@@ -134,10 +135,10 @@ function folderCreationWithValidName(): void {
       cy.get("[data-test='create-folder-dialog'] input").type("{enter}");
 
       cy.get("[data-test='create-folder-dialog']").should("be.hidden");
-      cy.get("[data-test='navigation-folder']").contains("CreatedFolder2").should("exist");
+      cy.get("[data-test='nav-folder']").contains("CreatedFolder2").should("exist");
 
       cy.get<number>("@folderCount").then((folderCount) => {
-        cy.get("[data-test='navigation-folder']:visible")
+        cy.get("[data-test='nav-folder']:visible")
           .its("length")
           .should("eq", folderCount + 1);
       });
@@ -145,8 +146,46 @@ function folderCreationWithValidName(): void {
   });
 }
 
+/**
+ * Tests that the system allows the creation of a subfolder within an existing folder.
+ * @returns {void}
+ */
 function folderCreationWithinFolder(): void {
-  describe("Allows the creation of a folder within a folder", ()=>{
-    it("")
-  })
+  describe("Creation of a folder within an existing folder", () => {
+    beforeEach(() => {
+      cy.contains("[data-test='nav-folder']", "CreatedFolder1").as("parentFolder");
+      cy.get("@parentFolder").should("exist");
+    });
+    it("Should not have a nested folder", () => {
+      cy.get("@parentFolder").click();
+      cy.get("@parentFolder").within(() => {
+        cy.contains("[data-test='nav-folder']", "CreatedSubfolder1").should("not.exist");
+      });
+    });
+    it("Allows the creation of a folder within an existing folder", () => {
+      cy.get("@parentFolder").trigger("mouseover");
+      cy.get("@parentFolder").within(() => {
+        cy.get("[data-test='nav-item-options-dropdown'] [data-test='dropdown-button']").click();
+        cy.get("[data-test='nav-item-options-dropdown'] [data-test='dropdown-menu']").should(
+          "be.visible"
+        );
+        cy.get("[data-test='nav-item-options-dropdown'] [data-test='nav-create-folder']").click();
+      });
+      cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").should(
+        "be.disabled"
+      );
+
+      cy.get("[data-test='create-folder-dialog'] input").type("CreatedSubfolder1");
+      cy.get("[data-test='create-folder-dialog'] [data-test='base-dialog-main-button']").should(
+        "be.enabled"
+      );
+      cy.get("[data-test='create-folder-dialog'] input").type("{enter}");
+      cy.get("[data-test='create-folder-dialog']").should("be.hidden");
+
+      cy.get("@parentFolder").click();
+      cy.get("@parentFolder").within(() => {
+        cy.get("[data-test='nav-folder']").contains("CreatedSubfolder1").should("exist");
+      });
+    });
+  });
 }

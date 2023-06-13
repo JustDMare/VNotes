@@ -1,4 +1,4 @@
-import { folderCreationSubSuite } from "./sub-suites/file-management";
+import { folderCreationSubSuite, folderDeletionSubSuite } from "./sub-suites/file-management";
 
 /* eslint-disable max-len */
 describe("File Management Tests", () => {
@@ -85,4 +85,5 @@ describe("File Management Tests", () => {
 
   // Folder creation
   folderCreationSubSuite();
+  folderDeletionSubSuite();
 });

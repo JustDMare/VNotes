@@ -26,7 +26,7 @@ defineEmits(["optionsDropdownOpened", "optionsDropdownClosed"]);
       :tooltip="$t('tooltips.navigationItemOptionsButton')"
       :menu-margin-from-button-in-px="MENU_MARGIN_FROM_BUTTON"
       :menu-percentage-left-alignment="MENU_LEFT_DISPLACEMENT"
-      data-testid="nav-item-options-dropdown"
+      data-test="nav-item-options-dropdown"
     >
       <template #button-content>
         <OptionsButtonIcon class="nav-item__options__icon" />

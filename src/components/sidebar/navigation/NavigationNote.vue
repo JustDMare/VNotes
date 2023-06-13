@@ -25,7 +25,7 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
 </script>
 
 <template>
-  <li class="nav__note">
+  <li class="nav__note" data-test="nav-note">
     <div
       @mouseover="setShowOptionsButton(true)"
       @mouseleave="setShowOptionsButton(false)"
