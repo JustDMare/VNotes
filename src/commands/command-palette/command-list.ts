@@ -97,6 +97,7 @@ function getEditorCommands(): PaletteCommand[] {
       name: t("commandPalette.editor.deleteBlock.name"),
       execute: deleteBlockCommand(),
       description: t("commandPalette.editor.deleteBlock.description"),
+      dataTest: "palette-delete-block",
     },
   ];
 }
