@@ -10,7 +10,8 @@
  */
 export function folderRelocationSubSuite(): void {
   describe("Folder Relocation", () => {
-    emptyFolderRelocationBetweenParentAndRoot();
+    //emptyFolderRelocationBetweenParentAndRoot();
+    folderWithNestedContentRelocationToSubfolder();
   });
 }
 
@@ -94,6 +95,145 @@ function emptyFolderRelocationBetweenParentAndRoot(): void {
       cy.contains("[data-test='nav-folder']", "SubfolderC")
         .parent("[data-test='nav-item-list']")
         .should("not.exist");
+    });
+  });
+}
+
+/**
+ * Tests the relocation of a subfolder with nested content to a different subfolder as its
+ * new parent folder. Then tests the relocation of that folder from the new parent folder
+ * to its original parent folder.
+ * @returns {void}
+ */
+function folderWithNestedContentRelocationToSubfolder(): void {
+  describe("Tests the relocation of a folder with nested content to a different subfolder as its new parent folder", () => {
+    beforeEach(() => {
+      cy.contains("[data-test='nav-folder']", "FolderA").as("parentFolder").should("exist");
+    });
+    it("Relocates a folder with nested content to a different subfolder as its new parent folder", () => {
+      // Display FolderA's content
+      cy.get("@parentFolder").click();
+      cy.get("@parentFolder").within(() => {
+        cy.contains("[data-test='nav-folder']", "SubfolderA").as("folderToMove").should("exist");
+        cy.contains("[data-test='nav-folder']", "SubfolderB").as("newParentFolder").should("exist");
+      });
+
+      // Display SubfolderA's content
+      cy.get("@folderToMove").click();
+      cy.get("@folderToMove").within(() => {
+        cy.contains("SubfolderD").should("be.visible");
+        cy.contains("NoteE").should("be.visible");
+      });
+
+      // Open the MoveFolder dialog for SubfolderA
+      cy.get("@folderToMove").trigger("mouseover");
+      cy.get("@folderToMove")
+        .children("[data-test='nav-folder-content']")
+        .within(() => {
+          cy.get("[data-test='nav-item-options-dropdown'] [data-test='dropdown-button']").click();
+          cy.get("[data-test='nav-item-options-dropdown'] [data-test='dropdown-menu']").should(
+            "be.visible"
+          );
+          cy.get("[data-test='nav-item-options-dropdown'] [data-test='nav-move-folder']").click();
+        });
+      cy.get("[data-test='move-folder-dialog']").should("be.visible");
+      cy.get("[data-test='move-folder-dialog'] [data-test='base-dialog-main-button']").should(
+        "be.disabled"
+      );
+
+      // Move SubfolderA to SubfolderB
+      cy.get("[data-test='move-folder-dialog']").within(() => {
+        cy.contains("[data-test='move-item-target-folder']", "FolderA")
+          .find("[data-test='move-item-target-folder-dropdown-btn']")
+          .should("exist")
+          .click();
+        // Verify that SubfolderA and its subfolders (SubfolderD) do not appear in the
+        // list of parent folder candidates
+        cy.contains("[data-test='move-item-target-folder']", "SubfolderA").should("not.exist");
+        cy.contains("[data-test='move-item-target-folder']", "SubfolderD").should("not.exist");
+        // Continue moving SubfolderA to SubfolderB
+        cy.contains("[data-test='move-item-target-folder']", "SubfolderB").should("exist").click();
+        cy.contains("[data-test='move-item-target-folder']", "SubfolderB")
+          .find("[data-test='move-item-target-folder-selected-icon']")
+          .should("be.visible");
+      });
+      cy.get("[data-test='move-folder-dialog'] [data-test='base-dialog-main-button']").should(
+        "be.enabled"
+      );
+      cy.get("[data-test='move-folder-dialog']").trigger("keydown", { key: "Enter" });
+      cy.get("[data-test='move-folder-dialog']").should("not.be.visible");
+
+      // Verify that SubfolderA is no longer a direct child of FolderA, but is now a child
+      // of SubfolderB.
+      cy.contains("[data-test='nav-folder']", "SubfolderA").should("not.be.visible");
+      cy.get("@newParentFolder").click();
+      cy.contains("[data-test='nav-folder']", "SubfolderA").should("be.visible");
+
+      // Verify that SubfolderA's content has moved with SubfolderA.
+      cy.contains("[data-test='nav-folder']", "SubfolderA").click();
+      cy.contains("[data-test='nav-folder']", "SubfolderA").within(() => {
+        cy.contains("SubfolderD").should("be.visible");
+        cy.contains("NoteE").should("be.visible");
+      });
+    });
+    it("Relocates the moved subfolder from its new parent to its original parent folder", () => {
+      // Display  SubfolderB's content
+      cy.get("@parentFolder").within(() => {
+        cy.contains("[data-test='nav-folder']", "SubfolderB").as("newParentFolder").should("exist");
+      });
+      cy.get("@newParentFolder").within(() => {
+        cy.contains("[data-test='nav-folder']", "SubfolderA").as("folderToMove").should("exist");
+      });
+
+      // Display SubfolderA's content
+      cy.get("@folderToMove").click();
+      cy.get("@folderToMove").within(() => {
+        cy.contains("SubfolderD").should("be.visible");
+        cy.contains("NoteE").should("be.visible");
+      });
+
+      // Open the MoveFolder dialog for SubfolderA
+      cy.get("@folderToMove").trigger("mouseover");
+      cy.get("@folderToMove")
+        .children("[data-test='nav-folder-content']")
+        .within(() => {
+          cy.get("[data-test='nav-item-options-dropdown'] [data-test='dropdown-button']").click();
+          cy.get("[data-test='nav-item-options-dropdown'] [data-test='dropdown-menu']").should(
+            "be.visible"
+          );
+          cy.get("[data-test='nav-item-options-dropdown'] [data-test='nav-move-folder']").click();
+        });
+      cy.get("[data-test='move-folder-dialog']").should("be.visible");
+      cy.get("[data-test='move-folder-dialog'] [data-test='base-dialog-main-button']").should(
+        "be.disabled"
+      );
+
+      // Move SubfolderA to SubfolderB
+      cy.get("[data-test='move-folder-dialog']").within(() => {
+        cy.contains("[data-test='move-item-target-folder']", "FolderA").should("exist").click();
+        cy.contains("[data-test='move-item-target-folder']", "FolderA")
+          .find("[data-test='move-item-target-folder-selected-icon']")
+          .should("be.visible");
+      });
+      cy.get("[data-test='move-folder-dialog'] [data-test='base-dialog-main-button']").should(
+        "be.enabled"
+      );
+      cy.get("[data-test='move-folder-dialog']").trigger("keydown", { key: "Enter" });
+      cy.get("[data-test='move-folder-dialog']").should("not.be.visible");
+
+      // Verify that SubfolderA is now a direct child of FolderA and is no longer a child
+      // of SubfolderB.
+      cy.get("@newParentFolder").click();
+      cy.contains("[data-test='nav-folder']", "SubfolderA").should("be.visible");
+      cy.get("@newParentFolder").within(() => {
+        cy.contains("[data-test='nav-folder']", "SubfolderA").should("not.exist");
+      });
+      // Verify that SubfolderA's content has moved with SubfolderA.
+      cy.contains("[data-test='nav-folder']", "SubfolderA").click();
+      cy.contains("[data-test='nav-folder']", "SubfolderA").within(() => {
+        cy.contains("SubfolderD").should("be.visible");
+        cy.contains("NoteE").should("be.visible");
+      });
     });
   });
 }

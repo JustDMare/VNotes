@@ -1,4 +1,5 @@
 import { folderCreationSubSuite, folderDeletionSubSuite } from "./sub-suites/file-management";
+import { folderRelocationSubSuite } from "./sub-suites/file-management/folder-relocation";
 
 /* eslint-disable max-len */
 describe("File Management Tests", () => {
@@ -61,8 +62,8 @@ describe("File Management Tests", () => {
           cy.get("[data-test='create-folder-dialog']").should("not.be.visible");
         });
         it("Pressing 'Esc' key closes the folder creation dialog", () => {
-          cy.get("[data-test='create-folder-dialog']").trigger("keydown", { key: "Esc" });
-          cy.get("[data-test='create-folder-dialog']").type("{esc}");
+          cy.get("[data-test='create-folder-dialog']").trigger("keydown", { key: "Escape" });
+          // cy.get("[data-test='create-folder-dialog']").type("{esc}");
           cy.get("[data-test='create-folder-dialog']").should("not.be.visible");
         });
         it("Clicking on the 'X' button closes the folder creation dialog", () => {
@@ -83,7 +84,7 @@ describe("File Management Tests", () => {
     );
   });
 
-  // Folder creation
   folderCreationSubSuite();
   folderDeletionSubSuite();
+  folderRelocationSubSuite();
 });

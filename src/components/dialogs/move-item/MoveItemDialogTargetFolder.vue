@@ -136,6 +136,7 @@ function toggleSubfolderVisibility(event: MouseEvent) {
           v-if="folder.content.folders.length > 0"
           @click="toggleSubfolderVisibility"
           class="move-item__target-list__target__dropdown-btn"
+          data-test="move-item-target-folder-dropdown-btn"
         >
           <ChevronRightIcon
             class="target__icon target__icon--chevron"
