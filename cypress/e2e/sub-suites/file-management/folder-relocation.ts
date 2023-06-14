@@ -26,6 +26,7 @@ function emptyFolderRelocationBetweenParentAndRoot(): void {
       cy.contains("[data-test='nav-folder']", "FolderB").as("parentFolder").should("exist");
     });
     it("Relocates a nested folder to the root directory, removing it from the old parent's list of content", () => {
+      // Open SubfolderC's Move dialog
       cy.get("@parentFolder").click();
       cy.get("@parentFolder").within(() => {
         cy.contains("[data-test='nav-folder']", "SubfolderC").as("folderToMove").should("exist");
@@ -40,6 +41,8 @@ function emptyFolderRelocationBetweenParentAndRoot(): void {
           );
           cy.get("[data-test='nav-item-options-dropdown'] [data-test='nav-move-folder']").click();
         });
+
+      // Move SubfolderC to the root directory
       cy.get("[data-test='move-folder-dialog']").should("be.visible");
       cy.get("[data-test='move-folder-dialog'] [data-test='base-dialog-main-button']").should(
         "be.disabled"
@@ -55,6 +58,9 @@ function emptyFolderRelocationBetweenParentAndRoot(): void {
       );
       cy.get("[data-test='move-folder-dialog']").trigger("keydown", { key: "Enter" });
       cy.get("[data-test='move-folder-dialog']").should("not.be.visible");
+
+      // Confirm that SubfolderC is no longer in FolderB's list of content, but in the
+      // root directory
       cy.get("@parentFolder").within(() => {
         cy.contains("[data-test='nav-folder']", "SubfolderC").should("not.exist");
       });
@@ -63,6 +69,7 @@ function emptyFolderRelocationBetweenParentAndRoot(): void {
         .should("exist");
     });
     it("Relocates the previously moved folder from the root directory to its original parent folder", () => {
+      // Open SubfolderC's Move dialog
       cy.contains("[data-test='nav-folder']", "SubfolderC").as("folderToMove").should("exist");
       cy.get("@folderToMove").trigger("mouseover");
       cy.get("@folderToMove")
@@ -74,6 +81,8 @@ function emptyFolderRelocationBetweenParentAndRoot(): void {
           );
           cy.get("[data-test='nav-item-options-dropdown'] [data-test='nav-move-folder']").click();
         });
+
+      // Move SubfolderC back to FolderB
       cy.get("[data-test='move-folder-dialog']").should("be.visible");
       cy.get("[data-test='move-folder-dialog'] [data-test='base-dialog-main-button']").should(
         "be.disabled"
@@ -89,6 +98,8 @@ function emptyFolderRelocationBetweenParentAndRoot(): void {
       );
       cy.get("[data-test='move-folder-dialog']").trigger("keydown", { key: "Enter" });
       cy.get("[data-test='move-folder-dialog']").should("not.be.visible");
+
+      // Confirm that SubfolderC is no longer in the root directory, but in FolderB's list
       cy.get("@parentFolder").within(() => {
         cy.contains("[data-test='nav-folder']", "SubfolderC").should("exist");
       });
