@@ -2,7 +2,7 @@
 
 /**
  * This suite tests the creation of folders.
- * The tests are divided into three sub-suites:
+ * The tests will cover the following scenarios:
  * - Folder creation with an empty name (forbidden).
  * - Folder creation with a valid name.
  * - Folder creation inside another folder.

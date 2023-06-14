@@ -119,7 +119,11 @@ function toggleSubfolderVisibility(event: MouseEvent) {
 </script>
 
 <template>
-  <li class="move-item__target-list__target-item" v-if="dialogEvent.movedItemId !== folder._id">
+  <li
+    class="move-item__target-list__target-item"
+    v-if="dialogEvent.movedItemId !== folder._id"
+    data-test="move-item-target-folder"
+  >
     <div
       class="move-item__target-list__target"
       :class="{ 'move-item__target-list__target--selected': isFolderSelected }"

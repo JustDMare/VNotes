@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /**
  * This suite tests the deletion of folders.
- * The tests are divided into two sub-suites:
+ * The tests  will cover the following scenarios:
  * - Folder deletion of an empty folder
  * - Folder deletion of a folder with nested content.
  * @returns {void}

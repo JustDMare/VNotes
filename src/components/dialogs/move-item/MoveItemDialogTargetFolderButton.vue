@@ -103,7 +103,10 @@ function onCheckboxChange(event: Event): boolean {
 </script>
 
 <template>
-  <label class="move-item__target-list__target__name" :for="checkboxId"
+  <label
+    class="move-item__target-list__target__name"
+    :for="checkboxId"
+    data-test="move-item-target-folder-button"
     >{{ folderName }}
     <FadeTransition>
       <input
@@ -113,6 +116,7 @@ function onCheckboxChange(event: Event): boolean {
         @change="onCheckboxChange"
         type="checkbox"
         class="move-item__target-list__target__checkbox"
+        data-test="move-item-target-folder-selected-icon"
       />
     </FadeTransition>
   </label>
