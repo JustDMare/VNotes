@@ -10,7 +10,7 @@
  */
 export function folderRelocationSubSuite(): void {
   describe("Folder Relocation", () => {
-    //emptyFolderRelocationBetweenParentAndRoot();
+    emptyFolderRelocationBetweenParentAndRoot();
     folderWithNestedContentRelocationToSubfolder();
   });
 }
