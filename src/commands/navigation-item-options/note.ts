@@ -3,6 +3,7 @@ import { MoveItemIcon, TrashIcon } from "@/components/icons";
 import type { NavigationItemOption } from "./interfaces";
 import { i18n } from "@/i18n/i18n.plugin";
 import RenameIcon from "@/components/icons/RenameIcon.vue";
+import type { Ref } from "vue";
 
 /**
  * Returns an array of predefined `NavigationItemOptions` for a note, given its
@@ -13,7 +14,7 @@ import RenameIcon from "@/components/icons/RenameIcon.vue";
  * @param {string} noteTitle - The title of the note for which the
  * `NavigationItemOptions` are customized.
  */
-export function getNoteOptions(noteId: string, noteTitle: string): NavigationItemOption[] {
+export function getNoteOptions(noteId: string, noteTitle: Ref<string>): NavigationItemOption[] {
   const eventStore = useEventStore();
   const t = i18n.global.t;
   return [
@@ -22,7 +23,7 @@ export function getNoteOptions(noteId: string, noteTitle: string): NavigationIte
       icon: RenameIcon,
       dataTest: "nav-rename-note",
       execute: () => {
-        eventStore.openRenameItemDialog("rename-note", noteId, noteTitle);
+        eventStore.openRenameItemDialog("rename-note", noteId, noteTitle.value);
       },
     },
     {
@@ -30,7 +31,7 @@ export function getNoteOptions(noteId: string, noteTitle: string): NavigationIte
       icon: MoveItemIcon,
       dataTest: "nav-move-note",
       execute: () => {
-        eventStore.openMoveItemDialog("move-note", noteId, noteTitle);
+        eventStore.openMoveItemDialog("move-note", noteId, noteTitle.value);
       },
     },
     {
@@ -38,7 +39,7 @@ export function getNoteOptions(noteId: string, noteTitle: string): NavigationIte
       icon: TrashIcon,
       dataTest: "nav-delete-note",
       execute: () => {
-        eventStore.openDeleteItemDialog("delete-note", noteId, noteTitle);
+        eventStore.openDeleteItemDialog("delete-note", noteId, noteTitle.value);
       },
     },
   ];

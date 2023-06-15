@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ChevronRightIcon, FolderIcon } from "@/components/icons";
 import type { Folder } from "vnotes-types";
-import { ref, type PropType } from "vue";
+import { ref, type PropType, toRef, computed } from "vue";
 import NavigationItemOptionsDropdown from "./NavigationItemOptionsDropdown.vue";
 import NavigationNote from "./NavigationNote.vue";
 import { getFolderOptions } from "@/commands/navigation-item-options/folder";
@@ -16,7 +16,9 @@ let showContents = ref(false);
 let optionsDropdownIsOpen = ref(false);
 let showOptionsButton = ref(false);
 
-const folderOptions = getFolderOptions(props.folderReference._id, props.folderReference.name);
+const folderOptions = computed(() =>
+  getFolderOptions(props.folderReference._id, toRef(props.folderReference, "name"))
+);
 
 function toggleContentVisibility(): void {
   showContents.value = !showContents.value;
