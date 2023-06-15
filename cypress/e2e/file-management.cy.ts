@@ -8,11 +8,9 @@ describe("File Management Tests", () => {
     cy.then(Cypress.session.clearCurrentSessionData);
     cy.loginWithAuth0(Cypress.env("auth0_username"), Cypress.env("auth0_password"));
   });
-  // eslint-disable-next-line no-constant-condition
-  if (false) {
-    folderCreationSubSuite();
-    folderDeletionSubSuite();
-    folderRelocationSubSuite();
-  }
+
+  folderCreationSubSuite();
+  folderDeletionSubSuite();
+  folderRelocationSubSuite();
   folderRenamingSubSuite();
 });

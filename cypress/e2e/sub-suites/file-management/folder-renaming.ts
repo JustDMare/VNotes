@@ -22,7 +22,7 @@ function folderRenamingWithEmptyName(): void {
     before(() => {
       // Open the Rename dialog for FolderA
       cy.contains("[data-test='nav-folder']", "FolderA").as("folderToRename").should("exist");
-      cy.get("@folderToRename").trigger("mouseover");
+      cy.get("@folderToRename").children("[data-test='nav-folder-content']").trigger("mouseover");
       cy.get("@folderToRename")
         .children("[data-test='nav-folder-content']")
         .within(() => {
@@ -35,7 +35,7 @@ function folderRenamingWithEmptyName(): void {
       cy.get("[data-test='rename-folder-dialog']").should("be.visible");
     });
     after(() => {
-      cy.get("#sidebar-nav").click();
+      cy.get("[data-test='nav-item-list']").click();
       cy.get("[data-test='rename-folder-dialog']").should("not.be.visible");
     });
     beforeEach(() => {
@@ -83,7 +83,7 @@ function folderRenamingWithValidName(): void {
 
       //Verify that the folder to be renamed has nested content
       cy.contains("[data-test='nav-folder']", "FolderA").as("folderToRename").should("exist");
-      cy.get("@folderToRename").click();
+
       cy.get("@folderToRename").within(() => {
         cy.contains("SubfolderA").should("be.visible");
         cy.contains("SubfolderB").should("be.visible");
@@ -92,7 +92,7 @@ function folderRenamingWithValidName(): void {
       });
 
       // Open the Rename dialog for FolderA
-      cy.get("@folderToRename").trigger("mouseover");
+      cy.get("@folderToRename").children("[data-test='nav-folder-content']").trigger("mouseover");
       cy.get("@folderToRename")
         .children("[data-test='nav-folder-content']")
         .within(() => {
@@ -124,7 +124,6 @@ function folderRenamingWithValidName(): void {
       cy.contains("[data-test='nav-folder']", "FolderRenamed").as("folderRenamed").should("exist");
 
       // Verify that the folder's nested content is still there
-      cy.get("@folderRenamed").click();
       cy.get("@folderRenamed").within(() => {
         cy.contains("SubfolderA").should("be.visible");
         cy.contains("SubfolderB").should("be.visible");
@@ -167,7 +166,6 @@ function folderRenamingWithValidName(): void {
       cy.contains("[data-test='nav-folder']", "FolderA").as("folderToRename").should("exist");
       // Verify that the folder's nested content is still there
 
-      cy.get("@folderToRename").click();
       cy.get("@folderToRename").within(() => {
         cy.contains("SubfolderA").should("be.visible");
         cy.contains("SubfolderB").should("be.visible");
