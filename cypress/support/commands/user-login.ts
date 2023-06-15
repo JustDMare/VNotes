@@ -1,4 +1,12 @@
-export function loginWithAuth0Command(username: string, password: string) {
+/**
+ * Logs into the system via interacting with the Auth0 UI, using the provided username and
+ * password, all while taking snapshots for easier debugging.
+ *
+ * @param username Username of the user to log in as.
+ * @param password Password of the user to log in as.
+ * @returns {void}
+ */
+export function loginWithAuth0Command(username: string, password: string): void {
   const log = Cypress.log({
     displayName: "AUTH0 LOGIN",
     message: [`🔐 Authenticating | ${username}`],
@@ -12,7 +20,17 @@ export function loginWithAuth0Command(username: string, password: string) {
   log.end();
 }
 
-function loginViaAuth0Ui(username: string, password: string) {
+/**
+ * Logs into the system via interacting with the Auth0 UI, using the provided username and
+ * password.
+ *
+ * Makes several assertions to make sure the process has been successfully completed.
+ * @param username Username of the user to log in as.
+ * @param password Password of the user to log in as.
+ * @returns {void}
+
+ */
+function loginViaAuth0Ui(username: string, password: string): void {
   cy.visit("http://localhost:3000");
   cy.contains("Sign in");
   //Redirects to Auth0

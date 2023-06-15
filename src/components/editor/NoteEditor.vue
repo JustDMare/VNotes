@@ -107,6 +107,7 @@ watch(
           @keydown="handleSpecialKeys"
           @input="processInput"
           v-text="initialNoteTitle"
+          data-test="note-title"
         />
       </header>
       <div id="note-editor__content__list">
