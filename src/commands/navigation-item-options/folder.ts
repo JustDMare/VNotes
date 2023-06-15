@@ -3,7 +3,6 @@ import { MoveItemIcon, NewFolderIcon, NewNoteIcon, TrashIcon } from "@/component
 import type { NavigationItemOption } from "./interfaces";
 import { i18n } from "@/i18n/i18n.plugin";
 import RenameIcon from "@/components/icons/RenameIcon.vue";
-import type { Ref } from "vue";
 
 /**
  * Returns an array of predefined `NavigationItemOptions` for a folder, given its
@@ -14,10 +13,7 @@ import type { Ref } from "vue";
  * @param {string} folderName - The name of the folder for which the
  * `NavigationItemOptions` are customized.
  */
-export function getFolderOptions(
-  folderId: string,
-  folderName: Ref<string>
-): NavigationItemOption[] {
+export function getFolderOptions(folderId: string, folderName: string): NavigationItemOption[] {
   const eventStore = useEventStore();
   const t = i18n.global.t;
   return [
@@ -42,7 +38,7 @@ export function getFolderOptions(
       icon: RenameIcon,
       dataTest: "nav-rename-folder",
       execute: () => {
-        eventStore.openRenameItemDialog("rename-folder", folderId, folderName.value);
+        eventStore.openRenameItemDialog("rename-folder", folderId, folderName);
       },
     },
     {
@@ -50,7 +46,7 @@ export function getFolderOptions(
       icon: MoveItemIcon,
       dataTest: "nav-move-folder",
       execute: () => {
-        eventStore.openMoveItemDialog("move-folder", folderId, folderName.value);
+        eventStore.openMoveItemDialog("move-folder", folderId, folderName);
       },
     },
     {
@@ -58,7 +54,7 @@ export function getFolderOptions(
       icon: TrashIcon,
       dataTest: "nav-delete-folder",
       execute: () => {
-        eventStore.openDeleteItemDialog("delete-folder", folderId, folderName.value);
+        eventStore.openDeleteItemDialog("delete-folder", folderId, folderName);
       },
     },
   ];
