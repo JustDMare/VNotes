@@ -80,4 +80,29 @@ describe("Tests for minor interactions, such as toggling the visibility of subfo
       }
     );
   });
+
+  // Opening and closing the sidebar
+  describe("Testing the opening and closing of the sidebar", () => {
+    before(() => {
+      cy.contains("NoteA").click();
+    });
+    it("Should close the sidebar when clicking on the sidebar toggle button while the sidebar is open", () => {
+      cy.get("[data-test='sidebar']").should("exist").and("have.class", "sidebar--open");
+      cy.get("[data-test='sidebar-toggle-btn']").click();
+      cy.get("[data-test='sidebar']")
+        .should("exist")
+        .should("have.class", "sidebar--closed")
+        .should("have.css", "width")
+        .and("match", /0/);
+    });
+    it("Should open the sidebar when clicking on the sidebar toggle button while the sidebar is closed", () => {
+      cy.get("[data-test='sidebar']").should("exist").should("have.class", "sidebar--closed");
+      cy.get("[data-test='sidebar-toggle-btn']").click();
+      cy.get("[data-test='sidebar']")
+        .should("exist")
+        .should("have.class", "sidebar--open")
+        .should("have.css", "width")
+        .and("match", /^[1-9]\d*/);
+    });
+  });
 });
