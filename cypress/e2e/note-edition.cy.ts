@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { noteRenamingWithinEditorSubSuite } from "./sub-suites/note-edition/note-rename-within-editor";
+import { noteRenamingWithinEditorSubSuite } from "./sub-suites/note-edition/";
 
 /* eslint-disable max-len */
 describe("Note Edition Tests", () => {
