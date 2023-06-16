@@ -80,12 +80,14 @@ watch(
     @mouseover="showButtons"
     @mouseleave="hideButtons"
     @hover="showButtons"
+    data-test="block-wrapper"
   >
     <component
       class="block__content"
       :is="blockComponentMap.get(block.type)"
       :block="block"
       ref="blockInnerComponent"
+      data-test="block"
     ></component>
 
     <div
@@ -100,6 +102,7 @@ watch(
           v-show="buttonsVisible"
           class="block__btn"
           @click="createBlockBelow"
+          data-test="add-block-btn"
         >
           <PlusIcon class="block__btn__icon" />
         </button>
@@ -109,6 +112,7 @@ watch(
           :title="$t('tooltips.block.gripButton')"
           v-show="buttonsVisible"
           class="block__btn grip-btn"
+          data-test="move-block-btn"
         >
           <GripIcon class="block__btn__icon" />
         </button>

@@ -72,5 +72,6 @@ defineExpose({ blockHTMLContent });
     @input="processInput"
     class="note-editor__content-editable"
     :class="{ 'block__show-placeholder': isContentEmpty }"
+    data-test="block-content"
   />
 </template>

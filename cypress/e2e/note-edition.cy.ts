@@ -1,5 +1,8 @@
 /* eslint-disable max-len */
-import { noteRenamingWithinEditorSubSuite } from "./sub-suites/note-edition/";
+import {
+  blockCreationSubsuite,
+  noteRenamingWithinEditorSubSuite,
+} from "./sub-suites/note-edition/";
 
 /* eslint-disable max-len */
 describe("Note Edition Tests", () => {
@@ -8,4 +11,5 @@ describe("Note Edition Tests", () => {
     cy.loginWithAuth0(Cypress.env("auth0_username"), Cypress.env("auth0_password"));
   });
   noteRenamingWithinEditorSubSuite();
+  blockCreationSubsuite();
 });
