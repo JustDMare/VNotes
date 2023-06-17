@@ -21,12 +21,7 @@ const highlightedCommandIndex = ref(0);
 //search term. It should delete it. (Add to testing findings?)
 function executeCommand(command: PaletteCommand) {
   command.execute();
-  if (editorStore.blockOpeningCommandPalette) {
-    editorStore.updateBlockContent(
-      editorStore.blockOpeningCommandPalette._id,
-      blockContentBeforeCommand.value
-    );
-  }
+  editorStore.restoreBlockContentBeforeOpeningCommandPalette();
   editorStore.setCommandPaletteOpen(false);
 }
 

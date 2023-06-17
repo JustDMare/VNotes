@@ -18,6 +18,7 @@ export const useEditorStore = defineStore("editor", {
     blockCreated: false as boolean,
     commandPaletteOpen: false as boolean,
     blockOpeningCommandPalette: null as Block | null,
+    blockContentBeforeOpeningCommandPalette: null as string | null,
     isSavingNote: false as boolean,
     auth0: useAuth0(),
   }),
@@ -84,6 +85,18 @@ export const useEditorStore = defineStore("editor", {
       if (this.noteInEditor) {
         this.noteInEditor.title = content;
       }
+    },
+    setBlockContentBeforeOpeningCommandPalette(content: string): void {
+      this.blockContentBeforeOpeningCommandPalette = content;
+    },
+    restoreBlockContentBeforeOpeningCommandPalette(): void {
+      if (this.blockOpeningCommandPalette) {
+        this.updateBlockContent(
+          this.blockOpeningCommandPalette._id,
+          this.blockContentBeforeOpeningCommandPalette as string
+        );
+      }
+      this.blockContentBeforeOpeningCommandPalette = null;
     },
 
     updateBlockContent(_id: string, content: string): void {

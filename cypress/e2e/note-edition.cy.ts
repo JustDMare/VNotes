@@ -2,7 +2,8 @@
 import {
   blockCreationSubSuite,
   blockEditionSubSuite,
-  commandPaletteUsageSubsuite,
+  checkboxStatePersistenceSubsuite,
+  commandPaletteUsageSubSuite,
   noteRenamingWithinEditorSubSuite,
 } from "./sub-suites/note-edition/";
 
@@ -15,8 +16,12 @@ describe("Note Edition Tests", () => {
   // eslint-disable-next-line no-constant-condition
   if (false) {
     noteRenamingWithinEditorSubSuite();
+    blockCreationSubSuite();
+    blockEditionSubSuite();
+    commandPaletteUsageSubSuite();
+    checkboxStatePersistenceSubsuite();
   }
   blockCreationSubSuite();
   blockEditionSubSuite();
-  commandPaletteUsageSubsuite();
+  checkboxStatePersistenceSubsuite();
 });

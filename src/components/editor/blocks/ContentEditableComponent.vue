@@ -43,11 +43,6 @@ function handleSpecialKeys(event: KeyboardEvent) {
   if (event.key === "Backspace" && blockHTMLContent.value?.innerText.length) {
     handleBackspaceOnContentEditable(event);
   }
-  if (event.key === "/") {
-    editorStore.setCommandPaletteOpen(true);
-    editorStore.setBlockOpeningCommandPalette(props.block);
-  }
-
   if (event.code === "Enter" && !event.shiftKey && !editorStore.commandPaletteOpen) {
     event.preventDefault();
     editorStore.createBlockBelowBlockId(unref(props.block._id));
@@ -55,7 +50,13 @@ function handleSpecialKeys(event: KeyboardEvent) {
 }
 
 function processInput(event: Event) {
+  const inputEvent: InputEvent = event as InputEvent;
   const input = event.target as HTMLElement;
+  if (inputEvent.inputType === "insertText" && inputEvent.data === "/") {
+    editorStore.setCommandPaletteOpen(true);
+    editorStore.setBlockOpeningCommandPalette(props.block);
+    editorStore.setBlockContentBeforeOpeningCommandPalette(props.block.content);
+  }
   editorStore.updateBlockContent(unref(props.block._id), input.innerText);
 }
 

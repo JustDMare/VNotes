@@ -21,7 +21,7 @@
  *    - Heading small.
  *    - Checkbox.
  */
-export function commandPaletteUsageSubsuite(): void {
+export function commandPaletteUsageSubSuite(): void {
   describe("Tests for activation and usage of the command palette", () => {
     before(() => {
       cy.get("[data-test='nav-item-list']").children(":contains('NoteA')").should("exist").click();
@@ -37,7 +37,7 @@ export function commandPaletteUsageSubsuite(): void {
         });
       cy.get("@cmdPalette").should("not.be.visible");
       cy.get("@currentBlock").click();
-      cy.get("@currentBlock").trigger("keydown", { key: "/" }).type("/");
+      cy.get("@currentBlock").type("/");
       cy.get("@cmdPalette").should("be.visible");
     });
     activationAndClosingOfCmdPalette();
