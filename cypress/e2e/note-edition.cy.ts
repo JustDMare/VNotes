@@ -14,14 +14,14 @@ describe("Note Edition Tests", () => {
     cy.loginWithAuth0(Cypress.env("auth0_username"), Cypress.env("auth0_password"));
   });
   // eslint-disable-next-line no-constant-condition
-  if (false) {
+  if (true) {
     noteRenamingWithinEditorSubSuite();
     blockCreationSubSuite();
     blockEditionSubSuite();
     commandPaletteUsageSubSuite();
     checkboxStatePersistenceSubsuite();
   }
-  blockCreationSubSuite();
-  blockEditionSubSuite();
-  checkboxStatePersistenceSubsuite();
+  // blockCreationSubSuite();
+  // blockEditionSubSuite();
+  // checkboxStatePersistenceSubsuite();
 });

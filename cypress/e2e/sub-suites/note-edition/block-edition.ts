@@ -32,7 +32,7 @@ export function blockEditionSubSuite(): void {
         expect(content).to.contain("Type '/' for commands");
       });
     });
-    it("Writes text in the block, which makes the placeholder disappear", () => {
+    it("Writes text in the block, which should hide the placeholder", () => {
       cy.get("@newBlock").type("Content for the block");
       cy.get("@newBlock").then(($el) => {
         const beforeStyle = window.getComputedStyle($el[0], "::before");
@@ -40,7 +40,7 @@ export function blockEditionSubSuite(): void {
         expect(content).to.equal("none");
       });
     });
-    it("Clears the text from the block, which makes the placeholder to show up again", () => {
+    it("Clears the text from the block. The placeholder should show be visible once again", () => {
       cy.get("@newBlock").clear();
       cy.get("@newBlock").then(($el) => {
         const beforeStyle = window.getComputedStyle($el[0], "::before");
