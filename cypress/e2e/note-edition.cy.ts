@@ -2,6 +2,7 @@
 import {
   blockCreationSubSuite,
   blockEditionSubSuite,
+  blockRearrangementSubSuite,
   noteRenamingWithinEditorSubSuite,
 } from "./sub-suites/note-edition/";
 
@@ -17,4 +18,5 @@ describe("Note Edition Tests", () => {
   }
   blockCreationSubSuite();
   blockEditionSubSuite();
+  blockRearrangementSubSuite();
 });
