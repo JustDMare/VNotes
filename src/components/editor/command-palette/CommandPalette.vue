@@ -95,7 +95,7 @@ watch(
 </script>
 
 <template>
-  <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette">
+  <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette" data-test="cmd-palette">
     <CommandList
       @commandListChanged="recalculatePosition"
       :show-command-palette="showCommandPalette"
