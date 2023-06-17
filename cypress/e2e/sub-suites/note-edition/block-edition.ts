@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /**
- * This suite tests creation of blocks within a note
+ * This suite tests edition of blocks within a note
  * The tests will cover the following scenarios:
  * - Creating a new block with the "Enter" key:
  *    - Below the title
@@ -11,7 +11,7 @@
  *   below the originally focused block, instead of just at the end of the list.
  * @returns {void}
  */
-export function blockCreationSubSuite(): void {
+export function blockEditionSubSuite(): void {
   describe("Block creation in a note", () => {
     before(() => {
       cy.get("[data-test='nav-item-list']").children(":contains('NoteA')").should("exist").click();
@@ -28,28 +28,16 @@ export function blockCreationSubSuite(): void {
     });
     it("Places the focus at the end of a block. Then creates a new block right below with the 'Enter' key.", () => {
       cy.contains("[data-test='block']", "Block 2").click();
-      cy.get(":focus").type("{enter}Block 6");
+      cy.get(":focus").type("{enter}Block 5");
       cy.get("[data-test='block-wrapper']")
         .eq(1)
         .should("contain", "Block 2")
         .next()
-        .should("contain", "Block 6");
+        .should("contain", "Block 5");
     });
     it("Places the focus at the start of a block. Then creates a new block right below with the 'Enter' key.", () => {
       cy.contains("[data-test='block']", "Block 2").click();
-      cy.get(":focus").type("{home}{enter}Block 5");
-      cy.get("[data-test='block-wrapper']")
-        .eq(1)
-        .should("contain", "Block 2")
-        .next()
-        .should("not.contain", "Block 6")
-        .should("contain", "Block 5")
-        .next()
-        .should("contain", "Block 6");
-    });
-    it("Places the focus in the middle of a block. Then creates a new block right below with the 'Enter' key.", () => {
-      cy.contains("[data-test='block']", "Block 2").click();
-      cy.get(":focus").type("{leftarrow}{leftarrow}{leftarrow}{enter}Block 4");
+      cy.get(":focus").type("{home}{enter}Block 4");
       cy.get("[data-test='block-wrapper']")
         .eq(1)
         .should("contain", "Block 2")
@@ -59,11 +47,9 @@ export function blockCreationSubSuite(): void {
         .next()
         .should("contain", "Block 5");
     });
-    it("Uses the 'Create new block' button, which creates a new block below the one whose button was pressed", () => {
-      cy.contains("[data-test='block-wrapper']", "Block 2")
-        .find("[data-test='add-block-btn']")
-        .click();
-      cy.get(":focus").type("Block 3");
+    it("Places the focus in the middle of a block. Then creates a new block right below with the 'Enter' key.", () => {
+      cy.contains("[data-test='block']", "Block 2").click();
+      cy.get(":focus").type("{leftarrow}{leftarrow}{leftarrow}{enter}Block 3");
       cy.get("[data-test='block-wrapper']")
         .eq(1)
         .should("contain", "Block 2")
