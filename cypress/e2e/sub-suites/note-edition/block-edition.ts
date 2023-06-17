@@ -1,63 +1,82 @@
 /* eslint-disable max-len */
 /**
- * This suite tests edition of blocks within a note
+ * This suite tests text edition of blocks within a note
  * The tests will cover the following scenarios:
- * - Creating a new block with the "Enter" key:
- *    - Below the title
- *    - With the cursor placed at the end of a block
- *    - With the cursor placed anywhere on a block
- * - With the dedicated button.
- *   These scenarios will also be designed to verify that the blocks are actually created
- *   below the originally focused block, instead of just at the end of the list.
+ * - Showing the placeholder text when the block is empty:
+ *    - Newly created
+ *    - Content was deleted
+ * - Writing text on a block and being properly displayed.
+ * - Writing multi-line text on a block and being properly displayed.
  * @returns {void}
  */
 export function blockEditionSubSuite(): void {
-  describe("Block creation in a note", () => {
+  describe("Block edition in a note. Creates a new block at the end of the list for these tests", () => {
     before(() => {
       cy.get("[data-test='nav-item-list']").children(":contains('NoteA')").should("exist").click();
+      cy.get("[data-test='block-wrapper']").last().trigger("mouseover");
+      cy.get("[data-test='block-wrapper']").last().find("[data-test='add-block-btn']").click();
     });
-    it("Creates a block below the title, and at the start of the block list, when pressing Enter while the title is focused", () => {
-      cy.get("[data-test='block-wrapper']").first().should("contain", "Block 2");
-      cy.get("[data-test='note-title']").type("{enter}");
-      cy.get(":focus").type("Block 1");
+
+    beforeEach(() => {
       cy.get("[data-test='block-wrapper']")
-        .first()
-        .should("contain", "Block 1")
-        .next()
-        .should("contain", "Block 2");
+        .last()
+        .find("[data-test='block-content']")
+        .as("newBlock")
+        .focus();
     });
-    it("Places the focus at the end of a block. Then creates a new block right below with the 'Enter' key.", () => {
-      cy.contains("[data-test='block']", "Block 2").click();
-      cy.get(":focus").type("{enter}Block 5");
-      cy.get("[data-test='block-wrapper']")
-        .eq(1)
-        .should("contain", "Block 2")
-        .next()
-        .should("contain", "Block 5");
+
+    it("Verifies that the newly created block is showing the placeholder, as it is empty", () => {
+      cy.get("@newBlock").then(($el) => {
+        const beforeStyle = window.getComputedStyle($el[0], "::before");
+        const content = beforeStyle.getPropertyValue("content");
+        expect(content).to.contain("Type '/' for commands");
+      });
     });
-    it("Places the focus at the start of a block. Then creates a new block right below with the 'Enter' key.", () => {
-      cy.contains("[data-test='block']", "Block 2").click();
-      cy.get(":focus").type("{home}{enter}Block 4");
-      cy.get("[data-test='block-wrapper']")
-        .eq(1)
-        .should("contain", "Block 2")
-        .next()
-        .should("not.contain", "Block 5")
-        .should("contain", "Block 4")
-        .next()
-        .should("contain", "Block 5");
+    it("Writes text in the block, which makes the placeholder disappear", () => {
+      cy.get("@newBlock").type("Content for the block");
+      cy.get("@newBlock").then(($el) => {
+        const beforeStyle = window.getComputedStyle($el[0], "::before");
+        const content = beforeStyle.getPropertyValue("content");
+        expect(content).to.equal("none");
+      });
     });
-    it("Places the focus in the middle of a block. Then creates a new block right below with the 'Enter' key.", () => {
-      cy.contains("[data-test='block']", "Block 2").click();
-      cy.get(":focus").type("{leftarrow}{leftarrow}{leftarrow}{enter}Block 3");
-      cy.get("[data-test='block-wrapper']")
-        .eq(1)
-        .should("contain", "Block 2")
-        .next()
-        .should("not.contain", "Block 4")
-        .should("contain", "Block 3")
-        .next()
-        .should("contain", "Block 4");
+    it("Clears the text from the block, which makes the placeholder to show up again", () => {
+      cy.get("@newBlock").clear();
+      cy.get("@newBlock").then(($el) => {
+        const beforeStyle = window.getComputedStyle($el[0], "::before");
+        const content = beforeStyle.getPropertyValue("content");
+        expect(content).to.contain("Type '/' for commands");
+      });
+    });
+    it("Allows the insertion of new lines to the block with 'Shift + Enter' as long as the block is not empty", () => {
+      cy.get("@newBlock").type("{shift}{enter}");
+      cy.get("@newBlock").then(($el) => {
+        const beforeStyle = window.getComputedStyle($el[0], "::before");
+        const content = beforeStyle.getPropertyValue("content");
+        expect(content).to.contain("Type '/' for commands");
+      });
+      cy.get("@newBlock").should(($el) => {
+        const text = $el.text();
+        expect(text.split("\n")).to.have.lengthOf(1);
+      });
+
+      cy.get("@newBlock").type("First line");
+      cy.get("@newBlock").should(($el) => {
+        const text = $el.text();
+        expect(text.split("\n")).to.have.lengthOf(1);
+      });
+
+      cy.get("@newBlock").type("{shift}{enter}Second line");
+      cy.get("@newBlock").should(($el) => {
+        const text = $el.text();
+        expect(text.split("\n")).to.have.lengthOf(2);
+      });
+
+      cy.get("@newBlock").type("{shift}{enter}Third line");
+      cy.get("@newBlock").should(($el) => {
+        const text = $el.text();
+        expect(text.split("\n")).to.have.lengthOf(3);
+      });
     });
   });
 }

@@ -87,7 +87,6 @@ watch(
       :is="blockComponentMap.get(block.type)"
       :block="block"
       ref="blockInnerComponent"
-      data-test="block"
     ></component>
 
     <div

@@ -27,7 +27,7 @@ export function blockCreationSubSuite(): void {
         .should("contain", "Block 2");
     });
     it("Places the focus at the end of a block. Then creates a new block right below with the 'Enter' key.", () => {
-      cy.contains("[data-test='block']", "Block 2").click();
+      cy.contains("[data-test='block-content']", "Block 2").click();
       cy.get(":focus").type("{enter}Block 6");
       cy.get("[data-test='block-wrapper']")
         .eq(1)
@@ -36,7 +36,7 @@ export function blockCreationSubSuite(): void {
         .should("contain", "Block 6");
     });
     it("Places the focus at the start of a block. Then creates a new block right below with the 'Enter' key.", () => {
-      cy.contains("[data-test='block']", "Block 2").click();
+      cy.contains("[data-test='block-content']", "Block 2").click();
       cy.get(":focus").type("{home}{enter}Block 5");
       cy.get("[data-test='block-wrapper']")
         .eq(1)
@@ -48,7 +48,7 @@ export function blockCreationSubSuite(): void {
         .should("contain", "Block 6");
     });
     it("Places the focus in the middle of a block. Then creates a new block right below with the 'Enter' key.", () => {
-      cy.contains("[data-test='block']", "Block 2").click();
+      cy.contains("[data-test='block-content']", "Block 2").click();
       cy.get(":focus").type("{leftarrow}{leftarrow}{leftarrow}{enter}Block 4");
       cy.get("[data-test='block-wrapper']")
         .eq(1)
