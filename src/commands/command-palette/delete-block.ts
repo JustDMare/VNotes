@@ -11,7 +11,7 @@ export default function deleteBlockCommand(): Executor {
     const editorStore = useEditorStore();
     const block = editorStore.blockOpeningCommandPalette;
     if (block) {
-      editorStore.deleteBlockById(block._id);
+      editorStore.deleteBlockByIdAndFocusPrevious(block._id);
     }
   };
 }
