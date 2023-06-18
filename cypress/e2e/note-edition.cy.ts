@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import {
   blockCreationSubSuite,
+  blockDeletionSubSuite,
   blockEditionSubSuite,
   checkboxStatePersistenceSubsuite,
   commandPaletteUsageSubSuite,
@@ -14,14 +15,13 @@ describe("Note Edition Tests", () => {
     cy.loginWithAuth0(Cypress.env("auth0_username"), Cypress.env("auth0_password"));
   });
   // eslint-disable-next-line no-constant-condition
-  if (true) {
+  if (false) {
     noteRenamingWithinEditorSubSuite();
     blockCreationSubSuite();
     blockEditionSubSuite();
     commandPaletteUsageSubSuite();
     checkboxStatePersistenceSubsuite();
   }
-  // blockCreationSubSuite();
-  // blockEditionSubSuite();
-  // checkboxStatePersistenceSubsuite();
+  blockCreationSubSuite();
+  blockDeletionSubSuite();
 });
