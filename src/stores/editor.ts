@@ -11,6 +11,8 @@ import type {
 } from "vnotes-types";
 
 import { defineStore } from "pinia";
+import { findContentEditables } from "@/composables/utils/find-content-editables";
+import { focusAndPlaceCaretAtEnd } from "@/utils";
 
 export const useEditorStore = defineStore("editor", {
   state: () => ({
@@ -171,13 +173,20 @@ export const useEditorStore = defineStore("editor", {
     setBlockOpeningCommandPalette(block: Block): void {
       this.blockOpeningCommandPalette = block;
     },
-    deleteBlockById(blockId: string): void {
-      if (this.noteInEditor) {
-        const blockIndex = this.noteInEditor.content.findIndex(
-          (block: Block) => block._id === blockId
-        );
-        this.noteInEditor.content.splice(blockIndex, 1);
+    deleteBlockByIdAndFocusPrevious(blockId: string): void {
+      if (!this.noteInEditor) {
+        return;
       }
+      const blockIndex = this.noteInEditor.content.findIndex(
+        (block: Block) => block._id === blockId
+      );
+      const elements = findContentEditables();
+      if (blockIndex < 0) {
+        return;
+      }
+      const elementToFocus = elements[blockIndex];
+      focusAndPlaceCaretAtEnd(elementToFocus);
+      this.noteInEditor.content.splice(blockIndex, 1);
     },
     updateNoteContent(content: Block[]): void {
       if (this.noteInEditor) {
