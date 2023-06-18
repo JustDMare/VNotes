@@ -3,6 +3,7 @@ import {
   blockCreationSubSuite,
   blockDeletionSubSuite,
   blockEditionSubSuite,
+  blockNavigationWithKeyboard,
   checkboxStatePersistenceSubsuite,
   commandPaletteUsageSubSuite,
   noteRenamingWithinEditorSubSuite,
@@ -21,7 +22,8 @@ describe("Note Edition Tests", () => {
     blockEditionSubSuite();
     commandPaletteUsageSubSuite();
     checkboxStatePersistenceSubsuite();
+    blockDeletionSubSuite();
   }
-  blockCreationSubSuite();
-  blockDeletionSubSuite();
+
+  blockNavigationWithKeyboard();
 });

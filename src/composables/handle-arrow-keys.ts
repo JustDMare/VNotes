@@ -9,7 +9,10 @@ export function useHandleArrowKeys(blockHTMLContent: Ref<HTMLElement | null>) {
     if (selection) {
       const range = selection.getRangeAt(0);
       range.collapse(true);
-      if (!range.startContainer.previousSibling) {
+      if (
+        !range.startContainer.previousSibling ||
+        range.startContainer.previousSibling.nodeName === "LABEL"
+      ) {
         event.preventDefault();
         focusPreviousContentEditable();
       }
