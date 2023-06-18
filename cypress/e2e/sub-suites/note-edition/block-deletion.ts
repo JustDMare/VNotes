@@ -54,5 +54,16 @@ export function blockDeletionSubSuite(): void {
       cy.get("@focusedBlock").should("not.have.text", "");
       cy.get("@focusedBlock").type("/Delete{enter}");
     });
+
+    it("Allows the deletion of a block by pressing 'backspace' when the block is empty", () => {
+      cy.get("@focusedBlock").should("not.have.text", "");
+      cy.get("@focusedBlock").type("{backspace}");
+
+      cy.get<number>("@blockCount").then((blockCount) => {
+        cy.get("[data-test='block-content']").its("length").should("eq", blockCount);
+      });
+      cy.get("@focusedBlock").clear();
+      cy.get("@focusedBlock").type("{backspace}");
+    });
   });
 }
