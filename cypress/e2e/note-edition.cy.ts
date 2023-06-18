@@ -9,7 +9,6 @@ import {
   noteRenamingWithinEditorSubSuite,
 } from "./sub-suites/note-edition/";
 
-/* eslint-disable max-len */
 describe("Note Edition Tests", () => {
   before(() => {
     cy.then(Cypress.session.clearCurrentSessionData);
