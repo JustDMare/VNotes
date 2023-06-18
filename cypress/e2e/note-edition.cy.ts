@@ -15,15 +15,12 @@ describe("Note Edition Tests", () => {
     cy.then(Cypress.session.clearCurrentSessionData);
     cy.loginWithAuth0(Cypress.env("auth0_username"), Cypress.env("auth0_password"));
   });
-  // eslint-disable-next-line no-constant-condition
-  if (false) {
-    noteRenamingWithinEditorSubSuite();
-    blockCreationSubSuite();
-    blockEditionSubSuite();
-    commandPaletteUsageSubSuite();
-    checkboxStatePersistenceSubsuite();
-    blockDeletionSubSuite();
-  }
 
+  noteRenamingWithinEditorSubSuite();
+  blockCreationSubSuite();
+  blockEditionSubSuite();
+  commandPaletteUsageSubSuite();
+  checkboxStatePersistenceSubsuite();
+  blockDeletionSubSuite();
   blockNavigationWithKeyboard();
 });

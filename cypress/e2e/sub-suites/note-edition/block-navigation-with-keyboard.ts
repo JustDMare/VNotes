@@ -9,8 +9,6 @@
  * - Multi-line text blocks with content.
  * - Checkbox block with content.
  * - Checkbox block without content.
- * - Text block with very long one-line content that jumps to "new lines" without an
- *   actual line break.
  *
  * @returns {void}
  */
