@@ -21,9 +21,9 @@ import { focusAndPlaceCaretAtEnd } from "@/utils";
 import type { Block, BlockType } from "vnotes-types";
 import { type PropType, ref, type Ref, watch } from "vue";
 import type { PlainTextBlock } from ".";
-import { getBlockToComponentMap, type BlockTypeMappings } from "./block-to-component-map";
+import { getBlockToComponentMap, type BlockTypeMapping } from "./block-to-component-map";
 
-const blockToComponentMap: ReadonlyMap<BlockType, BlockTypeMappings> = getBlockToComponentMap();
+const blockToComponentMap: ReadonlyMap<BlockType, BlockTypeMapping> = getBlockToComponentMap();
 const editorStore = useEditorStore();
 
 const props = defineProps({

@@ -8,12 +8,12 @@ import {
 import type { BlockType } from "vnotes-types";
 import type { Component } from "vue";
 
-export interface BlockTypeMappings {
+export interface BlockTypeMapping {
   component: Component;
   cssClass: string;
 }
 
-let BLOCK_COMPONENT_MAP = new Map<BlockType, BlockTypeMappings>(null);
+let BLOCK_COMPONENT_MAP = new Map<BlockType, BlockTypeMapping>(null);
 
 /**
  * @readonly Returns the constant `BLOCK_COMPONENT_MAP` that contains the mapping of `BlockTypes` to
@@ -21,12 +21,12 @@ let BLOCK_COMPONENT_MAP = new Map<BlockType, BlockTypeMappings>(null);
  * to the `BlockType`. If the constant is empty, it will be populated with a predefined list
  * of `BlockTypeMappings` objects then turned into a frozen map to prevent further changes.
  *
- * @returns {ReadonlyMap<BlockType, BlockTypeMappings>} map that contains all the
+ * @returns {ReadonlyMap<BlockType, BlockTypeMapping>} map that contains all the
  * BlockTypes and an object containing their assigned CSS class and Vue Component.
  */
-export function getBlockToComponentMap(): ReadonlyMap<BlockType, BlockTypeMappings> {
+export function getBlockToComponentMap(): ReadonlyMap<BlockType, BlockTypeMapping> {
   if (BLOCK_COMPONENT_MAP?.size === 0) {
-    BLOCK_COMPONENT_MAP = new Map<BlockType, BlockTypeMappings>([
+    BLOCK_COMPONENT_MAP = new Map<BlockType, BlockTypeMapping>([
       ["text", { component: PlainTextBlock, cssClass: "block--text" }],
       ["heading_big", { component: HeadingBigBlock, cssClass: "block--heading__big" }],
       ["heading_medium", { component: HeadingMediumBlock, cssClass: "block--heading__medium" }],
