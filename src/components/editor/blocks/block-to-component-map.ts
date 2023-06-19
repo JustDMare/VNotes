@@ -13,7 +13,10 @@ export interface BlockTypeMapping {
   cssClass: string;
 }
 
-let BLOCK_COMPONENT_MAP = new Map<BlockType, BlockTypeMapping>(null);
+let BLOCK_COMPONENT_MAP: ReadonlyMap<BlockType, BlockTypeMapping> = new Map<
+  BlockType,
+  BlockTypeMapping
+>(null);
 
 /**
  * @readonly Returns the constant `BLOCK_COMPONENT_MAP` that contains the mapping of `BlockTypes` to
