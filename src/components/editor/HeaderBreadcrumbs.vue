@@ -11,7 +11,7 @@ const editorStore = useEditorStore();
 const note: Ref<Note | null> = toRef(editorStore, "noteInEditor");
 const parentHashTable = toRef(userSpaceStore, "parentHashTable");
 
-const computeBreadcrumbs: ComputedRef<Folder[]> = computed(() => {
+const breadcrumbs: ComputedRef<Folder[]> = computed(() => {
   const breadcrumbs: Folder[] = [];
   if (!note.value) {
     return breadcrumbs;
@@ -42,11 +42,7 @@ function getOrderedParentIds(note: Note) {
 
 <template>
   <div class="header__breadcrumbs" v-if="note">
-    <BreadcrumbComponent
-      v-for="folder in computeBreadcrumbs"
-      :key="folder._id"
-      :name="folder.name"
-    />
+    <BreadcrumbComponent v-for="folder in breadcrumbs" :key="folder._id" :name="folder.name" />
     <BreadcrumbComponent class="header__breadcrumbs__note" :name="note.title" :show-icon="false" />
   </div>
 </template>
