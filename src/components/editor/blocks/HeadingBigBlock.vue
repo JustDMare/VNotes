@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { Block } from "vnotes-types";
+import type { HeadingBigBlock } from "vnotes-types";
 import { ref, type PropType } from "vue";
 import ContentEditableComponent from "./ContentEditableComponent.vue";
 
 defineProps({
-  block: { type: Object as PropType<Block>, required: true },
+  block: { type: Object as PropType<HeadingBigBlock>, required: true },
 });
 
 const blockContentEditable = ref<HTMLElement | null>(null);

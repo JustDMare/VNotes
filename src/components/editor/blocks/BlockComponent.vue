@@ -51,7 +51,7 @@ const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
  */
 let buttonsVisible: Ref<boolean> = ref(false);
 
-function createBlockBelow() {
+function createBlockBelow(): void {
   editorStore.createBlockBelowBlockId(props.block._id);
 }
 function showButtons(): void {
