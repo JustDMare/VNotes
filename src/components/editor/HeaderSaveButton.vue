@@ -2,7 +2,7 @@
 import { useEditorStore } from "@/stores/editor";
 import { formatLongDateAndTime } from "@/utils";
 import { SaveIcon } from "../icons";
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 
 const editorStore = useEditorStore();
 
@@ -12,7 +12,7 @@ const noteLastUpdatedTime = computed(() => {
   }
   return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
 });
-const isSavingNote = computed(() => editorStore.isSavingNote);
+const isSavingNote = toRef(editorStore, "isSavingNote");
 </script>
 
 <template>
