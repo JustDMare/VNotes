@@ -15,9 +15,12 @@ export function saveNoteCommand(): void {
   cy.get("[data-test='note-saving-animation']").should("not.exist");
   cy.get("[data-test='note-last-saved']").should("exist");
 
+  // Wait to make sure there is at least a difference of 1 second
+  cy.wait(1000);
+
   // Clicking the save button
   cy.get("[data-test='note-save-btn']").should("exist").click();
-  cy.wait(1000);
+
   //After clicking the save button, the saving animation will show up
   cy.get("[data-test='note-saving-animation']").should("exist");
   cy.get("[data-test='note-last-saved']").should("not.exist");
