@@ -17,7 +17,7 @@ export function saveNoteCommand(): void {
 
   // Clicking the save button
   cy.get("[data-test='note-save-btn']").should("exist").click();
-
+  cy.wait(1000);
   //After clicking the save button, the saving animation will show up
   cy.get("[data-test='note-saving-animation']").should("exist");
   cy.get("[data-test='note-last-saved']").should("not.exist");
@@ -25,7 +25,7 @@ export function saveNoteCommand(): void {
   // After a short while, the saving animation should stop and show the new last saved date.
   cy.get("[data-test='note-saving-animation']").should("not.exist");
   cy.get("[data-test='note-last-saved']").should("exist");
-  cy.wait(1000);
+
   cy.get<string>("@noteLastSavedTime").then((noteLastSavedTime) => {
     cy.get("[data-test='note-last-saved']").invoke("text").should("not.equal", noteLastSavedTime);
   });
