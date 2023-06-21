@@ -12,13 +12,13 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { useEventStore, type UserSettingsDialogEvent } from "@/stores/event";
+import { useDialogEventStore, type UserSettingsDialogEvent } from "@/stores/dialog-event";
 import { toRef, type Ref } from "vue";
 import { ScaleTransition } from "../animations";
 import BaseDialog from "../base/BaseDialog.vue";
 import LanguageSelector from "../LanguageSelector.vue";
 
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 
 /**
  * Ref to the event that opens the dialog.
@@ -26,7 +26,10 @@ const eventStore = useEventStore();
  * @type {Ref<UserSettingsDialogEvent>}
  * @reactive
  */
-const dialogEvent: Ref<UserSettingsDialogEvent> = toRef(eventStore, "userSettingsDialogEvent");
+const dialogEvent: Ref<UserSettingsDialogEvent> = toRef(
+  dialogEventStore,
+  "userSettingsDialogEvent"
+);
 
 /**
  * Handles the `close` event emitted by the BaseDialog component, closing the dialog.
@@ -36,7 +39,7 @@ const dialogEvent: Ref<UserSettingsDialogEvent> = toRef(eventStore, "userSetting
  * @listens close - The `close` event emitted by the BaseDialog component.
  */
 function closeDialog(): void {
-  eventStore.closeUserSettingsDialog();
+  dialogEventStore.closeUserSettingsDialog();
 }
 </script>
 

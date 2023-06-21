@@ -1,4 +1,4 @@
-import { useEventStore } from "@/stores/event";
+import { useDialogEventStore } from "@/stores/dialog-event";
 import { MoveItemIcon, NewFolderIcon, NewNoteIcon, TrashIcon } from "@/components/icons";
 import type { NavigationItemOption } from "./interfaces";
 import { i18n } from "@/i18n/i18n.plugin";
@@ -14,7 +14,7 @@ import RenameIcon from "@/components/icons/RenameIcon.vue";
  * `NavigationItemOptions` are customized.
  */
 export function getFolderOptions(folderId: string, folderName: string): NavigationItemOption[] {
-  const eventStore = useEventStore();
+  const dialogEventStore = useDialogEventStore();
   const t = i18n.global.t;
   return [
     {
@@ -22,7 +22,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
       icon: NewFolderIcon,
       dataTest: "nav-create-folder",
       execute: () => {
-        eventStore.openCreateItemDialog("create-folder", folderId);
+        dialogEventStore.openCreateItemDialog("create-folder", folderId);
       },
     },
     {
@@ -30,7 +30,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
       icon: NewNoteIcon,
       dataTest: "nav-create-note",
       execute: () => {
-        eventStore.openCreateItemDialog("create-note", folderId);
+        dialogEventStore.openCreateItemDialog("create-note", folderId);
       },
     },
     {
@@ -38,7 +38,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
       icon: RenameIcon,
       dataTest: "nav-rename-folder",
       execute: () => {
-        eventStore.openRenameItemDialog("rename-folder", folderId, folderName);
+        dialogEventStore.openRenameItemDialog("rename-folder", folderId, folderName);
       },
     },
     {
@@ -46,7 +46,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
       icon: MoveItemIcon,
       dataTest: "nav-move-folder",
       execute: () => {
-        eventStore.openMoveItemDialog("move-folder", folderId, folderName);
+        dialogEventStore.openMoveItemDialog("move-folder", folderId, folderName);
       },
     },
     {
@@ -54,7 +54,7 @@ export function getFolderOptions(folderId: string, folderName: string): Navigati
       icon: TrashIcon,
       dataTest: "nav-delete-folder",
       execute: () => {
-        eventStore.openDeleteItemDialog("delete-folder", folderId, folderName);
+        dialogEventStore.openDeleteItemDialog("delete-folder", folderId, folderName);
       },
     },
   ];

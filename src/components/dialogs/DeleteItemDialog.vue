@@ -12,14 +12,14 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { useEventStore, type DeleteItemDialogEvent } from "@/stores/event";
+import { useDialogEventStore, type DeleteItemDialogEvent } from "@/stores/dialog-event";
 import { useUserSpaceStore } from "@/stores/user-space";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../base/BaseDialog.vue";
 import { ScaleTransition } from "../animations";
 
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 const userSpaceStore = useUserSpaceStore();
 const t = ref(i18n.global.t);
 
@@ -29,7 +29,7 @@ const t = ref(i18n.global.t);
  * @type {Ref<DeleteItemDialogEvent>}
  * @reactive
  */
-const dialogEvent: Ref<DeleteItemDialogEvent> = toRef(eventStore, "deleteItemDialogEvent");
+const dialogEvent: Ref<DeleteItemDialogEvent> = toRef(dialogEventStore, "deleteItemDialogEvent");
 
 /**
  * The type of the item that is being deleted.
@@ -88,7 +88,7 @@ function handlePressedMainButton(): void {
  * @listens close - The `close` event emitted by the BaseDialog component.
  */
 function closeDialog(): void {
-  eventStore.closeDeleteItemDialog();
+  dialogEventStore.closeDeleteItemDialog();
 }
 </script>
 

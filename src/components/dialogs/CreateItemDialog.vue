@@ -13,13 +13,13 @@ export default {
 
 <script lang="ts" setup>
 import { i18n } from "@/i18n/i18n.plugin";
-import { useEventStore, type CreateItemDialogEvent } from "@/stores/event";
+import { useDialogEventStore, type CreateItemDialogEvent } from "@/stores/dialog-event";
 import { useUserSpaceStore } from "@/stores/user-space";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import { ScaleTransition } from "../animations";
 import BaseInputDialog from "../base/BaseInputDialog.vue";
 
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 const userSpaceStore = useUserSpaceStore();
 const t = ref(i18n.global.t);
 
@@ -29,7 +29,7 @@ const t = ref(i18n.global.t);
  * @type {Ref<CreateItemDialogEvent>}
  * @reactive
  */
-const dialogEvent: Ref<CreateItemDialogEvent> = toRef(eventStore, "createItemDialogEvent");
+const dialogEvent: Ref<CreateItemDialogEvent> = toRef(dialogEventStore, "createItemDialogEvent");
 
 /**
  * The type of the item that is being created.
@@ -61,7 +61,7 @@ watchEffect(() => {
  * @listens close - The `close` event emitted by the BaseInputDialog component.
  */
 function closeDialog(): void {
-  eventStore.closeCreateItemDialog();
+  dialogEventStore.closeCreateItemDialog();
 }
 
 /**

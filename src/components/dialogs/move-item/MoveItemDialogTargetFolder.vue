@@ -22,9 +22,9 @@ import type { Folder } from "vnotes-types";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import MoveItemDialogTargetFolderButton from "./MoveItemDialogTargetFolderButton.vue";
 import ChevronRightIcon from "@/components/icons/ChevronRightIcon.vue";
-import { useEventStore, type MoveItemDialogEvent } from "@/stores/event";
+import { useDialogEventStore, type MoveItemDialogEvent } from "@/stores/dialog-event";
 
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 
 const props = defineProps<{
   /**
@@ -47,7 +47,7 @@ const props = defineProps<{
  * @type {Ref<MoveItemDialogEvent>}
  * @reactive
  */
-const dialogEvent: Ref<MoveItemDialogEvent> = toRef(eventStore, "moveItemDialogEvent");
+const dialogEvent: Ref<MoveItemDialogEvent> = toRef(dialogEventStore, "moveItemDialogEvent");
 
 /**
  * Whether the subfolders of the folder are shown or not.

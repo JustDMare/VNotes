@@ -31,7 +31,7 @@ export interface UserSettingsDialogEvent {
   isOpen: boolean;
 }
 
-export const useEventStore = defineStore("event", {
+export const useDialogEventStore = defineStore("dialogEvent", {
   state: () => ({
     createItemDialogEvent: {
       isOpen: false,

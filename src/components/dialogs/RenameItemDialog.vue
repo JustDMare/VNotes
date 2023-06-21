@@ -14,13 +14,13 @@ export default {
 
 <script lang="ts" setup>
 import { i18n } from "@/i18n/i18n.plugin";
-import { useEventStore, type RenameItemDialogEvent } from "@/stores/event";
+import { useDialogEventStore, type RenameItemDialogEvent } from "@/stores/dialog-event";
 import { useUserSpaceStore } from "@/stores/user-space";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import { ScaleTransition } from "../animations";
 import BaseInputDialog from "../base/BaseInputDialog.vue";
 
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 const userSpaceStore = useUserSpaceStore();
 const t = ref(i18n.global.t);
 
@@ -30,7 +30,7 @@ const t = ref(i18n.global.t);
  * @type {Ref<RenameItemDialogEvent>}
  * @reactive
  */
-const dialogEvent: Ref<RenameItemDialogEvent> = toRef(eventStore, "renameItemDialogEvent");
+const dialogEvent: Ref<RenameItemDialogEvent> = toRef(dialogEventStore, "renameItemDialogEvent");
 
 /**
  * The type of the item that is being renamed.
@@ -62,7 +62,7 @@ watchEffect(() => {
  * @listens close - The `close` event emitted by the BaseInputDialog component.
  */
 function closeDialog(): void {
-  eventStore.closeRenameItemDialog();
+  dialogEventStore.closeRenameItemDialog();
 }
 
 /**

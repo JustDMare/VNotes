@@ -13,7 +13,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { useEventStore, type MoveItemDialogEvent } from "@/stores/event";
+import { useDialogEventStore, type MoveItemDialogEvent } from "@/stores/dialog-event";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../../base/BaseDialog.vue";
@@ -21,7 +21,7 @@ import MoveItemDialogTargetFolderList from "./MoveItemDialogTargetFolderList.vue
 import { useUserSpaceStore } from "@/stores/user-space";
 import { ScaleTransition } from "@/components/animations";
 
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 const userSpaceStore = useUserSpaceStore();
 const t = ref(i18n.global.t);
 
@@ -31,7 +31,7 @@ const t = ref(i18n.global.t);
  * @type {Ref<MoveItemDialogEvent>}
  * @reactive
  */
-const dialogEvent: Ref<MoveItemDialogEvent> = toRef(eventStore, "moveItemDialogEvent");
+const dialogEvent: Ref<MoveItemDialogEvent> = toRef(dialogEventStore, "moveItemDialogEvent");
 
 /**
  * The `_id` of the folder that the item will be moved to.
@@ -76,7 +76,7 @@ watchEffect(() => {
  */
 function closeDialog(): void {
   selectedNewParentFolderId.value = null;
-  eventStore.closeMoveItemDialog();
+  dialogEventStore.closeMoveItemDialog();
 }
 
 /**
