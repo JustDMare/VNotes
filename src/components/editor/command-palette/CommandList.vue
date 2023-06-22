@@ -13,7 +13,6 @@ const props = defineProps({
 });
 
 const commands: ShallowRef<PaletteCommand[]> = shallowRef([...getCommandList()]);
-const blockContentBeforeCommand = ref("");
 const searchTerm = ref("");
 const highlightedCommandIndex = ref(0);
 
@@ -119,9 +118,6 @@ function onShowingCommandList() {
   document.addEventListener("keydown", handleKeypress);
   document.addEventListener("mousemove", handleMouseRegainedControl);
   document.addEventListener("mousedown", handleMouseRegainedControl);
-  if (editorStore.blockOpeningCommandPalette) {
-    blockContentBeforeCommand.value = editorStore.blockOpeningCommandPalette.content;
-  }
 }
 function onHidingCommandList() {
   document.removeEventListener("keydown", handleSpecialKeys);
@@ -129,7 +125,6 @@ function onHidingCommandList() {
   document.removeEventListener("mousemove", handleMouseRegainedControl);
   document.removeEventListener("mousedown", handleMouseRegainedControl);
   searchTerm.value = "";
-  blockContentBeforeCommand.value = "";
   commands.value = [...getCommandList()];
 }
 
