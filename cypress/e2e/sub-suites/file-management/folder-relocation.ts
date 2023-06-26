@@ -219,7 +219,7 @@ function folderWithNestedContentRelocationToSubfolder(): void {
         "be.disabled"
       );
 
-      // Move SubfolderA to SubfolderB
+      // Move SubfolderA to FolderA
       cy.get("[data-test='move-folder-dialog']").within(() => {
         cy.contains("[data-test='move-item-target-folder']", "FolderA").should("exist").click();
         cy.contains("[data-test='move-item-target-folder']", "FolderA")
