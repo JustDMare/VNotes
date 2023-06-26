@@ -121,7 +121,6 @@ export const useDialogEventStore = defineStore("dialogEvent", {
     },
     openMoveItemDialog(
       type: NonNullable<MoveItemDialogEvent["type"]>,
-
       movedItemId: string,
       movedItemName: string
     ) {
