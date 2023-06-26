@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ChevronRightIcon, FolderIcon } from "@/components/icons";
 import type { Folder } from "vnotes-types";
-import { ref, type PropType } from "vue";
+import { ref, type PropType, computed } from "vue";
 import NavigationItemOptionsDropdown from "./NavigationItemOptionsDropdown.vue";
 import NavigationNote from "./NavigationNote.vue";
 import { getFolderOptions } from "@/commands/navigation-item-options/folder";
@@ -16,7 +16,9 @@ let showContents = ref(false);
 let optionsDropdownIsOpen = ref(false);
 let showOptionsButton = ref(false);
 
-const folderOptions = getFolderOptions(props.folderReference._id, props.folderReference.name);
+const folderOptions = computed(() =>
+  getFolderOptions(props.folderReference._id, props.folderReference.name)
+);
 
 function toggleContentVisibility(): void {
   showContents.value = !showContents.value;
@@ -28,7 +30,7 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
 </script>
 
 <template>
-  <li class="nav__folder">
+  <li class="nav__folder" data-test="nav-folder">
     <div
       @mouseover="setShowOptionsButton(true)"
       @mouseleave="setShowOptionsButton(false)"
@@ -36,6 +38,7 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
       @focusout="setShowOptionsButton(false)"
       class="sidebar__item"
       :class="{ 'sidebar__item--highlight': optionsDropdownIsOpen }"
+      data-test="nav-folder-content"
     >
       <button class="nav__item" @click="toggleContentVisibility">
         <ChevronRightIcon class="nav__icon nav__icon--chevron" :rotate-down="showContents" />
@@ -50,7 +53,6 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
         @options-dropdown-closed="optionsDropdownIsOpen = false"
       />
     </div>
-    <!--TODO: Can be refactored into a component-->
     <ul class="nav__folder__content" v-show="showContents">
       <NavigationFolder
         v-for="subfolderReference in folderReference.content.folders"

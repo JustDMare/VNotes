@@ -3,7 +3,7 @@ import { getNoteOptions } from "@/commands/navigation-item-options/note";
 import { NoteIcon } from "@/components/icons";
 import { useEditorStore } from "@/stores/editor";
 import type { NavigationNoteReference } from "vnotes-types";
-import { ref, type PropType } from "vue";
+import { ref, type PropType, computed } from "vue";
 import { RouterLink } from "vue-router";
 import NavigationItemOptionsDropdown from "./NavigationItemOptionsDropdown.vue";
 
@@ -14,7 +14,9 @@ const props = defineProps({
   },
 });
 const editorStore = useEditorStore();
-const noteOptions = getNoteOptions(props.noteReference._id, props.noteReference.title);
+const noteOptions = computed(() =>
+  getNoteOptions(props.noteReference._id, props.noteReference.title)
+);
 let optionsDropdownIsOpen = ref(false);
 let showOptionsButton = ref(false);
 
@@ -25,7 +27,7 @@ function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
 </script>
 
 <template>
-  <li class="nav__note">
+  <li class="nav__note" data-test="nav-note">
     <div
       @mouseover="setShowOptionsButton(true)"
       @mouseleave="setShowOptionsButton(false)"

@@ -1,4 +1,13 @@
-<script lang="ts" setup></script>
+<script lang="ts">
+/**
+ * Wrapper component that adds a fade transition to its children.
+ *
+ * @component FadeTransition
+ */
+export default {
+  name: "FadeTransition",
+};
+</script>
 
 <template>
   <Transition name="fade">

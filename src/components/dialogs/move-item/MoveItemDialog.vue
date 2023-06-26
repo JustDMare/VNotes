@@ -1,5 +1,19 @@
+<script lang="ts">
+/**
+ * Dialog component used to move an item (folder or note) to a different folder (in the
+ * case of folders, it cannot be moved to a child folder) or to the Root folder.
+ * Uses the BaseDialog component.
+ *
+ * @component MoveItemDialog
+ * @see BaseDialog
+ */
+export default {
+  name: "MoveItemDialog",
+};
+</script>
+
 <script lang="ts" setup>
-import { useEventStore } from "@/stores/event";
+import { useDialogEventStore, type MoveItemDialogEvent } from "@/stores/dialog-event";
 import { ref, toRef, watchEffect, type Ref } from "vue";
 import { i18n } from "@/i18n/i18n.plugin";
 import BaseDialog from "../../base/BaseDialog.vue";
@@ -7,15 +21,40 @@ import MoveItemDialogTargetFolderList from "./MoveItemDialogTargetFolderList.vue
 import { useUserSpaceStore } from "@/stores/user-space";
 import { ScaleTransition } from "@/components/animations";
 
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 const userSpaceStore = useUserSpaceStore();
-
 const t = ref(i18n.global.t);
-const dialogEvent = toRef(eventStore, "moveItemDialogEvent");
 
+/**
+ * Ref to the event that opens the dialog.
+ *
+ * @type {Ref<MoveItemDialogEvent>}
+ * @reactive
+ */
+const dialogEvent: Ref<MoveItemDialogEvent> = toRef(dialogEventStore, "moveItemDialogEvent");
+
+/**
+ * The `_id` of the folder that the item will be moved to.
+ *
+ * @type {Ref<string | null>}
+ * @reactive
+ */
 const selectedNewParentFolderId: Ref<string | null> = ref(null);
+
+/**
+ * The type of the item that is being moved.
+ *
+ * @type {Ref<string>}
+ * @reactive
+ */
 const itemType: Ref<string> = ref("");
 
+/**
+ * WatchEffect that sets the `itemType` value when the dialog is opened based on whether
+ * the moved item is a folder or a note.
+ *
+ * @watch dialogEvent.isOpen
+ */
 watchEffect(() => {
   if (!dialogEvent.value.isOpen) {
     return;
@@ -24,7 +63,35 @@ watchEffect(() => {
     ? (itemType.value = t.value("itemType.folder"))
     : (itemType.value = t.value("itemType.note"));
 });
-function handlePressedConfirmButton() {
+
+/**
+ * Resets the value of `selectedNewParentFolderId` and calls the EventStore to close the
+ * dialog.
+ *
+ * Serves as a handler for the `close` event emitted by the BaseDialog component.
+ *
+ * @function onDialogClose
+ * @returns {void}
+ * @listens close - The `close` event emitted by the BaseDialog component.
+ */
+function closeDialog(): void {
+  selectedNewParentFolderId.value = null;
+  dialogEventStore.closeMoveItemDialog();
+}
+
+/**
+ * Handles the `pressed-main-button` event emitted by the BaseDialog component.
+ *
+ * If the selected folder is the Root folder, the `selectedNewParentFolderId` is set to
+ * `null`. Then, calls the appropriate method from the UserSpaceStore to move the item to
+ * the selected folder. Finally, the dialog is closed.
+ *
+ * @function handlePressedMainButton
+ * @returns {void}
+ * @listens pressed-main-button - The `pressed-main-button` event emitted by the
+ * BaseDialog component.
+ */
+function handlePressedMainButton(): void {
   if (selectedNewParentFolderId.value === userSpaceStore.userSpace._id) {
     selectedNewParentFolderId.value = null;
   }
@@ -43,11 +110,22 @@ function handlePressedConfirmButton() {
   closeDialog();
 }
 
-function closeDialog() {
-  selectedNewParentFolderId.value = null;
-  eventStore.closeMoveItemDialog();
-}
-function handleFolderSelected(folderId: string | null) {
+/**
+ * Handles the `folder-selected` event emitted by the MoveItemDialogTargetFolderList
+ * component.
+ *
+ * If the selected folder is the same as the one that is already selected, the
+ * `selectedNewParentFolderId` is set to `null`.
+ *
+ * Otherwise, the `selectedNewParentFolderId` is set to the `_id` of the selected folder.
+ *
+ * @function handleFolderSelected
+ * @param {string | null} folderId - The `_id` of the selected folder.
+ * @returns {void}
+ * @listens folder-selected - The `folder-selected` event emitted by the
+ * MoveItemDialogTargetFolderList component.
+ */
+function handleFolderSelected(folderId: string | null): void {
   if (folderId === selectedNewParentFolderId.value) {
     selectedNewParentFolderId.value = null;
     return;
@@ -64,9 +142,10 @@ function handleFolderSelected(folderId: string | null) {
       :title="$t('moveItemDialog.title', { itemType })"
       :mainButtonText="$t('moveItemDialog.mainButtonText')"
       :is-main-button-disabled="selectedNewParentFolderId === null"
-      @pressed-main-button="handlePressedConfirmButton"
+      @pressed-main-button="handlePressedMainButton"
       @close="closeDialog"
       class="move-item-dialog"
+      :data-test="`move-${itemType}-dialog`"
     >
       <template #dialog-body>
         <p>

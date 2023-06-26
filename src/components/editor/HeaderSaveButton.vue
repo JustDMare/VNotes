@@ -2,7 +2,7 @@
 import { useEditorStore } from "@/stores/editor";
 import { formatLongDateAndTime } from "@/utils";
 import { SaveIcon } from "../icons";
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 
 const editorStore = useEditorStore();
 
@@ -12,7 +12,7 @@ const noteLastUpdatedTime = computed(() => {
   }
   return formatLongDateAndTime(editorStore.noteInEditor.lastUpdatedTime);
 });
-const isSavingNote = computed(() => editorStore.isSavingNote);
+const isSavingNote = toRef(editorStore, "isSavingNote");
 </script>
 
 <template>
@@ -20,8 +20,13 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
     <div
       v-if="isSavingNote"
       class="ws__header__save_section__saving-animation donut-animation"
+      data-test="note-saving-animation"
     ></div>
-    <span v-else-if="noteLastUpdatedTime" class="ws__header__save-section__text">
+    <span
+      v-else-if="noteLastUpdatedTime"
+      class="ws__header__save-section__text"
+      data-test="note-last-saved"
+    >
       {{ $t("header.lastSaved", { date: noteLastUpdatedTime }) }}
     </span>
 
@@ -29,6 +34,7 @@ const isSavingNote = computed(() => editorStore.isSavingNote);
       :title="$t('tooltips.saveButton')"
       class="ws__header__btn ws__header__save-section__button"
       @click="editorStore.saveNoteChanges()"
+      data-test="note-save-btn"
     >
       <SaveIcon />
       <span>{{ $t("header.saveChanges") }}</span>

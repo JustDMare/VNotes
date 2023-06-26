@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { NewNoteIcon, NewFolderIcon } from "../icons";
-import { useEventStore } from "@/stores/event";
+import { useDialogEventStore } from "@/stores/dialog-event";
 
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 
 function createNewNote() {
-  eventStore.openCreateItemDialog("create-note");
+  dialogEventStore.openCreateItemDialog("create-note");
 }
 function createNewFolder() {
-  eventStore.openCreateItemDialog("create-folder");
+  dialogEventStore.openCreateItemDialog("create-folder");
 }
 </script>
 

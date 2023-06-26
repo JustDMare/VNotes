@@ -23,24 +23,41 @@ function getCommandPaletteCoordinates() {
   const selection = window.getSelection();
   if (selection && selection.rangeCount !== 0) {
     const range = selection.getRangeAt(0).cloneRange();
-    range.collapse(true);
-    const rect = range.getClientRects()[0];
-    if (rect) {
-      computeCoordinates(rect.left, rect.top, rect.height, dialogHeight);
-      ({ x, y } = computeCoordinates(rect.left, rect.top, rect.height, dialogHeight));
+    if (range.collapsed) {
+      const rects = range.getClientRects();
+      if (rects.length > 0) {
+        const rect = rects[0];
+        ({ x, y } = computeCoordinates(rect.left, rect.top, rect.height, dialogHeight));
+        if (y < 0) {
+          y = rect.top + rect.height + dialogHeight;
+        }
+      }
     } else {
-      selection.collapseToStart();
-      const element: HTMLElement = selection.focusNode as HTMLElement;
-      ({ x, y } = computeCoordinates(
-        element.getBoundingClientRect().left,
-        element.getBoundingClientRect().top,
-        element.getBoundingClientRect().height,
-        dialogHeight
-      ));
+      range.collapse(true);
+      const rect = range.getClientRects()[0];
+      if (rect) {
+        ({ x, y } = computeCoordinates(rect.left, rect.top, rect.height, dialogHeight));
+        if (y < 0) {
+          y = rect.top + rect.height + dialogHeight;
+        }
+      } else {
+        selection.collapseToStart();
+        const element: HTMLElement = selection.focusNode as HTMLElement;
+        ({ x, y } = computeCoordinates(
+          element.getBoundingClientRect().left,
+          element.getBoundingClientRect().top,
+          element.getBoundingClientRect().height,
+          dialogHeight
+        ));
+        if (y < 0) {
+          y = element.getBoundingClientRect().bottom + dialogHeight;
+        }
+      }
     }
   }
   return { x, y };
 }
+
 function computeCoordinates(
   blockX: number,
   blockY: number,
@@ -95,7 +112,7 @@ watch(
 </script>
 
 <template>
-  <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette">
+  <dialog :open="showCommandPalette" ref="cmdPalette" class="cmd-palette" data-test="cmd-palette">
     <CommandList
       @commandListChanged="recalculatePosition"
       :show-command-palette="showCommandPalette"

@@ -1,8 +1,15 @@
 import { useEditorStore } from "@/stores/editor";
 import type { BlockType } from "vnotes-types";
+import type { Executor } from "../interfaces";
 
-//TODO: Document
-export default function convertBlockTypeCommand(blockType: BlockType): () => void {
+/**
+ * Returns an `Executor` that converts the block from which the command palette was opened
+ * to the given `BlockType`.
+ *
+ * @param {BlockType} blockType - new `BlockType` to convert the block to.
+ * @returns {Executor} The executor.
+ */
+export default function convertBlockTypeCommand(blockType: BlockType): Executor {
   return function (): void {
     const editorStore = useEditorStore();
     const block = editorStore.blockOpeningCommandPalette;

@@ -1,31 +1,118 @@
+<script lang="ts">
+/**
+ * Base dropdown component with default styling and functionality. Contains a slot for the
+ * dropdown's button and another one for the dropdown's menu to allow any component implementing
+ * it to add its own content.
+ *
+ * @component BaseDropdown
+ */
+export default {
+  name: "BaseDropdown",
+};
+</script>
+
 <script lang="ts" setup>
-import { nextTick, ref } from "vue";
+import { nextTick, ref, type Ref } from "vue";
 
-const showDropdown = ref(false);
-const dropdownMenu = ref<HTMLElement | null>(null);
-const dropdownButton = ref<HTMLElement | null>(null);
-
-const emit = defineEmits(["dropdownOpened", "dropdownClosed"]);
 const props = defineProps({
+  /**
+   * The margin between the dropdown menu and the button in pixels.
+   *
+   * @property menuMarginFromButtonInPx
+   * @type {Number}
+   * @default 0
+   */
   menuMarginFromButtonInPx: {
     type: Number,
     default: 0,
   },
+
+  /**
+   * The fraction of the dropdown menu's width that will be used to align it with respect to the
+   * left side of the button, where 1 means that the menu will be aligned to the leftmost side of
+   * the button and 0 means that the menu will be aligned to the rightmost side of the button.
+   *
+   * @type {Number}
+   * @default 1
+   */
   menuPercentageLeftAlignment: {
     type: Number,
     default: 1,
   },
+
+  /**
+   * The tooltip to be shown when hovering over the dropdown button.
+   *
+   * @type {String}
+   * @default ""
+   */
   tooltip: {
     type: String,
     default: "",
   },
 });
 
+/**
+ * Whether the dropdown is open or not.
+ *
+ * @type {Ref<Boolean>}
+ * @default false
+ * @reactive
+ */
+const showDropdown: Ref<boolean> = ref(false);
+
+/**
+ * The ref of the dropdown menu.
+ *
+ * @type {Ref<HTMLElement | null>}
+ */
+const dropdownMenu: Ref<HTMLElement | null> = ref(null);
+
+/**
+ * The ref of the dropdown button.
+ *
+ * @type {Ref<HTMLElement | null>}
+ */
+const dropdownButton: Ref<HTMLElement | null> = ref(null);
+
+const emit = defineEmits<{
+  /**
+   * Emitted when the dropdown is opened.
+   *
+   * @event dropdownOpened
+   */
+  (e: "dropdownOpened"): void;
+
+  /**
+   * Emitted when the dropdown is closed.
+   *
+   * @event dropdownClosed
+   */
+  (e: "dropdownClosed"): void;
+}>();
+
+/**
+ * Toggles the dropdown's visibility. When the dropdown is opened, it calls the
+ * `calculateDropdownPosition` to calculate its position. Then adds the `handleClickOutside`
+ * listener to the `mousedown` event and emits the `dropdownOpened` event.
+ *
+ * When the dropdown is closed, it removes the `handleClickOutside` listener from the
+ * `mousedown` event. Then emits the `dropdownClosed` event.
+ *
+ * @function toggleDropdown
+ * @returns {void}
+ * @listens click - on the dropdown button
+ * @emits dropdownOpened
+ * @emits dropdownClosed
+ *
+ * @see calculateDropdownPosition
+ */
 function toggleDropdown(): void {
   showDropdown.value = !showDropdown.value;
   if (showDropdown.value) {
     nextTick(() => {
       calculateDropdownPosition();
+      document.addEventListener("mousedown", handleClickOutside);
     });
     emit("dropdownOpened");
   } else {
@@ -34,6 +121,23 @@ function toggleDropdown(): void {
   }
 }
 
+/**
+ * Calculates the dropdown menu's position with respect to the button, using the
+ * `menuMarginFromButtonInPx` prop to set the margin between the menu and the button.
+ * Also, if the menu would overflow the window's height, it will be positioned above the
+ * button instead. Then it uses the `menuPercentageLeftAlignment` prop to set the
+ * alignment of the menu with respect to its left side.
+ *
+ *
+ * @function calculateDropdownPosition
+ * @description
+ * @returns {void}
+ * @see menuPercentageLeftAlignment
+ * @remarks
+ * The left alignment is done by subtracting the width of the menu multiplied by the
+ * `menuPercentageLeftAlignment` (thus 1 = leftmost position, 0 = rightmost position) prop from
+ * the button's right side coordinates.
+ */
 function calculateDropdownPosition(): void {
   if (!dropdownButton.value || !dropdownMenu.value) {
     return;
@@ -49,18 +153,22 @@ function calculateDropdownPosition(): void {
   } else {
     dropdownMenuStyle.top = `${buttonRect.bottom + props.menuMarginFromButtonInPx}px`;
   }
-  //TODO: Document that this is done like this because if its done by using the
-  //buttonRect.left, the menu will be slightly off the button and will overlap the sidebar
-  //resizer for the SidebarUserDropdown. This way, by taking the button's rightmost
-  //position (just out of the resizer) and then displacing the menu a percentage of its
-  //width, the menu will be perfectly aligned and not overlap the resizer.
   dropdownMenuStyle.left = `${
     buttonRect.right - menuRect.width * props.menuPercentageLeftAlignment
   }px`;
-  document.addEventListener("mousedown", handleClickOutside);
 }
 
-function handleClickOutside(event: MouseEvent) {
+/**
+ * Handles the `mousedown` event, so that if the `dropdownMenu` element is not the target of
+ * the event, the `closeDialog` function is called.
+ *
+ * @function handleClickOutside
+ * @param {MouseEvent} event - The event object.
+ * @returns {void}
+ * @listens mousedown - on the document
+ * @see closeDialog
+ */
+function handleClickOutside(event: MouseEvent): void {
   if (
     dropdownMenu.value &&
     !dropdownMenu.value.contains(event.target as Node) &&
@@ -80,10 +188,16 @@ function handleClickOutside(event: MouseEvent) {
       :class="{ 'button--active': showDropdown }"
       ref="dropdownButton"
       @click="toggleDropdown"
+      data-test="dropdown-button"
     >
       <slot name="button-content"></slot>
     </button>
-    <div class="base-dropdown__menu" ref="dropdownMenu" v-if="showDropdown">
+    <div
+      class="base-dropdown__menu"
+      ref="dropdownMenu"
+      v-if="showDropdown"
+      data-test="dropdown-menu"
+    >
       <slot name="menu" :closeOnClick="toggleDropdown"></slot>
     </div>
   </div>

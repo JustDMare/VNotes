@@ -3,7 +3,7 @@ import EmptyWorkspace from "./EmptyWorkspace.vue";
 import NoteEditor from "./NoteEditor.vue";
 import NoteWorkspaceHeader from "./NoteWorkspaceHeader.vue";
 import { useEditorStore } from "@/stores/editor";
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 
 const editorStore = useEditorStore();
 defineProps({
@@ -16,9 +16,8 @@ const emits = defineEmits(["toggle-sidebar"]);
 const scrollStateClass = computed(() => {
   return editorStore.commandPaletteOpen ? "disable-scroll" : "allow-scroll";
 });
-const note = computed(() => {
-  return editorStore.noteInEditor;
-});
+const note = toRef(editorStore, "noteInEditor");
+
 function onToggleSidebar() {
   emits("toggle-sidebar");
 }

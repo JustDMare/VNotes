@@ -1,15 +1,14 @@
 import { useEditorStore } from "@/stores/editor";
-import { ofCourseItIsFirefox, focusAndPlaceCaretAtEnd } from "@/utils";
+import { ofCourseItIsFirefox } from "@/utils";
 import type { Block } from "vnotes-types";
 import { unref, type Ref } from "vue";
-import { findContentEditables } from "./utils/find-content-editables";
 
 export function useHandleBackspace(block: Block, blockHTMLContent: Ref<HTMLElement | null>) {
   const editorStore = useEditorStore();
 
   function handleDeleteBlockShortcut(event: KeyboardEvent) {
     event.preventDefault();
-    deleteBlockAndFocusPrevious();
+    editorStore.deleteBlockByIdAndFocusPrevious(unref(block._id));
   }
 
   function handleBackspaceOnEmptyBlock(event: KeyboardEvent) {
@@ -38,7 +37,7 @@ export function useHandleBackspace(block: Block, blockHTMLContent: Ref<HTMLEleme
         blockHTMLInnerText === "\n"
       ) {
         event.preventDefault();
-        deleteBlockAndFocusPrevious();
+        editorStore.deleteBlockByIdAndFocusPrevious(unref(block._id));
         return true;
       }
       return false;
@@ -58,23 +57,13 @@ export function useHandleBackspace(block: Block, blockHTMLContent: Ref<HTMLEleme
           blockHTMLFirstChildTextContent === ""
         ) {
           event.preventDefault();
-          deleteBlockAndFocusPrevious();
+          editorStore.deleteBlockByIdAndFocusPrevious(unref(block._id));
         }
       }
     }
   }
-  function deleteBlockAndFocusPrevious() {
-    const elements = findContentEditables();
-    const index = elements.findIndex((element) => element === blockHTMLContent.value);
-    if (index > 0) {
-      const elementToFocus = elements[index - 1];
-      focusAndPlaceCaretAtEnd(elementToFocus);
-    }
-    editorStore.deleteBlockById(unref(block._id));
-  }
 
   //TODO: Documentar. Maybe change the name to a more fitting one
-  //TODO: Change all if (selection/blockHTMLContent) to return if they are falsy
   function handleBackspaceOnContentEditable(event: KeyboardEvent) {
     const selection = window.getSelection();
     if (!selection || !blockHTMLContent.value) {

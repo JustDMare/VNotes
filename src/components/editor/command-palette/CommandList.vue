@@ -2,7 +2,7 @@
 import getCommandList from "@/commands/command-palette/command-list";
 import type { PaletteCommand } from "@/commands/command-palette/interfaces";
 import { useEditorStore } from "@/stores/editor";
-import { computed, ref, shallowRef, watch } from "vue";
+import { computed, ref, shallowRef, watch, type ShallowRef } from "vue";
 import { matchSorter } from "match-sorter";
 
 const editorStore = useEditorStore();
@@ -12,8 +12,7 @@ const props = defineProps({
   showCommandPalette: { type: Boolean, required: true },
 });
 
-const commands = shallowRef<PaletteCommand[]>(getCommandList());
-const blockContentBeforeCommand = ref("");
+const commands: ShallowRef<PaletteCommand[]> = shallowRef([...getCommandList()]);
 const searchTerm = ref("");
 const highlightedCommandIndex = ref(0);
 
@@ -21,9 +20,7 @@ const highlightedCommandIndex = ref(0);
 //search term. It should delete it. (Add to testing findings?)
 function executeCommand(command: PaletteCommand) {
   command.execute();
-  if (editorStore.blockOpeningCommandPalette) {
-    editorStore.blockOpeningCommandPalette.content = blockContentBeforeCommand.value;
-  }
+  editorStore.restoreBlockContentBeforeOpeningCommandPalette();
   editorStore.setCommandPaletteOpen(false);
 }
 
@@ -121,9 +118,6 @@ function onShowingCommandList() {
   document.addEventListener("keydown", handleKeypress);
   document.addEventListener("mousemove", handleMouseRegainedControl);
   document.addEventListener("mousedown", handleMouseRegainedControl);
-  if (editorStore.blockOpeningCommandPalette) {
-    blockContentBeforeCommand.value = editorStore.blockOpeningCommandPalette.content;
-  }
 }
 function onHidingCommandList() {
   document.removeEventListener("keydown", handleSpecialKeys);
@@ -131,8 +125,7 @@ function onHidingCommandList() {
   document.removeEventListener("mousemove", handleMouseRegainedControl);
   document.removeEventListener("mousedown", handleMouseRegainedControl);
   searchTerm.value = "";
-  blockContentBeforeCommand.value = "";
-  commands.value = getCommandList();
+  commands.value = [...getCommandList()];
 }
 
 watch(
@@ -158,8 +151,12 @@ watch(
 </script>
 
 <template>
-  <div v-if="filteredCommands.length">
-    <div v-for="(command, index) in filteredCommands" :key="command.name">
+  <div v-if="filteredCommands.length" data-test="cmd-palette-list">
+    <div
+      v-for="(command, index) in filteredCommands"
+      :key="command.name"
+      data-test="cmd-palette-command"
+    >
       <button
         @click="executeCommand(command)"
         :title="command.description"
@@ -173,7 +170,7 @@ watch(
     </div>
   </div>
   <div v-else>
-    <p class="cmd-palette__no-command">
+    <p class="cmd-palette__no-command" data-test="cmd-palette-no-cmd-message">
       {{ $t("commandPalette.noCommands") }}
     </p>
   </div>

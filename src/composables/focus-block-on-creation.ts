@@ -14,5 +14,4 @@ export function useFocusBlockOnCreation(blockHTMLContent: Ref<HTMLElement | null
       editorStore.setBlockCreated(false);
     }
   }
-  return { focusBlockOnCreation };
 }

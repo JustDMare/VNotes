@@ -1,24 +1,57 @@
+<script lang="ts">
+/**
+ * Dynamic block component that renders the correct block component based on the Block's
+ * `type` and its mapping in the `blockComponentMap`, along with its corresponding styling
+ * based on the `blockClassMap` mapping.
+ *
+ * @component BlockComponent
+ * @see getBlockComponentMap
+ * @see getBlockClassMap
+ */
+export default {
+  name: "BlockComponent",
+};
+</script>
+
 <script setup lang="ts">
 import { FadeTransition } from "@/components/animations";
 import { GripIcon, PlusIcon } from "@/components/icons";
-import { getBlockComponentMap, getBlockClassMap } from "@/mappings";
 import { useEditorStore } from "@/stores/editor";
 import { focusAndPlaceCaretAtEnd } from "@/utils";
 import type { Block, BlockType } from "vnotes-types";
-import { type PropType, ref, type Component, type Ref, watch } from "vue";
+import { type PropType, ref, type Ref, watch } from "vue";
 import type { PlainTextBlock } from ".";
+import { getBlockToComponentMap, type BlockTypeMapping } from "./block-to-component-map";
 
-const blockComponentMap: ReadonlyMap<BlockType, Component> = getBlockComponentMap();
-const blockClassMap: ReadonlyMap<BlockType, string> = getBlockClassMap();
+const blockToComponentMap: ReadonlyMap<BlockType, BlockTypeMapping> = getBlockToComponentMap();
+const editorStore = useEditorStore();
 
 const props = defineProps({
+  /**
+   * The block object to render.
+   *
+   * @type {Block}
+   * @required
+   */
   block: { type: Object as PropType<Block>, required: true },
 });
-const editorStore = useEditorStore();
-const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
-let buttonsVisible = ref(false);
 
-function createBlockBelow() {
+/**
+ * Ref to the block's inner component.
+ *
+ * @type {Ref<PlainTextBlock | null>}
+ */
+const blockInnerComponent: Ref<typeof PlainTextBlock | null> = ref(null);
+
+/**
+ * Whether the create and move buttons should be visible.
+ *
+ * @type {Ref<boolean>}
+ * @reactive
+ */
+let buttonsVisible: Ref<boolean> = ref(false);
+
+function createBlockBelow(): void {
   editorStore.createBlockBelowBlockId(props.block._id);
 }
 function showButtons(): void {
@@ -42,14 +75,15 @@ watch(
 <template>
   <div
     class="block"
-    :class="blockClassMap.get(block.type)"
+    :class="blockToComponentMap.get(block.type)?.cssClass"
     @mouseover="showButtons"
     @mouseleave="hideButtons"
     @hover="showButtons"
+    data-test="block-wrapper"
   >
     <component
       class="block__content"
-      :is="blockComponentMap.get(block.type)"
+      :is="blockToComponentMap.get(block.type)?.component"
       :block="block"
       ref="blockInnerComponent"
     ></component>
@@ -66,6 +100,7 @@ watch(
           v-show="buttonsVisible"
           class="block__btn"
           @click="createBlockBelow"
+          data-test="add-block-btn"
         >
           <PlusIcon class="block__btn__icon" />
         </button>
@@ -75,6 +110,7 @@ watch(
           :title="$t('tooltips.block.gripButton')"
           v-show="buttonsVisible"
           class="block__btn grip-btn"
+          data-test="move-block-btn"
         >
           <GripIcon class="block__btn__icon" />
         </button>

@@ -10,8 +10,7 @@ const sidebarContent = toRef(userSpaceStore.$state.userSpace, "content");
 
 <template>
   <nav>
-    <!--TODO: Can be refactored into a component-->
-    <ul class="nav">
+    <ul class="nav" data-test="nav-item-list">
       <NavigationFolder
         v-for="folderReference in sidebarContent.folders"
         :key="folderReference._id"

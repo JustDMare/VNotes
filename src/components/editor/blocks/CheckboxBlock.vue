@@ -35,6 +35,7 @@ function onCheckboxChange(): void {
         :checked="checkboxChecked"
         @change="onCheckboxChange"
         :id="block._id"
+        data-test="block-checkbox"
       />
     </label>
     <ContentEditableComponent

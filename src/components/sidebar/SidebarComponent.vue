@@ -43,7 +43,12 @@ function onMouseDown(): void {
 </script>
 
 <template>
-  <aside ref="sidebar" class="sidebar" :class="isSidebarOpen ? 'sidebar--open' : 'sidebar--closed'">
+  <aside
+    ref="sidebar"
+    class="sidebar"
+    :class="isSidebarOpen ? 'sidebar--open' : 'sidebar--closed'"
+    data-test="sidebar"
+  >
     <div id="sidebar-content">
       <SidebarUserDropdown />
       <SidebarNewFolderAndNoteButtons />

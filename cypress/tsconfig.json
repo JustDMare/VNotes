@@ -1,18 +1,18 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": [
-    "./integration/**/*",
-    "./support/**/*"
+    "./**/*",
+    "./support/**/*",
+    "../src/**/*.cy.ts"
   ],
   "compilerOptions": {
-    "isolatedModules": false,
-    "target": "es2022",
+    "target": "es5",
     "lib": [
-      "es2022",
+      "es5",
       "dom"
     ],
     "types": [
-      "cypress"
+      "cypress",
+      "node"
     ]
   }
 }

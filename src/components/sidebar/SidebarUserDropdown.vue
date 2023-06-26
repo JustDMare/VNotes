@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { useEventStore } from "@/stores/event";
+import { useDialogEventStore } from "@/stores/dialog-event";
 import { useAuth0 } from "@auth0/auth0-vue";
 import { computed } from "vue";
 import BaseDropdown from "../base/BaseDropdown.vue";
 
 const auth0 = useAuth0();
-const eventStore = useEventStore();
+const dialogEventStore = useDialogEventStore();
 
 function handleLogout(): void {
   auth0.logout();
@@ -29,7 +29,7 @@ const authUser = computed(() => auth0.user.value);
     <template #menu="{ closeOnClick }">
       <button
         class="user-dropdown__option"
-        @click="eventStore.openUserSettingsDialog(), closeOnClick()"
+        @click="dialogEventStore.openUserSettingsDialog(), closeOnClick()"
       >
         {{ $t("userSettings.userDropdownButton") }}
       </button>

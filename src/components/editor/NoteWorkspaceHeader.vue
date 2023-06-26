@@ -19,6 +19,7 @@ defineEmits(["toggle-sidebar"]);
         @click="$emit('toggle-sidebar')"
         class="ws__header__btn ws__header__btn--toggle-sidebar"
         :title="$t('tooltips.sidebarButton')"
+        data-test="sidebar-toggle-btn"
       >
         <SidebarCloseIcon v-if="isSidebarOpen" />
         <SidebarOpenIcon v-else />

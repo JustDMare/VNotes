@@ -2,49 +2,41 @@
 import { useEditorStore } from "@/stores/editor";
 import { useUserSpaceStore } from "@/stores/user-space";
 import type { Folder, Note } from "vnotes-types";
-import { ref, toRef, watchEffect } from "vue";
+import { toRef, type Ref, computed, type ComputedRef } from "vue";
 import BreadcrumbComponent from "./BreadcrumbComponent.vue";
 
 const userSpaceStore = useUserSpaceStore();
 const editorStore = useEditorStore();
 
-const note: Note | null = editorStore.noteInEditor;
-const parentHashtable = toRef(userSpaceStore, "parentHashTable");
+const note: Ref<Note | null> = toRef(editorStore, "noteInEditor");
+const parentHashTable = toRef(userSpaceStore, "parentHashTable");
 
-const breadcrumbs = ref<Folder[]>([]);
-
-watchEffect(() => {
-  if (parentHashtable.value) {
-    computeBreadcrumbs();
-  }
-});
-
-function computeBreadcrumbs() {
-  breadcrumbs.value = [];
-  if (!note) {
+const breadcrumbs: ComputedRef<Folder[]> = computed(() => {
+  const breadcrumbs: Folder[] = [];
+  if (!note.value) {
     return breadcrumbs;
   }
-  const parents = getOrderedParentIds(note);
+  const parents = getOrderedParentIds(note.value);
   let currentLevelParents = userSpaceStore.userSpace.content.folders;
   let parentFolder;
   parents.forEach((parent: string) => {
     parentFolder = currentLevelParents.find((folder: Folder) => folder._id === parent);
     if (parentFolder) {
-      breadcrumbs.value.push(parentFolder);
+      breadcrumbs.push(parentFolder);
       currentLevelParents = parentFolder.content.folders;
     }
   });
-
-  function getOrderedParentIds(note: Note) {
-    let parents: string[] = [];
-    let parentId = note.parentId;
-    while (parentId) {
-      parents.push(parentId);
-      parentId = userSpaceStore.parentHashTable[parentId];
-    }
-    return parents.reverse();
-  }
   return breadcrumbs;
+});
+
+function getOrderedParentIds(note: Note) {
+  let parents: string[] = [];
+  let parentId = note.parentId;
+  while (parentId) {
+    parents.push(parentId);
+    parentId = parentHashTable.value[parentId];
+  }
+  return parents.reverse();
 }
 </script>
 

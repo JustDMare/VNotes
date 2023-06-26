@@ -7,7 +7,7 @@ import { useHandleShiftEnter } from "@/composables/handle-shift-enter";
 import { useIsContentEmpty } from "@/composables/is-content-empty";
 import { useEditorStore } from "@/stores/editor";
 import type { Block } from "vnotes-types";
-import { ref, toRef, unref, type PropType, type Ref } from "vue";
+import { ref, toRef, unref, type PropType, type Ref, nextTick } from "vue";
 
 const props = defineProps({
   block: { type: Object as PropType<Block>, required: true },
@@ -43,11 +43,6 @@ function handleSpecialKeys(event: KeyboardEvent) {
   if (event.key === "Backspace" && blockHTMLContent.value?.innerText.length) {
     handleBackspaceOnContentEditable(event);
   }
-  if (event.key === "/") {
-    editorStore.setCommandPaletteOpen(true);
-    editorStore.setBlockOpeningCommandPalette(props.block);
-  }
-
   if (event.code === "Enter" && !event.shiftKey && !editorStore.commandPaletteOpen) {
     event.preventDefault();
     editorStore.createBlockBelowBlockId(unref(props.block._id));
@@ -55,8 +50,18 @@ function handleSpecialKeys(event: KeyboardEvent) {
 }
 
 function processInput(event: Event) {
+  const inputEvent: InputEvent = event as InputEvent;
   const input = event.target as HTMLElement;
-  editorStore.updateBlockContent(unref(props.block._id), input.innerText);
+  if (inputEvent.inputType === "insertText" && inputEvent.data === "/") {
+    editorStore.setBlockOpeningCommandPalette(props.block);
+    editorStore.setBlockContentBeforeOpeningCommandPalette(props.block.content);
+    editorStore.updateBlockContent(unref(props.block._id), input.innerText);
+    nextTick(() => {
+      editorStore.setCommandPaletteOpen(true);
+    });
+  } else {
+    editorStore.updateBlockContent(unref(props.block._id), input.innerText);
+  }
 }
 
 defineExpose({ blockHTMLContent });
@@ -72,5 +77,6 @@ defineExpose({ blockHTMLContent });
     @input="processInput"
     class="note-editor__content-editable"
     :class="{ 'block__show-placeholder': isContentEmpty }"
+    data-test="block-content"
   />
 </template>

@@ -1,28 +1,128 @@
+<script lang="ts">
+/**
+ * Base dialog component with default styling and functionality. Contains a slot for the
+ * dialog's body to allow any component implementing it to add its own content.
+ *
+ * @component BaseDialog
+ */
+export default {
+  name: "BaseDialog",
+};
+</script>
+
 <script lang="ts" setup>
-import { ref, watchEffect } from "vue";
+import { watchEffect, type Ref, ref } from "vue";
 import { CrossIcon } from "../icons";
 
 const props = defineProps({
+  /**
+   * The title of the dialog.
+   *
+   * @type {String}
+   * @required
+   */
   title: { type: String, required: true },
+  /**
+   * The text of the main button.
+   *
+   * @type {String}
+   * @default ""
+   */
   mainButtonText: { type: String, required: false, default: "" },
+  /**
+   * Whether the dialog is open or not.
+   *
+   * @type {Boolean}
+   * @required
+   */
   open: { type: Boolean, required: true },
+  /**
+   * Whether the main button is disabled or not.
+   *
+   * @type {Boolean}
+   * @default false
+   */
   isMainButtonDisabled: { type: Boolean, required: false, default: false },
+  /**
+   * Whether the footer is shown or not.
+   *
+   * @type {Boolean}
+   * @default true
+   */
   showFooter: { type: Boolean, required: false, default: true },
 });
-const emits = defineEmits(["close", "pressed-main-button"]);
 
-const baseDialog = ref<HTMLElement | null>(null);
+/**
+ * The ref of the base dialog.
+ * @type {Ref<HTMLElement | null>}
+ */
+const baseDialog: Ref<HTMLElement | null> = ref(null);
 
+const emits = defineEmits<{
+  /**
+   * Emitted when the dialog is closed.
+   * @event close
+   */
+  (e: "close"): void;
+  /**
+   * Emitted when the main button is pressed.
+   * @event pressed-main-button
+   */
+  (e: "pressed-main-button"): void;
+}>();
+
+/**
+ * Emits the close event.
+ *
+ * @function closeDialog
+ * @returns {void}
+ * @listens click - The close button.
+ * @emits close
+ */
 function closeDialog(): void {
   emits("close");
 }
 
-function handleClickOutside(event: MouseEvent) {
+/**
+ * Handles the `click` event on the main button, emitting the `pressed-main-button` event.
+ *
+ * @function pressMainButton
+ * @returns {void}
+ * @listens click - The main button.
+ * @emits pressed-main-button
+ */
+function pressMainButton(): void {
+  emits("pressed-main-button");
+}
+
+/**
+ * Handles the `mousedown` event, so that if the `baseDialog` element is not the target of
+ * the event, the `closeDialog` function is called.
+ *
+ * @function handleClickOutside
+ * @param {MouseEvent} event - The mouse event.
+ * @returns {void}
+ * @listens mousedown
+ */
+function handleClickOutside(event: MouseEvent): void {
   if (baseDialog.value && !baseDialog.value.contains(event.target as Node)) {
     closeDialog();
   }
 }
-function handleDialogKeydown(event: KeyboardEvent) {
+
+/**
+ * Handles the `keydown` events for `Escape` and `Enter`. If the `Escape` key is pressed,
+ * the `closeDialog` function is called. If the `Enter` key is pressed and the main button
+ * is not disabled, the `pressMainButton` function is called.
+ *
+ * @function handleDialogKeydown
+ * @param {KeyboardEvent} event - The keyboard event.
+ * @returns {void}
+ * @listens keydown.Escape - The `Escape` key.
+ * @listens keydown.Enter - The `Enter` key.
+ *
+ */
+function handleDialogKeydown(event: KeyboardEvent): void {
   if (event.key === "Escape") {
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -35,6 +135,14 @@ function handleDialogKeydown(event: KeyboardEvent) {
   }
 }
 
+/**
+ * WatchEffect that adds the event handlers `handleClickOutside` and `handleDialogKeydown`
+ * for the `mousedown` and `keydown` events respectively if the `props.open` is `true`.
+ * Otherwise, it removes those event handlers.
+ *
+ * @watch props.open
+ * @returns {void}
+ */
 watchEffect(() => {
   if (props.open) {
     document.addEventListener("mousedown", handleClickOutside);
@@ -44,16 +152,17 @@ watchEffect(() => {
     document.removeEventListener("keydown", handleDialogKeydown);
   }
 });
-function pressMainButton() {
-  emits("pressed-main-button");
-}
 </script>
 
 <template>
   <dialog :open="open" class="base-dialog" ref="baseDialog">
     <header class="base-dialog__header">
       <h1 class="base-dialog__header__title">{{ title }}</h1>
-      <button @click="closeDialog" class="base-dialog__header__close-btn">
+      <button
+        @click="closeDialog"
+        class="base-dialog__header__close-btn"
+        data-test="base-dialog-close-button"
+      >
         <CrossIcon class="base-dialog__header__close-btn__icon" />
       </button>
     </header>
@@ -65,6 +174,7 @@ function pressMainButton() {
         :disabled="isMainButtonDisabled"
         @click="pressMainButton"
         class="base-dialog__footer__main-btn"
+        data-test="base-dialog-main-button"
       >
         {{ mainButtonText }}
       </button>
