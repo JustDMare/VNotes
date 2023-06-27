@@ -1,13 +1,10 @@
 //Core tokens
-//TODO: Add tokens for font-size?
-//TODO: Select other colors
-:root {
+/ :root {
   //Font
   --font-sans: Roboto, sans-serif;
   --font-default-size: 16px;
 
   //Color Palette
-  //TODO: Revisar paleta de colores. Tal vez son demasiado apagados
   --color-text: var(--color-base-10);
   --color-link: #3377c9;
   --color-base-100: #ffffff;

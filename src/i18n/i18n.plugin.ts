@@ -4,8 +4,6 @@ import { en, es } from "./locales";
 
 export const defaultLocale = LOCALES.EN;
 
-//TODO: Typecheck messages
-
 export const i18n = createI18n({
   locale: defaultLocale,
   fallbackLocale: defaultLocale,

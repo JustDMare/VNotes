@@ -63,7 +63,6 @@ export function useHandleBackspace(block: Block, blockHTMLContent: Ref<HTMLEleme
     }
   }
 
-  //TODO: Documentar. Maybe change the name to a more fitting one
   function handleBackspaceOnContentEditable(event: KeyboardEvent) {
     const selection = window.getSelection();
     if (!selection || !blockHTMLContent.value) {

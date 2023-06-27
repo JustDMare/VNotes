@@ -3,7 +3,6 @@ import type { Ref } from "vue";
 import { findContentEditables } from "./utils/find-content-editables";
 
 export function useHandleArrowKeys(blockHTMLContent: Ref<HTMLElement | null>) {
-  //TODO: DOCUMENT
   function handleArrowUpKey(event: KeyboardEvent) {
     const selection = window.getSelection();
     if (selection) {

@@ -23,7 +23,7 @@ const folderOptions = computed(() =>
 function toggleContentVisibility(): void {
   showContents.value = !showContents.value;
 }
-//TODO: Could be refactored into a composable
+
 function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
   showOptionsButton.value = newShowOptionsButtonValue;
 }

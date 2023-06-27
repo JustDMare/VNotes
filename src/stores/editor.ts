@@ -31,7 +31,6 @@ export const useEditorStore = defineStore("editor", {
     },
   },
   actions: {
-    //TODO: Document and better error handling
     async fetchNote(noteId: string) {
       const accessToken = await this.auth0.getAccessTokenSilently();
       fetch(`http://localhost:3030/notes/${noteId}`, {
@@ -48,7 +47,6 @@ export const useEditorStore = defineStore("editor", {
           console.log(error);
         });
     },
-    //TODO: Document and better error handling
     async saveNoteChanges() {
       if (!this.noteInEditor) {
         return;
@@ -81,9 +79,7 @@ export const useEditorStore = defineStore("editor", {
       }, 500);
     },
 
-    //TODO: DOCUMENT ACTIONS
     updateNoteTitle(content: string): void {
-      //TODO: Check for errors
       if (this.noteInEditor) {
         this.noteInEditor.title = content;
       }
@@ -104,7 +100,6 @@ export const useEditorStore = defineStore("editor", {
     updateBlockContent(_id: string, content: string): void {
       const block = this.getBlockInEditorById(_id);
       if (block) {
-        //TODO: Check for errors
         block.content = content;
       }
     },
@@ -113,7 +108,6 @@ export const useEditorStore = defineStore("editor", {
       uniqueProperty: keyof BlockUniqueProperties,
       uniquePropertyValue: AllPropertyTypesFromInterface<BlockUniqueProperties>
     ): void {
-      //TODO: Check for errors
       const block = this.getBlockInEditorById(_id);
       if (block) {
         block.uniqueProperties[uniqueProperty] = uniquePropertyValue;
@@ -128,7 +122,6 @@ export const useEditorStore = defineStore("editor", {
         return;
       }
       /*
-      TODO: Add to testing findings that a block returned from backend (not newly created)
       used to break when converting to a block type that had unique properties because of
       the lack of `block.uniqueProperties === undefined` check*/
       if (
@@ -146,7 +139,6 @@ export const useEditorStore = defineStore("editor", {
     },
 
     createBlockBelowBlockId(previousBlockId: string): void {
-      //TODO: Check for errors
       if (this.noteInEditor) {
         const previousBlockIndex = this.noteInEditor.content.findIndex(
           (block: Block) => block._id === previousBlockId
@@ -217,13 +209,11 @@ export const useEditorStore = defineStore("editor", {
     },
     setNoteInEditorParentId(parentId: string | null): void {
       if (this.noteInEditor) {
-        //TODO: Maybe change the TYPES to use null instead of undefined
         this.noteInEditor.parentId = parentId ?? undefined;
       }
     },
   },
 });
-//TODO: Documentar
 function newBlockTemplate(): Block {
   return {
     type: "text",
@@ -232,7 +222,6 @@ function newBlockTemplate(): Block {
     uniqueProperties: {},
   };
 }
-//TODO: Documentar
 function getNewBlockTemplate(type?: BlockType): Block {
   const newBlock: Block = newBlockTemplate();
   if (type === "checkbox") {

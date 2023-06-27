@@ -5,8 +5,6 @@ import type { Ref } from "vue";
 export function useHandleShiftEnter(block: Block, blockHTMLContent: Ref<HTMLElement | null>) {
   const editorStore = useEditorStore();
 
-  //TODO: Document. Modified the original shit+enter to add the nodes in a similar way to
-  //how I parse them on render function.
   function handleShiftEnter(event: KeyboardEvent) {
     event.preventDefault();
     const selection = window.getSelection();

@@ -13,7 +13,6 @@ const cmdPalette = ref<HTMLElement | null>(null);
 const MAX_HEIGHT = 200;
 const isPositionedOnTop = ref(false);
 
-//TODO: Document.
 function getCommandPaletteCoordinates() {
   let { x, y } = { x: 0, y: 0 };
   let dialogHeight = MAX_HEIGHT;
