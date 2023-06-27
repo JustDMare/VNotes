@@ -18,7 +18,7 @@ It requires, at least Node 16 to be installed into your system. Since Node 16 is
 
 [https://auth0.com/](https://auth0.com/)
 
-This project uses Auth0 for authentication. And it requires it to setup an API and Application (SPA).
+This project uses Auth0 for authentication. And it requires it to setup an Auth0 **API** and an  **Application** (SPA).
 
 For the Application, make sure to:
 
@@ -37,7 +37,7 @@ Then, with the information from the Auth0 Application and API, you'll need an .e
 `VITE_AUTH0_DOMAIN` ->  Domain of the tenant
 `VITE_AUTH0_CLIENT_ID` -> Client ID of the Application
 `VITE_AUTH0_CLIENT_SECRET` -> Client secret of the Application
-`VITE_AUTH0_AUDIENCE` -> Audience of the API
+`VITE_AUTH0_AUDIENCE` -> **Audience** of the API
 `VITE_AUTH0_REDIRECT_URI` -> Redirect URI (must be one of the allowed callback URLs). Works better with `"http://localhost:3000/workspace"`
 `VITE_AUTH0_SCOPE` -> "profile"
 
@@ -85,5 +85,3 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
     1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
     2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-
