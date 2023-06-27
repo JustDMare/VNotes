@@ -10,7 +10,6 @@ export const useUserSpaceStore = defineStore("userSpace", {
       _id: "",
       content: { folders: [], notes: [] },
     } as UserSpace,
-    //TODO: Use a map instead? (also in backend)
     parentHashTable: new Object(null) as Record<string, string>,
     editorStore: useEditorStore(),
     auth0: useAuth0(),
@@ -18,7 +17,6 @@ export const useUserSpaceStore = defineStore("userSpace", {
 
   getters: {},
   actions: {
-    //TODO: Error Handling and Documentation
     async fetchAllUserSpaceContent(): Promise<void> {
       const accessToken = await this.auth0.getAccessTokenSilently();
       const locale = i18n.global.locale.value;

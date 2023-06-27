@@ -20,7 +20,6 @@ const noteOptions = computed(() =>
 let optionsDropdownIsOpen = ref(false);
 let showOptionsButton = ref(false);
 
-//TODO: Could be refactored into a composable
 function setShowOptionsButton(newShowOptionsButtonValue: boolean) {
   showOptionsButton.value = newShowOptionsButtonValue;
 }

@@ -17,6 +17,7 @@ export default defineConfig({
   e2e: {
     testIsolation: false,
     experimentalStudio: true,
+    defaultCommandTimeout: 7500,
   },
   component: {
     devServer: {

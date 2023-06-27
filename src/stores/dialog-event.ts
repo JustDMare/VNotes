@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 
-//TODO: Move to a separate file?
 export interface CreateItemDialogEvent {
   isOpen: boolean;
   type: "create-folder" | "create-note" | null;

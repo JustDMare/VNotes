@@ -16,8 +16,6 @@ const commands: ShallowRef<PaletteCommand[]> = shallowRef([...getCommandList()])
 const searchTerm = ref("");
 const highlightedCommandIndex = ref(0);
 
-//TODO: Bug: If the new type of block is the same as the previous one, doesn't delete the
-//search term. It should delete it. (Add to testing findings?)
 function executeCommand(command: PaletteCommand) {
   command.execute();
   editorStore.restoreBlockContentBeforeOpeningCommandPalette();
@@ -72,12 +70,6 @@ function handleArrowKeys(event: KeyboardEvent) {
     inline: "center",
   });
 }
-/*TODO: Document. Mention that it doesn't support more complex interactions like
- * copy/paste, adding or removing chars in the middle of the term, etc. It does support
- * selecting from the end (like with shift + left arrow) to delete multiple chars.
- * Checking all interactions adds too much complexity and it's not worth it. Also, doesn't
- * support "Delete" key. Once again, too much complexity to be worth it.
- */
 function handleKeypress(event: KeyboardEvent) {
   const elements = Array.from(document.getElementsByClassName("cmd-palette__command"));
   if (elements.length) {

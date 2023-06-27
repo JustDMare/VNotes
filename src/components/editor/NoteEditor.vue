@@ -82,7 +82,6 @@ onBeforeRouteUpdate((to, from) => {
   }
 });
 
-//TODO: Document
 watch(
   () => props.note.title,
   (storeNoteTitle) => {
