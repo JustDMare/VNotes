@@ -18,6 +18,7 @@ export default defineConfig({
     testIsolation: false,
     experimentalStudio: true,
     defaultCommandTimeout: 7500,
+    chromeWebSecurity: false,
   },
   component: {
     devServer: {
